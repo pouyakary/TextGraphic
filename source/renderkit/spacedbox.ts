@@ -92,10 +92,10 @@
             }
 
         //
-        // ─── PADDING ─────────────────────────────────────────────────────
+        // ─── MARGIN ──────────────────────────────────────────────────────
         //
 
-            public withPadding ( top: number, right: number, bottom: number, left: number ): SpacedBox {
+            public applyMargin ( top: number, right: number, bottom: number, left: number ): SpacedBox {
                 //
                 const topBottomSpaceLines =
                     SpacedBox.spaceLineOfSize( left + this.width + right )
@@ -126,10 +126,30 @@
             }
 
         //
-        // ─── VERTICAL JOIN ───────────────────────────────────────────────
+        // ─── CENTER ──────────────────────────────────────────────────────
         //
 
-            static joinBoxesVertically ( boxes: SpacedBox[ ], joiner: SpacedBox ): SpacedBox {
+            public centerToBox ( width: number, height: number ) {
+                const top =
+                    Math.floor( height - this.height / 2 )
+                const right =
+                    Math.floor( width - this.width / 2 )
+                const bottom =
+                    height - ( top + this.height )
+                const left =
+                    width - ( right + this.width )
+
+                const box =
+                    this.applyMargin( top, right, bottom, left )
+
+                return box
+            }
+
+        //
+        // ─── CONCAT HORIZONTALLY ─────────────────────────────────────────
+        //
+
+            static concatHorizontally ( boxes: SpacedBox[ ], joiner: SpacedBox ): SpacedBox {
                 if ( boxes.length === 0 ) {
                     return SpacedBox.initEmptyBox( )
                 }
@@ -165,7 +185,7 @@
                             newBaseline - box.baseLine
                         const bottomPadding =
                             newHeight - box.height - topPadding
-                        return box.withPadding(
+                        return box.applyMargin(
                             topPadding, 0, bottomPadding, 0
                         )
                     })
@@ -189,6 +209,27 @@
 
                 // the new space box
                 return new SpacedBox( newLines, newBaseline )
+            }
+
+        //
+        // ─── CONCAT VERTICALLY ───────────────────────────────────────────
+        //
+
+            static concatVertically ( boxes: SpacedBox[ ], baseLine: number ) {
+                const resultWidth =
+                    Math.max( ...boxes.map( box => box.width ) )
+                const lines =
+                    new Array<string> ( )
+
+                for ( const box of boxes ) {
+                    const centeredBox =
+                        box.centerToBox( resultWidth, box.height )
+                    for ( const line of centeredBox.lines ) {
+                        lines.push( line )
+                    }
+                }
+
+                return new SpacedBox( lines, baseLine )
             }
 
         // ─────────────────────────────────────────────────────────────────
