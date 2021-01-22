@@ -3,7 +3,7 @@
 // ─── TYPE ───────────────────────────────────────────────────────────────────────
 //
 
-    export interface BoxCharSet {
+    export interface BoxFrameCharSet {
         top:            string
         topRight:       string
         right:          string
@@ -18,7 +18,7 @@
 // ─── BRACKET ────────────────────────────────────────────────────────────────────
 //
 
-    export const BracketPreset: BoxCharSet = {
+    export const BracketPreset: BoxFrameCharSet = {
         topLeft:        "┌",
         top:            " ",
         topRight:       "┐",
@@ -33,7 +33,7 @@
 // ─── ABSOLUTE ───────────────────────────────────────────────────────────────────
 //
 
-    export const AbsolutePreset: BoxCharSet = {
+    export const AbsolutePreset: BoxFrameCharSet = {
         topLeft:        "⎢" ,
         top:            " " ,
         topRight:       "⎥" ,
@@ -48,7 +48,7 @@
 // ─── FLOOR ──────────────────────────────────────────────────────────────────────
 //
 
-    export const FloorPreset: BoxCharSet = {
+    export const FloorPreset: BoxFrameCharSet = {
         topLeft:        "⎜",
         top:            " ",
         topRight:       "⎟",
@@ -63,7 +63,7 @@
 // ─── CEILING ────────────────────────────────────────────────────────────────────
 //
 
-    export const CeilingPreset: BoxCharSet = {
+    export const CeilingPreset: BoxFrameCharSet = {
         topLeft:        "⎡",
         top:            " ",
         topRight:       "⎤",
@@ -78,7 +78,7 @@
 // ─── PARENTHESIS ────────────────────────────────────────────────────────────────
 //
 
-    export const ParenthesisPreset: BoxCharSet = {
+    export const ParenthesisPreset: BoxFrameCharSet = {
         topLeft:        "⎛",
         top:            " ",
         topRight:       "⎞",
@@ -93,7 +93,7 @@
 // ─── LIGHT BOX ──────────────────────────────────────────────────────────────────
 //
 
-    export const LightBoxPreset: BoxCharSet = {
+    export const LightBoxPreset: BoxFrameCharSet = {
         topLeft:        "┌",
         top:            "─",
         topRight:       "┐",
@@ -108,7 +108,7 @@
 // ─── CORNERS ────────────────────────────────────────────────────────────────────
 //
 
-    export const CornersPreset: BoxCharSet = {
+    export const CornersPreset: BoxFrameCharSet = {
         topLeft:        "┌",
         top:            " ",
         topRight:       "┐",

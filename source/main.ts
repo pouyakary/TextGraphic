@@ -1,5 +1,6 @@
 
-import { SpacedBox } from "./renderkit/spacedbox"
+import { SpacedBox } from "./renderkit/spaced-box"
+import * as Presets from "./renderkit/shapes/box-frames"
 
 // SpacedBox Join Test
 
@@ -13,4 +14,11 @@ const box = SpacedBox.concatHorizontally(
     [ b1, b2, b3, b4, b5 ], SpacedBox.initWithText( " + ", 0 )
 )
 
-console.log( box.plainTextForm )
+const frame1 =
+    box .applyMargin( 0, 4, 0, 4 )
+        .frame( Presets.CornersPreset )
+        .applyMargin( 1, 3, 1, 3 )
+        .frame( Presets.LightBoxPreset )
+        .applyMargin( 1, 0, 1, 5 )
+
+console.log( frame1.plainTextForm )

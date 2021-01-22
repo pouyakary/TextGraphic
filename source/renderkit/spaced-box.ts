@@ -4,6 +4,7 @@
 //
 
     import { insertJoinersInBetweenArrayItems } from "../tools/array"
+    import { BoxFrameCharSet } from "./shapes/box-frames"
 
 //
 // ─── SPACED BOX ─────────────────────────────────────────────────────────────────
@@ -230,6 +231,24 @@
                 }
 
                 return new SpacedBox( lines, baseLine )
+            }
+
+        //
+        // ─── FRAME ───────────────────────────────────────────────────────
+        //
+
+            public frame ( charSet: BoxFrameCharSet ) {
+                const firstLine =
+                    charSet.topLeft + charSet.top.repeat( this.width ) + charSet.topRight
+                const lastLine =
+                    charSet.bottomLeft + charSet.bottom.repeat( this.width ) + charSet.bottomRight
+                const middleLines =
+                    this.lines.map( line => charSet.left + line + charSet.right )
+                const lines: string[ ] =
+                    [ firstLine, ...middleLines, lastLine ]
+                const result =
+                    new SpacedBox( lines, this.baseLine + 1 )
+                return result
             }
 
         // ─────────────────────────────────────────────────────────────────
