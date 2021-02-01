@@ -1,6 +1,7 @@
 
 import { SpacedBox } from "./renderkit/spaced-box"
 import * as Presets from "./renderkit/shapes/box-frames"
+import { createTable } from "./renderkit/shapes/table"
 
 // SpacedBox Join Test
 
@@ -21,4 +22,19 @@ const frame1 =
         .frame( Presets.LightBoxPreset )
         .applyMargin( 1, 0, 1, 5 )
 
-console.log( frame1.plainTextForm )
+const tableText = [
+    [ "Name", "Pouya Kary" ],
+    [ "Occupation", "█████████████ █████████" ]
+
+]
+
+const tableCells =
+    tableText.map( row =>
+        row.map( cell =>
+            SpacedBox.initWithText( " " + cell + " ", 0 )
+        )
+    )
+
+const table = createTable( tableCells )
+
+console.log( table.plainTextForm )

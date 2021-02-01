@@ -3,8 +3,10 @@
 // ─── IMPORTS ────────────────────────────────────────────────────────────────────
 //
 
-    import { insertJoinersInBetweenArrayItems } from "../tools/array"
-    import { BoxFrameCharSet } from "./shapes/box-frames"
+    import { insertJoinersInBetweenArrayItems }
+        from "../tools/array"
+    import { BoxFrameCharSet }
+        from "./shapes/box-frames"
 
 //
 // ─── SPACED BOX ─────────────────────────────────────────────────────────────────
@@ -16,10 +18,10 @@
         // ─── STORAGE ─────────────────────────────────────────────────────
         //
 
-            public readonly baseLine: number
-            public readonly lines:    Array<string>
-            public readonly height:   number
-            public readonly width:    number
+            private                 _baseline:      number
+            public      readonly    lines:          Array<string>
+            public      readonly    height:         number
+            public      readonly    width:          number
 
         //
         // ─── CONSTRUCTOR ─────────────────────────────────────────────────
@@ -32,7 +34,9 @@
                     this.lines.length
                 this.width =
                     this.lines[ 0 ].length
-                this.baseLine =
+                this._baseline =
+                    0
+                this.baseline =
                     baseLine
             }
 
@@ -52,6 +56,22 @@
 
             static initEmptyBox ( ) {
                 return new SpacedBox([ "" ], 0 )
+            }
+
+        //
+        // ─── BASELINE ────────────────────────────────────────────────────
+        //
+
+            public get baseline ( ) {
+                return this._baseline
+            }
+
+            public set baseline ( input: number ) {
+                if ( input < 0 && input >= this.height ) {
+                    throw `Baseline is set out of bounds. (Box height: ${ this.height }, given baseline: ${ input })`
+                }
+                this._baseline =
+                    input
             }
 
         //
@@ -123,7 +143,7 @@
                 }
 
                 //
-                return new SpacedBox( lines, this.baseLine + top )
+                return new SpacedBox( lines, this.baseline + top )
             }
 
         //
@@ -162,13 +182,13 @@
                 let newBaseline = 0
                 let heightBelowNewBaseline = 0
                 for ( const box of boxes ) {
-                    if ( box.baseLine > newBaseline ) {
+                    if ( box.baseline > newBaseline ) {
                         newBaseline =
-                            box.baseLine
+                            box.baseline
                     }
-                    if ( ( box.height - 1 - box.baseLine ) > heightBelowNewBaseline ) {
+                    if ( ( box.height - 1 - box.baseline ) > heightBelowNewBaseline ) {
                         heightBelowNewBaseline =
-                            box.height - 1 - box.baseLine
+                            box.height - 1 - box.baseline
                     }
                 }
 
@@ -183,7 +203,7 @@
                 const boxesWithAppropriatePaddings =
                     boxesWithJoiner.map( box => {
                         const topPadding =
-                            newBaseline - box.baseLine
+                            newBaseline - box.baseline
                         const bottomPadding =
                             newHeight - box.height - topPadding
                         return box.applyMargin(
@@ -247,7 +267,7 @@
                 const lines: string[ ] =
                     [ firstLine, ...middleLines, lastLine ]
                 const result =
-                    new SpacedBox( lines, this.baseLine + 1 )
+                    new SpacedBox( lines, this.baseline + 1 )
                 return result
             }
 
