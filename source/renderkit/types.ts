@@ -4,11 +4,24 @@
 //
 
     export enum HorizontalAlign {
-        Left = "L", Center = "C", Right = "R"
+        Left    = "Left",
+        Center  = "Center",
+        Right   = "Right"
     }
 
     export enum VerticalAlign {
-        Top = "L", Center = "C", Bottom = "B"
+        Top     = "Left",
+        Center  = "Center",
+        Bottom  = "Bottom"
+    }
+
+//
+// ─── RESIZING ───────────────────────────────────────────────────────────────────
+//
+
+    export enum ResizePolicy {
+        StandStill  = "Stand Still",
+        Stretch     = "Stretch",
     }
 
 // ────────────────────────────────────────────────────────────────────────────────

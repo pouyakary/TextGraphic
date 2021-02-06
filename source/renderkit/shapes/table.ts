@@ -7,7 +7,7 @@
         from "../spaced-box"
     import { insertJoinersInBetweenArrayItems }
         from "../../tools/array"
-    import { HorizontalAlign, VerticalAlign }
+    import { HorizontalAlign, VerticalAlign, ResizePolicy }
         from "../types"
 
 //
@@ -35,12 +35,14 @@
         minWidth?:          number
         horizontalAligns?:  HorizontalAlign[ ]
         verticalAligns?:    VerticalAlign[ ]
+        resizePolicies?:    ResizePolicy[ ]
     }
 
     interface TableSettings {
         minWidth:           number
         horizontalAligns:   HorizontalAlign[ ]
         verticalAligns:     VerticalAlign[ ]
+        resizePolicies:     ResizePolicy[ ]
     }
 
 //
@@ -57,7 +59,7 @@
         const settings =
             fixTableSettings( rows, input )
         const maxArrays =
-            computeMaxArrays( rows, settings.minWidth )
+            computeMaxArrays( rows, settings )
 
         const renderedRows =
             renderRows( rows, maxArrays, settings )
@@ -114,14 +116,35 @@
                     : VerticalAlign.Center
                 )
             }
-        } else {
+        }
+        else {
             for ( let index = 0; index < rows.length; index++ ) {
                 verticalAligns.push( VerticalAlign.Center )
             }
         }
 
+        // Resize Policy
+        const resizePolicy =
+            new Array<ResizePolicy> ( )
+
+        if ( input.resizePolicies ) {
+            for ( let index = 0; index < columns; index++ ) {
+                resizePolicy.push( input.resizePolicies[ index ]
+                    ? input.resizePolicies[ index ]
+                    : ResizePolicy.Stretch
+                )
+            }
+        } else {
+            for ( let index = resizePolicy.length; index < columns; index++ ) {
+                resizePolicy[ index ] =
+                    ResizePolicy.Stretch
+            }
+        }
+
+
+        // Done
         return {
-            minWidth, verticalAligns, horizontalAligns
+            minWidth, verticalAligns, horizontalAligns, resizePolicies: resizePolicy
         }
     }
 
@@ -173,11 +196,14 @@
 // ─── COMPUTE MAX ARRAYS ─────────────────────────────────────────────────────────
 //
 
-    function computeMaxArrays ( input: SpacedBoxTable, minWidth: number ): MaxArrays {
+    function computeMaxArrays ( input: SpacedBoxTable, settings: TableSettings ): MaxArrays {
         const columnsMaxWidths =
             new Array<number> ( )
         const rowsMaxHeights =
             new Array<number> ( )
+
+        const { minWidth, resizePolicies: resizePolicy } =
+            settings
 
         //                  ┌───────────┐
         //                  │ Max Width │
@@ -223,19 +249,34 @@
         let currentWidth =
             2 + columnsMaxWidths.reduce(( previousWidth, columnWidth ) =>
                 previousWidth + columnWidth + 1 )
+
         if ( minWidth > currentWidth ) {
-            const stretchWidths = ( ) => {
-                while ( true ) {
-                    for ( let index = columnsMaxWidths.length - 1; index >= 0; index-- ) {
-                        if ( currentWidth === minWidth ) {
-                            return
+            const resizePolicyInBoolean =
+                resizePolicy.map( policy =>
+                    policy === ResizePolicy.Stretch )
+            const isNotAllStandStill =
+                resizePolicyInBoolean.reduce(( sum, current ) =>
+                    sum || current )
+
+            if ( isNotAllStandStill ) {
+                const stretchWidths = ( ) => {
+                    while ( true ) {
+                        for ( let index = columnsMaxWidths.length - 1; index >= 0; index-- ) {
+                            if ( currentWidth === minWidth ) {
+                                return
+                            }
+                            if ( resizePolicyInBoolean[ index ] ) {
+                                columnsMaxWidths[ index ]++
+                                currentWidth++
+                            }
                         }
-                        columnsMaxWidths[ index ]++
-                        currentWidth++
                     }
                 }
+                stretchWidths( )
             }
-            stretchWidths( )
+
+            columnsMaxWidths[ columnsMaxWidths.length - 1 ] +=
+                minWidth - currentWidth
         }
 
         return {

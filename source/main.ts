@@ -1,5 +1,5 @@
 
-import { SpacedBox, BoxFramePresets, createTable, HorizontalAlign, VerticalAlign }
+import { SpacedBox, BoxFramePresets, createTable, HorizontalAlign, VerticalAlign, ResizePolicy }
     from "./renderkit"
 
 // SpacedBox Join Test
@@ -48,6 +48,10 @@ const table = createTable( tableCells, {
         VerticalAlign.Top,
         VerticalAlign.Bottom
     ],
+    resizePolicies: [
+        ResizePolicy.StandStill,
+        ResizePolicy.Stretch,
+    ]
 })
 
 
