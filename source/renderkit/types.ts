@@ -19,7 +19,7 @@
 // ─── RESIZING ───────────────────────────────────────────────────────────────────
 //
 
-    export enum ResizePolicy {
+    export enum ResizingPolicy {
         StandStill  = "Stand Still",
         Stretch     = "Stretch",
     }

@@ -7,7 +7,7 @@
         from "../spaced-box"
     import { insertJoinersInBetweenArrayItems }
         from "../../tools/array"
-    import { HorizontalAlign, VerticalAlign, ResizePolicy }
+    import { HorizontalAlign, VerticalAlign, ResizingPolicy }
         from "../types"
 
 //
@@ -32,17 +32,17 @@
     }
 
     export interface TableInitSettings {
-        minWidth?:          number
-        horizontalAligns?:  HorizontalAlign[ ]
-        verticalAligns?:    VerticalAlign[ ]
-        resizePolicies?:    ResizePolicy[ ]
+        minWidth?:              number
+        horizontalAligns?:      HorizontalAlign[ ]
+        verticalAligns?:        VerticalAlign[ ]
+        horizontalResizing?:    ResizingPolicy[ ]
     }
 
     interface TableSettings {
-        minWidth:           number
-        horizontalAligns:   HorizontalAlign[ ]
-        verticalAligns:     VerticalAlign[ ]
-        resizePolicies:     ResizePolicy[ ]
+    minWidth:                   number
+    horizontalAligns:           HorizontalAlign[ ]
+    verticalAligns:             VerticalAlign[ ]
+        horizontalResizing:     ResizingPolicy[ ]
     }
 
 //
@@ -125,26 +125,26 @@
 
         // Resize Policy
         const resizePolicy =
-            new Array<ResizePolicy> ( )
+            new Array<ResizingPolicy> ( )
 
-        if ( input.resizePolicies ) {
+        if ( input.horizontalResizing ) {
             for ( let index = 0; index < columns; index++ ) {
-                resizePolicy.push( input.resizePolicies[ index ]
-                    ? input.resizePolicies[ index ]
-                    : ResizePolicy.Stretch
+                resizePolicy.push( input.horizontalResizing[ index ]
+                    ? input.horizontalResizing[ index ]
+                    : ResizingPolicy.Stretch
                 )
             }
         } else {
             for ( let index = resizePolicy.length; index < columns; index++ ) {
                 resizePolicy[ index ] =
-                    ResizePolicy.Stretch
+                    ResizingPolicy.Stretch
             }
         }
 
 
         // Done
         return {
-            minWidth, verticalAligns, horizontalAligns, resizePolicies: resizePolicy
+            minWidth, verticalAligns, horizontalAligns, horizontalResizing: resizePolicy
         }
     }
 
@@ -202,7 +202,7 @@
         const rowsMaxHeights =
             new Array<number> ( )
 
-        const { minWidth, resizePolicies: resizePolicy } =
+        const { minWidth, horizontalResizing: resizePolicy } =
             settings
 
         //                  ┌───────────┐
@@ -253,7 +253,7 @@
         if ( minWidth > currentWidth ) {
             const resizePolicyInBoolean =
                 resizePolicy.map( policy =>
-                    policy === ResizePolicy.Stretch )
+                    policy === ResizingPolicy.Stretch )
             const isNotAllStandStill =
                 resizePolicyInBoolean.reduce(( sum, current ) =>
                     sum || current )

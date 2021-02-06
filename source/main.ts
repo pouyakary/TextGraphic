@@ -48,7 +48,7 @@ const table = createTable( tableCells, {
         VerticalAlign.Top,
         VerticalAlign.Bottom
     ],
-    resizePolicies: [
+    horizontalResizing: [
         ResizePolicy.StandStill,
         ResizePolicy.Stretch,
     ]
