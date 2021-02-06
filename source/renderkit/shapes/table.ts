@@ -9,6 +9,8 @@
         from "../../tools/array"
     import { HorizontalAlign, VerticalAlign, ResizingPolicy }
         from "../types"
+    import { TableCharSet, LightTablePreset }
+        from "./table-frames"
 
 //
 // ─── TYPES ──────────────────────────────────────────────────────────────────────
@@ -36,20 +38,23 @@
         horizontalAligns?:      HorizontalAlign[ ]
         verticalAligns?:        VerticalAlign[ ]
         horizontalResizing?:    ResizingPolicy[ ]
+        charSet?:               TableCharSet
     }
 
     interface TableSettings {
-    minWidth:                   number
-    horizontalAligns:           HorizontalAlign[ ]
-    verticalAligns:             VerticalAlign[ ]
+        minWidth:               number
+        horizontalAligns:       HorizontalAlign[ ]
+        verticalAligns:         VerticalAlign[ ]
         horizontalResizing:     ResizingPolicy[ ]
+        charSet:                TableCharSet
     }
 
 //
 // ─── GENERATOR ──────────────────────────────────────────────────────────────────
 //
 
-    export function createTable ( rows: SpacedBoxTable, input: TableInitSettings ): SpacedBox {
+    export function createTable ( rows: SpacedBoxTable,
+                                 input: TableInitSettings ): SpacedBox {
         if ( rows.length === 0 ) {
             return SpacedBox.initEmptyBox( )
         }
@@ -64,7 +69,7 @@
         const renderedRows =
             renderRows( rows, maxArrays, settings )
         const decorationLines =
-            createTableLines( maxArrays )
+            createTableLines( maxArrays, settings.charSet )
         const joinedTableParts =
             joinTableParts( renderedRows, decorationLines )
         const lines =
@@ -82,10 +87,8 @@
 // ─── FIX SETTINGS ───────────────────────────────────────────────────────────────
 //
 
-    function fixTableSettings ( rows: SpacedBoxTable, input: TableInitSettings ): TableSettings {
-        // minWidth
-        const minWidth =
-            input.minWidth ? input.minWidth : 0
+    function fixTableSettings ( rows: SpacedBoxTable,
+                               input: TableInitSettings ): TableSettings {
 
         const horizontalAligns =
             new Array<HorizontalAlign> ( )
@@ -93,6 +96,14 @@
             new Array<VerticalAlign> ( )
         const columns =
             rows[ 0 ].length
+
+        // minWidth
+        const minWidth =
+            input.minWidth ? input.minWidth : 0
+
+        // character set
+        const charSet =
+            input.charSet ? input.charSet : LightTablePreset
 
         // Horizontal Aligns
         if ( input.horizontalAligns ) {
@@ -124,27 +135,27 @@
         }
 
         // Resize Policy
-        const resizePolicy =
+        const horizontalResizing =
             new Array<ResizingPolicy> ( )
 
         if ( input.horizontalResizing ) {
             for ( let index = 0; index < columns; index++ ) {
-                resizePolicy.push( input.horizontalResizing[ index ]
+                horizontalResizing.push( input.horizontalResizing[ index ]
                     ? input.horizontalResizing[ index ]
                     : ResizingPolicy.Stretch
                 )
             }
         } else {
-            for ( let index = resizePolicy.length; index < columns; index++ ) {
-                resizePolicy[ index ] =
+            for ( let index = horizontalResizing.length; index < columns; index++ ) {
+                horizontalResizing[ index ] =
                     ResizingPolicy.Stretch
             }
         }
 
-
         // Done
         return {
-            minWidth, verticalAligns, horizontalAligns, horizontalResizing: resizePolicy
+            minWidth, verticalAligns, horizontalAligns,
+            horizontalResizing, charSet
         }
     }
 
@@ -167,7 +178,8 @@
 // ─── JOIN TABLE PARTS ───────────────────────────────────────────────────────────
 //
 
-    function joinTableParts ( renderedRows: SpacedBox[ ], decorationLines: TableLines ): SpacedBox[ ] {
+    function joinTableParts ( renderedRows: SpacedBox[ ],
+                           decorationLines: TableLines ): SpacedBox[ ] {
         const linesWithMiddleDecorations =
             insertJoinersInBetweenArrayItems( renderedRows, decorationLines.middleLine )
         const joinedTableParts = [
@@ -196,7 +208,8 @@
 // ─── COMPUTE MAX ARRAYS ─────────────────────────────────────────────────────────
 //
 
-    function computeMaxArrays ( input: SpacedBoxTable, settings: TableSettings ): MaxArrays {
+    function computeMaxArrays ( input: SpacedBoxTable,
+                             settings: TableSettings ): MaxArrays {
         const columnsMaxWidths =
             new Array<number> ( )
         const rowsMaxHeights =
@@ -303,24 +316,27 @@
 // ─── CREATE TABLE LINE ──────────────────────────────────────────────────────────
 //
 
-    function createTableLines ( maxArrays: MaxArrays ): TableLines {
+    function createTableLines ( maxArrays: MaxArrays, charSet: TableCharSet ): TableLines {
         const middleLines =
             maxArrays.columnsMaxWidths.map( width =>
-                "─".repeat( width ) )
+                charSet.horizontalMiddle.repeat( width ) )
 
         const topLine =
-            makeTopBottomLineWith( middleLines, "┌", "┬", "┐" )
+            makeTopBottomLineWith( middleLines, charSet.topLeft, charSet.topJoins, charSet.topRight )
         const middleLine =
-            makeTopBottomLineWith( middleLines, "├", "┼", "┤" )
+            makeTopBottomLineWith( middleLines, charSet.leftJoins, charSet.middleJoins, charSet.rightJoins )
         const bottomLine =
-            makeTopBottomLineWith( middleLines, "└", "┴", "┘" )
+            makeTopBottomLineWith( middleLines, charSet.bottomLeft, charSet.bottomJoins, charSet.bottomRight )
 
         return {
             topLine, middleLine, bottomLine
         }
     }
 
-    function makeTopBottomLineWith ( middleLines: string[ ], left: string, middle: string, right: string ): SpacedBox {
+    function makeTopBottomLineWith ( middleLines: string[ ],
+                                            left: string,
+                                          middle: string,
+                                           right: string ): SpacedBox {
         const line =
             left + middleLines.join( middle ) + right
         const box =
@@ -366,7 +382,7 @@
                     settings: TableSettings ) {
 
         const strokeLine =
-            createMiddleStroke( rowHeight )
+            createMiddleStroke( rowHeight, settings.charSet )
         const toBeJoined =
             [ strokeLine ]
 
@@ -396,11 +412,11 @@
 // ─── CREATE MIDDLE STROKE ───────────────────────────────────────────────────────
 //
 
-    function createMiddleStroke ( height: number ) {
+    function createMiddleStroke ( height: number, charSet: TableCharSet ) {
         const lines =
             [ ]
         for ( let line = 0; line < height; line++ ) {
-            lines.push( "│" )
+            lines.push( charSet.verticalMiddle )
         }
         const box =
             new SpacedBox( lines, 0 )
