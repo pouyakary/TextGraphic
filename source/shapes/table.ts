@@ -6,7 +6,7 @@
     import { SpacedBox }
         from "../spaced-box"
     import { insertJoinersInBetweenArrayItems }
-        from "../../tools/array"
+        from "../array"
     import { HorizontalAlign, VerticalAlign, ResizingPolicy }
         from "../types"
     import { TableCharSet, LightTablePreset }

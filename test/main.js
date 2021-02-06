@@ -1,7 +1,7 @@
 
 import { SpacedBox, BoxFramePresets, createTable, HorizontalAlign,
          VerticalAlign, ResizePolicy, TableCharSet, KaryGothic }
-    from "./renderkit"
+    from "../source"
 
 // SpacedBox Join Test
 
@@ -14,6 +14,7 @@ const b5 = new SpacedBox( [ '-', '2', '3' ], 0 )
 const box = SpacedBox.concatHorizontally(
     [ b1, b2, b3, b4, b5 ], SpacedBox.initWithText( " + ", 0 )
 )
+
 
 const frame1 =
     box .applyMargin( 0, 4, 0, 4 )

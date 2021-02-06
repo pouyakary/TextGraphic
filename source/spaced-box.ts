@@ -4,7 +4,7 @@
 //
 
     import { insertJoinersInBetweenArrayItems }
-        from "../tools/array"
+        from "./array"
     import { BoxFrameCharSet }
         from "./shapes/box-frames"
     import { HorizontalAlign, VerticalAlign }

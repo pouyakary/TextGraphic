@@ -1,0 +1,26 @@
+{
+  "name": "@pouyakary/textkit",
+  "version": "0.0.0",
+  "description": "The Kary TextKit Framework",
+  "main": "out/main.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "build": "npm run clean; npm run compile; npm run pack",
+    "compile": "tsc",
+    "clean": "rm -rf out",
+    "pack": "parcel build --out-dir=out/dist --out-file=textkit.js out/compiled/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pouyakary/textkit"
+  },
+  "author": "Pouya Kary",
+  "license": "ISC",
+  "homepage": "https://github.com/pouyakary/textkit",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  }
+}
