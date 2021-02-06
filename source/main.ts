@@ -1,5 +1,5 @@
 
-import { SpacedBox, BoxFramePresets, createTable, Justification }
+import { SpacedBox, BoxFramePresets, createTable, HorizontalAlign, VerticalAlign }
     from "./renderkit"
 
 // SpacedBox Join Test
@@ -23,7 +23,8 @@ const frame1 =
 
 const tableText = [
     [ "Pouya", "Can" ],
-    [ "Render", SpacedBox.initWithText( " TABLES ", 1 ).frame( BoxFramePresets.CornersPreset ).applyMargin( 1, 4, 1, 4 ) ]
+    [ "Render", SpacedBox.initWithText( " TABLES ", 1 ).frame( BoxFramePresets.CornersPreset ).applyMargin( 1, 4, 1, 4 ) ],
+    [ SpacedBox.initWithText( " *\n* ", 1 ), SpacedBox.initWithText( "Oooo\n   Behave!", 1 ).applyMargin( 0, 0, 1, 0 ) ]
 ]
 
 const tableCells =
@@ -35,14 +36,21 @@ const tableCells =
         )
     )
 
-for ( let i = 0; i < 4; i++ ) {
-    const minWidth = 30 + i * 10
-    const table = createTable( tableCells, {
-        justifications: [ Justification.Right, Justification.Center ],
-        minWidth
-    })
+const minWidth = 70
+const table = createTable( tableCells, {
+    minWidth,
+    horizontalAligns: [
+        HorizontalAlign.Right,
+        HorizontalAlign.Center
+    ],
+    verticalAligns: [
+        VerticalAlign.Center,
+        VerticalAlign.Top,
+        VerticalAlign.Bottom
+    ],
+})
 
 
-    console.log( " ", minWidth, "-".repeat( minWidth ) )
-    console.log( table.applyMargin( 1, 0, 1, 5 ).plainTextForm )
-}
+console.log( )
+console.log( " ", minWidth, "-".repeat( minWidth ) )
+console.log( table.applyMargin( 1, 0, 1, 5 ).plainTextForm )

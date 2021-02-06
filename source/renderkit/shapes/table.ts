@@ -7,7 +7,7 @@
         from "../spaced-box"
     import { insertJoinersInBetweenArrayItems }
         from "../../tools/array"
-    import { Justification }
+    import { HorizontalAlign, VerticalAlign }
         from "../types"
 
 //
@@ -33,12 +33,14 @@
 
     export interface TableInitSettings {
         minWidth?:          number
-        justifications?:    Justification[ ]
+        horizontalAligns?:  HorizontalAlign[ ]
+        verticalAligns?:    VerticalAlign[ ]
     }
 
     interface TableSettings {
         minWidth:           number
-        justifications:     Justification[ ]
+        horizontalAligns:   HorizontalAlign[ ]
+        verticalAligns:     VerticalAlign[ ]
     }
 
 //
@@ -54,12 +56,11 @@
 
         const settings =
             fixTableSettings( rows, input )
-
         const maxArrays =
             computeMaxArrays( rows, settings.minWidth )
 
         const renderedRows =
-            renderRows( rows, maxArrays, settings.justifications )
+            renderRows( rows, maxArrays, settings )
         const decorationLines =
             createTableLines( maxArrays )
         const joinedTableParts =
@@ -80,28 +81,47 @@
 //
 
     function fixTableSettings ( rows: SpacedBoxTable, input: TableInitSettings ): TableSettings {
+        // minWidth
         const minWidth =
             input.minWidth ? input.minWidth : 0
-        const justifications =
-            new Array<Justification> ( )
+
+        const horizontalAligns =
+            new Array<HorizontalAlign> ( )
+        const verticalAligns =
+            new Array<VerticalAlign> ( )
         const columns =
             rows[ 0 ].length
 
-        if ( input.justifications ) {
+        // Horizontal Aligns
+        if ( input.horizontalAligns ) {
             for ( let index = 0; index < columns; index++ ) {
-                justifications.push( input.justifications[ index ]
-                    ? input.justifications[ index ]
-                    : Justification.Left
+                horizontalAligns.push( input.horizontalAligns[ index ]
+                    ? input.horizontalAligns[ index ]
+                    : HorizontalAlign.Left
                 )
             }
         } else {
             for ( let index = 0; index < columns; index++ ) {
-                justifications.push( Justification.Left )
+                horizontalAligns.push( HorizontalAlign.Left )
+            }
+        }
+
+        // Vertical Aligns
+        if ( input.verticalAligns ) {
+            for ( let index = 0; index < rows.length; index++ ) {
+                verticalAligns.push( input.verticalAligns[ index ]
+                    ? input.verticalAligns[ index ]
+                    : VerticalAlign.Center
+                )
+            }
+        } else {
+            for ( let index = 0; index < rows.length; index++ ) {
+                verticalAligns.push( VerticalAlign.Center )
             }
         }
 
         return {
-            minWidth, justifications
+            minWidth, verticalAligns, horizontalAligns
         }
     }
 
@@ -273,7 +293,7 @@
 
     function renderRows ( table: SpacedBoxTable,
                       maxArrays: MaxArrays,
-                 justifications: Justification[ ] ) {
+                       settings: TableSettings ) {
 
         const { rowsMaxHeights, columnsMaxWidths } =
             maxArrays
@@ -286,7 +306,7 @@
             const rowHeight =
                 rowsMaxHeights[ rowIndex ]
             const renderedRow =
-                renderRow( row, rowHeight, columnsMaxWidths, justifications )
+                renderRow( row, rowIndex, rowHeight, columnsMaxWidths, settings )
 
             renderedRows.push( renderedRow )
         }
@@ -299,9 +319,10 @@
 //
 
     function renderRow ( row: SpacedBoxTableRows,
+                    rowIndex: number,
                    rowHeight: number,
             columnsMaxWidths: number[ ],
-              justifications: Justification[ ] ) {
+                    settings: TableSettings ) {
 
         const strokeLine =
             createMiddleStroke( rowHeight )
@@ -313,10 +334,12 @@
                 row[ columnIndex ]
             const columnWidth =
                 columnsMaxWidths[ columnIndex ]
-            const justification =
-                justifications[ columnIndex ]
+            const horizontalAlign =
+                settings.horizontalAligns[ columnIndex ]
+            const verticalAlign =
+                settings.verticalAligns[ rowIndex ]
             const box =
-                shapeCellToBoxSize( column, columnWidth, rowHeight, justification )
+                shapeCellToBoxSize( column, columnWidth, rowHeight, horizontalAlign, verticalAlign )
 
             toBeJoined.push( box )
             toBeJoined.push( strokeLine )
@@ -335,37 +358,52 @@
     function shapeCellToBoxSize ( cell: SpacedBox,
                                  width: number,
                              rowHeight: number,
-                         justification: Justification ) {
+                       horizontalAlign: HorizontalAlign,
+                         verticalAlign: VerticalAlign ) {
 
-        let marginRight = 0, marginLeft = 0
+        let marginTop = 0, marginRight = 0, marginLeft = 0, marginBottom = 0
 
         const horizontalEmptySpace =
             width - cell.width
         const verticalEmptySpace =
             rowHeight - cell.height
 
-        switch ( justification ) {
-            case Justification.Left:
+
+        switch ( horizontalAlign ) {
+            case HorizontalAlign.Left:
                 marginRight =
                     horizontalEmptySpace
                 break;
-            case Justification.Center:
+            case HorizontalAlign.Center:
                 marginLeft =
                     Math.floor( horizontalEmptySpace / 2 )
                 marginRight =
                     horizontalEmptySpace - marginLeft
                 break;
-            case Justification.Right:
+            case HorizontalAlign.Right:
                 marginLeft =
                     horizontalEmptySpace
                 break;
         }
 
 
-        const marginTop =
-            Math.floor( verticalEmptySpace / 2 )
-        const marginBottom =
-            verticalEmptySpace - marginTop
+        switch ( verticalAlign ) {
+            case VerticalAlign.Top:
+                marginBottom =
+                    verticalEmptySpace
+                break;
+            case VerticalAlign.Center:
+                marginTop =
+                    Math.floor( verticalEmptySpace / 2 )
+                marginBottom =
+                    verticalEmptySpace - marginTop
+                break;
+            case VerticalAlign.Bottom:
+                marginTop =
+                    verticalEmptySpace
+                break;
+        }
+
 
         const marginedBox =
             cell.applyMargin( marginTop, marginRight, marginBottom, marginLeft )
