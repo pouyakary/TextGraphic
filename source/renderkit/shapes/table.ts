@@ -380,7 +380,7 @@
             const verticalAlign =
                 settings.verticalAligns[ rowIndex ]
             const box =
-                shapeCellToBoxSize( column, columnWidth, rowHeight, horizontalAlign, verticalAlign )
+                column.alignInBox( columnWidth, rowHeight, horizontalAlign, verticalAlign )
 
             toBeJoined.push( box )
             toBeJoined.push( strokeLine )
@@ -390,67 +390,6 @@
             SpacedBox.concatHorizontally( toBeJoined, SpacedBox.initEmptyBox( ) )
 
         return renderedRow
-    }
-
-//
-// ─── SHAPE CELL TO SIZE ─────────────────────────────────────────────────────────
-//
-
-    function shapeCellToBoxSize ( cell: SpacedBox,
-                                 width: number,
-                             rowHeight: number,
-                       horizontalAlign: HorizontalAlign,
-                         verticalAlign: VerticalAlign ) {
-
-        let marginTop = 0, marginRight = 0, marginLeft = 0, marginBottom = 0
-
-        const horizontalEmptySpace =
-            width - cell.width
-        const verticalEmptySpace =
-            rowHeight - cell.height
-
-
-        switch ( horizontalAlign ) {
-            case HorizontalAlign.Left:
-                marginRight =
-                    horizontalEmptySpace
-                break;
-            case HorizontalAlign.Center:
-                marginLeft =
-                    Math.floor( horizontalEmptySpace / 2 )
-                marginRight =
-                    horizontalEmptySpace - marginLeft
-                break;
-            case HorizontalAlign.Right:
-                marginLeft =
-                    horizontalEmptySpace
-                break;
-        }
-
-
-        switch ( verticalAlign ) {
-            case VerticalAlign.Top:
-                marginBottom =
-                    verticalEmptySpace
-                break;
-            case VerticalAlign.Center:
-                marginTop =
-                    Math.floor( verticalEmptySpace / 2 )
-                marginBottom =
-                    verticalEmptySpace - marginTop
-                break;
-            case VerticalAlign.Bottom:
-                marginTop =
-                    verticalEmptySpace
-                break;
-        }
-
-
-        const marginedBox =
-            cell.applyMargin( marginTop, marginRight, marginBottom, marginLeft )
-
-        marginedBox.baseline = 0
-        return marginedBox
     }
 
 //

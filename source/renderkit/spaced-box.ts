@@ -7,6 +7,8 @@
         from "../tools/array"
     import { BoxFrameCharSet }
         from "./shapes/box-frames"
+    import { HorizontalAlign, VerticalAlign }
+        from "./types"
 
 //
 // ─── SPACED BOX ─────────────────────────────────────────────────────────────────
@@ -269,6 +271,67 @@
                 const result =
                     new SpacedBox( lines, this.baseline + 1 )
                 return result
+            }
+
+        //
+        // ─── ALIGN ───────────────────────────────────────────────────────
+        //
+
+            public alignInBox ( boxWidth: number,
+                               boxHeight: number,
+                         horizontalAlign: HorizontalAlign,
+                           verticalAlign: VerticalAlign ) {
+
+                let marginTop = 0, marginRight = 0, marginLeft = 0, marginBottom = 0
+
+                const horizontalEmptySpace =
+                    boxWidth - this.width
+                const verticalEmptySpace =
+                    boxHeight - this.height
+
+
+                switch ( horizontalAlign ) {
+                    case HorizontalAlign.Left:
+                        marginRight =
+                            horizontalEmptySpace
+                        break;
+                    case HorizontalAlign.Center:
+                        marginLeft =
+                            Math.floor( horizontalEmptySpace / 2 )
+                        marginRight =
+                            horizontalEmptySpace - marginLeft
+                        break;
+                    case HorizontalAlign.Right:
+                        marginLeft =
+                            horizontalEmptySpace
+                        break;
+                }
+
+
+                switch ( verticalAlign ) {
+                    case VerticalAlign.Top:
+                        marginBottom =
+                            verticalEmptySpace
+                        break;
+                    case VerticalAlign.Center:
+                        marginTop =
+                            Math.floor( verticalEmptySpace / 2 )
+                        marginBottom =
+                            verticalEmptySpace - marginTop
+                        break;
+                    case VerticalAlign.Bottom:
+                        marginTop =
+                            verticalEmptySpace
+                        break;
+                }
+
+
+                const marginedBox =
+                    this.applyMargin( marginTop, marginRight, marginBottom, marginLeft )
+                marginedBox.baseline = 0
+
+
+                return marginedBox
             }
 
         // ─────────────────────────────────────────────────────────────────
