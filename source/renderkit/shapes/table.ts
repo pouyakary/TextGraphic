@@ -381,12 +381,18 @@
             columnsMaxWidths: number[ ],
                     settings: TableSettings ) {
 
-        const strokeLine =
-            createMiddleStroke( rowHeight, settings.charSet )
+        const leftStrokeLine =
+            createVerticalStrokeLine( rowHeight, settings.charSet.left )
+        const middleStrokeLine =
+            createVerticalStrokeLine( rowHeight, settings.charSet.verticalMiddle )
+        const rightStrokeLine =
+            createVerticalStrokeLine( rowHeight, settings.charSet.right )
         const toBeJoined =
-            [ strokeLine ]
+            [ leftStrokeLine ]
 
-        for ( let columnIndex = 0; columnIndex < columnsMaxWidths.length; columnIndex++ ) {
+        const columns =
+            columnsMaxWidths.length
+        for ( let columnIndex = 0; columnIndex < columns; columnIndex++ ) {
             const column =
                 row[ columnIndex ]
             const columnWidth =
@@ -399,7 +405,13 @@
                 column.alignInBox( columnWidth, rowHeight, horizontalAlign, verticalAlign )
 
             toBeJoined.push( box )
-            toBeJoined.push( strokeLine )
+
+            const verticalLine =
+                ( columnIndex === columns - 1
+                    ?  rightStrokeLine
+                    : middleStrokeLine
+                    )
+            toBeJoined.push( verticalLine )
         }
 
         const renderedRow =
@@ -409,14 +421,14 @@
     }
 
 //
-// ─── CREATE MIDDLE STROKE ───────────────────────────────────────────────────────
+// ─── ROW MIDDLE STROKE LINE ─────────────────────────────────────────────────────
 //
 
-    function createMiddleStroke ( height: number, charSet: TableCharSet ) {
+    function createVerticalStrokeLine ( height: number, character: string ) {
         const lines =
             [ ]
         for ( let line = 0; line < height; line++ ) {
-            lines.push( charSet.verticalMiddle )
+            lines.push( character )
         }
         const box =
             new SpacedBox( lines, 0 )
