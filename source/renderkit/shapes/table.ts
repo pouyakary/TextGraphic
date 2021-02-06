@@ -7,6 +7,8 @@
         from "../spaced-box"
     import { insertJoinersInBetweenArrayItems }
         from "../../tools/array"
+    import { Justification }
+        from "../types"
 
 //
 // ─── TYPES ──────────────────────────────────────────────────────────────────────
@@ -29,18 +31,35 @@
         bottomLine: SpacedBox
     }
 
+    export interface TableInitSettings {
+        minWidth?:          number
+        justifications?:    Justification[ ]
+    }
+
+    interface TableSettings {
+        minWidth:           number
+        justifications:     Justification[ ]
+    }
+
 //
 // ─── GENERATOR ──────────────────────────────────────────────────────────────────
 //
 
-    export function createTable ( input: SpacedBoxTable ): SpacedBox {
-        completeSpacedBoxTable( input )
+    export function createTable ( rows: SpacedBoxTable, input: TableInitSettings ): SpacedBox {
+        if ( rows.length === 0 ) {
+            return SpacedBox.initEmptyBox( )
+        }
+
+        completeSpacedBoxTable( rows )
+
+        const settings =
+            fixTableSettings( rows, input )
 
         const maxArrays =
-            computeMaxArrays( input )
+            computeMaxArrays( rows, settings.minWidth )
 
         const renderedRows =
-            renderRows( input, maxArrays )
+            renderRows( rows, maxArrays, settings.justifications )
         const decorationLines =
             createTableLines( maxArrays )
         const joinedTableParts =
@@ -54,6 +73,36 @@
             new SpacedBox( lines, baseline )
 
         return table
+    }
+
+//
+// ─── FIX SETTINGS ───────────────────────────────────────────────────────────────
+//
+
+    function fixTableSettings ( rows: SpacedBoxTable, input: TableInitSettings ): TableSettings {
+        const minWidth =
+            input.minWidth ? input.minWidth : 0
+        const justifications =
+            new Array<Justification> ( )
+        const columns =
+            rows[ 0 ].length
+
+        if ( input.justifications ) {
+            for ( let index = 0; index < columns; index++ ) {
+                justifications.push( input.justifications[ index ]
+                    ? input.justifications[ index ]
+                    : Justification.Left
+                )
+            }
+        } else {
+            for ( let index = 0; index < columns; index++ ) {
+                justifications.push( Justification.Left )
+            }
+        }
+
+        return {
+            minWidth, justifications
+        }
     }
 
 //
@@ -104,7 +153,7 @@
 // ─── COMPUTE MAX ARRAYS ─────────────────────────────────────────────────────────
 //
 
-    function computeMaxArrays ( input: SpacedBoxTable ): MaxArrays {
+    function computeMaxArrays ( input: SpacedBoxTable, minWidth: number ): MaxArrays {
         const columnsMaxWidths =
             new Array<number> ( )
         const rowsMaxHeights =
@@ -150,6 +199,25 @@
             columnsMaxWidths.push( maxWidth )
         }
 
+        // adding the minWidth
+        let currentWidth =
+            2 + columnsMaxWidths.reduce(( previousWidth, columnWidth ) =>
+                previousWidth + columnWidth + 1 )
+        if ( minWidth > currentWidth ) {
+            const stretchWidths = ( ) => {
+                while ( true ) {
+                    for ( let index = columnsMaxWidths.length - 1; index >= 0; index-- ) {
+                        if ( currentWidth === minWidth ) {
+                            return
+                        }
+                        columnsMaxWidths[ index ]++
+                        currentWidth++
+                    }
+                }
+            }
+            stretchWidths( )
+        }
+
         return {
             columnsMaxWidths, rowsMaxHeights
         }
@@ -167,6 +235,7 @@
                 row.push( SpacedBox.initEmptyBox( ) )
             }
         }
+        return table
     }
 
 //
@@ -202,7 +271,10 @@
 // ─── RENDER ROWS ────────────────────────────────────────────────────────────────
 //
 
-    function renderRows ( table: SpacedBoxTable, maxArrays: MaxArrays ) {
+    function renderRows ( table: SpacedBoxTable,
+                      maxArrays: MaxArrays,
+                 justifications: Justification[ ] ) {
+
         const { rowsMaxHeights, columnsMaxWidths } =
             maxArrays
         const renderedRows =
@@ -214,7 +286,7 @@
             const rowHeight =
                 rowsMaxHeights[ rowIndex ]
             const renderedRow =
-                renderRow( row, rowHeight, columnsMaxWidths )
+                renderRow( row, rowHeight, columnsMaxWidths, justifications )
 
             renderedRows.push( renderedRow )
         }
@@ -226,7 +298,11 @@
 // ─── RENDER ROW ─────────────────────────────────────────────────────────────────
 //
 
-    function renderRow ( row: SpacedBoxTableRows, rowHeight: number, columnsMaxWidths: number[ ] ) {
+    function renderRow ( row: SpacedBoxTableRows,
+                   rowHeight: number,
+            columnsMaxWidths: number[ ],
+              justifications: Justification[ ] ) {
+
         const strokeLine =
             createMiddleStroke( rowHeight )
         const toBeJoined =
@@ -237,8 +313,10 @@
                 row[ columnIndex ]
             const columnWidth =
                 columnsMaxWidths[ columnIndex ]
+            const justification =
+                justifications[ columnIndex ]
             const box =
-                shapeCellToBoxSize( column, columnWidth, rowHeight )
+                shapeCellToBoxSize( column, columnWidth, rowHeight, justification )
 
             toBeJoined.push( box )
             toBeJoined.push( strokeLine )
@@ -254,15 +332,45 @@
 // ─── SHAPE CELL TO SIZE ─────────────────────────────────────────────────────────
 //
 
-    function shapeCellToBoxSize ( cell: SpacedBox, width: number, height: number) {
-        const marginRight =
+    function shapeCellToBoxSize ( cell: SpacedBox,
+                                 width: number,
+                             rowHeight: number,
+                         justification: Justification ) {
+
+        let marginRight = 0, marginLeft = 0
+
+        const horizontalEmptySpace =
             width - cell.width
+        const verticalEmptySpace =
+            rowHeight - cell.height
+
+        switch ( justification ) {
+            case Justification.Left:
+                marginRight =
+                    horizontalEmptySpace
+                break;
+            case Justification.Center:
+                marginLeft =
+                    Math.floor( horizontalEmptySpace / 2 )
+                marginRight =
+                    horizontalEmptySpace - marginLeft
+                break;
+            case Justification.Right:
+                marginLeft =
+                    horizontalEmptySpace
+                break;
+        }
+
+
+        const marginTop =
+            Math.floor( verticalEmptySpace / 2 )
         const marginBottom =
-            height - cell.height
-        cell.baseline =
-            0
+            verticalEmptySpace - marginTop
+
         const marginedBox =
-            cell.applyMargin( 0, marginRight, marginBottom, 0 )
+            cell.applyMargin( marginTop, marginRight, marginBottom, marginLeft )
+
+        marginedBox.baseline = 0
         return marginedBox
     }
 

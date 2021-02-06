@@ -1,7 +1,6 @@
 
-import { SpacedBox } from "./renderkit/spaced-box"
-import * as Presets from "./renderkit/shapes/box-frames"
-import { createTable } from "./renderkit/shapes/table"
+import { SpacedBox, BoxFramePresets, createTable, Justification }
+    from "./renderkit"
 
 // SpacedBox Join Test
 
@@ -17,24 +16,33 @@ const box = SpacedBox.concatHorizontally(
 
 const frame1 =
     box .applyMargin( 0, 4, 0, 4 )
-        .frame( Presets.CornersPreset )
+        .frame( BoxFramePresets.CornersPreset )
         .applyMargin( 1, 3, 1, 3 )
-        .frame( Presets.LightBoxPreset )
+        .frame( BoxFramePresets.LightBoxPreset )
         .applyMargin( 1, 0, 1, 5 )
 
 const tableText = [
-    [ "Name", "Pouya Kary" ],
-    [ "Occupation", "█████████████ █████████" ]
-
+    [ "Pouya", "Can" ],
+    [ "Render", SpacedBox.initWithText( " TABLES ", 1 ).frame( BoxFramePresets.CornersPreset ).applyMargin( 1, 4, 1, 4 ) ]
 ]
 
 const tableCells =
     tableText.map( row =>
         row.map( cell =>
-            SpacedBox.initWithText( " " + cell + " ", 0 )
+            typeof cell === "string"
+                ? SpacedBox.initWithText( " " + cell + " ", 0 )
+                : cell
         )
     )
 
-const table = createTable( tableCells )
+for ( let i = 0; i < 4; i++ ) {
+    const minWidth = 30 + i * 10
+    const table = createTable( tableCells, {
+        justifications: [ Justification.Right, Justification.Center ],
+        minWidth
+    })
 
-console.log( table.plainTextForm )
+
+    console.log( " ", minWidth, "-".repeat( minWidth ) )
+    console.log( table.applyMargin( 1, 0, 1, 5 ).plainTextForm )
+}
