@@ -317,21 +317,31 @@
 //
 
     function createTableLines ( maxArrays: MaxArrays, charSet: TableCharSet ): TableLines {
-        const middleLines =
-            maxArrays.columnsMaxWidths.map( width =>
-                charSet.horizontalMiddle.repeat( width ) )
+        const { columnsMaxWidths } =
+            maxArrays
+
+        const topMiddleLines =
+            makeHorizontalLines( columnsMaxWidths, charSet.top )
+        const middleMiddleLines =
+            makeHorizontalLines( columnsMaxWidths, charSet.horizontalMiddle )
+        const bottomMiddleLines =
+            makeHorizontalLines( columnsMaxWidths, charSet.bottom )
 
         const topLine =
-            makeTopBottomLineWith( middleLines, charSet.topLeft, charSet.topJoins, charSet.topRight )
+            makeTopBottomLineWith( topMiddleLines,
+                charSet.topLeft, charSet.topJoins, charSet.topRight )
         const middleLine =
-            makeTopBottomLineWith( middleLines, charSet.leftJoins, charSet.middleJoins, charSet.rightJoins )
+            makeTopBottomLineWith( middleMiddleLines,
+                charSet.leftJoins, charSet.middleJoins, charSet.rightJoins )
         const bottomLine =
-            makeTopBottomLineWith( middleLines, charSet.bottomLeft, charSet.bottomJoins, charSet.bottomRight )
+            makeTopBottomLineWith( bottomMiddleLines,
+                charSet.bottomLeft, charSet.bottomJoins, charSet.bottomRight )
 
         return {
             topLine, middleLine, bottomLine
         }
     }
+
 
     function makeTopBottomLineWith ( middleLines: string[ ],
                                             left: string,
@@ -342,6 +352,13 @@
         const box =
             new SpacedBox( [ line ], 0 )
         return box
+    }
+
+
+    function makeHorizontalLines ( columnsMaxWidths: number[ ],
+                                          character: string ): string[ ] {
+        return columnsMaxWidths.map( width =>
+            character.repeat( width ) )
     }
 
 //

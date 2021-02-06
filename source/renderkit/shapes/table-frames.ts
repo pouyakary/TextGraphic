@@ -42,4 +42,26 @@
         bottomJoins:        "┴",
     }
 
+//
+// ─── STYLISH KARY ───────────────────────────────────────────────────────────────
+//
+
+    export const KaryGothic: TableCharSet = {
+        topLeft:            " ",
+        top:                " ",
+        topRight:           " ",
+        right:              " ",
+        bottomRight:        " ",
+        bottom:             " ",
+        bottomLeft:         " ",
+        left:               " ",
+        horizontalMiddle:   "─",
+        verticalMiddle:     "│",
+        middleJoins:        "┼",
+        leftJoins:          "─",
+        rightJoins:         "─",
+        topJoins:           "✤",
+        bottomJoins:        "✤",
+    }
+
 // ────────────────────────────────────────────────────────────────────────────────

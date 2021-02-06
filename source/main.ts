@@ -1,5 +1,6 @@
 
-import { SpacedBox, BoxFramePresets, createTable, HorizontalAlign, VerticalAlign, ResizePolicy, TableCharSet }
+import { SpacedBox, BoxFramePresets, createTable, HorizontalAlign,
+         VerticalAlign, ResizePolicy, TableCharSet, KaryGothic }
     from "./renderkit"
 
 // SpacedBox Join Test
@@ -22,9 +23,8 @@ const frame1 =
         .applyMargin( 1, 0, 1, 5 )
 
 const tableText = [
-    [ "Pouya", "Can" ],
-    [ "Render", SpacedBox.initWithText( " TABLES ", 1 ).frame( BoxFramePresets.CornersPreset ).applyMargin( 1, 4, 1, 4 ) ],
-    [ SpacedBox.initWithText( " * \n*  ", 1 ), SpacedBox.initWithText( "Oooo\n   Behave!", 1 ).applyMargin( 0, 0, 1, 0 ) ]
+    [ "Name", "Surname", "E-mails" ],
+    [ "Pouya", "Kary", "- pouya@kary.us\n - kary@gnu.org" ]
 ]
 
 const tableCells =
@@ -36,41 +36,11 @@ const tableCells =
         )
     )
 
-export const ASCIITable: TableCharSet = {
-    topLeft:            "─",
-    top:                "─",
-    topRight:           "─",
-    right:              " ",
-    bottomRight:        "─",
-    bottom:             " ",
-    bottomLeft:         "─",
-    left:               " ",
-    horizontalMiddle:   "─",
-    verticalMiddle:     ":",
-    middleJoins:        "─",
-    leftJoins:          "─",
-    topJoins:           "─",
-    rightJoins:         "─",
-    bottomJoins:        "─",
-}
 
 const minWidth = 70
 const table = createTable( tableCells, {
     minWidth,
-    charSet: ASCIITable,
-    horizontalAligns: [
-        HorizontalAlign.Right,
-        HorizontalAlign.Center
-    ],
-    verticalAligns: [
-        VerticalAlign.Center,
-        VerticalAlign.Top,
-        VerticalAlign.Bottom
-    ],
-    horizontalResizing: [
-        ResizePolicy.StandStill,
-        ResizePolicy.Stretch,
-    ]
+    charSet: KaryGothic,
 })
 
 

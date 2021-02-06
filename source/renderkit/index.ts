@@ -11,7 +11,7 @@
         "./spaced-box"
     export * as BoxFramePresets from
         "./shapes/box-frames"
-    export { TableCharSet, LightTablePreset } from
+    export { TableCharSet, LightTablePreset, KaryGothic } from
         "./shapes/table-frames"
 
 // ────────────────────────────────────────────────────────────────────────────────
