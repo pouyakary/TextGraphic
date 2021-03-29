@@ -2,7 +2,7 @@
   "name": "@pouyakary/textkit",
   "version": "0.0.0",
   "description": "The Kary TextKit Framework",
-  "main": "out/main.js",
+  "main": "out/dist/textkit.js",
   "directories": {
     "test": "test"
   },
