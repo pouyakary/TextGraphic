@@ -1,6 +1,6 @@
 
 const { SpacedBox, BoxFramePresets, createTableInTextForm, HorizontalAlign,
-         VerticalAlign, ResizePolicy, TableCharSet, KaryGothic, ANSITerminalColor, ANSITerminalDecoration } =
+         VerticalAlign, ResizePolicy, TableCharSet, KaryGothic, ANSITerminalBackgroundColor, ANSITerminalForegroundColor } =
     require( "../out/compiled/index.js" )
 
 // SpacedBox Join Test
@@ -51,13 +51,14 @@ console.log( table.applyMargin( 1, 0, 1, 5 ).plainTextForm )
 
 
 const stylingTestBox =
-    new SpacedBox([ "Hello, World!"], 0 )
+    new SpacedBox([ " Hello, World! "], 0 )
 
 stylingTestBox.setANSITerminalStyle({
-    decoration: ANSITerminalDecoration.Bold,
-    foregroundColor: ANSITerminalColor.Blue
+    bold: true, blink: true,
+    foregroundColor:    ANSITerminalForegroundColor.White,
+    backgroundColor:    ANSITerminalBackgroundColor.Blue,
 })
 
-console.log({ terminalCode: stylingTestBox.ANSITerminalForm })
+console.log({ code: stylingTestBox.ANSITerminalForm })
 
 console.log( stylingTestBox.ANSITerminalForm )
