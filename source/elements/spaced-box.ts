@@ -4,32 +4,48 @@
 //
 
     import { insertJoinersInBetweenArrayItems }
-        from "./array"
+        from "../helpers/array"
     import { BoxFrameCharSet }
-        from "./shapes/box-frames"
+        from "../shapes/box-frames"
+    import { ANSITerminalStyling, generateStartingANSITerminalEscapeSequenceOfTerminalStyling
+           , getDefaultTerminalStyle, ANSITerminalResetEscapeSequence
+           , ANSITerminalSetStyleOptions, mergeTerminalStyleWithOptions
+           }
+        from "../environments/ansi-terminal"
     import { HorizontalAlign, VerticalAlign }
-        from "./types"
+        from "../shapes/types"
+    import { DrawableBox }
+        from "./drawable-box"
+    import { RenderEnvironment }
+        from "../environments/types"
+    import { v4 }
+        from "uuid"
 
 //
 // ─── SPACED BOX ─────────────────────────────────────────────────────────────────
 //
 
-    export class SpacedBox {
+    export class SpacedBox implements DrawableBox {
 
         //
         // ─── STORAGE ─────────────────────────────────────────────────────
         //
 
-            private                 _baseline:      number
-            public      readonly    lines:          Array<string>
-            public      readonly    height:         number
-            public      readonly    width:          number
+            private                 _baseline:          number
+            private                 _terminalStyling:   ANSITerminalStyling
+            private                 _terminalStartTag:  string
+            public      readonly    uuid:               string
+            public      readonly    lines:              Array<string>
+            public      readonly    height:             number
+            public      readonly    width:              number
 
         //
         // ─── CONSTRUCTOR ─────────────────────────────────────────────────
         //i
 
             constructor ( lines: string[ ], baseLine: number ) {
+                this.uuid =
+                    v4( )
                 this.lines =
                     lines
                 this.height =
@@ -38,6 +54,10 @@
                     this.lines[ 0 ].length
                 this._baseline =
                     0
+                this._terminalStyling =
+                    getDefaultTerminalStyle( )
+                this._terminalStartTag =
+                    ""
                 this.baseline =
                     baseLine
             }
@@ -60,6 +80,17 @@
                 return new SpacedBox([ "" ], 0 )
             }
 
+            static initEmptySpaceSurface ( width: number, height: number ) {
+                const emptyLine =
+                    " ".repeat( width )
+                const lines =
+                    new Array<string> ( )
+                for ( let i = 0; i < height; i++ ) {
+                    lines.push( emptyLine )
+                }
+                return new SpacedBox( lines, 0 )
+            }
+
         //
         // ─── BASELINE ────────────────────────────────────────────────────
         //
@@ -74,6 +105,36 @@
                 }
                 this._baseline =
                     input
+            }
+
+        //
+        // ─── SET TERMINAL STYLE ──────────────────────────────────────────
+        //
+
+            public setANSITerminalStyle ( options: ANSITerminalSetStyleOptions ) {
+                this._terminalStyling =
+                    mergeTerminalStyleWithOptions( this._terminalStyling, options )
+
+                this._terminalStartTag =
+                    generateStartingANSITerminalEscapeSequenceOfTerminalStyling(
+                        this._terminalStyling
+                    )
+            }
+
+            public get terminalStartTag ( ): string {
+                return this._terminalStartTag
+            }
+
+        //
+        // ─── GET CHARACTER ───────────────────────────────────────────────
+        //
+
+            public getCharAtRelativePosition( left: number ,
+                                               top: number ,
+                                                 x: number ,
+                                                 y: number ): string {
+
+                return this.lines[ y - top ][ x - left ]
             }
 
         //
@@ -107,18 +168,61 @@
             }
 
         //
+        // ─── RENDER ──────────────────────────────────────────────────────
+        //
+
+            public renderFor ( environment: RenderEnvironment ): string {
+                switch ( environment ) {
+                    case RenderEnvironment.PlainText:
+                        return this.plainTextForm
+                    case RenderEnvironment.ANSITerminal:
+                        return this.ANSITerminalForm
+                }
+            }
+
+            public renderLineFor ( line: number, environment: RenderEnvironment ): string {
+                switch ( environment ) {
+                    case RenderEnvironment.PlainText:
+                        return this.lines[ line ]
+                    case RenderEnvironment.ANSITerminal:
+                        return this.renderLineForANSITerminal( line )
+                }
+            }
+
+        //
         // ─── GET PLAIN TEXT ──────────────────────────────────────────────
         //
 
-            public get plainTextForm ( ) {
+            public get plainTextForm ( ): string {
                 return this.lines.join( "\n" )
+            }
+
+        //
+        // ─── TERMINAL RENDER ─────────────────────────────────────────────
+        //
+
+            public get ANSITerminalForm ( ): string {
+                const styledLines =
+                    new Array<string> ( )
+                for ( let line = 0; line < this.height; line++ ) {
+                    styledLines.push( this.renderLineForANSITerminal( line ) )
+                }
+                return styledLines.join("\n")
+            }
+
+            public renderLineForANSITerminal ( line: number ) {
+                return (
+                    this._terminalStartTag + this.lines[ line ] +
+                    ANSITerminalResetEscapeSequence
+                )
             }
 
         //
         // ─── MARGIN ──────────────────────────────────────────────────────
         //
 
-            public applyMargin ( top: number, right: number, bottom: number, left: number ): SpacedBox {
+            public applyMargin ( top: number, right: number,
+                                 bottom: number, left: number ): SpacedBox {
                 //
                 const topBottomSpaceLines =
                     SpacedBox.spaceLineOfSize( left + this.width + right )

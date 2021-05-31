@@ -4,11 +4,11 @@
 //
 
     import { SpacedBox }
-        from "../spaced-box"
+        from "../elements/spaced-box"
     import { insertJoinersInBetweenArrayItems }
-        from "../array"
+        from "../helpers/array"
     import { HorizontalAlign, VerticalAlign, ResizingPolicy }
-        from "../types"
+        from "./types"
     import { TableCharSet, LightTablePreset }
         from "./table-frames"
 
@@ -53,8 +53,8 @@
 // ─── GENERATOR ──────────────────────────────────────────────────────────────────
 //
 
-    export function createTable ( rows: SpacedBoxTable,
-                                 input: TableInitSettings ): SpacedBox {
+    export function createTableInTextForm ( rows: SpacedBoxTable,
+                                           input: TableInitSettings ): SpacedBox {
         if ( rows.length === 0 ) {
             return SpacedBox.initEmptyBox( )
         }

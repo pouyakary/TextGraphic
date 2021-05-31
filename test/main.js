@@ -1,5 +1,5 @@
 
-import { SpacedBox, BoxFramePresets, createTable, HorizontalAlign,
+import { SpacedBox, BoxFramePresets, createTableInTextForm, HorizontalAlign,
          VerticalAlign, ResizePolicy, TableCharSet, KaryGothic }
     from "../source"
 
@@ -39,7 +39,7 @@ const tableCells =
 
 
 const minWidth = 70
-const table = createTable( tableCells, {
+const table = createTableInTextForm( tableCells, {
     minWidth,
     charSet: KaryGothic,
 })
