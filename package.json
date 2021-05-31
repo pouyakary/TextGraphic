@@ -11,6 +11,7 @@
     "compile": "tsc",
     "clean": "rm -rf out",
     "pack": "parcel build --out-dir=out/dist --out-file=textkit.js out/compiled/index.js",
+    "test-flight": "npm run build; node test/main.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -22,5 +23,9 @@
   "homepage": "https://github.com/pouyakary/textkit",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
+  },
+  "dependencies": {
+    "@types/uuid": "^8.3.0",
+    "uuid": "^8.3.2"
   }
 }
