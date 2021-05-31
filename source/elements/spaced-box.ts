@@ -16,8 +16,6 @@
         from "../shapes/types"
     import { DrawableBox }
         from "./drawable-box"
-    import { RenderEnvironment }
-        from "../environments/types"
     import { v4 }
         from "uuid"
 
@@ -165,28 +163,6 @@
 
             static spaceLineOfSize ( size: number ) {
                 return " ".repeat( size )
-            }
-
-        //
-        // ─── RENDER ──────────────────────────────────────────────────────
-        //
-
-            public renderFor ( environment: RenderEnvironment ): string {
-                switch ( environment ) {
-                    case RenderEnvironment.PlainText:
-                        return this.plainTextForm
-                    case RenderEnvironment.ANSITerminal:
-                        return this.ANSITerminalForm
-                }
-            }
-
-            public renderLineFor ( line: number, environment: RenderEnvironment ): string {
-                switch ( environment ) {
-                    case RenderEnvironment.PlainText:
-                        return this.lines[ line ]
-                    case RenderEnvironment.ANSITerminal:
-                        return this.renderLineForANSITerminal( line )
-                }
             }
 
         //

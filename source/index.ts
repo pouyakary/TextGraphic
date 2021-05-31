@@ -3,15 +3,21 @@
 // ─── GLOBAL ACCESSORS ───────────────────────────────────────────────────────────
 //
 
-    export { createTableInTextForm } from
+    export * from
         "./shapes/table"
-    export { HorizontalAlign, VerticalAlign, ResizingPolicy as ResizePolicy } from
+    export * from
         "./shapes/types"
-    export { SpacedBox } from
+    export * from
         "./elements/spaced-box"
+    export * from
+        "./elements/layered-pane"
     export * as BoxFramePresets from
         "./shapes/box-frames"
-    export { TableCharSet, LightTablePreset, KaryGothic } from
+    export * from
         "./shapes/table-frames"
+    export * from
+        "./helpers/array"
+    export * from
+        "./environments/ansi-terminal"
 
 // ────────────────────────────────────────────────────────────────────────────────

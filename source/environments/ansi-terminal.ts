@@ -6,9 +6,7 @@
     export interface ANSITerminalStyling {
         foregroundColor:    ANSITerminalColor
         backgroundColor:    ANSITerminalColor
-        bold:               boolean
-        underline:          boolean
-        reversed:           boolean
+        decoration:         ANSITerminalDecoration
     }
 
     export type TerminalStylingComparison = {
@@ -24,124 +22,154 @@
 //
 
     export const ANSITerminalResetEscapeSequence =
-        "\u001b[0m"
+        "\x1b[0m"
     export const ANSITerminalBoldEscapeSequence =
-        "\u001b[1m"
+        "\x1b[1m"
     export const ANSITerminalUnderlineEscapeSequence =
-        "\u001b[4m"
+        "\x1b[4m"
     export const ANSITerminalReversedEscapeSequence =
-        "\u001b[7m"
+        "\x1b[7m"
 
 //
 // ─── COLORS ─────────────────────────────────────────────────────────────────────
 //
 
     export enum ANSITerminalColor {
-        Default                     = "\u001b[0m",
-        Black                       = "\u001b[30m",
-        Red                         = "\u001b[31m",
-        Yellow                      = "\u001b[33m",
-        Blue                        = "\u001b[34m",
-        Magenta                     = "\u001b[35m",
-        Cyan                        = "\u001b[36m",
-        White                       = "\u001b[37m",
-        Reset                       = "\u001b[0m",
-        BrightBlack                 = "\u001b[30;1m",
-        BrightRed                   = "\u001b[31;1m",
-        BrightGreen                 = "\u001b[32;1m",
-        BrightYellow                = "\u001b[33;1m",
-        BrightBlue                  = "\u001b[34;1m",
-        BrightMagenta               = "\u001b[35;1m",
-        BrightCyan                  = "\u001b[36;1m",
-        BrightWhite                 = "\u001b[37;1m",
-        BackgroundBlack             = "\u001b[40m",
-        BackgroundRed               = "\u001b[41m",
-        BackgroundGreen             = "\u001b[42m",
-        BackgroundYellow            = "\u001b[43m",
-        BackgroundBlue              = "\u001b[44m",
-        BackgroundMagenta           = "\u001b[45m",
-        BackgroundCyan              = "\u001b[46m",
-        BackgroundWhite             = "\u001b[47m",
-        BackgroundBrightBlack       = "\u001b[40;1m",
-        BackgroundBrightRed         = "\u001b[41;1m",
-        BackgroundBrightGreen       = "\u001b[42;1m",
-        BackgroundBrightYellow      = "\u001b[43;1m",
-        BackgroundBrightBlue        = "\u001b[44;1m",
-        BackgroundBrightMagenta     = "\u001b[45;1m",
-        BackgroundBrightCyan        = "\u001b[46;1m",
-        BackgroundBrightWhite       = "\u001b[47;1m",
+        Default                 = "default",
+        Black                   = "black",
+        Red                     = "red",
+        Yellow                  = "yellow",
+        Blue                    = "blue",
+        Magenta                 = "magenta",
+        Cyan                    = "cyan",
+        White                   = "white",
+        Reset                   = "reset",
+        BrightBlack             = "bright black",
+        BrightRed               = "bright red",
+        BrightGreen             = "bright green",
+        BrightYellow            = "bright yellow",
+        BrightBlue              = "bright blue",
+        BrightMagenta           = "bright magenta",
+        BrightCyan              = "bright cyan",
+        BrightWhite             = "bright white",
+        BackgroundBlack         = "background black",
+        BackgroundRed           = "background red",
+        BackgroundGreen         = "background green",
+        BackgroundYellow        = "background yellow",
+        BackgroundBlue          = "background blue",
+        BackgroundMagenta       = "background magenta",
+        BackgroundCyan          = "background cyan",
+        BackgroundWhite         = "background white",
+        BackgroundBrightBlack   = "background bright black",
+        BackgroundBrightRed     = "background bright red",
+        BackgroundBrightGreen   = "background bright green",
+        BackgroundBrightYellow  = "background bright yellow",
+        BackgroundBrightBlue    = "background bright blue",
+        BackgroundBrightMagenta = "background bright magenta",
+        BackgroundBrightCyan    = "background bright cyan",
+        BackgroundBrightWhite   = "background bright white",
+    }
+
+//
+// ─── DECORATION ─────────────────────────────────────────────────────────────────
+//
+
+    export enum ANSITerminalDecoration {
+        Bold        = "bold",
+        Underline   = "underline",
+        Reversed    = "reversed",
+        None        = "none"
     }
 
 //
 // ─── GET CODE ───────────────────────────────────────────────────────────────────
 //
 
-    export function getANSIEscapeSequenceFor ( color: ANSITerminalColor ): string {
+    export function getANSITerminalEscapeSequenceForColor ( color: ANSITerminalColor ): string {
         switch ( color ) {
             case ANSITerminalColor.Black:
-                return "\u001b[30m"
+                return "\x1b[30m"
             case ANSITerminalColor.Red:
-                return "\u001b[31m"
+                return "\x1b[31m"
             case ANSITerminalColor.Yellow:
-                return "\u001b[33m"
+                return "\x1b[33m"
             case ANSITerminalColor.Blue:
-                return "\u001b[34m"
+                return "\x1b[34m"
             case ANSITerminalColor.Magenta:
-                return "\u001b[35m"
+                return "\x1b[35m"
             case ANSITerminalColor.Cyan:
-                return "\u001b[36m"
+                return "\x1b[36m"
             case ANSITerminalColor.White:
-                return "\u001b[37m"
+                return "\x1b[37m"
             case ANSITerminalColor.Reset:
-                return "\u001b[0m"
+                return "\x1b[0m"
             case ANSITerminalColor.BrightBlack:
-                return "\u001b[30;1m"
+                return "\x1b[30;1m"
             case ANSITerminalColor.BrightRed:
-                return "\u001b[31;1m"
+                return "\x1b[31;1m"
             case ANSITerminalColor.BrightGreen:
-                return "\u001b[32;1m"
+                return "\x1b[32;1m"
             case ANSITerminalColor.BrightYellow:
-                return "\u001b[33;1m"
+                return "\x1b[33;1m"
             case ANSITerminalColor.BrightBlue:
-                return "\u001b[34;1m"
+                return "\x1b[34;1m"
             case ANSITerminalColor.BrightMagenta:
-                return "\u001b[35;1m"
+                return "\x1b[35;1m"
             case ANSITerminalColor.BrightCyan:
-                return "\u001b[36;1m"
+                return "\x1b[36;1m"
             case ANSITerminalColor.BrightWhite:
-                return "\u001b[37;1m"
+                return "\x1b[37;1m"
             case ANSITerminalColor.BackgroundBlack:
-                return "\u001b[40m"
+                return "\x1b[40m"
             case ANSITerminalColor.BackgroundRed:
-                return "\u001b[41m"
+                return "\x1b[41m"
             case ANSITerminalColor.BackgroundGreen:
-                return "\u001b[42m"
+                return "\x1b[42m"
             case ANSITerminalColor.BackgroundYellow:
-                return "\u001b[43m"
+                return "\x1b[43m"
             case ANSITerminalColor.BackgroundBlue:
-                return "\u001b[44m"
+                return "\x1b[44m"
             case ANSITerminalColor.BackgroundMagenta:
-                return "\u001b[45m"
+                return "\x1b[45m"
             case ANSITerminalColor.BackgroundCyan:
-                return "\u001b[46m"
+                return "\x1b[46m"
             case ANSITerminalColor.BackgroundWhite:
-                return "\u001b[47m"
+                return "\x1b[47m"
             case ANSITerminalColor.BackgroundBrightBlack:
-                return "\u001b[40;1m"
+                return "\x1b[40;1m"
             case ANSITerminalColor.BackgroundBrightRed:
-                return "\u001b[41;1m"
+                return "\x1b[41;1m"
             case ANSITerminalColor.BackgroundBrightGreen:
-                return "\u001b[42;1m"
+                return "\x1b[42;1m"
             case ANSITerminalColor.BackgroundBrightYellow:
-                return "\u001b[43;1m"
+                return "\x1b[43;1m"
             case ANSITerminalColor.BackgroundBrightBlue:
-                return "\u001b[44;1m"
+                return "\x1b[44;1m"
             case ANSITerminalColor.BackgroundBrightMagenta:
-                return "\u001b[45;1m"
+                return "\x1b[45;1m"
             case ANSITerminalColor.BackgroundBrightCyan:
-                return "\u001b[46;1m"
+                return "\x1b[46;1m"
             case ANSITerminalColor.BackgroundBrightWhite:
-                return "\u001b[47;1m"
+                return "\x1b[47;1m"
+            case ANSITerminalColor.Default:
+                return ""
+        }
+    }
+
+//
+// ─── GET ESCAPE CODE FOR THE DECORATION ─────────────────────────────────────────
+//
+
+    export function getANSITerminalEscapeSequenceForDecoration ( decoration: ANSITerminalDecoration ): string {
+        switch ( decoration ) {
+            case ANSITerminalDecoration.None:
+                return ""
+            case ANSITerminalDecoration.Bold:
+                return "\x1b[1m"
+            case ANSITerminalDecoration.Underline:
+                return "\x1b[4m"
+            case ANSITerminalDecoration.Reversed:
+                return "\x1b[7m"
         }
     }
 
@@ -151,11 +179,9 @@
 
     export function getDefaultTerminalStyle ( ): ANSITerminalStyling {
         return {
-            foregroundColor:          ANSITerminalColor.Black,
-            backgroundColor:    ANSITerminalColor.Black,
-            bold:               false,
-            reversed:           false,
-            underline:          false,
+            foregroundColor:    ANSITerminalColor.Default,
+            backgroundColor:    ANSITerminalColor.Default,
+            decoration:         ANSITerminalDecoration.None
         }
     }
 
@@ -175,24 +201,16 @@
             a.backgroundColor == b.backgroundColor
         allElementsAreEquals = allElementsAreEquals && backgroundColor
 
-        const bold =
-            a.bold == b.bold
-        allElementsAreEquals = allElementsAreEquals && bold
-
-        const reversed =
-            a.reversed == b.reversed
-        allElementsAreEquals = allElementsAreEquals && reversed
-
-        const underline =
-            a.underline == b.underline
-        allElementsAreEquals = allElementsAreEquals && underline
+        const decoration =
+            a.decoration == b.decoration
+        allElementsAreEquals = allElementsAreEquals && decoration
 
         if ( allElementsAreEquals ) {
             return true
         }
 
         const report: TerminalStylingComparison = {
-            bold, reversed, underline, foregroundColor, backgroundColor
+            foregroundColor, backgroundColor, decoration
         }
 
         return report
@@ -203,18 +221,14 @@
 //
 
     export function generateStartingANSITerminalEscapeSequenceOfTerminalStyling ( style: ANSITerminalStyling ): string {
-        const bold =
-            style.bold ? ANSITerminalBoldEscapeSequence : ""
-        const reversed =
-            style.reversed ? ANSITerminalResetEscapeSequence : ""
-        const underline =
-            style.underline ? ANSITerminalUnderlineEscapeSequence : ""
+        const decoration =
+            getANSITerminalEscapeSequenceForDecoration( style.decoration )
         const backgroundColor =
-            style.backgroundColor !== ANSITerminalColor.Default ? style.backgroundColor : ""
+            getANSITerminalEscapeSequenceForColor( style.backgroundColor )
         const foregroundColor =
-            style.foregroundColor !== ANSITerminalColor.Default ? style.foregroundColor : ""
+            getANSITerminalEscapeSequenceForColor( style.foregroundColor )
 
-        return backgroundColor + foregroundColor + bold + reversed + underline
+        return decoration + backgroundColor + foregroundColor
     }
 
 //
@@ -225,10 +239,8 @@
                                                   options: ANSITerminalSetStyleOptions ): ANSITerminalStyling {
         return {
             backgroundColor:    options.backgroundColor     ? options.backgroundColor   : style.backgroundColor,
-            bold:               options.bold                ? options.bold              : style.bold,
             foregroundColor:    options.foregroundColor     ? options.foregroundColor   : style.foregroundColor,
-            reversed:           options.reversed            ? options.reversed          : style.reversed,
-            underline:          options.underline           ? options.underline         : style.underline,
+            decoration:         options.decoration          ? options.decoration        : style.decoration,
         }
     }
 

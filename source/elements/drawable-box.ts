@@ -3,8 +3,6 @@
 // ─── IMPORTS ────────────────────────────────────────────────────────────────────
 //
 
-    import { RenderEnvironment }
-        from "../environments/types"
     import { ANSITerminalSetStyleOptions }
         from "../environments/ansi-terminal"
 
