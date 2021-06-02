@@ -78,9 +78,9 @@
                 return new SpacedBox([ "" ], 0 )
             }
 
-            static initEmptySpaceSurface ( width: number, height: number ) {
+            static initEmptySpaceSurface ( width: number, height: number, backgroundChar = " " ) {
                 const emptyLine =
-                    " ".repeat( width )
+                    backgroundChar.repeat( width )
                 const lines =
                     new Array<string> ( )
                 for ( let i = 0; i < height; i++ ) {
@@ -117,6 +117,8 @@
                     generateStartingANSITerminalEscapeSequenceOfTerminalStyling(
                         this._terminalStyling
                     )
+
+                return this
             }
 
             public get terminalStartTag ( ): string {

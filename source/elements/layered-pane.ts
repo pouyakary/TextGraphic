@@ -99,9 +99,10 @@
         // ─── ADD CHILD ───────────────────────────────────────────────────
         //
 
-            public insertChildAt ( child: DrawableBox, x: number, y: number, zIndex: number ) {
+            public insertChildAt<X> ( child: DrawableBox, x: number, y: number, zIndex: number ) {
                 this.children.push({ x, y, zIndex, child })
                 this.updatePlainTextCache( )
+                return this
             }
 
         //
@@ -116,6 +117,8 @@
                     generateStartingANSITerminalEscapeSequenceOfTerminalStyling(
                         this._terminalStyling
                     )
+
+                return this
             }
 
             public get terminalStartTag ( ): string {
@@ -160,7 +163,7 @@
                 for ( let y = 0; y < this.height; y++ ) {
                     lines.push( this.renderLineForANSITerminal( y ) )
                 }
-                return this.lines.join("\n")
+                return lines.join("\n")
             }
 
         //
@@ -248,6 +251,8 @@
                             true
                     }
                 }
+
+                constructedLine += resetTag
 
                 return constructedLine
             }

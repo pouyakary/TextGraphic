@@ -44,7 +44,7 @@
          * Sets theQ$
          * @param options ANSI Terminal stylings
          */
-        setANSITerminalStyle ( options: ANSITerminalSetStyleOptions ): void
+        setANSITerminalStyle ( options: ANSITerminalSetStyleOptions ): DrawableBox
 
         getCharAtRelativePosition( left: number, top: number, x: number, y: number ): string
     }
