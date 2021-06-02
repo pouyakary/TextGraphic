@@ -75,7 +75,7 @@
                     [ ]
             }
 
-            public static constructWithSpacedBox ( background: SpacedBox ): LayeredPane {
+            public static initWithSpacedBox ( background: SpacedBox ): LayeredPane {
                 return new LayeredPane( background.lines, background.baseline )
             }
 
@@ -99,7 +99,7 @@
         // ─── ADD CHILD ───────────────────────────────────────────────────
         //
 
-            public insertChildAt ( x: number, y: number, zIndex: number, child: DrawableBox, ) {
+            public insertChildAt ( child: DrawableBox, x: number, y: number, zIndex: number ) {
                 this.children.push({ x, y, zIndex, child })
                 this.updatePlainTextCache( )
             }
@@ -131,16 +131,16 @@
                     null
                 for ( const childProfile of this.children ) {
                     const leftBoundary =
-                        childProfile.x
+                        x >= childProfile.x
                     const rightBoundary =
-                        childProfile.x + childProfile.child.width
+                        x < ( childProfile.x + childProfile.child.width )
                     const topBoundary =
-                        childProfile.y
+                        y >= childProfile.y
                     const bottomBoundary =
-                        childProfile.y + childProfile.child.height
+                        y < ( childProfile.y + childProfile.child.height )
 
-                    if ( x >= leftBoundary && x < rightBoundary
-                            && y >= bottomBoundary && y < topBoundary ) {
+
+                    if ( leftBoundary && rightBoundary && bottomBoundary && topBoundary ) {
                         if ( answer == null || answer.zIndex < childProfile.zIndex ) {
                             answer = childProfile
                         }
@@ -237,8 +237,6 @@
 
                         previousCharWasBackground =
                             false
-
-                        x += source.child.width
                     }
 
                     else {

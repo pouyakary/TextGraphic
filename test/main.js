@@ -1,6 +1,6 @@
 
 const { SpacedBox, BoxFramePresets, createTableInTextForm, HorizontalAlign,
-         VerticalAlign, ResizePolicy, TableCharSet, KaryGothic, ANSITerminalBackgroundColor, ANSITerminalForegroundColor } =
+         VerticalAlign, ResizePolicy, TableCharSet, KaryGothic, ANSITerminalBackgroundColor, ANSITerminalForegroundColor, LayeredPane } =
     require( "../out/compiled/index.js" )
 
 // SpacedBox Join Test
@@ -54,11 +54,33 @@ const stylingTestBox =
     new SpacedBox([ " Hello, World! "], 0 )
 
 stylingTestBox.setANSITerminalStyle({
-    bold: true, blink: true,
-    foregroundColor:    ANSITerminalForegroundColor.White,
-    backgroundColor:    ANSITerminalBackgroundColor.Blue,
+    bold: true,
+    blink: true,
+    foregroundColor:    ANSITerminalForegroundColor.Red,
 })
 
 console.log({ code: stylingTestBox.ANSITerminalForm })
-
 console.log( stylingTestBox.ANSITerminalForm )
+
+let background =
+    SpacedBox.initEmptySpaceSurface( 20, 5 )
+            .frame( BoxFramePresets.LightBoxPreset )
+const pane =
+    LayeredPane.initWithSpacedBox( background )
+
+const helloChild =
+    new SpacedBox(["Hello"], 0)
+    .frame( BoxFramePresets.LightBoxPreset )
+pane.insertChildAt( helloChild, 3, 1, 1 )
+
+const worldChild =
+    new SpacedBox(["World"], 0)
+    .frame( BoxFramePresets.LightBoxPreset )
+pane.insertChildAt( worldChild, 7, 2, 2 )
+
+const outOfBoxChild =
+    new SpacedBox(["Out of Box"], 0)
+    .frame( BoxFramePresets.LightBoxPreset )
+pane.insertChildAt( outOfBoxChild, 17, 2, 3 )
+
+console.log( pane.plainTextForm )
