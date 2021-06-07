@@ -14,10 +14,8 @@
         from "../environments/ansi-terminal"
     import { HorizontalAlign, VerticalAlign }
         from "../shapes/types"
-    import { DrawableBox }
+    import { DrawableBox, ScreenMatrixPixel }
         from "./drawable-box"
-    import { v4 }
-        from "uuid"
 
 //
 // ─── SPACED BOX ─────────────────────────────────────────────────────────────────
@@ -29,32 +27,43 @@
         // ─── STORAGE ─────────────────────────────────────────────────────
         //
 
-            private                 _baseline:          number
-            private                 _terminalStyling:   ANSITerminalStyling
-            private                 _terminalStartTag:  string
-            public      readonly    uuid:               string
-            public      readonly    lines:              Array<string>
-            public      readonly    height:             number
-            public      readonly    width:              number
+                        #baseline:          number
+                        #terminalStyling:   ANSITerminalStyling
+                        #terminalStartTag:  string
+            readonly    lines:              Array<string>
+            readonly    height:             number
+            readonly    width:              number
 
         //
         // ─── CONSTRUCTOR ─────────────────────────────────────────────────
         //i
 
             constructor ( lines: string[ ], baseLine: number ) {
-                this.uuid =
-                    v4( )
+                if ( lines instanceof Array ) {
+                    for ( const line of lines ) {
+                        if ( typeof line !== "string" ) {
+                            throw "Elements of the lines array should all be of type string"
+                        }
+                    }
+                } else {
+                    throw "SpacedBox should be constructed with an array of strings"
+                }
+
+                if ( baseLine < 0 || baseLine >= lines.length ) {
+                    throw "Initial SpacedBox baseline is out of boundary"
+                }
+
                 this.lines =
                     lines
                 this.height =
                     this.lines.length
                 this.width =
                     this.lines[ 0 ].length
-                this._baseline =
+                this.#baseline =
                     0
-                this._terminalStyling =
+                this.#terminalStyling =
                     getDefaultTerminalStyle( )
-                this._terminalStartTag =
+                this.#terminalStartTag =
                     ""
                 this.baseline =
                     baseLine
@@ -74,11 +83,11 @@
                 return new SpacedBox( unifiedLines, baseLine )
             }
 
-            static initEmptyBox ( ) {
+            static initWithEmptyBox ( ) {
                 return new SpacedBox([ "" ], 0 )
             }
 
-            static initEmptySpaceSurface ( width: number, height: number, backgroundChar = " " ) {
+            static initWithEmptySpaceSurface ( width: number, height: number, backgroundChar = " " ) {
                 const emptyLine =
                     backgroundChar.repeat( width )
                 const lines =
@@ -94,14 +103,14 @@
         //
 
             public get baseline ( ) {
-                return this._baseline
+                return this.#baseline
             }
 
             public set baseline ( input: number ) {
                 if ( input < 0 && input >= this.height ) {
                     throw `Baseline is set out of bounds. (Box height: ${ this.height }, given baseline: ${ input })`
                 }
-                this._baseline =
+                this.#baseline =
                     input
             }
 
@@ -109,32 +118,20 @@
         // ─── SET TERMINAL STYLE ──────────────────────────────────────────
         //
 
-            public setANSITerminalStyle ( options: ANSITerminalSetStyleOptions ) {
-                this._terminalStyling =
-                    mergeTerminalStyleWithOptions( this._terminalStyling, options )
+            public setANSITerminalStyle ( options: ANSITerminalSetStyleOptions ): DrawableBox {
+                this.#terminalStyling =
+                    mergeTerminalStyleWithOptions( this.#terminalStyling, options )
 
-                this._terminalStartTag =
+                this.#terminalStartTag =
                     generateStartingANSITerminalEscapeSequenceOfTerminalStyling(
-                        this._terminalStyling
+                        this.#terminalStyling
                     )
 
                 return this
             }
 
             public get terminalStartTag ( ): string {
-                return this._terminalStartTag
-            }
-
-        //
-        // ─── GET CHARACTER ───────────────────────────────────────────────
-        //
-
-            public getCharAtRelativePosition( left: number ,
-                                               top: number ,
-                                                 x: number ,
-                                                 y: number ): string {
-
-                return this.lines[ y - top ][ x - left ]
+                return this.#terminalStartTag
             }
 
         //
@@ -181,16 +178,17 @@
 
             public get ANSITerminalForm ( ): string {
                 const styledLines =
-                    new Array<string> ( )
+                    new Array<string> ( this.height )
                 for ( let line = 0; line < this.height; line++ ) {
-                    styledLines.push( this.renderLineForANSITerminal( line ) )
+                    styledLines[ line ] =
+                        this.renderLineForANSITerminal( line )
                 }
-                return styledLines.join("\n")
+                return styledLines.join( "\n" )
             }
 
             public renderLineForANSITerminal ( line: number ) {
                 return (
-                    this._terminalStartTag + this.lines[ line ] +
+                    this.#terminalStartTag + this.lines[ line ] +
                     ANSITerminalResetEscapeSequence
                 )
             }
@@ -243,7 +241,6 @@
                     height - ( top + this.height )
                 const left =
                     width - ( right + this.width )
-
                 const box =
                     this.applyMargin( top, right, bottom, left )
 
@@ -256,7 +253,7 @@
 
             static concatHorizontally ( boxes: SpacedBox[ ], joiner: SpacedBox ): SpacedBox {
                 if ( boxes.length === 0 ) {
-                    return SpacedBox.initEmptyBox( )
+                    return SpacedBox.initWithEmptyBox( )
                 }
                 if ( boxes.length === 1 ) {
                     return boxes[ 0 ]
@@ -296,20 +293,22 @@
                     })
 
                 // join
-                const newLines =
-                    new Array<string> ( )
                 const rows =
                     boxesWithAppropriatePaddings[ 0 ].lines.length
                 const columns =
                     boxesWithAppropriatePaddings.length
+                const newLines =
+                    new Array<string> ( rows )
 
                 for ( let row = 0; row < rows; row++ ) {
                     const lineColumns =
-                        new Array<string> ( )
+                        new Array<string> ( columns )
                     for ( let column = 0; column < columns; column++ ) {
-                        lineColumns.push( boxesWithAppropriatePaddings[ column ].lines[ row ] )
+                        lineColumns[ column ] =
+                            boxesWithAppropriatePaddings[ column ].lines[ row ]
                     }
-                    newLines.push( lineColumns.join( "" ) )
+                    newLines[ row ] =
+                        lineColumns.join( "" )
                 }
 
                 // the new space box
@@ -347,7 +346,8 @@
                 const lastLine =
                     charSet.bottomLeft + charSet.bottom.repeat( this.width ) + charSet.bottomRight
                 const middleLines =
-                    this.lines.map( line => charSet.left + line + charSet.right )
+                    this.lines.map( line =>
+                        charSet.left + line + charSet.right )
                 const lines: string[ ] =
                     [ firstLine, ...middleLines, lastLine ]
                 const result =
@@ -371,7 +371,6 @@
                 const verticalEmptySpace =
                     boxHeight - this.height
 
-
                 switch ( horizontalAlign ) {
                     case HorizontalAlign.Left:
                         marginRight =
@@ -388,7 +387,6 @@
                             horizontalEmptySpace
                         break;
                 }
-
 
                 switch ( verticalAlign ) {
                     case VerticalAlign.Top:
@@ -407,13 +405,37 @@
                         break;
                 }
 
-
                 const marginedBox =
                     this.applyMargin( marginTop, marginRight, marginBottom, marginLeft )
-                marginedBox.baseline = 0
-
+                marginedBox.baseline =
+                    0
 
                 return marginedBox
+            }
+
+        //
+        // ─── RAY TRACER ──────────────────────────────────────────────────
+        //
+
+            public rayTrace ( left: number, top: number, x: number, y: number ): ScreenMatrixPixel {
+                return [
+                    this.#terminalStartTag,
+                    this.lines[ y - top ][ x - left ],
+                ]
+            }
+
+        //
+        // ─── GET AT RELATIVE POSITION ────────────────────────────────────
+        //
+
+            public getCharAtRelativePosition ( left: number ,
+                                                top: number ,
+                                                  x: number ,
+                                                  y: number ): ScreenMatrixPixel {
+                return [
+                    this.#terminalStartTag,
+                    this.lines[ y - top ][ x - left ],
+                ]
             }
 
         // ─────────────────────────────────────────────────────────────────

@@ -23,9 +23,5 @@
   "homepage": "https://github.com/pouyakary/textkit",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
-  },
-  "dependencies": {
-    "@types/uuid": "^8.3.0",
-    "uuid": "^8.3.2"
   }
 }

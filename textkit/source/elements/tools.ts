@@ -3,7 +3,8 @@
 // ─── IMPORTS ────────────────────────────────────────────────────────────────────
 //
 
-    import { DrawableBox } from "./drawable-box"
+    import { DrawableBox }
+        from "./drawable-box"
 
     //function concatVertically ( boxes: DrawableBox[ ], baseLine: number ) {
     //    const resultWidth =

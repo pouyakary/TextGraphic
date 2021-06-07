@@ -7,32 +7,39 @@
         from "../environments/ansi-terminal"
 
 //
+// ─── RAY TRACER RESULT ──────────────────────────────────────────────────────────
+//
+
+    /**
+     * ```
+     * [  ANSI Terminal Color Starting Tag,  Character  ]
+     * ```
+     */
+    export type ScreenMatrixPixel =
+        [ string, string ]
+
+//
 // ─── TYPES ──────────────────────────────────────────────────────────────────────
 //
 
-
     export interface DrawableBox {
-        /**
-         * The universally unique identifier for the drawable boxes.
-         */
-        readonly uuid: string
 
         /**
          * Specifies the baseline of the text box. The baseline indicates
          * where the DrawableBoxes should be aligned vertically together.
          * The baseline is defined as a line from the top of the box.
          */
-        readonly baseline:  number
+        readonly baseline: number
+
         /**
          * Number of the lines a given DrawableBox has.
          */
-        readonly height:    number
+        readonly height: number
+
         /**
          * Character length of a line in the DrawableBox
          */
-        readonly width:     number
-
-        readonly lines:     string[ ]
+        readonly width: number
 
         readonly terminalStartTag: string
 
@@ -41,12 +48,20 @@
         readonly plainTextForm: string
 
         /**
-         * Sets theQ$
+         * Sets theQ$a
          * @param options ANSI Terminal stylings
          */
         setANSITerminalStyle ( options: ANSITerminalSetStyleOptions ): DrawableBox
 
-        getCharAtRelativePosition( left: number, top: number, x: number, y: number ): string
+        getCharAtRelativePosition( left: number ,
+                                    top: number ,
+                                      x: number ,
+                                      y: number ): ScreenMatrixPixel
+
+        rayTrace ( distanceToLeftInParent: number ,
+                  distanceToRightInParent: number ,
+                                        x: number ,
+                                        y: number ): ScreenMatrixPixel
     }
 
 // ────────────────────────────────────────────────────────────────────────────────
