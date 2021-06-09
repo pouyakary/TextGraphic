@@ -36,13 +36,19 @@ drawingPane.add( outOfBoxChild, 17, 2, 3 )
 
 
 let secondPaneBackground =
-    SpacedBox.initWithEmptySpaceSurface( 40, 10 )
+    SpacedBox.initWithEmptySpaceSurface( 40, 8 )
         .frame( BoxFramePresets.LightBoxPreset )
+        .setANSITerminalStyle({
+            foregroundColor: ANSITerminalForegroundColor.Red
+        })
 const secondDrawingPane =
     new LayeredPane( secondPaneBackground )
 
-secondDrawingPane.add( drawingPane, 10, 3, 1 )
+secondDrawingPane.add( drawingPane, 5, 1, 1 )
+secondDrawingPane.add( drawingPane, 16, 2, 2 )
 
-console.log({ code: drawingPane.ANSITerminalForm.split("\n")})
+console.log( "\nA demo layered pane:\n")
 console.log( drawingPane.ANSITerminalForm )
+console.log( "\nThat same pane, putted inside another pane, twice:\n")
 console.log( secondDrawingPane.ANSITerminalForm )
+console.log( )

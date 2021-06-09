@@ -43,14 +43,14 @@ main( ); async function main ( ) {
                 .setANSITerminalStyle({
                     foregroundColor: ANSITerminalForegroundColor.Green
                 })
-        thirdPane.add( thirdPaneObjectOne, -3 + ( iteration % 20 ) * 3, -3 + ( iteration % 20 ), 1 )
+        thirdPane.add( thirdPaneObjectOne, -4 + ( iteration % 30 ), 3, 1 )
         const thirdPaneObjectTwo =
             new SpacedBox([ " * " ], 0)
                 .frame( BoxFramePresets.LightBoxPreset )
                 .setANSITerminalStyle({
                     foregroundColor: ANSITerminalForegroundColor.Blue
                 })
-        thirdPane.add( thirdPaneObjectTwo, 1, -3 + ( iteration % 20 ), 1 )
+        thirdPane.add( thirdPaneObjectTwo, 24 - ( iteration % 30 ), 2 , 1 )
 
         // text
         const title =
@@ -62,7 +62,7 @@ main( ); async function main ( ) {
 
         // Main Pane
         const mainPaneBackground =
-            SpacedBox.initWithEmptySpaceSurface( 77, 9 )
+            SpacedBox.initWithEmptySpaceSurface( 77, 10 )
         const mainPane =
             new LayeredPane( mainPaneBackground )
 

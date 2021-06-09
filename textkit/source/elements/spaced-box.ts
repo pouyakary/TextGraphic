@@ -118,7 +118,7 @@
         // ─── SET TERMINAL STYLE ──────────────────────────────────────────
         //
 
-            public setANSITerminalStyle ( options: ANSITerminalSetStyleOptions ): DrawableBox {
+            public setANSITerminalStyle ( options: ANSITerminalSetStyleOptions ): SpacedBox {
                 this.#terminalStyling =
                     mergeTerminalStyleWithOptions( this.#terminalStyling, options )
 

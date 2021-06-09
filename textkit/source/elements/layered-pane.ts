@@ -13,6 +13,8 @@
            , mergeTerminalStyleWithOptions
            }
         from "../environments/ansi-terminal"
+    import { fineTuneUnicodeBoxCharWithSurroundings }
+        from "./tools/fine-tune-unicode-box"
 
 //
 // ─── TYPES ──────────────────────────────────────────────────────────────────────
@@ -24,6 +26,17 @@
         zIndex: number
         child:  DrawableBox
     }
+
+    // char top left bottom right
+    export type ScreenMatrixPixelSurroundings =
+        string
+
+//
+// ─── CONSTANTS ──────────────────────────────────────────────────────────────────
+//
+
+    const UNICODE_BOX_CHARACTERS =
+        "┌┬┐├┼┤└┴┘┏┳┓┣╋┫┛┻┗┍┯┑┥┿┝┕┷┙┎┰┒┠╂┨┖┸┚╒╤╕╞╪╡╘╧╛╔╦╗╠╬╣╚╩╝╓╥╖╟╫╢╙╨╜│┃─━║═"
 
 //
 // ─── SCREEN MATRIX ──────────────────────────────────────────────────────────────
@@ -115,6 +128,13 @@
                     value[ 1 ]  // character
             }
 
+            public writeChar ( x: number, y: number, text: string ): void {
+                const index =
+                    this.computeIndex( x, y )
+                this.#matrix[ index + 1 ] =
+                    text
+            }
+
         //
         // ─── GET ─────────────────────────────────────────────────────────
         //
@@ -130,6 +150,14 @@
                     this.#matrix[ index + 1 ]
 
                 return [ color, char ]
+            }
+
+            public readChar ( x: number, y: number ): string {
+                return this.read( x, y )[ 1 ]
+            }
+
+            public readColor ( x: number, y: number ): string {
+                return this.read( x, y )[ 0 ]
             }
 
         //
@@ -384,6 +412,49 @@
                                                  x: number ,
                                                  y: number ): ScreenMatrixPixel {
                 return this.#matrix.read( x - left, y - top )
+            }
+
+        //
+        // ─── COMBINE BOXES ───────────────────────────────────────────────
+        //
+
+            private getRestOfSurroundingsForFineTunnigUnicodeBoxes ( x: number, y: number ): string {
+                let surroundings =
+                    ""
+                if ( y > 0 ) {
+                    surroundings +=
+                        this.#matrix.readChar( x, y - 1 )
+                }
+                if ( x < this.width - 1 ) {
+                    surroundings +=
+                        this.#matrix.readChar( x + 1, y )
+                }
+                if ( y < this.height - 1 ) {
+                    surroundings +=
+                        this.#matrix.readChar( x, y + 1 )
+                }
+                if ( x > 0 ) {
+                    surroundings +=
+                        this.#matrix.readChar( x - 1, y )
+                }
+                return surroundings
+            }
+
+            public fineTuneUnicodeBoxes ( ) {
+                const { width, height } =
+                    this
+                for ( let y = 0; y < height; y++ ) {
+                    for ( let x = 0; x < width; x++ ) {
+                        let char =
+                            this.#matrix.readChar( x, y )
+                        if ( UNICODE_BOX_CHARACTERS.includes( char) ) {
+                            const surroundings =
+                                this.getRestOfSurroundingsForFineTunnigUnicodeBoxes( x, y )
+                            const newChar =
+                                fineTuneUnicodeBoxCharWithSurroundings( surroundings )
+                        }
+                    }
+                }
             }
 
         // ─────────────────────────────────────────────────────────────────
