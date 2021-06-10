@@ -36,7 +36,7 @@
 //
 
     const UNICODE_BOX_CHARACTERS =
-        "┌┬┐├┼┤└┴┘┏┳┓┣╋┫┛┻┗┍┯┑┥┿┝┕┷┙┎┰┒┠╂┨┖┸┚╒╤╕╞╪╡╘╧╛╔╦╗╠╬╣╚╩╝╓╥╖╟╫╢╙╨╜│┃─━║═"
+        "┌┬┐┏┳┓├┼┤┣╋┫└┴┘┗┻┛┍┯┑┎┒┝┿┥┠╂┨┕┷┙┖┸┚╒╤╕╔╦╗╞╪╡╠╬╣╘╧╛╚╩╝╓╥╖╼╾╟╫╢╽╿╙╨╜┮┱┲┭┡┽╀╁┾┩┟╆╈╇╅┧┞╄╉╊╃┦┢┶┹┺┵┪│┃┊┋┆┇─━┈┉┄┅╎╌╏╍║═"
 
 //
 // ─── SCREEN MATRIX ──────────────────────────────────────────────────────────────
@@ -421,22 +421,15 @@
             private getRestOfSurroundingsForFineTunnigUnicodeBoxes ( x: number, y: number ): string {
                 let surroundings =
                     ""
-                if ( y > 0 ) {
-                    surroundings +=
-                        this.#matrix.readChar( x, y - 1 )
-                }
-                if ( x < this.width - 1 ) {
-                    surroundings +=
-                        this.#matrix.readChar( x + 1, y )
-                }
-                if ( y < this.height - 1 ) {
-                    surroundings +=
-                        this.#matrix.readChar( x, y + 1 )
-                }
-                if ( x > 0 ) {
-                    surroundings +=
-                        this.#matrix.readChar( x - 1, y )
-                }
+                surroundings +=
+                    ( y > 0 ? this.#matrix.readChar( x, y - 1 ) : "*" )
+                surroundings +=
+                    ( x < this.width - 1 ? this.#matrix.readChar( x + 1, y ) : "*" )
+                surroundings +=
+                    ( y < this.height - 1 ? this.#matrix.readChar( x, y + 1 ) : "*" )
+                surroundings +=
+                    ( x > 0 ? this.#matrix.readChar( x - 1, y ) : "*" )
+
                 return surroundings
             }
 
@@ -447,11 +440,12 @@
                     for ( let x = 0; x < width; x++ ) {
                         let char =
                             this.#matrix.readChar( x, y )
-                        if ( UNICODE_BOX_CHARACTERS.includes( char) ) {
+                        if ( UNICODE_BOX_CHARACTERS.includes( char ) ) {
                             const surroundings =
                                 this.getRestOfSurroundingsForFineTunnigUnicodeBoxes( x, y )
                             const newChar =
-                                fineTuneUnicodeBoxCharWithSurroundings( surroundings )
+                                fineTuneUnicodeBoxCharWithSurroundings( char, surroundings )
+                            this.#matrix.writeChar( x, y, newChar )
                         }
                     }
                 }

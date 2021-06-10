@@ -71,6 +71,8 @@ main( ); async function main ( ) {
         mainPane.add( secondPane, 29, 2, 1 )
         mainPane.add( thirdPane, 53, 2, 1 )
 
+        mainPane.fineTuneUnicodeBoxes()
+
         console.clear( )
         console.log( mainPane.ANSITerminalForm )
 

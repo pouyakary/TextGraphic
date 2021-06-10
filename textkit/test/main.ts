@@ -34,6 +34,7 @@ const outOfBoxChild =
         })
 drawingPane.add( outOfBoxChild, 17, 2, 3 )
 
+// drawingPane.fineTuneUnicodeBoxes( )
 
 let secondPaneBackground =
     SpacedBox.initWithEmptySpaceSurface( 40, 8 )
@@ -46,6 +47,8 @@ const secondDrawingPane =
 
 secondDrawingPane.add( drawingPane, 5, 1, 1 )
 secondDrawingPane.add( drawingPane, 16, 2, 2 )
+
+secondDrawingPane.fineTuneUnicodeBoxes( )
 
 console.log( "\nA demo layered pane:\n")
 console.log( drawingPane.ANSITerminalForm )

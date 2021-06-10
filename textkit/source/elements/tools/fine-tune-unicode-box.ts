@@ -23,125 +23,128 @@
     const MAIN_CHAR_REPLACEMENTS = {
         "LLLL": "┼",
         "LLLH": "┽",
-        "LLL ": "├",
+        "LLL*": "├",
         "LLHL": "╁",
         "LLHH": "╅",
-        "LLH ": "┟",
-        "LL L": "┴",
-        "LL H": "┵",
-        "LL  ": "└",
+        "LLH*": "┟",
+        "LL*L": "┴",
+        "LL*H": "┵",
+        "LL**": "└",
         "LHLL": "┾",
         "LHLH": "┿",
-        "LHL ": "┝",
+        "LHL*": "┝",
         "LHHL": "╆",
         "LHHH": "╈",
-        "LHH ": "┢",
-        "LH L": "┶",
-        "LH H": "┷",
-        "LH  ": "┕",
-        "L LL": "┤",
-        "L LH": "┥",
-        "L L ": "│",
-        "L HL": "┧",
-        "L HH": "┪",
-        "L H ": "╽",
-        "L  L": "┘",
-        "L  H": "┙",
+        "LHH*": "┢",
+        "LH*L": "┶",
+        "LH*H": "┷",
+        "LH**": "┕",
+        "L*LL": "┤",
+        "L*LH": "┥",
+        "L*L*": "│",
+        "L*HL": "┧",
+        "L*HH": "┪",
+        "L*H*": "╽",
+        "L**L": "┘",
+        "L**H": "┙",
         "HLLL": "╀",
         "HLLH": "╃",
-        "HLL ": "┞",
+        "HLL*": "┞",
         "HLHL": "╂",
         "HLHH": "╉",
-        "HLH ": "┠",
-        "HL L": "┸",
-        "HL H": "┹",
-        "HL  ": "┖",
+        "HLH*": "┠",
+        "HL*L": "┸",
+        "HL*H": "┹",
+        "HL**": "┖",
         "HHLL": "╄",
         "HHLH": "╇",
-        "HHL ": "┡",
+        "HHL*": "┡",
         "HHHL": "╊",
         "HHHH": "╋",
-        "HHH ": "┣",
-        "HH L": "┺",
-        "HH H": "┻",
-        "HH  ": "┗",
-        "H LL": "┦",
-        "H LH": "┩",
-        "H L ": "╿",
-        "H HL": "┨",
-        "H HH": "┫",
-        "H H ": "┃",
-        "H  L": "┚",
-        "H  H": "┛",
-        " LLL": "┬",
-        " LLH": "┭",
-        " LL ": "┌",
-        " LHL": "┰",
-        " LHH": "┱",
-        " LH ": "┎",
-        " L L": "─",
-        " L H": "╾",
-        " HLL": "┮",
-        " HLH": "┯",
-        " HL ": "┍",
-        " HHL": "┲",
-        " HHH": "┳",
-        " HH ": "┏",
-        " H L": "╼",
-        " H H": "━",
-        "  LL": "┐",
-        "  HL": "┒",
-        "  HH": "┓",
-        "    ": " ",
+        "HHH*": "┣",
+        "HH*L": "┺",
+        "HH*H": "┻",
+        "HH**": "┗",
+        "H*LL": "┦",
+        "H*LH": "┩",
+        "H*L*": "╿",
+        "H*HL": "┨",
+        "H*HH": "┫",
+        "H*H*": "┃",
+        "H**L": "┚",
+        "H**H": "┛",
+        "*LLL": "┬",
+        "*LLH": "┭",
+        "*LL ": "┌",
+        "*LHL": "┰",
+        "*LHH": "┱",
+        "*LH*": "┎",
+        "*L*L": "─",
+        "*L*H": "╾",
+        "*HLL": "┮",
+        "*HLH": "┯",
+        "*HL*": "┍",
+        "*HHL": "┲",
+        "*HHH": "┳",
+        "*HH*": "┏",
+        "*H*L": "╼",
+        "*H*H": "━",
+        "**LL": "┐",
+        "**HL": "┒",
+        "**HH": "┓",
+        "*LL*": "┌"
     }
 
 //
 // ─── FINE TUNE UNICODE BOX ──────────────────────────────────────────────────────
 //
 
-    export function fineTuneUnicodeBoxCharWithSurroundings ( surroundings: string ) {
+    export function fineTuneUnicodeBoxCharWithSurroundings ( char: string, surroundings: string ): string {
         const [ top, right, bottom, left ] =
             surroundings
         let diagnostics =
             ""
 
         // top
-        if ( LIGHT_CONNECTIONS_FROM_TOP.includes( top ) ) {
+        if ( LIGHT_CONNECTIONS_FROM_BOTTOM.includes( char ) || LIGHT_CONNECTIONS_FROM_TOP.includes( top ) ) {
             diagnostics += "L"
-        } else if ( HEAVY_CONNECTIONS_FROM_TOP ) {
+        } else if ( HEAVY_CONNECTIONS_FROM_BOTTOM.includes( char ) || HEAVY_CONNECTIONS_FROM_TOP.includes( top ) ) {
             diagnostics += "H"
         } else {
-            diagnostics += " "
+            diagnostics += "*"
         }
 
         // right
-        if ( LIGHT_CONNECTIONS_FROM_RIGHT.includes( right ) ) {
+        if ( LIGHT_CONNECTIONS_FROM_LEFT.includes( char ) || LIGHT_CONNECTIONS_FROM_RIGHT.includes( right ) ) {
             diagnostics += "L"
-        } else if ( HEAVY_CONNECTIONS_FROM_RIGHT.includes( right ) ) {
+        } else if ( HEAVY_CONNECTIONS_FROM_LEFT.includes( char ) || HEAVY_CONNECTIONS_FROM_RIGHT.includes( right ) ) {
             diagnostics += "H"
         } else {
-            diagnostics += " "
+            diagnostics += "*"
         }
 
         // bottom
-        if ( LIGHT_CONNECTIONS_FROM_BOTTOM.includes( bottom ) ) {
+        if ( LIGHT_CONNECTIONS_FROM_TOP.includes( char ) || LIGHT_CONNECTIONS_FROM_BOTTOM.includes( bottom ) ) {
             diagnostics += "L"
-        } else if ( HEAVY_CONNECTIONS_FROM_BOTTOM.includes( bottom ) ) {
+        } else if ( HEAVY_CONNECTIONS_FROM_TOP.includes( char ) || HEAVY_CONNECTIONS_FROM_BOTTOM.includes( bottom ) ) {
             diagnostics += "H"
         } else {
-            diagnostics += " "
+            diagnostics += "*"
         }
 
         // left
-        if ( LIGHT_CONNECTIONS_FROM_LEFT.includes( left ) ) {
+        if ( LIGHT_CONNECTIONS_FROM_RIGHT.includes( char ) || LIGHT_CONNECTIONS_FROM_LEFT.includes( left ) ) {
             diagnostics += "L"
-        } else if ( HEAVY_CONNECTIONS_FROM_LEFT.includes( left ) ) {
+        } else if ( HEAVY_CONNECTIONS_FROM_RIGHT.includes( char ) || HEAVY_CONNECTIONS_FROM_LEFT.includes( left ) ) {
             diagnostics += "H"
         } else {
-            diagnostics += " "
+            diagnostics += "*"
         }
 
+        const replacement =
+            ( MAIN_CHAR_REPLACEMENTS as never )[ diagnostics ]
 
+        return replacement
     }
 
 // ────────────────────────────────────────────────────────────────────────────────

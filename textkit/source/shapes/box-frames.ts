@@ -105,6 +105,21 @@
     }
 
 //
+// ─── HEAVY BOX ──────────────────────────────────────────────────────────────────
+//
+
+    export const HeavyBoxPreset: BoxFrameCharSet = {
+        topLeft:        "┏",
+        top:            "━",
+        topRight:       "┓",
+        right:          "┃",
+        bottomRight:    "┛",
+        bottom:         "━",
+        bottomLeft:     "┗",
+        left:           "┃",
+    }
+
+//
 // ─── CORNERS ────────────────────────────────────────────────────────────────────
 //
 

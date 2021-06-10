@@ -12,7 +12,8 @@
     "clean": "rm -rf out",
     "pack": "parcel build --out-dir=out/dist --out-file=textkit.js out/compiled/index.js",
     "test-flight": "npm run build; node test/main.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "test-unicode": "node ./out/compiled/test/unicode-box.js"
   },
   "repository": {
     "type": "git",
