@@ -19,7 +19,7 @@ drawingPane.add( helloChild, 3, 1, 1 )
 
 const worldChild =
     new SpacedBox([ "World" ], 0)
-        .frame( BoxFramePresets.LightBoxPreset )
+        .frame( BoxFramePresets.LightBoxWithRoundCornerPreset )
         .setANSITerminalStyle({
             italic: true,
             foregroundColor: ANSITerminalForegroundColor.Red
@@ -28,11 +28,13 @@ drawingPane.add( worldChild, 7, 2, 2 )
 
 const outOfBoxChild =
     new SpacedBox([ "Out of Box" ], 0)
-        .frame( BoxFramePresets.LightBoxPreset )
+        .frame( BoxFramePresets.DoubleLineBoxPreset )
         .setANSITerminalStyle({
             foregroundColor: ANSITerminalForegroundColor.Green
         })
 drawingPane.add( outOfBoxChild, 17, 2, 3 )
+
+drawingPane.fineTuneUnicodeBoxes( )
 
 // drawingPane.fineTuneUnicodeBoxes( )
 

@@ -18,21 +18,35 @@
 // ─── BRACKET ────────────────────────────────────────────────────────────────────
 //
 
+    /**
+     * ```
+     * ⎡    ⎤
+     * ⎜    ⎟
+     * ⎣    ⎦
+     * ```
+     */
     export const BracketPreset: BoxFrameCharSet = {
-        topLeft:        "┌",
+        topLeft:        "⎡",
         top:            " ",
-        topRight:       "┐",
-        right:          "│",
-        bottomRight:    "┘",
+        topRight:       "⎤",
+        right:          "⎟",
+        bottomRight:    "⎦",
         bottom:         " ",
-        bottomLeft:     "└",
-        left:           "│",
+        bottomLeft:     "⎣",
+        left:           "⎜",
     }
 
 //
 // ─── ABSOLUTE ───────────────────────────────────────────────────────────────────
 //
 
+    /**
+     * ```
+     * ⎜    ⎟
+     * ⎜    ⎟
+     * ⎜    ⎟
+     * ```
+     */
     export const AbsolutePreset: BoxFrameCharSet = {
         topLeft:        "⎢" ,
         top:            " " ,
@@ -48,6 +62,13 @@
 // ─── FLOOR ──────────────────────────────────────────────────────────────────────
 //
 
+    /**
+     * ```
+     * ⎜    ⎟
+     * ⎜    ⎟
+     * ⎣    ⎦
+     * ```
+     */
     export const FloorPreset: BoxFrameCharSet = {
         topLeft:        "⎜",
         top:            " ",
@@ -63,6 +84,13 @@
 // ─── CEILING ────────────────────────────────────────────────────────────────────
 //
 
+    /**
+     * ```
+     * ⎡    ⎤
+     * ⎜    ⎟
+     * ⎜    ⎟
+     * ```
+     */
     export const CeilingPreset: BoxFrameCharSet = {
         topLeft:        "⎡",
         top:            " ",
@@ -78,6 +106,13 @@
 // ─── PARENTHESIS ────────────────────────────────────────────────────────────────
 //
 
+    /**
+     * ```
+     * ⎛    ⎞
+     * ⎜    ⎟
+     * ⎝    ⎠
+     * ```
+     */
     export const ParenthesisPreset: BoxFrameCharSet = {
         topLeft:        "⎛",
         top:            " ",
@@ -93,6 +128,13 @@
 // ─── LIGHT BOX ──────────────────────────────────────────────────────────────────
 //
 
+    /**
+     * ```
+     * ┌────┐
+     * │    │
+     * └────┘
+     * ```
+     */
     export const LightBoxPreset: BoxFrameCharSet = {
         topLeft:        "┌",
         top:            "─",
@@ -105,9 +147,39 @@
     }
 
 //
+// ─── LIGHT BOX WITH CORNER RADIUS ───────────────────────────────────────────────
+//
+
+    /**
+     * ```
+     * ╭────╮
+     * │    │
+     * ╰────╯
+     * ```
+     */
+    export const LightBoxWithRoundCornerPreset: BoxFrameCharSet = {
+        topLeft:        "╭",
+        top:            "─",
+        topRight:       "╮",
+        right:          "│",
+        bottomRight:    "╯",
+        bottom:         "─",
+        bottomLeft:     "╰",
+        left:           "│",
+    }
+
+//
 // ─── HEAVY BOX ──────────────────────────────────────────────────────────────────
 //
 
+
+    /**
+     * ```
+     * ┏━━━━┓
+     * ┃    ┃
+     * ┗━━━━┛
+     * ```
+     */
     export const HeavyBoxPreset: BoxFrameCharSet = {
         topLeft:        "┏",
         top:            "━",
@@ -120,9 +192,82 @@
     }
 
 //
+// ─── DOUBLE LINED HORIZONTAL AND VERTICAL ───────────────────────────────────────
+//
+
+    /**
+     * ```
+     * ╔════╗
+     * ║    ║
+     * ╚════╝
+     * ```
+     */
+    export const DoubleLineBoxPreset: BoxFrameCharSet = {
+        topLeft:        "╔",
+        top:            "═",
+        topRight:       "╗",
+        right:          "║",
+        bottomRight:    "╝",
+        bottom:         "═",
+        bottomLeft:     "╚",
+        left:           "║",
+    }
+
+//
+// ─── DOUBLE VERTICAL BOX ────────────────────────────────────────────────────────
+//
+
+    /**
+     * ```
+     * ╓────╖
+     * ║    ║
+     * ╙────╜
+     * ```
+     */
+    export const HLightVDoubleBoxPreset: BoxFrameCharSet = {
+        topLeft:        "╓",
+        top:            "─",
+        topRight:       "╖",
+        right:          "║",
+        bottomRight:    "╜",
+        bottom:         "─",
+        bottomLeft:     "╙",
+        left:           "║",
+    }
+
+//
+// ─── DOUBLE HORIZONTAL BOX ──────────────────────────────────────────────────────
+//
+
+    /**
+     * ```
+     * ╒════╕
+     * │    │
+     * ╘════╛
+     * ```
+     */
+    export const HDoubleVLightBoxPreset: BoxFrameCharSet = {
+        topLeft:        "╒",
+        top:            "═",
+        topRight:       "╕",
+        right:          "│",
+        bottomRight:    "╛",
+        bottom:         "═",
+        bottomLeft:     "╘",
+        left:           "│",
+    }
+
+//
 // ─── CORNERS ────────────────────────────────────────────────────────────────────
 //
 
+    /**
+     * ```
+     * ┌    ┐
+     *
+     * └    ┘
+     * ```
+     */
     export const CornersPreset: BoxFrameCharSet = {
         topLeft:        "┌",
         top:            " ",
