@@ -13,7 +13,7 @@
            , mergeTerminalStyleWithOptions
            }
         from "../environments/ansi-terminal"
-    import { fineTuneUnicodeBoxCharWithSurroundings }
+    import { fineTuneUnicodeBoxCharWithSurroundings, CHANGEABLE_CHARACTERS_FOR_UNICODE_TUNNING }
         from "./tools/fine-tune-unicode-box"
 
 //
@@ -30,13 +30,6 @@
     // char top left bottom right
     export type ScreenMatrixPixelSurroundings =
         string
-
-//
-// ─── CONSTANTS ──────────────────────────────────────────────────────────────────
-//
-
-    const UNICODE_BOX_CHARACTERS =
-        "┌┬┐┏┳┓├┼┤┣╋┫└┴┘┗┻┛┍┯┑┎┒┝┿┥┠╂┨┕┷┙┖┸┚╒╤╕╔╦╗╞╪╡╠╬╣╘╧╛╚╩╝╓╥╖╼╾╟╫╢╽╿╙╨╜┮┱┲┭┡┽╀╁┾┩┟╆╈╇╅┧┞╄╉╊╃┦┢┶┹┺┵┪│┃┊┋┆┇─━┈┉┄┅╎╌╏╍║═"
 
 //
 // ─── SCREEN MATRIX ──────────────────────────────────────────────────────────────
@@ -440,7 +433,7 @@
                     for ( let x = 0; x < width; x++ ) {
                         let char =
                             this.#matrix.readChar( x, y )
-                        if ( UNICODE_BOX_CHARACTERS.includes( char ) ) {
+                        if ( CHANGEABLE_CHARACTERS_FOR_UNICODE_TUNNING.includes( char ) ) {
                             const surroundings =
                                 this.getRestOfSurroundingsForFineTunnigUnicodeBoxes( x, y )
                             const newChar =
