@@ -279,4 +279,26 @@
         left:           " ",
     }
 
+//
+// ─── LIGHT DASHED BOX ───────────────────────────────────────────────────────────
+//
+
+    /**
+     * ```
+     * ┍━━━━┑
+     * │    │
+     * ┕━━━━┙
+     * ```
+     */
+    export const HHeavyVLightBoxPreset: BoxFrameCharSet = {
+        topLeft:        "┍",
+        top:            "━",
+        topRight:       "┑",
+        right:          "│",
+        bottomRight:    "┙",
+        bottom:         "━",
+        bottomLeft:     "┕",
+        left:           "│",
+    }
+
 // ────────────────────────────────────────────────────────────────────────────────

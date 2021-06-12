@@ -40,7 +40,7 @@ drawingPane.fineTuneUnicodeBoxes( )
 
 let secondPaneBackground =
     SpacedBox.initWithEmptySpaceSurface( 40, 8 )
-        .frame( BoxFramePresets.LightBoxPreset )
+        .frame( BoxFramePresets.HHeavyVLightBoxPreset )
         .setANSITerminalStyle({
             foregroundColor: ANSITerminalForegroundColor.Red
         })
