@@ -95,7 +95,8 @@
         "**LL": "┐",
         "**HL": "┒",
         "**HH": "┓",
-        "*LL*": "┌"
+        "*LL*": "┌",
+        "**LH": "┑"
     }
 
 //
@@ -146,6 +147,10 @@
 
         const replacement =
             ( MAIN_CHAR_REPLACEMENTS as never )[ diagnostics ]
+
+        if ( replacement === undefined ) {
+            throw `Unicode Box Fine Tuner: ${ char } with diagnostics ${ diagnostics } could not be replaced`
+        }
 
         return replacement
     }
