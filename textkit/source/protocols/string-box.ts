@@ -22,7 +22,7 @@
 // ─── TYPES ──────────────────────────────────────────────────────────────────────
 //
 
-    export interface DrawableBox {
+    export interface StringBox {
 
         /**
          * Specifies the baseline of the text box. The baseline indicates
@@ -51,7 +51,7 @@
          * Sets theQ$a
          * @param options ANSI Terminal stylings
          */
-        setANSITerminalStyle ( options: ANSITerminalSetStyleOptions ): DrawableBox
+        setANSITerminalStyle ( options: ANSITerminalSetStyleOptions ): StringBox
 
         getCharAtRelativePosition( left: number ,
                                     top: number ,

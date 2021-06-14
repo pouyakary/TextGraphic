@@ -3,21 +3,56 @@
 // ─── GLOBAL ACCESSORS ───────────────────────────────────────────────────────────
 //
 
-    export * from
-        "./shapes/table"
-    export * from
-        "./shapes/types"
-    export * from
-        "./elements/spaced-box"
-    export * from
-        "./elements/layered-pane"
-    export * as BoxFramePresets from
-        "./shapes/box-frames"
-    export * from
-        "./shapes/table-frames"
-    export * from
-        "./helpers/array"
-    export * from
-        "./environments/ansi-terminal"
+    //
+    // ─── CORE ───────────────────────────────────────────────────────────────────────
+    //
+
+        export * from
+            "./core-elements/spaced-box"
+        export * from
+            "./core-elements/layered-pane"
+
+    //
+    // ─── LAYOUTS ────────────────────────────────────────────────────────────────────
+    //
+
+        export * from
+            "./layouts/table/spaced-box-implementation"
+
+    //
+    // ─── SHAPES ─────────────────────────────────────────────────────────────────────
+    //
+
+        export * from
+            "./shapes/types"
+        export * as BoxFramePresets from
+            "./shapes/box-frames"
+        export * from
+            "./shapes/table-frames"
+
+    //
+    // ─── ENVIRONMENTS ───────────────────────────────────────────────────────────────
+    //
+
+        export * from
+            "./environments/ansi-terminal"
+
+    //
+    // ─── TOOLS ──────────────────────────────────────────────────────────────────────
+    //
+
+        export * from
+            "./tools/array"
+        export * from
+            "./tools/timpani-parser"
+
+    //
+    // ─── PROTOCOLS ──────────────────────────────────────────────────────────────────
+    //
+
+        export * from
+            "./protocols/string-box"
+
+    // ────────────────────────────────────────────────────────────────────────────────
 
 // ────────────────────────────────────────────────────────────────────────────────

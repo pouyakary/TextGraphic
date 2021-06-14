@@ -4,13 +4,13 @@
 //
 
     import { SpacedBox }
-        from "../elements/spaced-box"
+        from "../../core-elements/spaced-box"
     import { insertJoinersInBetweenArrayItems }
-        from "../helpers/array"
+        from "../../tools/array"
     import { HorizontalAlign, VerticalAlign, ResizingPolicy }
-        from "./types"
+        from "../../shapes/types"
     import { TableCharSet, LightTablePreset }
-        from "./table-frames"
+        from "../../shapes/table-frames"
 
 //
 // ─── TYPES ──────────────────────────────────────────────────────────────────────
@@ -53,8 +53,8 @@
 // ─── GENERATOR ──────────────────────────────────────────────────────────────────
 //
 
-    export function createTableInTextForm ( rows: SpacedBoxTable,
-                                           input: TableInitSettings ): SpacedBox {
+    export function createSpacedBoxTableInTextForm ( rows: SpacedBoxTable,
+                                                    input: TableInitSettings ): SpacedBox {
         if ( rows.length === 0 ) {
             return SpacedBox.initWithEmptyBox( )
         }
@@ -419,7 +419,9 @@
             const verticalAlign =
                 settings.verticalAligns[ rowIndex ]
             const box =
-                column.alignInBox( columnWidth, rowHeight, horizontalAlign, verticalAlign )
+                column.alignInBox(
+                    columnWidth, rowHeight, horizontalAlign, verticalAlign
+                )
 
             toBeJoined.push( box )
 

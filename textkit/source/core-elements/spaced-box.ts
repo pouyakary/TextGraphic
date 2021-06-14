@@ -4,7 +4,7 @@
 //
 
     import { insertJoinersInBetweenArrayItems }
-        from "../helpers/array"
+        from "../tools/array"
     import { BoxFrameCharSet }
         from "../shapes/box-frames"
     import { ANSITerminalStyling, generateStartingANSITerminalEscapeSequenceOfTerminalStyling
@@ -14,14 +14,14 @@
         from "../environments/ansi-terminal"
     import { HorizontalAlign, VerticalAlign }
         from "../shapes/types"
-    import { DrawableBox, ScreenMatrixPixel }
-        from "./drawable-box"
+    import { StringBox, ScreenMatrixPixel }
+        from "../protocols/string-box"
 
 //
 // ─── SPACED BOX ─────────────────────────────────────────────────────────────────
 //
 
-    export class SpacedBox implements DrawableBox {
+    export class SpacedBox implements StringBox {
 
         //
         // ─── STORAGE ─────────────────────────────────────────────────────
