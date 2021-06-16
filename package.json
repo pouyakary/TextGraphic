@@ -11,9 +11,11 @@
     "compile": "tsc",
     "clean": "rm -rf out",
     "pack": "parcel build --out-dir=out/dist --out-file=textkit.js out/compiled/index.js",
-    "test-flight": "npm run build; node test/main.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "test-unicode": "node ./out/compiled/test/unicode-box.js"
+
+    "play-unicode": "node ./out/compiled/playgrounds/unicode-box.js",
+    "play-animation": "node ./out/compiled/playgrounds/animation.js",
+    "play-timpani": "node ./out/compiled/playgrounds/timpani.js",
+    "play-transparency": "node ./out/compiled/playgrounds/transparency.js"
   },
   "repository": {
     "type": "git",
