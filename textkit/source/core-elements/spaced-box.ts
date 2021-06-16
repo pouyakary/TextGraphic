@@ -30,6 +30,7 @@
                         #baseline:          number
                         #terminalStyling:   ANSITerminalStyling
                         #terminalStartTag:  string
+                        transparent:        boolean
             readonly    lines:              Array<string>
             readonly    height:             number
             readonly    width:              number
@@ -65,6 +66,8 @@
                     getDefaultTerminalStyle( )
                 this.#terminalStartTag =
                     ""
+                this.transparent =
+                    false
                 this.baseline =
                     baseLine
             }

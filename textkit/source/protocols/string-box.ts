@@ -47,6 +47,8 @@
 
         readonly plainTextForm: string
 
+        transparent: boolean
+
         /**
          * Sets theQ$a
          * @param options ANSI Terminal stylings

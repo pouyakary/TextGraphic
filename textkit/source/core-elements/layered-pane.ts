@@ -43,7 +43,8 @@
             readonly    height:                 number
             readonly    width:                  number
             readonly    background:             SpacedBox
-                        screen:                 VirtualScreen
+            readonly    screen:                 VirtualScreen
+                        transparent:            boolean
                         #baseline:              number
                         #terminalStyling:       ANSITerminalStyling
                         #terminalStartTag:      string
@@ -62,6 +63,8 @@
                     background
                 this.screen =
                     new VirtualScreen( this.width, this.height )
+                this.transparent =
+                    false
                 this.#baseline =
                     background.baseline
                 this.#terminalStyling =
@@ -139,7 +142,17 @@
                     if ( horizontalBoundary && verticalBoundary ) {
                         if ( result ) {
                             if ( profile.zIndex > result.zIndex ) {
-                                result = profile
+                                if ( profile.child.transparent ) {
+                                    const [ ___, character ] =
+                                        profile.child.getCharAtRelativePosition(
+                                            profile.x, profile.y, x, y
+                                        )
+                                    if ( character !== " " ) {
+                                        result = profile
+                                    }
+                                } else {
+                                    result = profile
+                                }
                             }
                         } else {
                             result = profile
