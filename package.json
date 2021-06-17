@@ -10,6 +10,8 @@
     "build": "npm run clean; npm run compile; npm run pack",
     "compile": "tsc",
     "clean": "rm -rf out",
+    "test": "mocha \"./out/compiled/tests/**/*.js\"",
+
     "pack": "parcel build --out-dir=out/dist --out-file=textkit.js out/compiled/index.js",
     "play-unicode": "node ./out/compiled/playgrounds/unicode-box.js",
     "play-animation": "node ./out/compiled/playgrounds/animation.js",
@@ -24,6 +26,8 @@
   "license": "ISC",
   "homepage": "https://github.com/pouyakary/textkit",
   "devDependencies": {
+    "@types/mocha": "^8.2.2",
+    "@types/node": "^15.12.2",
     "mocha": "^9.0.0"
   },
   "publishConfig": {
