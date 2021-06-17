@@ -1,5 +1,12 @@
 
 //
+// ─── IMPORTS ────────────────────────────────────────────────────────────────────
+//
+
+    import { LayeredPane }
+        from "../main"
+
+//
 // ─── CONSTANTS ──────────────────────────────────────────────────────────────────
 //
 
@@ -100,10 +107,51 @@
     }
 
 //
+// ─── FINE TUNE UNICODE BOX FOR LAYERED PANE ─────────────────────────────────────
+//
+
+    export function fineTuneUnicodeBoxForLayeredPane ( pane: LayeredPane ) {
+        const { width, height } =
+            pane
+        for ( let y = 0; y < height; y++ ) {
+            for ( let x = 0; x < width; x++ ) {
+                let char =
+                    pane.screen.readChar( x, y )
+                if ( CHANGEABLE_CHARACTERS_FOR_UNICODE_TUNNING.includes( char ) ) {
+                    const surroundings =
+                        getRestOfSurroundingsForFineTunnigUnicodeBoxes( pane, x, y )
+                    const newChar =
+                        fineTuneUnicodeBoxCharWithSurroundings( char, surroundings )
+                    pane.screen.writeChar( x, y, newChar )
+                }
+            }
+        }
+    }
+
+//
+// ─── GET REST OF THE CHARACTERS ─────────────────────────────────────────────────
+//
+
+    function getRestOfSurroundingsForFineTunnigUnicodeBoxes ( pane: LayeredPane, x: number, y: number ): string {
+        let surroundings =
+            ""
+        surroundings +=
+            ( y > 0 ? pane.screen.readChar( x, y - 1 ) : "*" )
+        surroundings +=
+            ( x < pane.width - 1 ? pane.screen.readChar( x + 1, y ) : "*" )
+        surroundings +=
+            ( y < pane.height - 1 ? pane.screen.readChar( x, y + 1 ) : "*" )
+        surroundings +=
+            ( x > 0 ? pane.screen.readChar( x - 1, y ) : "*" )
+
+        return surroundings
+    }
+
+//
 // ─── FINE TUNE UNICODE BOX ──────────────────────────────────────────────────────
 //
 
-    export function fineTuneUnicodeBoxCharWithSurroundings ( char: string, surroundings: string ): string {
+    function fineTuneUnicodeBoxCharWithSurroundings ( char: string, surroundings: string ): string {
         const [ top, right, bottom, left ] =
             surroundings
         let diagnostics =

@@ -4,26 +4,26 @@
 //
 
     import { SpacedBox }
-        from "./spaced-box"
+        from "../spaced-box"
     import { StringBox, ScreenMatrixPixel }
-        from "../protocols/string-box"
+        from "../../protocols/string-box"
     import { VirtualScreen }
-        from "./virtual-screen"
+        from "../virtual-screen"
     import { getDefaultTerminalStyle, ANSITerminalSetStyleOptions
            , generateStartingANSITerminalEscapeSequenceOfTerminalStyling
            , mergeTerminalStyleWithOptions, ANSITerminalStyling
            }
-        from "../environments/ansi-terminal"
-    import { fineTuneUnicodeBoxCharWithSurroundings
-           , CHANGEABLE_CHARACTERS_FOR_UNICODE_TUNNING
-           }
-        from "../tools/fine-tune-unicode-box"
+        from "../../environments/ansi-terminal"
+    import { fineTuneUnicodeBoxForLayeredPane }
+        from "./algorithms/fine-tune-unicode-box"
+    import { rayTraceScreenPixel }
+        from "./algorithms/ray-trace"
 
 //
 // ─── TYPES ──────────────────────────────────────────────────────────────────────
 //
 
-    interface PaneChildrenProfile {
+    export interface PaneChildrenProfile {
         x:      number
         y:      number
         zIndex: number
@@ -44,11 +44,11 @@
             readonly    width:                  number
             readonly    background:             SpacedBox
             readonly    screen:                 VirtualScreen
+            readonly    children:               PaneChildrenProfile[ ]
                         transparent:            boolean
                         #baseline:              number
                         #terminalStyling:       ANSITerminalStyling
                         #terminalStartTag:      string
-                        #children:              PaneChildrenProfile[ ]
 
         //
         // ─── CONSTRUCTOR ─────────────────────────────────────────────────
@@ -71,7 +71,7 @@
                     getDefaultTerminalStyle( )
                 this.#terminalStartTag =
                     ""
-                this.#children =
+                this.children =
                     [ ]
             }
 
@@ -96,7 +96,7 @@
         //
 
             public add ( child: StringBox, x: number, y: number, zIndex: number ) {
-                this.#children.push({ x, y, zIndex, child })
+                this.children.push({ x, y, zIndex, child })
                 this.updateScreenMatrix( )
                 return this
             }
@@ -126,48 +126,7 @@
         //
 
             public rayTrace ( left: number, top: number, x: number, y: number ): ScreenMatrixPixel {
-                let result: PaneChildrenProfile | null =
-                    null
-                const xQuery =
-                    x - left
-                const yQuery =
-                    y - top
-
-                for ( const profile of this.#children ) {
-                    const horizontalBoundary =
-                        ( xQuery >= profile.x ) && ( xQuery < profile.x + profile.child.width )
-                    const verticalBoundary =
-                        ( yQuery >= profile.y ) && ( yQuery < profile.y + profile.child.height )
-
-                    if ( horizontalBoundary && verticalBoundary ) {
-                        if ( result ) {
-                            if ( profile.zIndex > result.zIndex ) {
-                                if ( profile.child.transparent ) {
-                                    const [ ___, character ] =
-                                        profile.child.getCharAtRelativePosition(
-                                            profile.x, profile.y, x, y
-                                        )
-                                    if ( character !== " " ) {
-                                        result = profile
-                                    }
-                                } else {
-                                    result = profile
-                                }
-                            }
-                        } else {
-                            result = profile
-                        }
-                    }
-                }
-
-                return ( result
-                    ?   result.child.getCharAtRelativePosition(
-                            result.x, result.y, x, y
-                        )
-                    :   this.background.getCharAtRelativePosition(
-                            0, 0, x, y
-                        )
-                    )
+                return rayTraceScreenPixel( this, left, top, x, y )
             }
 
         //
@@ -215,37 +174,8 @@
         // ─── COMBINE BOXES ───────────────────────────────────────────────
         //
 
-            private getRestOfSurroundingsForFineTunnigUnicodeBoxes ( x: number, y: number ): string {
-                let surroundings =
-                    ""
-                surroundings +=
-                    ( y > 0 ? this.screen.readChar( x, y - 1 ) : "*" )
-                surroundings +=
-                    ( x < this.width - 1 ? this.screen.readChar( x + 1, y ) : "*" )
-                surroundings +=
-                    ( y < this.height - 1 ? this.screen.readChar( x, y + 1 ) : "*" )
-                surroundings +=
-                    ( x > 0 ? this.screen.readChar( x - 1, y ) : "*" )
-
-                return surroundings
-            }
-
             public fineTuneUnicodeBoxes ( ) {
-                const { width, height } =
-                    this
-                for ( let y = 0; y < height; y++ ) {
-                    for ( let x = 0; x < width; x++ ) {
-                        let char =
-                            this.screen.readChar( x, y )
-                        if ( CHANGEABLE_CHARACTERS_FOR_UNICODE_TUNNING.includes( char ) ) {
-                            const surroundings =
-                                this.getRestOfSurroundingsForFineTunnigUnicodeBoxes( x, y )
-                            const newChar =
-                                fineTuneUnicodeBoxCharWithSurroundings( char, surroundings )
-                            this.screen.writeChar( x, y, newChar )
-                        }
-                    }
-                }
+                fineTuneUnicodeBoxForLayeredPane( this )
             }
 
         // ─────────────────────────────────────────────────────────────────
