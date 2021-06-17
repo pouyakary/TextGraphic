@@ -39,9 +39,9 @@
             SpacedBox.initWithEmptySpaceSurface( 65, 10 )
         )
 
-    pane.add( box1, 3, 2, 1 )
-    pane.add( box2, 8, 3, 2 )
-    pane.add( box3, 14, 4, 3 )
+    pane.add( box1, 3, 1, 1 )
+    pane.add( box2, 8, 2, 2 )
+    pane.add( box3, 14, 3, 3 )
 
     const text =
         SpacedBox.initWithText( "And there goes the transparency! 😎", 0 )
@@ -50,7 +50,7 @@
             foregroundColor: ANSITerminalForegroundColor.Black
         })
 
-    pane.add( text, 27, 5, 3 )
+    pane.add( text, 27, 4, 3 )
 
     pane.fineTuneUnicodeBoxes( )
 

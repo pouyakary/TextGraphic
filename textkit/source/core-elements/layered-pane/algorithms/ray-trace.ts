@@ -25,7 +25,7 @@
         const yQuery =
             y - top
 
-        for ( const profile of pane.children ) {
+        for ( const profile of pane.getChildren( ) ) {
             const horizontalBoundary =
                 ( xQuery >= profile.x ) && ( xQuery < profile.x + profile.child.width )
             const verticalBoundary =

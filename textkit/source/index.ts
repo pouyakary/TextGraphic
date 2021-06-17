@@ -10,7 +10,7 @@
         export * from
             "./core-elements/spaced-box"
         export * from
-            "./core-elements/layered-pane"
+            "./core-elements/layered-pane/main"
 
     //
     // ─── LAYOUTS ────────────────────────────────────────────────────────────────────

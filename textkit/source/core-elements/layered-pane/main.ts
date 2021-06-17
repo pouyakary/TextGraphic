@@ -44,7 +44,7 @@
             readonly    width:                  number
             readonly    background:             SpacedBox
             readonly    screen:                 VirtualScreen
-            readonly    children:               PaneChildrenProfile[ ]
+            readonly    #children:               PaneChildrenProfile[ ]
                         transparent:            boolean
                         #baseline:              number
                         #terminalStyling:       ANSITerminalStyling
@@ -71,8 +71,31 @@
                     getDefaultTerminalStyle( )
                 this.#terminalStartTag =
                     ""
-                this.children =
+                this.#children =
                     [ ]
+            }
+
+
+            public static initWithTransparentBackground ( width: number,
+                                                         height: number ): LayeredPane {
+                const background =
+                    SpacedBox.initWithEmptySpaceSurface( width, height )
+                const pane =
+                    new LayeredPane( background )
+                pane.transparent =
+                    true
+                return pane
+            }
+
+        //
+        // ─── CHILDREN ────────────────────────────────────────────────────
+        //
+
+            public * getChildren ( ): Generator<PaneChildrenProfile, null> {
+                for ( const child of this.#children ) {
+                    yield child
+                }
+                return null
             }
 
         //
@@ -96,7 +119,7 @@
         //
 
             public add ( child: StringBox, x: number, y: number, zIndex: number ) {
-                this.children.push({ x, y, zIndex, child })
+                this.#children.push({ x, y, zIndex, child })
                 this.updateScreenMatrix( )
                 return this
             }
