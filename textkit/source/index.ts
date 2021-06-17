@@ -8,7 +8,7 @@
     //
 
         export * from
-            "./core-elements/spaced-box"
+            "./core-elements/spaced-box/main"
         export * from
             "./core-elements/layered-pane/main"
 

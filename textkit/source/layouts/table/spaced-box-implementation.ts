@@ -4,7 +4,7 @@
 //
 
     import { SpacedBox }
-        from "../../core-elements/spaced-box"
+        from "../../core-elements/spaced-box/main"
     import { insertJoinersInBetweenArrayItems }
         from "../../tools/array"
     import { HorizontalAlign, VerticalAlign, ResizingPolicy }

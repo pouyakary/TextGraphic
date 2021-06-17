@@ -4,7 +4,7 @@
 //
 
     import { SpacedBox }
-        from "../spaced-box"
+        from "../spaced-box/main"
     import { StringBox, ScreenMatrixPixel }
         from "../../protocols/string-box"
     import { VirtualScreen }
