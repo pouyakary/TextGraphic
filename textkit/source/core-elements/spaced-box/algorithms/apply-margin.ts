@@ -6,6 +6,8 @@
 
     import { SpacedBox }
         from "../main"
+    import { createEmptyStringLine }
+        from "../../../tools/string"
 
 //
 // ─── APPLY MARGIN ───────────────────────────────────────────────────────────────
@@ -18,11 +20,11 @@
                                             left: number ): SpacedBox {
         //
         const topBottomSpaceLines =
-            SpacedBox.spaceLineOfSize( left + box.width + right )
+            createEmptyStringLine( left + box.width + right )
         const leftSpaceLines =
-            SpacedBox.spaceLineOfSize( left )
+            createEmptyStringLine( left )
         const rightSpaceLines =
-            SpacedBox.spaceLineOfSize( right )
+            createEmptyStringLine( right )
         const lines =
             new Array<string> ( )
 

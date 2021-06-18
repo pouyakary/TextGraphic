@@ -17,7 +17,7 @@
            }
         from "../../environments/ansi-terminal"
 
-    import { unifyLineSpaces }
+    import { unifyLineSpaces, breakStringIntoLines }
         from "../../tools/string"
 
     import { alignSpacedBoxWithinNewBoxBoundary }
@@ -100,7 +100,7 @@
 
             static initWithText ( text: string, baseLine: number ) {
                 const lines =
-                    text.split( "\n" )
+                    breakStringIntoLines( text )
                 const unifiedLines =
                     unifyLineSpaces( lines )
                 return new SpacedBox( unifiedLines, baseLine )

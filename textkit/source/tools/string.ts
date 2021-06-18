@@ -7,10 +7,17 @@
         from "./array"
 
 //
+// ─── CONSTANTS ──────────────────────────────────────────────────────────────────
+//
+
+    const END_OF_LINE_REGEXP =
+        /(?:\n\r?)|(?:\r\n)/g
+
+//
 // ─── CREATE EMPTY STRING LINE ───────────────────────────────────────────────────
 //
 
-    export function createStringLine ( size: number ) {
+    export function createEmptyStringLine ( size: number ) {
         return " ".repeat( size )
     }
 
@@ -19,7 +26,7 @@
 //
 
     export function perfectLineToSize ( line: string, size: number ) {
-        return line + createStringLine( size - line.length )
+        return line + createEmptyStringLine( size - line.length )
     }
 
 //
@@ -34,6 +41,14 @@
                 perfectLineToSize( line, longestLine )
             )
         return perfectLines
+    }
+
+//
+// ─── BREAK LINES ────────────────────────────────────────────────────────────────
+//
+
+    export function breakStringIntoLines ( text: string ) {
+        return text.split( END_OF_LINE_REGEXP )
     }
 
 // ────────────────────────────────────────────────────────────────────────────────
