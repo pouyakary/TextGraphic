@@ -23,18 +23,44 @@
             describe( "Initiation", function ( ) {
 
                 it ( "When initiating on the Unsafe mode, it should not check for line width correctness", function ( ) {
-                    assert.equal(
-                        new TextKit.SpacedBox( [ "*", "**", "***" ], 1 ).plainTextForm,
-                        "*\n**\n***"
-                    )
+                    const box =
+                        new TextKit.SpacedBox( [ "*", "**", "***" ], 1 )
+                    const expected =
+                        [ "*", "**", "***" ]
+
+                    assert.deepEqual( box.lines, expected )
                 })
 
 
-                it ( "When initiating with 'initWithText()' it, it should fix spaces", function ( ) {
-                    assert.equal(
-                        TextKit.SpacedBox.initWithText( "*\n**\n***", 1 ).plainTextForm,
-                        "*  \n** \n***"
-                    )
+                it ( "When initiating with '.initWithSpaceCheck()', it should fix spaces", function ( ) {
+                    const box =
+                        TextKit.SpacedBox.initWithSpaceCheck( [ "*", "**", "***" ], 1 )
+                    const expected =
+                        [ "*  ", "** ", "***" ]
+
+                    assert.deepEqual( box.lines, expected )
+                })
+
+
+
+                it ( "When initiating with '.initWithText()', it should fix spaces", function ( ) {
+                    const box =
+                        TextKit.SpacedBox.initWithText( "*\n**\n***", 1 )
+                    const expected =
+                        [ "*  ", "** ", "***" ]
+
+                    assert.deepEqual( box.lines, expected )
+                })
+
+
+
+                it ( "When initiating with '.initWithText()', it should detect lines correctly", function ( ) {
+                    const box =
+                        TextKit.SpacedBox.initWithText( "*\n\r\n***", 1 )
+                    const expected =
+                        [ "*  ", "   ", "***" ]
+
+                    assert.deepEqual( box.lines, expected )
                 })
             })
 

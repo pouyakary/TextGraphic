@@ -169,7 +169,7 @@
         //
 
             static getLongestLineOfArray ( lines: string[ ] ) {
-                return Math.max( ...lines.map( x => x.length ) )
+                return Math.max( ...lines.map( x => [ ...x ].length ) )
             }
 
             static perfectLineSize ( line: string, size: number ) {

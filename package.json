@@ -11,6 +11,7 @@
     "compile": "tsc",
     "clean": "rm -rf out",
     "test": "mocha \"./out/compiled/tests/**/*.js\"",
+    "config-ci": "npm install -g typescript parcel-bundler mocha",
 
     "pack": "parcel build --out-dir=out/dist --out-file=textkit.js out/compiled/index.js",
     "play-unicode": "node ./out/compiled/playgrounds/unicode-box.js",
