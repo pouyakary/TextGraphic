@@ -17,6 +17,9 @@
            }
         from "../../environments/ansi-terminal"
 
+    import { unifyLineSpaces }
+        from "../../tools/string"
+
     import { alignSpacedBoxWithinNewBoxBoundary }
         from "./algorithms/align-in-box"
     import { frameSpacedBox }
@@ -85,25 +88,34 @@
                     baseLine
             }
 
-            static initWithSpaceCheck ( lines: string[ ], baseLine: number ) {
+
+            static initWithSpaceCheck ( lines: string[ ],
+                                     baseLine: number ) {
+                //
                 const unifiedLines =
-                    SpacedBox.unifyLineSpaces( lines )
+                    unifyLineSpaces( lines )
                 return new SpacedBox( unifiedLines, baseLine )
             }
+
 
             static initWithText ( text: string, baseLine: number ) {
                 const lines =
                     text.split( "\n" )
                 const unifiedLines =
-                    SpacedBox.unifyLineSpaces( lines )
+                    unifyLineSpaces( lines )
                 return new SpacedBox( unifiedLines, baseLine )
             }
 
+
             static initWithEmptyBox ( ) {
-                return new SpacedBox([ "" ], 0 )
+                return new SpacedBox( [ "" ], 0 )
             }
 
-            static initWithEmptySpaceSurface ( width: number, height: number, backgroundChar = " " ) {
+
+            static initWithEmptySpaceSurface ( width: number ,
+                                              height: number ,
+                                      backgroundChar: string = " " ) {
+                //
                 const emptyLine =
                     backgroundChar.repeat( width )
                 const lines =
@@ -137,7 +149,6 @@
             public setANSITerminalStyle ( options: ANSITerminalSetStyleOptions ): SpacedBox {
                 this.#terminalStyling =
                     mergeTerminalStyleWithOptions( this.#terminalStyling, options )
-
                 this.#terminalStartTag =
                     generateStartingANSITerminalEscapeSequenceOfTerminalStyling(
                         this.#terminalStyling
@@ -148,36 +159,6 @@
 
             public get terminalStartTag ( ): string {
                 return this.#terminalStartTag
-            }
-
-        //
-        // ─── CREATE LINES ────────────────────────────────────────────────
-        //
-
-            static unifyLineSpaces ( lines: string[ ] ) {
-                const longestLine =
-                    SpacedBox.getLongestLineOfArray( lines )
-                const perfectLines =
-                    lines.map( line =>
-                        SpacedBox.perfectLineSize( line, longestLine )
-                    )
-                return perfectLines
-            }
-
-        //
-        // ─── TOOLS ───────────────────────────────────────────────────────
-        //
-
-            static getLongestLineOfArray ( lines: string[ ] ) {
-                return Math.max( ...lines.map( x => [ ...x ].length ) )
-            }
-
-            static perfectLineSize ( line: string, size: number ) {
-                return line + SpacedBox.spaceLineOfSize( size - line.length )
-            }
-
-            static spaceLineOfSize ( size: number ) {
-                return " ".repeat( size )
             }
 
         //
@@ -202,6 +183,7 @@
                 return styledLines.join( "\n" )
             }
 
+
             public renderLineForANSITerminal ( line: number ) {
                 return (
                     this.#terminalStartTag + this.lines[ line ] +
@@ -213,8 +195,11 @@
         // ─── MARGIN ──────────────────────────────────────────────────────
         //
 
-            public applyMargin ( top: number, right: number,
-                                 bottom: number, left: number ): SpacedBox {
+            public applyMargin ( top: number,
+                               right: number,
+                              bottom: number,
+                                left: number ): SpacedBox {
+                //
                 return applyMarginToSpacedBox( this, top, right, bottom, left )
             }
 
@@ -230,7 +215,9 @@
         // ─── CONCAT HORIZONTALLY ─────────────────────────────────────────
         //
 
-            static concatHorizontally ( boxes: SpacedBox[ ], joiner: SpacedBox ): SpacedBox {
+            static concatHorizontally ( boxes: SpacedBox[ ],
+                                       joiner: SpacedBox ): SpacedBox {
+                //
                 return concatSpacedBoxesHorizontally( boxes, joiner )
             }
 
@@ -238,7 +225,9 @@
         // ─── CONCAT VERTICALLY ───────────────────────────────────────────
         //
 
-            static concatVertically ( boxes: SpacedBox[ ], baseLine: number ): SpacedBox {
+            static concatVertically ( boxes: SpacedBox[ ],
+                                   baseLine: number ): SpacedBox {
+                //
                 return concatSpacedBoxesVertically( boxes, baseLine )
             }
 
@@ -258,7 +247,7 @@
                                boxHeight: number,
                          horizontalAlign: HorizontalAlign,
                            verticalAlign: VerticalAlign ) {
-
+                //
                 return alignSpacedBoxWithinNewBoxBoundary(
                     this, boxWidth, boxHeight, horizontalAlign, verticalAlign
                 )
@@ -268,7 +257,11 @@
         // ─── RAY TRACER ──────────────────────────────────────────────────
         //
 
-            public rayTrace ( left: number, top: number, x: number, y: number ): ScreenMatrixPixel {
+            public rayTrace ( left: number,
+                               top: number,
+                                 x: number,
+                                 y: number ): ScreenMatrixPixel {
+                //
                 return [
                     this.#terminalStartTag,
                     this.lines[ y - top ][ x - left ],
@@ -283,6 +276,7 @@
                                                 top: number ,
                                                   x: number ,
                                                   y: number ): ScreenMatrixPixel {
+                //
                 return [
                     this.#terminalStartTag,
                     this.lines[ y - top ][ x - left ],

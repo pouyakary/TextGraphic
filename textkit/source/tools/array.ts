@@ -19,4 +19,21 @@
         return newArray
     }
 
+//
+// ─── LONGEST LINE ───────────────────────────────────────────────────────────────
+//
+
+    export function getLongestLineOfArray ( lines: string[ ] ) {
+        let max = 0
+        for ( const line of lines ) {
+            const lineLength =
+                [ ...line ].length
+            if ( lineLength > max ) {
+                max = lineLength
+            }
+        }
+
+        return max
+    }
+
 // ────────────────────────────────────────────────────────────────────────────────
