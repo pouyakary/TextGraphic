@@ -79,7 +79,7 @@
             public static initWithTransparentBackground ( width: number,
                                                          height: number ): LayeredPane {
                 const background =
-                    SpacedBox.initWithEmptySpaceSurface( width, height )
+                    SpacedBox.initBlankRectangle( width, height )
                 const pane =
                     new LayeredPane( background )
                 pane.transparent =

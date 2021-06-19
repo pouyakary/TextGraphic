@@ -56,7 +56,7 @@
     export function createSpacedBoxTableInTextForm ( rows: SpacedBoxTable,
                                                     input: TableInitSettings ): SpacedBox {
         if ( rows.length === 0 ) {
-            return SpacedBox.initWithEmptyBox( )
+            return SpacedBox.initEmptyBox( )
         }
 
         completeSpacedBoxTable( rows )
@@ -306,7 +306,7 @@
             Math.max( ...table.map( row => row.length ) )
         for ( const row of table ) {
             for ( let iterator = row.length; iterator < width; iterator++ ) {
-                row.push( SpacedBox.initWithEmptyBox( ) )
+                row.push( SpacedBox.initEmptyBox( ) )
             }
         }
         return table
@@ -434,7 +434,7 @@
         }
 
         const renderedRow =
-            SpacedBox.concatHorizontally( toBeJoined, SpacedBox.initWithEmptyBox( ) )
+            SpacedBox.concatHorizontally( toBeJoined, SpacedBox.initEmptyBox( ) )
 
         return renderedRow
     }

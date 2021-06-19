@@ -11,14 +11,14 @@
 //
 
     const box1 =
-        SpacedBox.initWithEmptySpaceSurface( 8, 3 )
+        SpacedBox.initBlankRectangle( 8, 3 )
             .frame( BoxFramePresets.LightBoxPreset )
             .setANSITerminalStyle({
                 foregroundColor: ANSITerminalForegroundColor.Blue
             })
 
     const box2 =
-        SpacedBox.initWithEmptySpaceSurface( 8, 3 )
+        SpacedBox.initBlankRectangle( 8, 3 )
             .frame( BoxFramePresets.LightBoxPreset )
             .setANSITerminalStyle({
                 foregroundColor: ANSITerminalForegroundColor.Red
@@ -28,7 +28,7 @@
 
 
     const box3 =
-        SpacedBox.initWithEmptySpaceSurface( 8, 3 )
+        SpacedBox.initBlankRectangle( 8, 3 )
             .frame( BoxFramePresets.LightBoxPreset )
             .setANSITerminalStyle({
                 foregroundColor: ANSITerminalForegroundColor.Green
@@ -36,7 +36,7 @@
 
     const pane =
         new LayeredPane(
-            SpacedBox.initWithEmptySpaceSurface( 65, 10 )
+            SpacedBox.initBlankRectangle( 65, 10 )
         )
 
     pane.add( box1, 3, 1, 1 )

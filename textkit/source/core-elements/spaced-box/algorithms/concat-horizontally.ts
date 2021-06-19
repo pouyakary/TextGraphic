@@ -15,7 +15,7 @@
 
     export function concatSpacedBoxesHorizontally ( boxes: SpacedBox[ ], joiner: SpacedBox ) {
         if ( boxes.length === 0 ) {
-            return SpacedBox.initWithEmptyBox( )
+            return SpacedBox.initEmptyBox( )
         }
         if ( boxes.length === 1 ) {
             return boxes[ 0 ]

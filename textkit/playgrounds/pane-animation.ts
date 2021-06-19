@@ -9,7 +9,7 @@ main( ); async function main ( ) {
     for ( let iteration = 0; true; iteration++ ) {
         // 1
         const firstPaneBackground =
-            SpacedBox.initWithEmptySpaceSurface( 20, 5 )
+            SpacedBox.initBlankRectangle( 20, 5 )
                 .frame( BoxFramePresets.LightBoxPreset )
         const firstPane =
             new LayeredPane( firstPaneBackground )
@@ -21,7 +21,7 @@ main( ); async function main ( ) {
 
         // 2
         const secondPaneBackground =
-            SpacedBox.initWithEmptySpaceSurface( 20, 5 )
+            SpacedBox.initBlankRectangle( 20, 5 )
                 .frame( BoxFramePresets.LightBoxPreset )
         const secondPane =
             new LayeredPane( secondPaneBackground )
@@ -33,7 +33,7 @@ main( ); async function main ( ) {
 
         // 3
         const thirdPaneBackground =
-            SpacedBox.initWithEmptySpaceSurface( 20, 5 )
+            SpacedBox.initBlankRectangle( 20, 5 )
                 .frame( BoxFramePresets.LightBoxPreset )
         const thirdPane =
             new LayeredPane( thirdPaneBackground )
@@ -62,7 +62,7 @@ main( ); async function main ( ) {
 
         // Main Pane
         const mainPaneBackground =
-            SpacedBox.initWithEmptySpaceSurface( 77, 10 )
+            SpacedBox.initBlankRectangle( 77, 10 )
         const mainPane =
             new LayeredPane( mainPaneBackground )
 

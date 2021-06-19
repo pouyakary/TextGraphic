@@ -3,7 +3,7 @@ import { SpacedBox, BoxFramePresets, ANSITerminalForegroundColor, LayeredPane } 
     "../source"
 
 let background =
-    SpacedBox.initWithEmptySpaceSurface( 20, 5 )
+    SpacedBox.initBlankRectangle( 20, 5 )
         .frame( BoxFramePresets.LightBoxPreset )
 const drawingPane =
     new LayeredPane( background )
@@ -39,7 +39,7 @@ drawingPane.fineTuneUnicodeBoxes( )
 // drawingPane.fineTuneUnicodeBoxes( )
 
 let secondPaneBackground =
-    SpacedBox.initWithEmptySpaceSurface( 40, 8 )
+    SpacedBox.initBlankRectangle( 40, 8 )
         .frame( BoxFramePresets.HHeavyVLightBoxPreset )
         .setANSITerminalStyle({
             foregroundColor: ANSITerminalForegroundColor.Red

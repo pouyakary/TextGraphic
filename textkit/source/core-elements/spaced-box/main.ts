@@ -107,14 +107,14 @@
             }
 
 
-            static initWithEmptyBox ( ) {
+            static initEmptyBox ( ) {
                 return new SpacedBox( [ "" ], 0 )
             }
 
 
-            static initWithEmptySpaceSurface ( width: number ,
-                                              height: number ,
-                                      backgroundChar: string = " " ) {
+            static initBlankRectangle ( width: number ,
+                                       height: number ,
+                               backgroundChar: string = " " ) {
                 //
                 const emptyLine =
                     backgroundChar.repeat( width )
