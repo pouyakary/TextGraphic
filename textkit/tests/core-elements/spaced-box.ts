@@ -9,6 +9,8 @@
         from "../../source"
     import { strict as assert } from
         "assert"
+    import { tenNumbersInRange }
+        from "../commons/range"
 
 //
 // ─── SPACED BOX TESTING ─────────────────────────────────────────────────────────
@@ -17,27 +19,12 @@
     describe( "TextKit.SpacedBox",  function ( ) {
 
         //
-        // ─── TOOLS ───────────────────────────────────────────────────────
-        //
-
-            function tenNumbersInRange ( min: number, max: number ): number[ ] {
-                //
-                const results =
-                    [ ]
-                const counter =
-                    Math.floor(( max - min ) / 10 )
-                for ( let i = min; i < max; i += counter ) {
-                    results.push( i )
-                }
-                results.push( max )
-                return results
-            }
-
-        //
         // ─── INITIATING ──────────────────────────────────────────────────
         //
 
             describe( "Initiation", function ( ) {
+
+                //
 
                 it ( "When initiating on the Unsafe mode, it should not check for line width correctness", function ( ) {
                     const box =
@@ -181,6 +168,24 @@
                     }
                 })
             })
+
+        //
+        // ─── BASELINE ATTRIBUTE ──────────────────────────────────────────
+        //
+
+            describe ( ".baseline", function ( ) {
+                it ( ".baseline should return correctly", function ( ) {
+                    const baseline =
+                        3
+                    const lines =
+                        [ "", "", "", "", "" ]
+                    const box =
+                        new TextKit.SpacedBox( lines, baseline )
+                    assert.equal( box.baseline, baseline )
+                })
+            })
+
+
 
         // ─────────────────────────────────────────────────────────────────
 

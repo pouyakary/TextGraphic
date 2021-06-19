@@ -77,15 +77,13 @@
                 this.width =
                     this.lines[ 0 ].length
                 this.#baseline =
-                    0
+                    baseLine
                 this.#terminalStyling =
                     getDefaultTerminalStyle( )
                 this.#terminalStartTag =
                     ""
                 this.transparent =
                     false
-                this.baseline =
-                    baseLine
             }
 
 
@@ -132,14 +130,6 @@
 
             public get baseline ( ) {
                 return this.#baseline
-            }
-
-            public set baseline ( input: number ) {
-                if ( input < 0 && input >= this.height ) {
-                    throw `Baseline is set out of bounds. (Box height: ${ this.height }, given baseline: ${ input })`
-                }
-                this.#baseline =
-                    input
             }
 
         //
