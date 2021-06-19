@@ -24,6 +24,19 @@
                 return Math.floor( Math.random( ) * ( 20 - min ) ) + min
             }
 
+            function tenNumbersInRange ( min: number, max: number ): number[ ] {
+                //
+                const results =
+                    [ ]
+                const counter =
+                    Math.floor(( max - min ) / 10 )
+                for ( let i = min; i < max; i += counter ) {
+                    results.push( i )
+                }
+                results.push( max )
+                return results
+            }
+
         //
         // ─── INITIATING ──────────────────────────────────────────────────
         //
@@ -147,9 +160,7 @@
 
             describe ( ".width", function ( ) {
                 it ( ".width should return correctly", function ( ) {
-                    for ( let i = 0; i < 10; i++ ) {
-                        const width =
-                            generateRandomSize( )
+                    for ( const width of tenNumbersInRange( 0, 100 ) ) {
                         const line =
                             "*".repeat( width )
                         const box =
@@ -165,17 +176,12 @@
 
             describe ( ".height", function ( ) {
                 it ( ".height should return correctly", function ( ) {
-                    for ( let i = 0; i < 10; i++ ) {
-                        const height =
-                            generateRandomSize( )
-                        const lines =
-                            new Array<string> ( )
-                        for ( let j = 0; j < height; j++ ) {
-                            lines.push( "*" )
-                        }
+                    for ( const height of tenNumbersInRange( 1, 100 ) ) {
+                        const line =
+                            "*".repeat( height )
                         const box =
-                            new TextKit.SpacedBox( lines, 0 )
-                        assert.equal( box.height, height )
+                            new TextKit.SpacedBox( [ line ], 0 )
+                        assert.equal( box.width, height )
                     }
                 })
             })
