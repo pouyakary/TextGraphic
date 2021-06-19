@@ -20,10 +20,6 @@
         // ─── TOOLS ───────────────────────────────────────────────────────
         //
 
-            function generateRandomSize ( min = 1 ): number {
-                return Math.floor( Math.random( ) * ( 20 - min ) ) + min
-            }
-
             function tenNumbersInRange ( min: number, max: number ): number[ ] {
                 //
                 const results =
@@ -110,21 +106,21 @@
                 //
 
                 it ( "When initiating blank rectangle, the width of the rectangle should match the passed width", function ( ) {
-                    const rectangleWidth =
-                        generateRandomSize( )
-                    const rectangle =
-                        TextKit.SpacedBox.initBlankRectangle( rectangleWidth, 1 )
-                    assert.equal( rectangle.lines[ 0 ].length, rectangleWidth )
+                    for ( const width of tenNumbersInRange( 0, 100 ) ) {
+                        const rectangle =
+                            TextKit.SpacedBox.initBlankRectangle( width, 1 )
+                        assert.equal( rectangle.lines[ 0 ].length, width )
+                    }
                 })
 
                 //
 
                 it ( "When initiating blank rectangle, the height of the rectangle should match the passed height", function ( ) {
-                    const rectangleHeight =
-                        generateRandomSize( )
-                    const rectangle =
-                        TextKit.SpacedBox.initBlankRectangle( 1, rectangleHeight )
-                    assert.equal( rectangle.lines.length, rectangleHeight )
+                    for ( const height of tenNumbersInRange( 1, 100 ) ) {
+                        const rectangle =
+                            TextKit.SpacedBox.initBlankRectangle( 1, height )
+                        assert.equal( rectangle.lines.length, height )
+                    }
                 })
 
                 //
