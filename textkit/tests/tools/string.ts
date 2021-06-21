@@ -43,6 +43,14 @@
 
                 //
 
+                it ( "createEmptyStringLine( ) should not break on decimal sizes", function ( ) {
+                    const line =
+                        StringTools.createEmptyStringLine( 2.5 )
+                    assert.equal( "  ", line )
+                })
+
+                //
+
                 it ( "perfectLineToSize( ) should pad the line rightly", function ( ) {
                     for ( const lineSize of tenNumbersInRange( 2, 40 ) ) {
                         const sampleLine =
