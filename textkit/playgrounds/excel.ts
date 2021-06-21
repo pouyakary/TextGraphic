@@ -3,6 +3,8 @@
 // ─── IMPORTS ────────────────────────────────────────────────────────────────────
 //
 
+    import { performance }
+        from "perf_hooks"
     import * as TextKit
         from "../source"
 
@@ -22,6 +24,15 @@
         4
     const PADDING_VERTICALLY =
         2
+    const WAIT_MS =
+        1000
+
+//
+// ─── WAIT ───────────────────────────────────────────────────────────────────────
+//
+
+    const sleep = ( ) =>
+        new Promise( resolve => setTimeout( resolve, WAIT_MS ) )
 
 //
 // ─── MAKE THE CELL ──────────────────────────────────────────────────────────────
@@ -49,36 +60,56 @@
 // ─── MAKING THE TABLE ───────────────────────────────────────────────────────────
 //
 
-    const paneWidth =
-        ( ( ( CELL_WIDTH - 1 ) * TABLE_COLUMNS ) + 2 ) + LEFT_PADDING
-    const paneHeight =
-        ( ( ( CELL_HEIGHT - 1 ) * TABLE_ROWS ) + 1 ) + 2 * PADDING_VERTICALLY
-    const tablePane =
-        TextKit.LayeredPane.initWithTransparentBackground(
-            paneWidth, paneHeight )
+    function renderTable ( activeColumn: number ) {
+        const paneWidth =
+            ( ( ( CELL_WIDTH - 1 ) * TABLE_COLUMNS ) + 2 ) + LEFT_PADDING
+        const paneHeight =
+            ( ( ( CELL_HEIGHT - 1 ) * TABLE_ROWS ) + 1 ) + 2 * PADDING_VERTICALLY
+        const tablePane =
+            TextKit.LayeredPane.initWithTransparentBackground(
+                paneWidth, paneHeight )
 
-    const ALPHABET =
-        [ "A", "B", "C", "D", "E", "F", "G", "H" ]
+        const ALPHABET =
+            [ "A", "B", "C", "D", "E", "F", "G", "H" ]
 
-    for ( let row = 0; row < TABLE_ROWS; row++ ) {
-        for ( let column = 0; column < TABLE_COLUMNS; column++ ) {
-            const active =
-                row === 1 && column === 3
-            const x =
-                ( column * ( CELL_WIDTH - 1 ) ) + 1 + LEFT_PADDING
-            const y =
-                ( row * ( CELL_HEIGHT - 1 ) ) + PADDING_VERTICALLY
-            const text =
-                active ? "=SUM(A1:A4)" : `${ALPHABET[column]}${row + 1}`
-            const cell =
-                createCell( text, active )
+        for ( let row = 0; row < TABLE_ROWS; row++ ) {
+            for ( let column = 0; column < TABLE_COLUMNS; column++ ) {
+                const active =
+                    row === 1 && column === activeColumn
+                const x =
+                    ( column * ( CELL_WIDTH - 1 ) ) + 1 + LEFT_PADDING
+                const y =
+                    ( row * ( CELL_HEIGHT - 1 ) ) + PADDING_VERTICALLY
+                const text =
+                    active ? "=SUM(A1:A4)" : `${ALPHABET[column]}${row + 1}`
+                const cell =
+                    createCell( text, active )
 
-            tablePane.add( cell, x, y, active ? 2 : 1 )
+                tablePane.add( cell, x, y, active ? 2 : 1 )
+            }
         }
+
+        tablePane.fineTuneUnicodeBoxes( )
+
+        console.log( tablePane.ANSITerminalForm )
     }
 
-    tablePane.fineTuneUnicodeBoxes( )
+//
+// ─── MAIN ───────────────────────────────────────────────────────────────────────
+//
 
-    console.log( tablePane.ANSITerminalForm )
+    main( ); async function main( ) {
+        while ( true ) {
+            for ( const column of [ 1, 2, 3, 4 ] ) {
+                renderTable( column )
+                const start = performance.now( )
+                await sleep( )
+                const end = performance.now( )
+                process.stdout.write(
+                    String.fromCharCode(27) + "]0;" + ( end - start ) + "ms" + String.fromCharCode(7) )
+                console.clear( )
+            }
+        }
+    }
 
 // ────────────────────────────────────────────────────────────────────────────────
