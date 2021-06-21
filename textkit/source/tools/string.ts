@@ -18,7 +18,7 @@
 //
 
     export function createEmptyStringLine ( size: number ) {
-        return " ".repeat( size )
+        return ( size <= 0 ? "" : " ".repeat( Math.floor( size ) ) )
     }
 
 //

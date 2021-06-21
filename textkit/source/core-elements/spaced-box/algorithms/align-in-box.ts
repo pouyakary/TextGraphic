@@ -61,8 +61,6 @@
 
         const marginedBox =
             box.applyMargin( marginTop, marginRight, marginBottom, marginLeft )
-        marginedBox.baseline =
-            0
 
         return marginedBox
     }
