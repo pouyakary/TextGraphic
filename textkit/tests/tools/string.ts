@@ -33,6 +33,16 @@
 
                 //
 
+                it ( "createEmptyStringLine( ) should not break on sizes =< 0", function ( ) {
+                    for ( const size of tenNumbersInRange( -20, 0 ) ) {
+                        const line =
+                            StringTools.createEmptyStringLine( size )
+                        assert.equal( "", line )
+                    }
+                })
+
+                //
+
                 it ( "perfectLineToSize( ) should pad the line rightly", function ( ) {
                     for ( const lineSize of tenNumbersInRange( 2, 40 ) ) {
                         const sampleLine =
