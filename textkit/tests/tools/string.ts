@@ -82,6 +82,28 @@
                     }
                 })
 
+                //
+
+                const samples = [
+                    { text: "\\r\\n", joint: "\r\n" },
+                    { text: "\\r", joint: "\r" },
+                    { text: "\\n\\r", joint: "\n\r" },
+                    { text: "\\n", joint: "\n" },
+                ]
+
+                for ( const joint of samples ) {
+                    it ( `breakStringIntoLines( ) should break on ${ joint.text } right`, function () {
+                        const input =
+                            "x" + joint.joint + "y"
+                        const expectation =
+                            [ "x", "y" ]
+                        const result =
+                            StringTools.breakStringIntoLines( input )
+                        assert.deepEqual( expectation, result )
+                    })
+                }
+
+                //
             })
 
         // ─────────────────────────────────────────────────────────────────

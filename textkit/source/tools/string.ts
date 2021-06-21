@@ -11,7 +11,7 @@
 //
 
     const END_OF_LINE_REGEXP =
-        /(?:\n\r?)|(?:\r\n)/g
+        /(?:\n\r?)|(?:\r\n?)/g
 
 //
 // ─── CREATE EMPTY STRING LINE ───────────────────────────────────────────────────
