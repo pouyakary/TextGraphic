@@ -104,6 +104,28 @@
                 }
 
                 //
+
+                it ( `breakStringIntoLines( ) should break a sequence of "\\n"s as one`, function () {
+                    const input =
+                        "x\n\ny"
+                    const expectation =
+                        [ "x", "", "y" ]
+                    const result =
+                        StringTools.breakStringIntoLines( input )
+                    assert.deepEqual( expectation, result )
+                })
+
+                //
+
+                it ( `breakStringIntoLines( ) should break a sequence of "\\r"s as one`, function () {
+                    const input =
+                        "x\r\ry"
+                    const expectation =
+                        [ "x", "", "y" ]
+                    const result =
+                        StringTools.breakStringIntoLines( input )
+                    assert.deepEqual( expectation, result )
+                })
             })
 
         // ─────────────────────────────────────────────────────────────────
