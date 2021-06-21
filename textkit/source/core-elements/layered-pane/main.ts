@@ -120,7 +120,7 @@
 
             public add ( child: StringBox, x: number, y: number, zIndex: number ) {
                 this.#children.push({ x, y, zIndex, child })
-                this.updateScreenMatrix( )
+                this.updatePortionOfScreenMatrix( x, y, child.width, child.height )
                 return this
             }
 
@@ -159,6 +159,24 @@
             private updateScreenMatrix ( ) {
                 for ( let x = 0; x < this.width; x++ ) {
                     for ( let y = 0; y < this.height; y++ ) {
+                        this.screen.write( x, y,
+                            this.rayTrace( 0, 0, x, y )
+                        )
+                    }
+                }
+            }
+
+        //
+        // ─── UPDATE PORTION OF SCREEN MATRIX ─────────────────────────────
+        //
+
+            private updatePortionOfScreenMatrix (  left: number,
+                                                    top: number,
+                                                  width: number,
+                                                 height: number ) {
+                //
+                for ( let x = left; x < width + left; x++ ) {
+                    for ( let y = top; y < height + top; y++ ) {
                         this.screen.write( x, y,
                             this.rayTrace( 0, 0, x, y )
                         )

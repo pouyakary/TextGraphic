@@ -25,7 +25,7 @@
     const PADDING_VERTICALLY =
         2
     const WAIT_MS =
-        1000
+        120
 
 //
 // ─── WAIT ───────────────────────────────────────────────────────────────────────
@@ -50,7 +50,7 @@
             .centerToBox( CELL_WIDTH - 2, 1 )
             .frame( border )
             .setANSITerminalStyle({
-                italic: active
+                bold: active
             })
 
         return box
@@ -64,7 +64,7 @@
         const paneWidth =
             ( ( ( CELL_WIDTH - 1 ) * TABLE_COLUMNS ) + 2 ) + LEFT_PADDING
         const paneHeight =
-            ( ( ( CELL_HEIGHT - 1 ) * TABLE_ROWS ) + 1 ) + 2 * PADDING_VERTICALLY
+            ( ( ( CELL_HEIGHT - 1 ) * TABLE_ROWS ) + 1 ) + 1 * PADDING_VERTICALLY
         const tablePane =
             TextKit.LayeredPane.initWithTransparentBackground(
                 paneWidth, paneHeight )
@@ -81,7 +81,7 @@
                 const y =
                     ( row * ( CELL_HEIGHT - 1 ) ) + PADDING_VERTICALLY
                 const text =
-                    active ? "=SUM(A1:A4)" : `${ALPHABET[column]}${row + 1}`
+                    `${ALPHABET[column]}${row + 1}`
                 const cell =
                     createCell( text, active )
 
@@ -100,13 +100,16 @@
 
     main( ); async function main( ) {
         while ( true ) {
-            for ( const column of [ 1, 2, 3, 4 ] ) {
+            for ( const column of [ 0, 1, 2, 3, 4 ] ) {
                 renderTable( column )
                 const start = performance.now( )
                 await sleep( )
                 const end = performance.now( )
                 process.stdout.write(
-                    String.fromCharCode(27) + "]0;" + ( end - start ) + "ms" + String.fromCharCode(7) )
+                    String.fromCharCode(27) + "]0;" +
+                    Math.floor( end - start - WAIT_MS )
+                    + "ms" + String.fromCharCode(7)
+                )
                 console.clear( )
             }
         }
