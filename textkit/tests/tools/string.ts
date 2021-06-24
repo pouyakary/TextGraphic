@@ -20,11 +20,11 @@
         describe ( "String Tools", function ( ) {
 
             //
-            // ─── STRING ──────────────────────────────────────────────────────
+            // ─── CREATE EMPTY STRING LINE ────────────────────────────────────
             //
 
-                describe ( "String", function ( ) {
-                    it ( "createEmptyStringLine( ) should return string with the right size", function ( ) {
+                describe ( "createEmptyStringLine( )", function ( ) {
+                    it ( "Should return string with the right size", function ( ) {
                         const expectation =
                             "     "
                         const line =
@@ -34,7 +34,7 @@
 
                     //
 
-                    it ( "createEmptyStringLine( ) should not break on sizes =< 0", function ( ) {
+                    it ( "Should not break on sizes =< 0", function ( ) {
                         for ( const size of tenNumbersInRange( -20, 0 ) ) {
                             const line =
                                 StringTools.createEmptyStringLine( size )
@@ -44,15 +44,20 @@
 
                     //
 
-                    it ( "createEmptyStringLine( ) should not break on decimal sizes", function ( ) {
+                    it ( "Should not break on decimal sizes", function ( ) {
                         const line =
                             StringTools.createEmptyStringLine( 2.5 )
                         assert.equal( "  ", line )
                     })
 
-                    //
+                })
 
-                    it ( "perfectLineToSize( ) should pad the line rightly", function ( ) {
+            //
+            // ─── PERFECT LINE TO SIZE ────────────────────────────────────────
+            //
+
+                describe ( "perfectLineToSize( )", function ( ) {
+                    it ( "Should pad the line rightly", function ( ) {
                         for ( const lineSize of tenNumbersInRange( 2, 40 ) ) {
                             const sampleLine =
                                 "*".repeat( Math.floor( Math.random( ) * lineSize ) + 1 )
@@ -61,10 +66,14 @@
                             assert.equal( paddedLine.length, lineSize )
                         }
                     })
+                })
 
-                    //
+            //
+            // ─── UNIFY LINE SPACES ───────────────────────────────────────────
+            //
 
-                    it ( "unifyLineSpaces( ) should make all the lines have the same length", function ( ) {
+                describe ( "unifyLineSpaces( )", function ( ) {
+                    it ( "Should make all the lines have the same length", function ( ) {
                         for ( let i = 0; i < 10; i++ ) {
                             const lines =
                                 new Array<string> ( )
@@ -83,8 +92,13 @@
                         }
                     })
 
-                    //
+                })
 
+            //
+            // ─── BREAK STRING INTO LINES ─────────────────────────────────────
+            //
+
+                describe ( "breakStringIntoLines( )", function ( ) {
                     const samples = [
                         { text: "\\r\\n", joint: "\r\n" },
                         { text: "\\r", joint: "\r" },
@@ -93,7 +107,7 @@
                     ]
 
                     for ( const joint of samples ) {
-                        it ( `breakStringIntoLines( ) should break on ${ joint.text } right`, function () {
+                        it ( `Should break on ${ joint.text } right`, function () {
                             const input =
                                 "x" + joint.joint + "y"
                             const expectation =
@@ -106,7 +120,7 @@
 
                     //
 
-                    it ( `breakStringIntoLines( ) should break a sequence of "\\n"s as one`, function () {
+                    it ( `Should break a sequence of "\\n"s as one`, function () {
                         const input =
                             "x\n\ny"
                         const expectation =
@@ -118,7 +132,7 @@
 
                     //
 
-                    it ( `breakStringIntoLines( ) should break a sequence of "\\r"s as one`, function () {
+                    it ( `Should break a sequence of "\\r"s as one`, function () {
                         const input =
                             "x\r\ry"
                         const expectation =

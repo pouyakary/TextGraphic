@@ -143,7 +143,7 @@
             //
 
                 describe ( ".width", function ( ) {
-                    it ( ".width should return correctly", function ( ) {
+                    it ( "Should return correctly", function ( ) {
                         for ( const width of tenNumbersInRange( 0, 100 ) ) {
                             const line =
                                 "*".repeat( width )
@@ -159,7 +159,7 @@
             //
 
                 describe ( ".height", function ( ) {
-                    it ( ".height should return correctly", function ( ) {
+                    it ( "Should return correctly", function ( ) {
                         for ( const height of tenNumbersInRange( 1, 100 ) ) {
                             const line =
                                 "*".repeat( height )
@@ -175,7 +175,7 @@
             //
 
                 describe ( ".baseline", function ( ) {
-                    it ( ".baseline should return correctly", function ( ) {
+                    it ( "Should return correctly", function ( ) {
                         const baseline =
                             3
                         const lines =
@@ -185,8 +185,6 @@
                         assert.equal( box.baseline, baseline )
                     })
                 })
-
-
 
             // ─────────────────────────────────────────────────────────────────
 
