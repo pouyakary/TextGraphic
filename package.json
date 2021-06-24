@@ -10,7 +10,7 @@
     "build": "npm run clean; npm run compile; npm run pack",
     "compile": "tsc",
     "clean": "rm -rf out",
-    "test": "mocha \"./out/compiled/tests/**/*.js\"",
+    "test": "mocha \"./out/compiled/tests/main.js\"",
     "config-ci": "npm install -g typescript mocha",
     "pack": "parcel build --out-dir=out/dist --out-file=textkit.js ./out/compiled/source/index.js",
     "play-unicode": "node ./out/compiled/playgrounds/unicode-box.js",

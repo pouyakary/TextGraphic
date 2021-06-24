@@ -45,6 +45,8 @@
             "./tools/array"
         export * from
             "./tools/timpani-parser"
+        export * from
+            "./tools/justifier"
 
     //
     // ─── PROTOCOLS ──────────────────────────────────────────────────────────────────

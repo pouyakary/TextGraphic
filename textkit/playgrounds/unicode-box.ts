@@ -29,3 +29,5 @@
     background.fineTuneUnicodeBoxes( )
 
     console.log( background.ANSITerminalForm )
+
+// ────────────────────────────────────────────────────────────────────────────────
