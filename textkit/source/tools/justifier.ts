@@ -3,13 +3,38 @@
 // ─── TEST JUSTIFIER ─────────────────────────────────────────────────────────────
 //
 
-    export function clusterWordsToLinesOfSize ( lineSize: number ,
-                                                    text: string ): string[ ] {
+    export function * clusterWordsToLinesOfSize ( lineSize: number ,
+                                                      text: string ): Generator<string> {
         //
-        const results =
-            new Array<string> ( )
+        const words =
+            separateWordsBySpaceAndIncludeSpacesInResult( text )
+        let currentLineSize =
+            0
 
-        return results
+        function flushNewLine ( ) {
+            currentLineSize =
+                0
+            return "\n"
+        }
+
+        function updateOnReturn ( word: string ) {
+            currentLineSize +=
+                word.length
+            return word
+        }
+
+        //
+        for ( const word of words ) {
+            if ( currentLineSize + word.length > lineSize ) {
+                yield flushNewLine( )
+                if ( ! /^\s+$/.test( word ) ) {
+                    yield updateOnReturn( word )
+                }
+            } else {
+                yield updateOnReturn( word )
+            }
+
+        }
     }
 
 //
@@ -24,6 +49,7 @@
         let buffer =
             ""
 
+        //
         function flushBuffer ( ) {
             if ( buffer !== "" ) {
                 results.push( buffer )
@@ -39,6 +65,7 @@
                 false
         }
 
+        //
         for ( const char of text ) {
             if ( char === " " || char === "\t" ) {
                 if ( previousCharWasSpace ) {

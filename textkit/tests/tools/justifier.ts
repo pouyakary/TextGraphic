@@ -15,7 +15,7 @@
 //
 
     export function runTextJustifierToolsTestSuite ( ) {
-        describe ( "Text Justifier", function ( ) {
+        describe ( "Text Justifier Tools", function ( ) {
 
             //
             // ─── THE WORDS SEPARATOR ─────────────────────────────────────────
