@@ -110,7 +110,9 @@
                 if ( place >= 0 && place < this.height ) {
                     this.#baseline = place
                 } else {
-                    throw `Could not move the baseline to ${ place }. (box height of ${ this.height })`
+                    throw new Error(
+                        `Could not move the baseline to ${ place }. (box height of ${ this.height })`
+                    )
                 }
             }
 
@@ -153,20 +155,6 @@
             }
 
         //
-        // ─── UPDATE MATRIX ───────────────────────────────────────────────
-        //
-
-            private updateScreenMatrix ( ) {
-                for ( let x = 0; x < this.width; x++ ) {
-                    for ( let y = 0; y < this.height; y++ ) {
-                        this.screen.write( x, y,
-                            this.rayTrace( 0, 0, x, y )
-                        )
-                    }
-                }
-            }
-
-        //
         // ─── UPDATE PORTION OF SCREEN MATRIX ─────────────────────────────
         //
 
@@ -177,9 +165,11 @@
                 //
                 for ( let x = left; x < width + left; x++ ) {
                     for ( let y = top; y < height + top; y++ ) {
-                        this.screen.write( x, y,
-                            this.rayTrace( 0, 0, x, y )
-                        )
+                        if ( x >= 0 && x < this.width && y >= 0 && y < this.height ) {
+                            this.screen.write( x, y,
+                                this.rayTrace( 0, 0, x, y )
+                            )
+                        }
                     }
                 }
             }

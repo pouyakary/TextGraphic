@@ -5,19 +5,16 @@
 
     import { describe }
         from "mocha"
-    import { runStringToolsTestSuite }
-        from "./string"
-    import { runMonoTextJustificationTestSuite }
-        from "../layouts/text-justification/mono"
+    import { runTextJustificationLayoutTestSuite }
+        from "./text-justification/main"
 
 //
-// ─── TOOLS TEST SUITE ───────────────────────────────────────────────────────────
+// ─── LAYOUTS TEST SUITE ─────────────────────────────────────────────────────────
 //
 
-    export function runToolsTestSuite ( ) {
-        describe ( "Tools", function ( ) {
-            runStringToolsTestSuite( )
-            runMonoTextJustificationTestSuite( )
+    export function runLayoutsTestSuite ( ) {
+        describe ( "Layouts", function ( ) {
+            runTextJustificationLayoutTestSuite( )
         })
     }
 

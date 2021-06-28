@@ -6,5 +6,7 @@
         "renderkit",
         "spacedbox",
         "textkit"
-    ]
+    ],
+    "typescript.suggest.autoImports": false,
+    "typescript.preferences.includePackageJsonAutoImports": "off"
 }

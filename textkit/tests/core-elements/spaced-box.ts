@@ -74,7 +74,9 @@
                     it ( "When initiating, baseline should not be out of boundary (upper boundary)", function ( done ) {
                         try {
                             new TextKit.SpacedBox( [ "", "" ], 2 )
-                            throw "Upper boundary problem."
+                            throw new Error(
+                                "Upper boundary problem."
+                            )
                         } catch {
                             done( )
                         }
@@ -85,7 +87,9 @@
                     it ( "When initiating, baseline should not be out of boundary (lower boundary)", function ( done ) {
                         try {
                             new TextKit.SpacedBox( [ "" ], -1 )
-                            throw "Lower boundary problem."
+                            throw new Error(
+                                "Lower boundary problem."
+                            )
                         } catch {
                             done( )
                         }

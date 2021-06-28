@@ -197,7 +197,9 @@
             ( MAIN_CHAR_REPLACEMENTS as never )[ diagnostics ]
 
         if ( replacement === undefined ) {
-            throw `Unicode Box Fine Tuner: ${ char } with diagnostics ${ diagnostics } could not be replaced`
+            throw new Error(
+                `Unicode Box Fine Tuner: ${ char } with diagnostics ${ diagnostics } could not be replaced`
+            )
         }
 
         return replacement

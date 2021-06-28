@@ -3,19 +3,19 @@
 // ─── IMPORTS ────────────────────────────────────────────────────────────────────
 //
 
-    import * as TextJustifierTools
-        from "../../source/tools/justifier"
+    import * as MonoTextJustification
+        from "../../../source/layouts/test-justification/mono"
     import { describe }
         from "mocha"
     import { strict as assert }
         from "assert"
 
 //
-// ─── TEXT JUSTIFIER TESTS ───────────────────────────────────────────────────────
+// ─── TEXT JUSTIFICATION TEST SUITE ──────────────────────────────────────────────
 //
 
-    export function runTextJustifierToolsTestSuite ( ) {
-        describe ( "Text Justifier Tools", function ( ) {
+    export function runMonoTextJustificationTestSuite ( ) {
+        describe ( "Mono Text Justification Layout & Tools", function ( ) {
 
             //
             // ─── THE WORDS SEPARATOR ─────────────────────────────────────────
@@ -25,7 +25,7 @@
                     function test ( title: string, input: string, expectedOutput: string[ ] ) {
                         it ( title, function ( ) {
                             const output =
-                                TextJustifierTools.separateWordsBySpaceAndIncludeSpacesInResult( input )
+                                MonoTextJustification.separateWordsBySpaceAndIncludeSpacesInResult( input )
                             assert.deepEqual( output, expectedOutput )
                         })
                     }

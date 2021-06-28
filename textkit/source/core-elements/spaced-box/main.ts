@@ -59,15 +59,21 @@
                 if ( lines instanceof Array ) {
                     for ( const line of lines ) {
                         if ( typeof line !== "string" ) {
-                            throw "Elements of the lines array should all be of type string"
+                            throw new Error(
+                                "Elements of the lines array should all be of type string"
+                            )
                         }
                     }
                 } else {
-                    throw "SpacedBox should be constructed with an array of strings"
+                    throw new Error(
+                        "SpacedBox should be constructed with an array of strings"
+                    )
                 }
 
                 if ( baseLine < 0 || baseLine >= lines.length ) {
-                    throw "Initial SpacedBox baseline is out of boundary"
+                    throw new Error(
+                        "Initial SpacedBox baseline is out of boundary"
+                    )
                 }
 
                 this.lines =

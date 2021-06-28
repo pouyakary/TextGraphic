@@ -59,10 +59,14 @@
 
             private checkCoordinateBoundary ( x: number, y: number ): void {
                 if ( x < 0 || x > this.#width ) {
-                    throw `X: ${ x } is out of boundary (0 - ${ this.#width })`
+                    throw new Error(
+                        `Virtual Screen - X: ${ x } is out of boundary (0 - ${ this.#width })`
+                    )
                 }
                 if ( y < 0 || y > this.#height ) {
-                    throw `Y: ${ y } is out of boundary (0 - ${ this.#height })`
+                    throw new Error(
+                        `Virtual Screen - Y: ${ y } is out of boundary (0 - ${ this.#height })`
+                    )
                 }
             }
 

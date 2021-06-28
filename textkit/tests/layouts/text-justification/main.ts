@@ -1,22 +1,20 @@
 
+
 //
 // ─── IMPORTS ────────────────────────────────────────────────────────────────────
 //
 
     import { describe }
         from "mocha"
-    import { runStringToolsTestSuite }
-        from "./string"
     import { runMonoTextJustificationTestSuite }
-        from "../layouts/text-justification/mono"
+        from "./mono"
 
 //
-// ─── TOOLS TEST SUITE ───────────────────────────────────────────────────────────
+// ─── TEXT JUSTIFICATION LAYOUT TEST SUITE ───────────────────────────────────────
 //
 
-    export function runToolsTestSuite ( ) {
-        describe ( "Tools", function ( ) {
-            runStringToolsTestSuite( )
+    export function runTextJustificationLayoutTestSuite ( ) {
+        describe ( "Text Justification Layout", function ( ) {
             runMonoTextJustificationTestSuite( )
         })
     }

@@ -6,8 +6,12 @@
   "directories": {
     "test": "test"
   },
+  "bin": {
+    "textkit": "./out/compiled/repl/main.js"
+  },
   "scripts": {
     "build": "npm run clean; npm run compile; npm run pack",
+    "repl": "node ./out/compiled/repl/main.js",
     "compile": "tsc",
     "clean": "rm -rf out",
     "test": "mocha \"./out/compiled/tests/main.js\"",
