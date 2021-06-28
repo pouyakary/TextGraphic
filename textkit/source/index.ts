@@ -7,6 +7,8 @@
     export * from
         "./core-elements/spaced-box/main"
     export * from
+        "./core-elements/spaced-box/samples"
+    export * from
         "./core-elements/layered-pane/main"
 
 //
