@@ -71,9 +71,9 @@
 // ─── APPEND TEXT KIT TO THE REPL CONTEXT ────────────────────────────────────────
 //
 
-    function appendTextKitToREPLContext ( server: repl.REPLServer ) {
-        for ( const property of Object.getOwnPropertyNames( TextKit ) ) {
-            appendToContext( server, property, TextKit[ property as never ] )
+    function appendObjectToREPLContext ( object: any, server: repl.REPLServer ) {
+        for ( const property of Object.getOwnPropertyNames( object ) ) {
+            appendToContext( server, property, object[ property as never ] )
         }
     }
 
@@ -175,8 +175,11 @@
 // ─── APPLY CONTEXT ──────────────────────────────────────────────────────────────
 //
 
-    function applyContextToServer ( server: repl.REPLServer ) {
-        appendTextKitToREPLContext( server )
+    function setupREPLEnvironment ( server: repl.REPLServer ) {
+        // context
+        appendObjectToREPLContext( TextKit, server )
+        appendObjectToREPLContext( Math, server )
+        // commands
         defineExitCommand( server )
         defineCleanCommand( server )
         defineNoteCommand( server )
@@ -193,10 +196,9 @@
     const server =
         repl.start({ prompt: '→ ', writer: replWriter })
 
-    server.on( "reset", ( ) => {
-        applyContextToServer( server )
-    })
+    server.on( "reset", ( ) =>
+        setupREPLEnvironment( server ))
 
-    applyContextToServer( server )
+    setupREPLEnvironment( server )
 
 // ────────────────────────────────────────────────────────────────────────────────
