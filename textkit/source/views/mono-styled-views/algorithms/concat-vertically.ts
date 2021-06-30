@@ -3,14 +3,17 @@
 // ─── IMPORTS ────────────────────────────────────────────────────────────────────
 //
 
-    import { SpacedBox }
-        from "../main"
+    import { ShapeView }
+        from "../shape-view/main"
+    import { MonoStyledViews }
+        from ".."
 
 //
 // ─── CONCAT VERTICALLY ──────────────────────────────────────────────────────────
 //
 
-    export function concatSpacedBoxesVertically ( boxes: SpacedBox[ ], baseLine: number ) {
+    export function concatMonoStyledViewsVertically ( boxes: MonoStyledViews[ ],
+                                                   baseLine: number ): ShapeView {
         const resultWidth =
             Math.max( ...boxes.map( box => box.width ) )
         const lines =
@@ -24,7 +27,7 @@
             }
         }
 
-        return new SpacedBox( lines, baseLine )
+        return new ShapeView( lines, baseLine )
     }
 
 // ────────────────────────────────────────────────────────────────────────────────

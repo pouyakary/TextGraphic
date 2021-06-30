@@ -3,79 +3,111 @@
 // ─── IMPORTS ────────────────────────────────────────────────────────────────────
 //
 
-    import { StringBox, ScreenMatrixPixel }
-        from "../../protocols/string-box"
+    import { ViewProtocol, ScreenMatrixPixel }
+        from "../../../protocols/view-protocol"
 
     import { BoxFrameCharSet }
-        from "../../shapes/box-frames"
+        from "../../../shapes/presets/box-frames"
     import { HorizontalAlign, VerticalAlign }
-        from "../../shapes/types"
+        from "../../../shapes/types"
 
     import { ANSITerminalStyling, generateStartingANSITerminalEscapeSequenceOfTerminalStyling
            , getDefaultTerminalStyle, ANSITerminalResetEscapeSequence
            , ANSITerminalSetStyleOptions, mergeTerminalStyleWithOptions
            }
-        from "../../environments/ansi-terminal"
+        from "../../../environments/ansi-terminal"
 
-    import { unifyLineSpaces, breakStringIntoLines }
-        from "../../tools/string"
+    import { unifyLineSpaces, breakStringIntoLines, includesLineBreak }
+        from "../../../tools/string"
 
-    import { alignSpacedBoxWithinNewBoxBoundary }
-        from "./algorithms/align-in-box"
-    import { frameSpacedBox }
-        from "./algorithms/frame"
-    import { concatSpacedBoxesVertically }
-        from "./algorithms/concat-vertically"
-    import { concatSpacedBoxesHorizontally }
-        from "./algorithms/concat-horizontally"
-    import { centerSpacedBoxToBoundaryBox }
-        from "./algorithms/center-to-boundary-box"
-    import { applyMarginToSpacedBox }
-        from "./algorithms/apply-margin"
+    import { alignShapeViewWithinNewBoxBoundary }
+        from "../algorithms/align-in-box"
+    import { frameMonoStyledViews }
+        from "../../../shapes/frame/mono/frame"
+    import { concatMonoStyledViewsVertically }
+        from "../algorithms/concat-vertically"
+    import { concatMonoStyledViewsHorizontally }
+        from "../algorithms/concat-horizontally"
+    import { centerShapeViewToBoundaryBox }
+        from "../algorithms/center-to-boundary-box"
+    import { applyMarginToShapeView }
+        from "../algorithms/apply-margin"
 
 //
-// ─── SPACED BOX ─────────────────────────────────────────────────────────────────
+// ─── SHAPE VIEW ─────────────────────────────────────────────────────────────────
 //
 
-    export class SpacedBox implements StringBox {
+    export class ShapeView implements ViewProtocol {
 
         //
         // ─── STORAGE ─────────────────────────────────────────────────────
         //
 
-                        #baseline:          number
-                        #terminalStyling:   ANSITerminalStyling
-                        #terminalStartTag:  string
-                        transparent:        boolean
             readonly    lines:              Array<string>
             readonly    height:             number
             readonly    width:              number
+
+                        transparent:        boolean
+
+                        #baseline:          number
+                        #terminalStyling:   ANSITerminalStyling
+                        #terminalStartTag:  string
 
         //
         // ─── CONSTRUCTOR ─────────────────────────────────────────────────
         //i
 
-            constructor ( lines: string[ ], baseLine: number ) {
+            constructor ( lines: string[ ], baseline: number ) {
+                // checking the lines
                 if ( lines instanceof Array ) {
+                    // for checking the size of the lines
+                    let minLineLength =
+                        Infinity
+                    let maxLineLength =
+                        - Infinity
+
                     for ( const line of lines ) {
+                        // checking the type
                         if ( typeof line !== "string" ) {
                             throw new Error(
-                                "Elements of the lines array should all be of type string"
+                                `Elements of the lines array should all be of type string, but found ${ typeof line }.`
                             )
                         }
+
+                        // checking if the lines are really lines
+                        if ( includesLineBreak( line ) ) {
+                            throw new Error(
+                                `Elements of the lines array should not include line breaks.`
+                            )
+                        }
+
+                        // checking the size of the lines
+                        if ( line.length > maxLineLength ) {
+                            maxLineLength = line.length
+                        }
+                        if ( line.length < minLineLength ) {
+                            minLineLength = line.length
+                        }
+                    }
+                    if ( minLineLength !== maxLineLength ) {
+                        throw new Error(
+                            `Lines of the ShapeView are not evenly spaced. (Min line length: ${ minLineLength }, Max line length: ${ maxLineLength })`
+                        )
                     }
                 } else {
                     throw new Error(
-                        "SpacedBox should be constructed with an array of strings"
+                        "ShapeView should be constructed with an array of strings"
                     )
                 }
 
-                if ( baseLine < 0 || baseLine >= lines.length ) {
+                // checking the baseline
+                if ( typeof baseline !== "number" || baseline < 0 || baseline >= lines.length ) {
                     throw new Error(
-                        "Initial SpacedBox baseline is out of boundary"
+                        "Initial ShapeView baseline is out of boundary"
                     )
                 }
 
+                // constructing
                 this.lines =
                     lines
                 this.height =
@@ -83,7 +115,7 @@
                 this.width =
                     this.lines[ 0 ].length
                 this.#baseline =
-                    baseLine
+                    baseline
                 this.#terminalStyling =
                     getDefaultTerminalStyle( )
                 this.#terminalStartTag =
@@ -98,7 +130,7 @@
                 //
                 const unifiedLines =
                     unifyLineSpaces( lines )
-                return new SpacedBox( unifiedLines, baseLine )
+                return new ShapeView( unifiedLines, baseLine )
             }
 
 
@@ -107,12 +139,12 @@
                     breakStringIntoLines( text )
                 const unifiedLines =
                     unifyLineSpaces( lines )
-                return new SpacedBox( unifiedLines, baseLine )
+                return new ShapeView( unifiedLines, baseLine )
             }
 
 
             static initEmptyBox ( ) {
-                return new SpacedBox( [ "" ], 0 )
+                return new ShapeView( [ "" ], 0 )
             }
 
 
@@ -127,7 +159,7 @@
                 for ( let i = 0; i < height; i++ ) {
                     lines.push( emptyLine )
                 }
-                return new SpacedBox( lines, 0 )
+                return new ShapeView( lines, 0 )
             }
 
         //
@@ -142,7 +174,7 @@
         // ─── SET TERMINAL STYLE ──────────────────────────────────────────
         //
 
-            public setANSITerminalStyle ( options: ANSITerminalSetStyleOptions ): SpacedBox {
+            public setANSITerminalStyle ( options: ANSITerminalSetStyleOptions ): ShapeView {
                 this.#terminalStyling =
                     mergeTerminalStyleWithOptions( this.#terminalStyling, options )
                 this.#terminalStartTag =
@@ -194,37 +226,37 @@
             public applyMargin ( top: number,
                                right: number,
                               bottom: number,
-                                left: number ): SpacedBox {
+                                left: number ): ShapeView {
                 //
-                return applyMarginToSpacedBox( this, top, right, bottom, left )
+                return applyMarginToShapeView( this, top, right, bottom, left )
             }
 
         //
         // ─── CENTER ──────────────────────────────────────────────────────
         //
 
-            public centerToBox ( width: number, height: number ): SpacedBox{
-                return centerSpacedBoxToBoundaryBox( this, width, height )
+            public centerToBox ( width: number, height: number ): ShapeView{
+                return centerShapeViewToBoundaryBox( this, width, height )
             }
 
         //
         // ─── CONCAT HORIZONTALLY ─────────────────────────────────────────
         //
 
-            static concatHorizontally ( boxes: SpacedBox[ ],
-                                       joiner: SpacedBox ): SpacedBox {
+            static concatHorizontally ( boxes: ShapeView[ ],
+                                       joiner: ShapeView ): ShapeView {
                 //
-                return concatSpacedBoxesHorizontally( boxes, joiner )
+                return concatMonoStyledViewsHorizontally( boxes, joiner )
             }
 
         //
         // ─── CONCAT VERTICALLY ───────────────────────────────────────────
         //
 
-            static concatVertically ( boxes: SpacedBox[ ],
-                                   baseLine: number ): SpacedBox {
+            static concatVertically ( boxes: ShapeView[ ],
+                                   baseLine: number ): ShapeView {
                 //
-                return concatSpacedBoxesVertically( boxes, baseLine )
+                return concatMonoStyledViewsVertically( boxes, baseLine )
             }
 
         //
@@ -232,7 +264,7 @@
         //
 
             public frame ( charSet: BoxFrameCharSet ) {
-                return frameSpacedBox( this, charSet )
+                return frameMonoStyledViews( this, charSet )
             }
 
         //
@@ -244,7 +276,7 @@
                          horizontalAlign: HorizontalAlign,
                            verticalAlign: VerticalAlign ) {
                 //
-                return alignSpacedBoxWithinNewBoxBoundary(
+                return alignShapeViewWithinNewBoxBoundary(
                     this, boxWidth, boxHeight, horizontalAlign, verticalAlign
                 )
             }

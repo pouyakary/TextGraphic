@@ -1,5 +1,5 @@
 
-import { SpacedBox, BoxFramePresets, ANSITerminalForegroundColor, LayeredPane } from
+import { ShapeView, BoxFramePresets, ANSITerminalForegroundColor, PaneView } from
     "../source"
 
 const wait = ( ms: number ) =>
@@ -9,43 +9,43 @@ main( ); async function main ( ) {
     for ( let iteration = 0; true; iteration++ ) {
         // 1
         const firstPaneBackground =
-            SpacedBox.initBlankRectangle( 20, 5 )
+            ShapeView.initBlankRectangle( 20, 5 )
                 .frame( BoxFramePresets.LightBoxPreset )
         const firstPane =
-            new LayeredPane( firstPaneBackground )
+            new PaneView( firstPaneBackground )
         const topLeftPaneObject =
-            new SpacedBox([ " * " ], 0)
+            new ShapeView([ " * " ], 0)
                 .frame( BoxFramePresets.LightBoxPreset )
                 .setANSITerminalStyle({ foregroundColor: ANSITerminalForegroundColor.Blue })
         firstPane.add( topLeftPaneObject, -5 + ( iteration % 30 ), 1, 1 )
 
         // 2
         const secondPaneBackground =
-            SpacedBox.initBlankRectangle( 20, 5 )
+            ShapeView.initBlankRectangle( 20, 5 )
                 .frame( BoxFramePresets.LightBoxPreset )
         const secondPane =
-            new LayeredPane( secondPaneBackground )
+            new PaneView( secondPaneBackground )
         const secondPaneObject =
-            new SpacedBox([ " * " ], 0)
+            new ShapeView([ " * " ], 0)
                 .frame( BoxFramePresets.LightBoxPreset )
                 .setANSITerminalStyle({ foregroundColor: ANSITerminalForegroundColor.Red })
         secondPane.add( secondPaneObject, 3, -3 + ( iteration % 20), 1 )
 
         // 3
         const thirdPaneBackground =
-            SpacedBox.initBlankRectangle( 20, 5 )
+            ShapeView.initBlankRectangle( 20, 5 )
                 .frame( BoxFramePresets.LightBoxPreset )
         const thirdPane =
-            new LayeredPane( thirdPaneBackground )
+            new PaneView( thirdPaneBackground )
         const thirdPaneObjectOne =
-            new SpacedBox([ " * " ], 0)
+            new ShapeView([ " * " ], 0)
                 .frame( BoxFramePresets.LightBoxPreset )
                 .setANSITerminalStyle({
                     foregroundColor: ANSITerminalForegroundColor.Green
                 })
         thirdPane.add( thirdPaneObjectOne, -4 + ( iteration % 30 ), 3, 1 )
         const thirdPaneObjectTwo =
-            new SpacedBox([ " * " ], 0)
+            new ShapeView([ " * " ], 0)
                 .frame( BoxFramePresets.LightBoxPreset )
                 .setANSITerminalStyle({
                     foregroundColor: ANSITerminalForegroundColor.Blue
@@ -54,7 +54,7 @@ main( ); async function main ( ) {
 
         // text
         const title =
-            SpacedBox.initWithText( "Multi Layer Animation Grouping in Pouya's TextKit", 0 )
+            ShapeView.initWithText( "Multi Layer Animation Grouping in Pouya's TextKit", 0 )
                 .setANSITerminalStyle({
                     italic:         true,
                     foregroundColor: ANSITerminalForegroundColor.Red
@@ -62,9 +62,9 @@ main( ); async function main ( ) {
 
         // Main Pane
         const mainPaneBackground =
-            SpacedBox.initBlankRectangle( 77, 10 )
+            ShapeView.initBlankRectangle( 77, 10 )
         const mainPane =
-            new LayeredPane( mainPaneBackground )
+            new PaneView( mainPaneBackground )
 
         mainPane.add( title, 15, 1, 1 )
         mainPane.add( firstPane, 4, 2, 1 )

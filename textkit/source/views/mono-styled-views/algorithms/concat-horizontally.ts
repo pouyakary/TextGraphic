@@ -4,8 +4,10 @@
 // ─── IMPORTS ────────────────────────────────────────────────────────────────────
 //
 
-    import { SpacedBox }
-        from "../main"
+    import { MonoStyledViews }
+        from ".."
+    import { ShapeView }
+        from "../shape-view/main"
     import { insertJoinersInBetweenArrayItems }
         from "../../../tools/array"
 
@@ -13,9 +15,10 @@
 // ─── CONCAT HORIZONTALLY ────────────────────────────────────────────────────────
 //
 
-    export function concatSpacedBoxesHorizontally ( boxes: SpacedBox[ ], joiner: SpacedBox ) {
+    export function concatMonoStyledViewsHorizontally ( boxes: MonoStyledViews[ ],
+                                                       joiner: ShapeView ) {
         if ( boxes.length === 0 ) {
-            return SpacedBox.initEmptyBox( )
+            return ShapeView.initEmptyBox( )
         }
         if ( boxes.length === 1 ) {
             return boxes[ 0 ]
@@ -74,7 +77,7 @@
         }
 
         // the new space box
-        return new SpacedBox( newLines, newBaseline )
+        return new ShapeView( newLines, newBaseline )
     }
 
 // ────────────────────────────────────────────────────────────────────────────────

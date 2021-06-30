@@ -1,15 +1,15 @@
 
-import { SpacedBox, BoxFramePresets, ANSITerminalForegroundColor, LayeredPane } from
+import { ShapeView, BoxFramePresets, ANSITerminalForegroundColor, PaneView } from
     "../source"
 
 let background =
-    SpacedBox.initBlankRectangle( 20, 5 )
+    ShapeView.initBlankRectangle( 20, 5 )
         .frame( BoxFramePresets.LightBoxPreset )
 const drawingPane =
-    new LayeredPane( background )
+    new PaneView( background )
 
 const helloChild =
-    new SpacedBox([ "Hello" ], 0)
+    new ShapeView([ "Hello" ], 0)
         .frame( BoxFramePresets.LightBoxPreset )
         .setANSITerminalStyle({
             bold: true,
@@ -18,7 +18,7 @@ const helloChild =
 drawingPane.add( helloChild, 3, 1, 1 )
 
 const worldChild =
-    new SpacedBox([ "World" ], 0)
+    new ShapeView([ "World" ], 0)
         .frame( BoxFramePresets.LightBoxWithRoundCornerPreset )
         .setANSITerminalStyle({
             italic: true,
@@ -27,7 +27,7 @@ const worldChild =
 drawingPane.add( worldChild, 7, 2, 2 )
 
 const outOfBoxChild =
-    new SpacedBox([ "Out of Box" ], 0)
+    new ShapeView([ "Out of Box" ], 0)
         .frame( BoxFramePresets.DoubleLineBoxPreset )
         .setANSITerminalStyle({
             foregroundColor: ANSITerminalForegroundColor.Green
@@ -39,13 +39,13 @@ drawingPane.fineTuneUnicodeBoxes( )
 // drawingPane.fineTuneUnicodeBoxes( )
 
 let secondPaneBackground =
-    SpacedBox.initBlankRectangle( 40, 8 )
+    ShapeView.initBlankRectangle( 40, 8 )
         .frame( BoxFramePresets.HHeavyVLightBoxPreset )
         .setANSITerminalStyle({
             foregroundColor: ANSITerminalForegroundColor.Red
         })
 const secondDrawingPane =
-    new LayeredPane( secondPaneBackground )
+    new PaneView( secondPaneBackground )
 
 secondDrawingPane.add( drawingPane, 5, 1, 1 )
 secondDrawingPane.add( drawingPane, 16, 2, 2 )

@@ -4,8 +4,10 @@
 // ─── IMPORTS ────────────────────────────────────────────────────────────────────
 //
 
-    import { SpacedBox }
-        from "../main"
+    import { MonoStyledViews }
+        from ".."
+    import { ShapeView }
+        from "../shape-view/main"
     import { createEmptyStringLine }
         from "../../../tools/string"
 
@@ -13,11 +15,11 @@
 // ─── APPLY MARGIN ───────────────────────────────────────────────────────────────
 //
 
-    export function applyMarginToSpacedBox ( box: SpacedBox,
+    export function applyMarginToShapeView ( box: MonoStyledViews,
                                              top: number,
                                            right: number,
                                           bottom: number,
-                                            left: number ): SpacedBox {
+                                            left: number ): ShapeView {
         //
         const topBottomSpaceLines =
             createEmptyStringLine( left + box.width + right )
@@ -44,7 +46,7 @@
         }
 
         //
-        return new SpacedBox( lines, box.baseline + top )
+        return new ShapeView( lines, box.baseline + top )
     }
 
 // ────────────────────────────────────────────────────────────────────────────────

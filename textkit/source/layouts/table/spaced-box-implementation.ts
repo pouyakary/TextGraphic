@@ -3,24 +3,24 @@
 // ─── IMPORTS ────────────────────────────────────────────────────────────────────
 //
 
-    import { SpacedBox }
-        from "../../core-elements/spaced-box/main"
+    import { ShapeView }
+        from "../../views/mono-styled-views/shape-view/main"
     import { insertJoinersInBetweenArrayItems }
         from "../../tools/array"
     import { HorizontalAlign, VerticalAlign, ResizingPolicy }
         from "../../shapes/types"
     import { TableCharSet, LightTablePreset }
-        from "../../shapes/table-frames"
+        from "../../shapes/presets/table-frames"
 
 //
 // ─── TYPES ──────────────────────────────────────────────────────────────────────
 //
 
-    type SpacedBoxTableRows =
-        SpacedBox[ ]
+    type ShapeViewTableRows =
+        ShapeView[ ]
 
-    type SpacedBoxTable =
-        SpacedBoxTableRows[ ]
+    type ShapeViewTable =
+        ShapeViewTableRows[ ]
 
     interface MaxArrays {
         columnsMaxWidths:   number[ ]
@@ -28,9 +28,9 @@
     }
 
     interface TableLines {
-        topLine:    SpacedBox
-        middleLine: SpacedBox
-        bottomLine: SpacedBox
+        topLine:    ShapeView
+        middleLine: ShapeView
+        bottomLine: ShapeView
     }
 
     export interface TableInitSettings {
@@ -53,13 +53,13 @@
 // ─── GENERATOR ──────────────────────────────────────────────────────────────────
 //
 
-    export function createSpacedBoxTableInTextForm ( rows: SpacedBoxTable,
-                                                    input: TableInitSettings ): SpacedBox {
+    export function createShapeViewTableInTextForm ( rows: ShapeViewTable,
+                                                    input: TableInitSettings ): ShapeView {
         if ( rows.length === 0 ) {
-            return SpacedBox.initEmptyBox( )
+            return ShapeView.initEmptyBox( )
         }
 
-        completeSpacedBoxTable( rows )
+        completeShapeViewTable( rows )
 
         const settings =
             fixTableSettings( rows, input )
@@ -73,12 +73,12 @@
         const joinedTableParts =
             joinTableParts( renderedRows, decorationLines )
         const lines =
-            flattenSpacedBoxLines( joinedTableParts )
+            flattenShapeViewLines( joinedTableParts )
         const baseline =
             computeNewBaseline( maxArrays )
 
         const table =
-            new SpacedBox( lines, baseline )
+            new ShapeView( lines, baseline )
 
         return table
     }
@@ -87,7 +87,7 @@
 // ─── FIX SETTINGS ───────────────────────────────────────────────────────────────
 //
 
-    function fixTableSettings ( rows: SpacedBoxTable,
+    function fixTableSettings ( rows: ShapeViewTable,
                                input: TableInitSettings ): TableSettings {
 
         const horizontalAligns =
@@ -163,7 +163,7 @@
 // ─── FLATTEN LINES ──────────────────────────────────────────────────────────────
 //
 
-    function flattenSpacedBoxLines ( boxes: SpacedBox[ ] ): string[ ] {
+    function flattenShapeViewLines ( boxes: ShapeView[ ] ): string[ ] {
         const lines =
             new Array<string> ( )
         for ( const box of boxes ) {
@@ -178,8 +178,8 @@
 // ─── JOIN TABLE PARTS ───────────────────────────────────────────────────────────
 //
 
-    function joinTableParts ( renderedRows: SpacedBox[ ],
-                           decorationLines: TableLines ): SpacedBox[ ] {
+    function joinTableParts ( renderedRows: ShapeView[ ],
+                           decorationLines: TableLines ): ShapeView[ ] {
         const linesWithMiddleDecorations =
             insertJoinersInBetweenArrayItems( renderedRows, decorationLines.middleLine )
         const joinedTableParts = [
@@ -208,7 +208,7 @@
 // ─── COMPUTE MAX ARRAYS ─────────────────────────────────────────────────────────
 //
 
-    function computeMaxArrays ( input: SpacedBoxTable,
+    function computeMaxArrays ( input: ShapeViewTable,
                              settings: TableSettings ): MaxArrays {
         const columnsMaxWidths =
             new Array<number> ( )
@@ -301,12 +301,12 @@
 // ─── MAKE COMPLETE TABLE ────────────────────────────────────────────────────────
 //
 
-    function completeSpacedBoxTable ( table: SpacedBoxTable ) {
+    function completeShapeViewTable ( table: ShapeViewTable ) {
         const width =
             Math.max( ...table.map( row => row.length ) )
         for ( const row of table ) {
             for ( let iterator = row.length; iterator < width; iterator++ ) {
-                row.push( SpacedBox.initEmptyBox( ) )
+                row.push( ShapeView.initEmptyBox( ) )
             }
         }
         return table
@@ -346,11 +346,11 @@
     function makeTopBottomLineWith ( middleLines: string[ ],
                                             left: string,
                                           middle: string,
-                                           right: string ): SpacedBox {
+                                           right: string ): ShapeView {
         const line =
             left + middleLines.join( middle ) + right
         const box =
-            new SpacedBox( [ line ], 0 )
+            new ShapeView( [ line ], 0 )
         return box
     }
 
@@ -365,14 +365,14 @@
 // ─── RENDER ROWS ────────────────────────────────────────────────────────────────
 //
 
-    function renderRows ( table: SpacedBoxTable,
+    function renderRows ( table: ShapeViewTable,
                       maxArrays: MaxArrays,
                        settings: TableSettings ) {
 
         const { rowsMaxHeights, columnsMaxWidths } =
             maxArrays
         const renderedRows =
-            new Array<SpacedBox> ( )
+            new Array<ShapeView> ( )
 
         for ( let rowIndex = 0; rowIndex < table.length; rowIndex++ ) {
             const row =
@@ -392,7 +392,7 @@
 // ─── RENDER ROW ─────────────────────────────────────────────────────────────────
 //
 
-    function renderRow ( row: SpacedBoxTableRows,
+    function renderRow ( row: ShapeViewTableRows,
                     rowIndex: number,
                    rowHeight: number,
             columnsMaxWidths: number[ ],
@@ -434,7 +434,7 @@
         }
 
         const renderedRow =
-            SpacedBox.concatHorizontally( toBeJoined, SpacedBox.initEmptyBox( ) )
+            ShapeView.concatHorizontally( toBeJoined, ShapeView.initEmptyBox( ) )
 
         return renderedRow
     }
@@ -450,7 +450,7 @@
             lines.push( character )
         }
         const box =
-            new SpacedBox( lines, 0 )
+            new ShapeView( lines, 0 )
         return box
     }
 

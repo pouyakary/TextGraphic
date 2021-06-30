@@ -3,16 +3,16 @@
 // ─── IMPORTS ────────────────────────────────────────────────────────────────────
 //
 
-    import { LayeredPane, PaneChildrenProfile }
+    import { PaneView, PaneChildrenProfile }
         from "../main"
     import { ScreenMatrixPixel }
-        from "../../../protocols/string-box"
+        from "../../../protocols/view-protocol"
 
 //
 // ─── RAY TRACE ──────────────────────────────────────────────────────────────────
 //
 
-    export function rayTraceScreenPixel ( pane: LayeredPane,
+    export function rayTraceScreenPixel ( pane: PaneView,
                                           left: number,
                                            top: number,
                                              x: number,

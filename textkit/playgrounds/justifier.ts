@@ -80,7 +80,7 @@
 // ─── HORIZONTAL RULER ───────────────────────────────────────────────────────────
 //
 
-    function createHorizontalRuler ( size: number ): TextKit.SpacedBox {
+    function createHorizontalRuler ( size: number ): TextKit.ShapeView {
         const charSet: TextKit.RulerCharSet = {
             originChar: "└",
             middleChar: "─",
@@ -105,7 +105,7 @@
 // ─── VERTICAL RULER ─────────────────────────────────────────────────────────────
 //
 
-    function createVerticalRuler ( height: number ): TextKit.SpacedBox {
+    function createVerticalRuler ( height: number ): TextKit.ShapeView {
         const charSet: TextKit.RulerCharSet = {
             originChar: "┐",
             middleChar: "│",
@@ -131,7 +131,7 @@
 // ─── CREATE TEXT JUSTIFIED ──────────────────────────────────────────────────────
 //
 
-    function createTextJustified ( size: number ): TextKit.SpacedBox {
+    function createTextJustified ( size: number ): TextKit.ShapeView {
         const justifiedText =
             TextKit.justifyPlainText(
                 SAMPLE_TEXT, size, TextKit.Justification.Center )
@@ -159,7 +159,7 @@
         const paneHeight =
             justifiedText.height + horizontalRuler.height + VERTICAL_SPACING + ( PANE_VERTICAL_PADDING * 2 )
         const pane =
-            TextKit.LayeredPane.initWithTransparentBackground( paneWidth, paneHeight )
+            TextKit.PaneView.initWithTransparentBackground( paneWidth, paneHeight )
 
         //
         pane.add( verticalRuler,

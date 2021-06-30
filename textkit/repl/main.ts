@@ -33,16 +33,16 @@
         ]
 
         const pattern =
-            new TextKit.SpacedBox( patternLines, 0 )
+            new TextKit.ShapeView( patternLines, 0 )
 
         const title =
-            TextKit.SpacedBox.initWithText( "TextKit", 0 )
+            TextKit.ShapeView.initWithText( "TextKit", 0 )
                 .setANSITerminalStyle({
                     italic: true,
                 })
 
         const pane =
-            TextKit.LayeredPane.initWithTransparentBackground(
+            TextKit.PaneView.initWithTransparentBackground(
                 parseInt( process.env.columns || "20" ), 5
             )
 

@@ -3,7 +3,7 @@
 // ─── IMPORTS ────────────────────────────────────────────────────────────────────
 //
 
-    import { ANSITerminalForegroundColor, BoxFramePresets, LayeredPane, SpacedBox }
+    import { ANSITerminalForegroundColor, BoxFramePresets, PaneView, ShapeView }
         from "../source"
 
 //
@@ -11,14 +11,14 @@
 //
 
     const box1 =
-        SpacedBox.initBlankRectangle( 8, 3 )
+        ShapeView.initBlankRectangle( 8, 3 )
             .frame( BoxFramePresets.LightBoxPreset )
             .setANSITerminalStyle({
                 foregroundColor: ANSITerminalForegroundColor.Blue
             })
 
     const box2 =
-        SpacedBox.initBlankRectangle( 8, 3 )
+        ShapeView.initBlankRectangle( 8, 3 )
             .frame( BoxFramePresets.LightBoxPreset )
             .setANSITerminalStyle({
                 foregroundColor: ANSITerminalForegroundColor.Red
@@ -28,15 +28,16 @@
 
 
     const box3 =
-        SpacedBox.initBlankRectangle( 8, 3 )
+        ShapeView.initBlankRectangle( 8, 3 )
             .frame( BoxFramePresets.LightBoxPreset )
             .setANSITerminalStyle({
                 foregroundColor: ANSITerminalForegroundColor.Green
             })
 
+
     const pane =
-        new LayeredPane(
-            SpacedBox.initBlankRectangle( 65, 10 )
+        new PaneView(
+            ShapeView.initBlankRectangle( 65, 10 )
         )
 
     pane.add( box1, 3, 1, 1 )
@@ -44,7 +45,7 @@
     pane.add( box3, 14, 3, 3 )
 
     const text =
-        SpacedBox.initWithText( "And there goes the transparency! 😎", 0 )
+        ShapeView.initWithText( "And there goes the transparency! 😎", 0 )
         .setANSITerminalStyle({
             italic: true,
             foregroundColor: ANSITerminalForegroundColor.Black

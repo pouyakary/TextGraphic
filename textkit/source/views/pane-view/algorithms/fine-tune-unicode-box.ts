@@ -3,7 +3,7 @@
 // ─── IMPORTS ────────────────────────────────────────────────────────────────────
 //
 
-    import { LayeredPane }
+    import { PaneView }
         from "../main"
 
 //
@@ -110,7 +110,7 @@
 // ─── FINE TUNE UNICODE BOX FOR LAYERED PANE ─────────────────────────────────────
 //
 
-    export function fineTuneUnicodeBoxForLayeredPane ( pane: LayeredPane ) {
+    export function fineTuneUnicodeBoxForLayeredPane ( pane: PaneView ) {
         const { width, height } =
             pane
         for ( let y = 0; y < height; y++ ) {
@@ -132,7 +132,7 @@
 // ─── GET REST OF THE CHARACTERS ─────────────────────────────────────────────────
 //
 
-    function getRestOfSurroundingsForFineTunnigUnicodeBoxes ( pane: LayeredPane, x: number, y: number ): string {
+    function getRestOfSurroundingsForFineTunnigUnicodeBoxes ( pane: PaneView, x: number, y: number ): string {
         let surroundings =
             ""
         surroundings +=

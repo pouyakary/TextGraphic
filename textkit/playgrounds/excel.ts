@@ -46,7 +46,7 @@
                 )
 
         const box =
-            TextKit.SpacedBox.initWithText( text, 0 )
+            TextKit.ShapeView.initWithText( text, 0 )
             .centerToBox( CELL_WIDTH - 2, 1 )
             .frame( border )
             .setANSITerminalStyle({
@@ -66,7 +66,7 @@
         const paneHeight =
             ( ( ( CELL_HEIGHT - 1 ) * TABLE_ROWS ) + 1 ) + 1 * PADDING_VERTICALLY
         const tablePane =
-            TextKit.LayeredPane.initWithTransparentBackground(
+            TextKit.PaneView.initWithTransparentBackground(
                 paneWidth, paneHeight )
 
         const ALPHABET =

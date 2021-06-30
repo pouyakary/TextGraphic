@@ -3,17 +3,19 @@
 // ─── IMPORTS ────────────────────────────────────────────────────────────────────
 //
 
-    import { VirtualScreen }
-        from "../../views/pane-view/virtual-screen"
-    import { ViewProtocol }
-        from "../../protocols/view-protocol"
+    import { describe }
+        from "mocha"
+    import { runShapeViewTestSuite }
+        from "./shape"
 
 //
-// ─── WRAP LAYOUT ────────────────────────────────────────────────────────────────
+// ─── CORE ELEMENTS TEST SUITE ───────────────────────────────────────────────────
 //
 
-    export class WrapLayout {
-
+    export function runCoreElementsTestSuite ( ) {
+        describe ( "Core Views", function ( ) {
+            runShapeViewTestSuite( )
+        })
     }
 
 // ────────────────────────────────────────────────────────────────────────────────

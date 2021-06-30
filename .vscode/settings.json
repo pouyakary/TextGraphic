@@ -4,7 +4,7 @@
         "occupation",
         "pouyakary",
         "renderkit",
-        "spacedbox",
+        "ShapeView",
         "textkit"
     ],
     "typescript.suggest.autoImports": false,

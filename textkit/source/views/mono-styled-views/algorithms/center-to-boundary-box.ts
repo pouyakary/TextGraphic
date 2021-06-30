@@ -3,14 +3,14 @@
 // ─── IMPORTS ────────────────────────────────────────────────────────────────────
 //
 
-    import { SpacedBox }
-        from "../main"
+    import { ShapeView }
+        from "../shape-view/main"
 
 //
 // ─── CENTER TO BOUNDARY BOX ─────────────────────────────────────────────────────
 //
 
-    export function centerSpacedBoxToBoundaryBox ( box: SpacedBox,
+    export function centerShapeViewToBoundaryBox ( box: ShapeView,
                                                  width: number,
                                                 height: number ) {
         const top =

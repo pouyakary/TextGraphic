@@ -3,12 +3,12 @@
 // ─── IMPORTS ────────────────────────────────────────────────────────────────────
 //
 
-    import { SpacedBox }
-        from "../spaced-box/main"
-    import { StringBox, ScreenMatrixPixel }
-        from "../../protocols/string-box"
+    import { ShapeView }
+        from "../mono-styled-views/shape-view/main"
+    import { ViewProtocol, ScreenMatrixPixel }
+        from "../../protocols/view-protocol"
     import { VirtualScreen }
-        from "../virtual-screen"
+        from "./virtual-screen"
     import { getDefaultTerminalStyle, ANSITerminalSetStyleOptions
            , generateStartingANSITerminalEscapeSequenceOfTerminalStyling
            , mergeTerminalStyleWithOptions, ANSITerminalStyling
@@ -27,14 +27,14 @@
         x:      number
         y:      number
         zIndex: number
-        child:  StringBox
+        child:  ViewProtocol
     }
 
 //
 // ─── DRAW PANE ──────────────────────────────────────────────────────────────────
 //
 
-    export class LayeredPane implements StringBox {
+    export class PaneView implements ViewProtocol {
 
         //
         // ─── STORAGE ─────────────────────────────────────────────────────
@@ -42,7 +42,7 @@
 
             readonly    height:                 number
             readonly    width:                  number
-            readonly    background:             SpacedBox
+            readonly    background:             ShapeView
             readonly    screen:                 VirtualScreen
             readonly    #children:               PaneChildrenProfile[ ]
                         transparent:            boolean
@@ -54,7 +54,7 @@
         // ─── CONSTRUCTOR ─────────────────────────────────────────────────
         //
 
-            constructor ( background: SpacedBox ) {
+            constructor ( background: ShapeView ) {
                 this.height =
                     background.height
                 this.width =
@@ -77,11 +77,11 @@
 
 
             public static initWithTransparentBackground ( width: number,
-                                                         height: number ): LayeredPane {
+                                                         height: number ): PaneView {
                 const background =
-                    SpacedBox.initBlankRectangle( width, height )
+                    ShapeView.initBlankRectangle( width, height )
                 const pane =
-                    new LayeredPane( background )
+                    new PaneView( background )
                 pane.transparent =
                     true
                 return pane
@@ -120,7 +120,7 @@
         // ─── ADD CHILD ───────────────────────────────────────────────────
         //
 
-            public add ( child: StringBox, x: number, y: number, zIndex: number ) {
+            public add ( child: ViewProtocol, x: number, y: number, zIndex: number ) {
                 this.#children.push({ x, y, zIndex, child })
                 this.updatePortionOfScreenMatrix( x, y, child.width, child.height )
                 return this
@@ -130,7 +130,7 @@
         // ─── TERMINAL STYLE ──────────────────────────────────────────────
         //
 
-            public setANSITerminalStyle ( options: ANSITerminalSetStyleOptions ): StringBox {
+            public setANSITerminalStyle ( options: ANSITerminalSetStyleOptions ): ViewProtocol {
                 this.#terminalStyling =
                     mergeTerminalStyleWithOptions( this.#terminalStyling, options )
 

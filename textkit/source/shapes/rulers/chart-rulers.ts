@@ -3,8 +3,8 @@
 // ─── IMPORTS ────────────────────────────────────────────────────────────────────
 //
 
-    import { SpacedBox }
-        from "../../core-elements/spaced-box/main"
+    import { ShapeView }
+        from "../../views/mono-styled-views/shape-view/main"
     import { Direction }
         from "../../protocols/direction"
 
@@ -42,12 +42,12 @@
 // ─── RULER MAKER ────────────────────────────────────────────────────────────────
 //
 
-    export function createChartRuler ( inputSettings: CharRulerSettings ): SpacedBox {
+    export function createChartRuler ( inputSettings: CharRulerSettings ): ShapeView {
         const settings =
             fixSettings( inputSettings )
 
         if ( settings.size < 1 ) {
-            return SpacedBox.initEmptyBox( )
+            return ShapeView.initEmptyBox( )
         }
 
         switch ( settings.facing ) {
@@ -94,13 +94,13 @@
 //
 
     function createHorizontalChartRuler ( settings: FixedCharRulerSettings,
-                                     isDirectionUp: boolean ): SpacedBox {
+                                     isDirectionUp: boolean ): ShapeView {
         //
         const rulerLine =
             createHorizontalRulerLine( settings )
 
         if ( settings.hideNumbers ) {
-            return new SpacedBox( [ rulerLine ], 0 )
+            return new ShapeView( [ rulerLine ], 0 )
         }
 
         //
@@ -116,14 +116,14 @@
                 ? 0
                 : 1
 
-        return new SpacedBox( lines, baseline )
+        return new ShapeView( lines, baseline )
     }
 
 //
 // ─── CREATE VERTICAL RULER ──────────────────────────────────────────────────────
 //
 
-    function createVerticalRuler ( settings: FixedCharRulerSettings, facingLeft: boolean ): SpacedBox {
+    function createVerticalRuler ( settings: FixedCharRulerSettings, facingLeft: boolean ): ShapeView {
         const { hideNumbers, size, chars, verticalGutterSize, unit, unitSize } =
             settings
         const { originChar, middleChar, separatorChar } =
@@ -142,7 +142,7 @@
                         : middleChar
             }
 
-            return new SpacedBox( lines, 0 )
+            return new ShapeView( lines, 0 )
         }
 
 
@@ -182,7 +182,7 @@
                     )
         }
 
-        return new SpacedBox( lines, 0 )
+        return new ShapeView( lines, 0 )
     }
 
 //

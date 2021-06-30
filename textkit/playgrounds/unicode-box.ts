@@ -3,7 +3,7 @@
 // ─── IMPORTS ────────────────────────────────────────────────────────────────────
 //
 
-    import { SpacedBox, BoxFramePresets, LayeredPane }
+    import { ShapeView, BoxFramePresets, PaneView }
         from "../source/index"
 
 //
@@ -11,16 +11,16 @@
 //
 
     const background =
-        new LayeredPane(
-            SpacedBox.initBlankRectangle( 7, 4 )
+        new PaneView(
+            ShapeView.initBlankRectangle( 7, 4 )
         )
 
     const sampleBox1 =
-        SpacedBox.initBlankRectangle( 3, 1 )
+        ShapeView.initBlankRectangle( 3, 1 )
             .frame( BoxFramePresets.LightBoxPreset )
 
     const sampleBox2 =
-        SpacedBox.initBlankRectangle( 3, 1 )
+        ShapeView.initBlankRectangle( 3, 1 )
             .frame( BoxFramePresets.HeavyBoxPreset )
 
     background.add( sampleBox1, 0, 0, 1 )

@@ -5,8 +5,8 @@
 
     import { Justification }
         from "../../protocols/justification"
-    import { SpacedBox }
-        from "../../core-elements/spaced-box/main"
+    import { ShapeView }
+        from "../../views/mono-styled-views/shape-view/main"
 
 //
 // ─── CONSTANTS ──────────────────────────────────────────────────────────────────
@@ -21,7 +21,7 @@
 
     export function justifyPlainText ( text: string,
                                       width: number,
-                              justification: Justification ): SpacedBox {
+                              justification: Justification ): ShapeView {
         //
         const lines =
             new Array<string> ( )
@@ -75,7 +75,7 @@
         }
 
         //
-        return new SpacedBox( lines, 0 )
+        return new ShapeView( lines, 0 )
     }
 
 //

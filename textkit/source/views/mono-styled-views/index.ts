@@ -3,19 +3,19 @@
 // ─── IMPORTS ────────────────────────────────────────────────────────────────────
 //
 
-    import { describe }
-        from "mocha"
-    import { runSpacedBoxTestSuite }
-        from "./spaced-box"
+    import { LineView }
+        from "./line-view/main"
+    import { ShapeView }
+        from "./shape-view/main"
 
 //
-// ─── CORE ELEMENTS TEST SUITE ───────────────────────────────────────────────────
+// ─── EXPORTS ────────────────────────────────────────────────────────────────────
 //
 
-    export function runCoreElementsTestSuite ( ) {
-        describe ( "Core Library Elements", function ( ) {
-            runSpacedBoxTestSuite( )
-        })
-    }
+    export type MonoStyledViews =
+        ShapeView | LineView
+
+    export * from "./line-view/main"
+    export * from "./shape-view/main"
 
 // ────────────────────────────────────────────────────────────────────────────────

@@ -3,14 +3,14 @@
 // ─── IMPORTS ────────────────────────────────────────────────────────────────────
 //
 
-    import { SpacedBox }
+    import { ShapeView }
         from "./main"
 
 //
 // ─── BIRD ───────────────────────────────────────────────────────────────────────
 //
 
-    export function createSpacedBoxBirdSample ( ) {
+    export function createShapeViewBirdSample ( ) {
         const lines = [
             "  ██████        ",
             "████  ██        ",
@@ -22,14 +22,14 @@
             "    ██          ",
         ]
 
-        return new SpacedBox( lines, 4 )
+        return new ShapeView( lines, 4 )
     }
 
 //
 // ─── ALIEN ──────────────────────────────────────────────────────────────────────
 //
 
-    export function createSpacedBoxAlienSample ( ) {
+    export function createShapeViewAlienSample ( ) {
         const lines = [
             "  ██████████  ",
             "  ████  ████  ",
@@ -41,7 +41,7 @@
             "  ████  ████  ",
         ]
 
-        return new SpacedBox( lines, 4 )
+        return new ShapeView( lines, 4 )
     }
 
 // ────────────────────────────────────────────────────────────────────────────────

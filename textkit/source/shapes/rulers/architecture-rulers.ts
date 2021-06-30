@@ -3,8 +3,8 @@
 // ─── IMPORTS ────────────────────────────────────────────────────────────────────
 //
 
-    import { SpacedBox }
-        from "../../core-elements/spaced-box/main"
+    import { ShapeView }
+        from "../../views/mono-styled-views/shape-view/main"
 
 //
 // ─── TYPES ──────────────────────────────────────────────────────────────────────
@@ -22,7 +22,7 @@
 
     export function createVerticalArchitectureRuler ( size: number,
                                                      chars: ArchitecturalRulerCharSet,
-                                                      text: string = "" ): SpacedBox {
+                                                      text: string = "" ): ShapeView {
         const lineChar =
             chars.line
         const startChar =
@@ -38,22 +38,22 @@
                     line.push()
                 }
             }
-            return new SpacedBox([
+            return new ShapeView([
 
             ], 0 )
         }
 
-        return SpacedBox.initEmptyBox( )
+        return ShapeView.initEmptyBox( )
     }
 
 //
 // ─── CREATE VERTICAL LINE WITHOUT TEXT ──────────────────────────────────────────
 //
 
-    function createVerticalRulerWithoutText ( size: number, start: string, middle: string, end: string ): SpacedBox {
+    function createVerticalRulerWithoutText ( size: number, start: string, middle: string, end: string ): ShapeView {
         const lineChars =
             ""
-        return new SpacedBox([ ], 0)
+        return new ShapeView([ ], 0)
     }
 
 // ────────────────────────────────────────────────────────────────────────────────

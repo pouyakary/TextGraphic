@@ -3,8 +3,10 @@
 // ─── IMPORTS ────────────────────────────────────────────────────────────────────
 //
 
-    import { SpacedBox }
-        from "../main"
+    import { MonoStyledViews }
+        from ".."
+    import { ShapeView }
+        from "../shape-view/main"
     import { HorizontalAlign, VerticalAlign }
         from "../../../shapes/types"
 
@@ -12,11 +14,11 @@
 // ─── ALIGN IN BOX ───────────────────────────────────────────────────────────────
 //
 
-    export function alignSpacedBoxWithinNewBoxBoundary ( box: SpacedBox,
+    export function alignShapeViewWithinNewBoxBoundary ( box: MonoStyledViews,
                                                     boxWidth: number,
                                                    boxHeight: number,
                                              horizontalAlign: HorizontalAlign,
-                                               verticalAlign: VerticalAlign ) {
+                                               verticalAlign: VerticalAlign ): ShapeView {
 
         let marginTop = 0, marginRight = 0, marginLeft = 0, marginBottom = 0
 

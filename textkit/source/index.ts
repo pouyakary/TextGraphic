@@ -4,12 +4,13 @@
 // ─── CORE ───────────────────────────────────────────────────────────────────────
 //
 
+    // Mono Views
     export * from
-        "./core-elements/spaced-box/main"
+        "./views/mono-styled-views"
+
+    // PaneView
     export * from
-        "./core-elements/spaced-box/samples"
-    export * from
-        "./core-elements/layered-pane/main"
+        "./views/pane-view/main"
 
 //
 // ─── LAYOUTS ────────────────────────────────────────────────────────────────────
@@ -27,9 +28,9 @@
     export * from
         "./shapes/types"
     export * as BoxFramePresets from
-        "./shapes/box-frames"
+        "./shapes/presets/box-frames"
     export * from
-        "./shapes/table-frames"
+        "./shapes/presets/table-frames"
     export * from
         "./shapes/rulers/chart-rulers"
 
@@ -54,7 +55,7 @@
 //
 
     export * from
-        "./protocols/string-box"
+        "./protocols/view-protocol"
     export * from
         "./protocols/direction"
     export * from

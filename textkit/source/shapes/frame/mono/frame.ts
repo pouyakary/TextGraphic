@@ -3,16 +3,18 @@
 // ─── IMPORTS ────────────────────────────────────────────────────────────────────
 //
 
-    import { SpacedBox }
-        from "../main"
+    import { MonoStyledViews }
+        from "../../../views/mono-styled-views"
+    import { ShapeView }
+        from "../../../views/mono-styled-views/shape-view/main"
     import { BoxFrameCharSet }
-        from "../../../shapes/box-frames"
+        from "../../presets/box-frames"
 
 //
-// ─── FRAME SPACED BOX ───────────────────────────────────────────────────────────
+// ─── FRAME SHAPE VIEW ───────────────────────────────────────────────────────────
 //
 
-    export function frameSpacedBox ( box: SpacedBox, charSet: BoxFrameCharSet ) {
+    export function frameMonoStyledViews ( box: MonoStyledViews, charSet: BoxFrameCharSet ) {
         const firstLine =
             charSet.topLeft + charSet.top.repeat( box.width ) + charSet.topRight
         const lastLine =
@@ -23,6 +25,6 @@
         const lines: string[ ] =
             [ firstLine, ...middleLines, lastLine ]
         const result =
-            new SpacedBox( lines, box.baseline + 1 )
+            new ShapeView( lines, box.baseline + 1 )
         return result
     }
