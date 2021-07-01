@@ -52,7 +52,7 @@
                     newBaseline - box.baseline
                 const bottomPadding =
                     newHeight - box.height - topPadding
-                return box.cloneWithAppliedMargin(
+                return box.applyMargin(
                     topPadding, 0, bottomPadding, 0
                 )
             })

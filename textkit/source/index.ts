@@ -10,7 +10,7 @@
 
     // PaneView
     export * from
-        "./views/pane-view/main"
+        "./views/multi-style-views/pane-view/main"
 
 //
 // ─── LAYOUTS ────────────────────────────────────────────────────────────────────

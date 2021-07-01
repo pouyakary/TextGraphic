@@ -154,13 +154,13 @@
         // ─── COMMON SHAPING TOOLS ────────────────────────────────────────
         //
 
-            cloneWithAppliedMargin ( topMargin: number ,
-                                   rightMargin: number ,
-                                  bottomMargin: number ,
-                                    leftMargin: number ): ViewProtocol
+            applyMargin ( topMargin: number ,
+                        rightMargin: number ,
+                       bottomMargin: number ,
+                         leftMargin: number ): ViewProtocol
 
-            cloneWithViewCenteredToBoundary ( width: number,
-                                             height: number ): ViewProtocol
+            centerToBoundaryBox ( width: number,
+                                 height: number ): ViewProtocol
 
         // ─────────────────────────────────────────────────────────────────
 

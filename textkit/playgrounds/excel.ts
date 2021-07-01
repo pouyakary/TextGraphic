@@ -47,7 +47,7 @@
 
         const box =
             TextKit.ShapeView.initWithText( text, 0 )
-            .cloneWithViewCenteredToBoundary( CELL_WIDTH - 2, 1 )
+            .centerToBoundaryBox( CELL_WIDTH - 2, 1 )
             .frame( border )
             .setANSITerminalStyle({
                 bold: active

@@ -19,8 +19,8 @@
 
     import { applyMarginToMonoStyleView }
         from "../algorithms/apply-margin"
-    import { centerMonoStyleViewToBoundaryBox }
-        from "../algorithms/center-to-boundary-box"
+    import { centerViewProtocolToBoundaryBox }
+        from "../../algorithms/center-to-boundary-box"
 
 //
 // ─── LINE VIEW ──────────────────────────────────────────────────────────────────
@@ -151,7 +151,7 @@
         // ─── APPLY MARGIN ────────────────────────────────────────────────
         //
 
-            public cloneWithAppliedMargin ( top: number,
+            public applyMargin ( top: number,
                                           right: number,
                                          bottom: number,
                                            left: number ): ShapeView {
@@ -164,10 +164,10 @@
         //
 
 
-            public cloneWithViewCenteredToBoundary ( width: number,
-                                                    height: number ): ShapeView{
+            public centerToBoundaryBox ( width: number,
+                                        height: number ): ShapeView {
                 //
-                return centerMonoStyleViewToBoundaryBox( this, width, height )
+                return centerViewProtocolToBoundaryBox( this, width, height ) as ShapeView
             }
 
         // ─────────────────────────────────────────────────────────────────

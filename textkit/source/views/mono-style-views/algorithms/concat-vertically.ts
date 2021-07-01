@@ -21,7 +21,7 @@
 
         for ( const box of boxes ) {
             const centeredBox =
-                box.cloneWithViewCenteredToBoundary( resultWidth, box.height )
+                box.centerToBoundaryBox( resultWidth, box.height )
             for ( const line of centeredBox.lines ) {
                 lines.push( line )
             }

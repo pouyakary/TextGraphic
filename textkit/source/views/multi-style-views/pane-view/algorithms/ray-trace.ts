@@ -6,7 +6,7 @@
     import { PaneView, PaneChildrenProfile }
         from "../main"
     import { ScreenMatrixPixel }
-        from "../../../protocols/view-protocol"
+        from "../../../../protocols/view-protocol"
 
 //
 // ─── RAY TRACE ──────────────────────────────────────────────────────────────────
@@ -35,7 +35,7 @@
                 if ( result ) {
                     if ( profile.zIndex > result.zIndex ) {
                         if ( profile.child.transparent ) {
-                            const [ style, character ] =
+                            const [ _, character ] =
                                 profile.child.getCharAtRelativePosition(
                                     profile.x, profile.y, x, y
                                 )
@@ -52,14 +52,13 @@
             }
         }
 
-        return ( result
-            ?   result.child.getCharAtRelativePosition(
-                    result.x, result.y, x, y
-                )
-            :   pane.background.getCharAtRelativePosition(
-                    0, 0, x, y
-                )
+        if ( result ) {
+            return result.child.getCharAtRelativePosition(
+                result.x, result.y, x, y
             )
+        } else {
+            return [ pane.terminalStartTag, " " ]
+        }
     }
 
 // ────────────────────────────────────────────────────────────────────────────────

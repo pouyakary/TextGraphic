@@ -4,7 +4,7 @@
 //
 
     import { VirtualScreen }
-        from "../../views/pane-view/virtual-screen"
+        from "../../views/multi-style-views/pane-view/virtual-screen"
     import { ViewProtocol }
         from "../../protocols/view-protocol"
 

@@ -4,9 +4,9 @@
 //
 
     import { ScreenMatrixPixel }
-        from "../../protocols/view-protocol"
+        from "../../../protocols/view-protocol"
     import { ANSITerminalResetEscapeSequence }
-        from "../../environments/ansi-terminal"
+        from "../../../environments/ansi-terminal"
 
 //
 // ─── TYPES ──────────────────────────────────────────────────────────────────────

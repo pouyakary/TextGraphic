@@ -31,8 +31,8 @@
         from "../algorithms/concat-vertically"
     import { concatMonoStyledViewsHorizontally }
         from "../algorithms/concat-horizontally"
-    import { centerMonoStyleViewToBoundaryBox }
-        from "../algorithms/center-to-boundary-box"
+    import { centerViewProtocolToBoundaryBox }
+        from "../../algorithms/center-to-boundary-box"
     import { applyMarginToMonoStyleView }
         from "../algorithms/apply-margin"
 
@@ -226,7 +226,7 @@
         // ─── MARGIN ──────────────────────────────────────────────────────
         //
 
-            public cloneWithAppliedMargin ( top: number,
+            public applyMargin ( top: number,
                                           right: number,
                                          bottom: number,
                                            left: number ): ShapeView {
@@ -238,9 +238,10 @@
         // ─── CENTER ──────────────────────────────────────────────────────
         //
 
-            public cloneWithViewCenteredToBoundary ( width: number,
-                                                    height: number ): ShapeView{
-                return centerMonoStyleViewToBoundaryBox( this, width, height )
+            public centerToBoundaryBox ( width: number,
+                                        height: number ): ShapeView {
+                //
+                return centerViewProtocolToBoundaryBox( this, width, height ) as ShapeView
             }
 
         //

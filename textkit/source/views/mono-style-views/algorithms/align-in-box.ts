@@ -62,7 +62,7 @@
         }
 
         const marginedBox =
-            box.cloneWithAppliedMargin( marginTop, marginRight, marginBottom, marginLeft )
+            box.applyMargin( marginTop, marginRight, marginBottom, marginLeft )
 
         return marginedBox
     }

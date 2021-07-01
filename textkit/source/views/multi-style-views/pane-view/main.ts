@@ -3,21 +3,27 @@
 // ─── IMPORTS ────────────────────────────────────────────────────────────────────
 //
 
-    import { ShapeView }
-        from "../mono-style-views/views/shape-view"
     import { ViewProtocol, ScreenMatrixPixel }
-        from "../../protocols/view-protocol"
+        from "../../../protocols/view-protocol"
     import { VirtualScreen }
         from "./virtual-screen"
+
     import { getDefaultTerminalStyle, ANSITerminalSetStyleOptions
            , generateStartingANSITerminalEscapeSequenceOfTerminalStyling
            , mergeTerminalStyleWithOptions, ANSITerminalStyling
            }
-        from "../../environments/ansi-terminal"
+        from "../../../environments/ansi-terminal"
+
     import { fineTuneUnicodeBoxForLayeredPane }
         from "./algorithms/fine-tune-unicode-box"
     import { rayTraceScreenPixel }
         from "./algorithms/ray-trace"
+
+    import { applyMarginToMultiStyleView }
+        from "../algorithms/apply-margin"
+
+    import { centerViewProtocolToBoundaryBox }
+        from "../../algorithms/center-to-boundary-box"
 
 //
 // ─── TYPES ──────────────────────────────────────────────────────────────────────
@@ -42,9 +48,8 @@
 
             readonly    height:                 number
             readonly    width:                  number
-            readonly    background:             ShapeView
             readonly    screen:                 VirtualScreen
-            readonly    #children:               PaneChildrenProfile[ ]
+            readonly    #children:              PaneChildrenProfile[ ]
                         transparent:            boolean
                         #baseline:              number
                         #terminalStyling:       ANSITerminalStyling
@@ -54,37 +59,23 @@
         // ─── CONSTRUCTOR ─────────────────────────────────────────────────
         //
 
-            constructor ( background: ShapeView ) {
+            constructor ( width: number, height: number) {
                 this.height =
-                    background.height
+                    height
                 this.width =
-                    background.width
-                this.background =
-                    background
+                    width
                 this.screen =
                     new VirtualScreen( this.width, this.height )
                 this.transparent =
                     false
                 this.#baseline =
-                    background.baseline
+                    0
                 this.#terminalStyling =
                     getDefaultTerminalStyle( )
                 this.#terminalStartTag =
                     ""
                 this.#children =
                     [ ]
-            }
-
-
-            public static initWithTransparentBackground ( width: number,
-                                                         height: number ): PaneView {
-                const background =
-                    ShapeView.initBlankRectangle( width, height )
-                const pane =
-                    new PaneView( background )
-                pane.transparent =
-                    true
-                return pane
             }
 
         //
@@ -103,17 +94,16 @@
         //
 
             public get baseline ( ): number {
-                return this.baseline
+                return this.#baseline
             }
 
-            public moveBaselineTo ( place: number ) {
-                if ( place >= 0 && place < this.height ) {
-                    this.#baseline = place
-                } else {
-                    throw new Error(
-                        `Could not move the baseline to ${ place }. (box height of ${ this.height })`
-                    )
+            public set baseline ( x: number ) {
+                if ( x >= 0 && x < this.height ) {
+                    this.#baseline = x
                 }
+                throw new Error(
+                    `Baseline was set out of boundary (given ${ x }, height: ${ this.height })`
+                )
             }
 
         //
@@ -150,7 +140,10 @@
         // ─── RAY TRACER ──────────────────────────────────────────────────
         //
 
-            public rayTrace ( left: number, top: number, x: number, y: number ): ScreenMatrixPixel {
+            public rayTrace ( left: number,
+                               top: number,
+                                 x: number,
+                                 y: number ): ScreenMatrixPixel {
                 return rayTraceScreenPixel( this, left, top, x, y )
             }
 
@@ -207,6 +200,30 @@
 
             public fineTuneUnicodeBoxes ( ) {
                 fineTuneUnicodeBoxForLayeredPane( this )
+            }
+
+        //
+        // ─── APPLY MARGIN ────────────────────────────────────────────────
+        //
+
+            public applyMargin ( topMargin: number ,
+                               rightMargin: number ,
+                              bottomMargin: number ,
+                                leftMargin: number ): PaneView {
+                //
+                return applyMarginToMultiStyleView(
+                    this, topMargin, rightMargin, bottomMargin, leftMargin
+                )
+            }
+
+        //
+        // ─── CENTER TO BOX ───────────────────────────────────────────────
+        //
+
+            public centerToBoundaryBox ( width: number,
+                                        height: number ): PaneView {
+                //
+                return centerViewProtocolToBoundaryBox( this, width, height ) as PaneView
             }
 
         // ─────────────────────────────────────────────────────────────────
