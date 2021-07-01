@@ -6,7 +6,7 @@
     import { Justification }
         from "../../protocols/justification"
     import { ShapeView }
-        from "../../views/mono-styled-views/shape-view/main"
+        from "../../views/mono-style-views/views/shape-view"
 
 //
 // ─── CONSTANTS ──────────────────────────────────────────────────────────────────

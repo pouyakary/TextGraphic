@@ -4,15 +4,15 @@
 //
 
     import { ShapeView }
-        from "../shape-view/main"
-    import { MonoStyledViews }
+        from "../views/shape-view"
+    import { MonoStyleViews }
         from ".."
 
 //
 // ─── CONCAT VERTICALLY ──────────────────────────────────────────────────────────
 //
 
-    export function concatMonoStyledViewsVertically ( boxes: MonoStyledViews[ ],
+    export function concatMonoStyledViewsVertically ( boxes: MonoStyleViews[ ],
                                                    baseLine: number ): ShapeView {
         const resultWidth =
             Math.max( ...boxes.map( box => box.width ) )
@@ -21,7 +21,7 @@
 
         for ( const box of boxes ) {
             const centeredBox =
-                box.centerToBox( resultWidth, box.height )
+                box.cloneWithViewCenteredToBoundary( resultWidth, box.height )
             for ( const line of centeredBox.lines ) {
                 lines.push( line )
             }

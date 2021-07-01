@@ -4,7 +4,7 @@
 //
 
     import { ShapeView }
-        from "../mono-styled-views/shape-view/main"
+        from "../mono-style-views/views/shape-view"
     import { ViewProtocol, ScreenMatrixPixel }
         from "../../protocols/view-protocol"
     import { VirtualScreen }

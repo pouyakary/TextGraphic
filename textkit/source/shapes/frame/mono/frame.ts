@@ -3,10 +3,10 @@
 // ─── IMPORTS ────────────────────────────────────────────────────────────────────
 //
 
-    import { MonoStyledViews }
-        from "../../../views/mono-styled-views"
+    import { MonoStyleViews }
+        from "../../../views/mono-style-views"
     import { ShapeView }
-        from "../../../views/mono-styled-views/shape-view/main"
+        from "../../../views/mono-style-views/views/shape-view"
     import { BoxFrameCharSet }
         from "../../presets/box-frames"
 
@@ -14,7 +14,7 @@
 // ─── FRAME SHAPE VIEW ───────────────────────────────────────────────────────────
 //
 
-    export function frameMonoStyledViews ( box: MonoStyledViews, charSet: BoxFrameCharSet ) {
+    export function frameMonoStyledViews ( box: MonoStyleViews, charSet: BoxFrameCharSet ) {
         const firstLine =
             charSet.topLeft + charSet.top.repeat( box.width ) + charSet.topRight
         const lastLine =

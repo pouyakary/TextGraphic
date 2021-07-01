@@ -4,10 +4,10 @@
 // ─── IMPORTS ────────────────────────────────────────────────────────────────────
 //
 
-    import { MonoStyledViews }
+    import { MonoStyleViews }
         from ".."
     import { ShapeView }
-        from "../shape-view/main"
+        from "../views/shape-view"
     import { insertJoinersInBetweenArrayItems }
         from "../../../tools/array"
 
@@ -15,7 +15,7 @@
 // ─── CONCAT HORIZONTALLY ────────────────────────────────────────────────────────
 //
 
-    export function concatMonoStyledViewsHorizontally ( boxes: MonoStyledViews[ ],
+    export function concatMonoStyledViewsHorizontally ( boxes: MonoStyleViews[ ],
                                                        joiner: ShapeView ) {
         if ( boxes.length === 0 ) {
             return ShapeView.initEmptyBox( )
@@ -52,7 +52,7 @@
                     newBaseline - box.baseline
                 const bottomPadding =
                     newHeight - box.height - topPadding
-                return box.applyMargin(
+                return box.cloneWithAppliedMargin(
                     topPadding, 0, bottomPadding, 0
                 )
             })

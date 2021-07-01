@@ -4,10 +4,10 @@
 // ─── IMPORTS ────────────────────────────────────────────────────────────────────
 //
 
-    import { MonoStyledViews }
+    import { MonoStyleViews }
         from ".."
     import { ShapeView }
-        from "../shape-view/main"
+        from "../views/shape-view"
     import { createEmptyStringLine }
         from "../../../tools/string"
 
@@ -15,11 +15,11 @@
 // ─── APPLY MARGIN ───────────────────────────────────────────────────────────────
 //
 
-    export function applyMarginToShapeView ( box: MonoStyledViews,
-                                             top: number,
-                                           right: number,
-                                          bottom: number,
-                                            left: number ): ShapeView {
+    export function applyMarginToMonoStyleView ( box: MonoStyleViews,
+                                                 top: number ,
+                                               right: number ,
+                                              bottom: number ,
+                                                left: number ): ShapeView {
         //
         const topBottomSpaceLines =
             createEmptyStringLine( left + box.width + right )

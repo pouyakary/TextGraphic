@@ -4,7 +4,7 @@
 //
 
     import { ShapeView }
-        from "../../views/mono-styled-views/shape-view/main"
+        from "../../views/mono-style-views/views/shape-view"
     import { insertJoinersInBetweenArrayItems }
         from "../../tools/array"
     import { HorizontalAlign, VerticalAlign, ResizingPolicy }

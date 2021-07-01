@@ -5,14 +5,22 @@
 
     import { ScreenMatrixPixel, ViewProtocol }
         from "../../../protocols/view-protocol"
+    import { ShapeView }
+        from "./shape-view"
 
     import { generateStartingANSITerminalEscapeSequenceOfTerminalStyling
            , getDefaultTerminalStyle, ANSITerminalResetEscapeSequence
            , ANSITerminalSetStyleOptions, mergeTerminalStyleWithOptions
            }
         from "../../../environments/ansi-terminal"
+
     import { includesLineBreak }
         from "../../../tools/string"
+
+    import { applyMarginToMonoStyleView }
+        from "../algorithms/apply-margin"
+    import { centerMonoStyleViewToBoundaryBox }
+        from "../algorithms/center-to-boundary-box"
 
 //
 // ─── LINE VIEW ──────────────────────────────────────────────────────────────────
@@ -137,6 +145,29 @@
                 throw Error (
                     `Character resolution failed. Position out of boundary: (X: ${ destX }, Width: ${ this.width }), (Y: ${ destY }, Height: 1).`
                 )
+            }
+
+        //
+        // ─── APPLY MARGIN ────────────────────────────────────────────────
+        //
+
+            public cloneWithAppliedMargin ( top: number,
+                                          right: number,
+                                         bottom: number,
+                                           left: number ): ShapeView {
+                //
+                return applyMarginToMonoStyleView( this, top, right, bottom, left )
+            }
+
+        //
+        // ─── CENTER TO BOX ───────────────────────────────────────────────
+        //
+
+
+            public cloneWithViewCenteredToBoundary ( width: number,
+                                                    height: number ): ShapeView{
+                //
+                return centerMonoStyleViewToBoundaryBox( this, width, height )
             }
 
         // ─────────────────────────────────────────────────────────────────

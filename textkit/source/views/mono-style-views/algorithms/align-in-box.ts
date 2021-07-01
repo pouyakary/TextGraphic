@@ -3,10 +3,10 @@
 // ─── IMPORTS ────────────────────────────────────────────────────────────────────
 //
 
-    import { MonoStyledViews }
+    import { MonoStyleViews }
         from ".."
     import { ShapeView }
-        from "../shape-view/main"
+        from "../views/shape-view"
     import { HorizontalAlign, VerticalAlign }
         from "../../../shapes/types"
 
@@ -14,11 +14,11 @@
 // ─── ALIGN IN BOX ───────────────────────────────────────────────────────────────
 //
 
-    export function alignShapeViewWithinNewBoxBoundary ( box: MonoStyledViews,
-                                                    boxWidth: number,
-                                                   boxHeight: number,
-                                             horizontalAlign: HorizontalAlign,
-                                               verticalAlign: VerticalAlign ): ShapeView {
+    export function alignMonoStyleViewWithinNewBoxBoundary ( box: MonoStyleViews,
+                                                        boxWidth: number,
+                                                       boxHeight: number,
+                                                 horizontalAlign: HorizontalAlign,
+                                                   verticalAlign: VerticalAlign ): ShapeView {
 
         let marginTop = 0, marginRight = 0, marginLeft = 0, marginBottom = 0
 
@@ -62,7 +62,7 @@
         }
 
         const marginedBox =
-            box.applyMargin( marginTop, marginRight, marginBottom, marginLeft )
+            box.cloneWithAppliedMargin( marginTop, marginRight, marginBottom, marginLeft )
 
         return marginedBox
     }

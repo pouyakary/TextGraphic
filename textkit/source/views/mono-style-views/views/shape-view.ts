@@ -6,6 +6,9 @@
     import { ViewProtocol, ScreenMatrixPixel }
         from "../../../protocols/view-protocol"
 
+    import { MonoStyleViews }
+        from ".."
+
     import { BoxFrameCharSet }
         from "../../../shapes/presets/box-frames"
     import { HorizontalAlign, VerticalAlign }
@@ -20,7 +23,7 @@
     import { unifyLineSpaces, breakStringIntoLines, includesLineBreak }
         from "../../../tools/string"
 
-    import { alignShapeViewWithinNewBoxBoundary }
+    import { alignMonoStyleViewWithinNewBoxBoundary }
         from "../algorithms/align-in-box"
     import { frameMonoStyledViews }
         from "../../../shapes/frame/mono/frame"
@@ -28,9 +31,9 @@
         from "../algorithms/concat-vertically"
     import { concatMonoStyledViewsHorizontally }
         from "../algorithms/concat-horizontally"
-    import { centerShapeViewToBoundaryBox }
+    import { centerMonoStyleViewToBoundaryBox }
         from "../algorithms/center-to-boundary-box"
-    import { applyMarginToShapeView }
+    import { applyMarginToMonoStyleView }
         from "../algorithms/apply-margin"
 
 //
@@ -223,20 +226,21 @@
         // ─── MARGIN ──────────────────────────────────────────────────────
         //
 
-            public applyMargin ( top: number,
-                               right: number,
-                              bottom: number,
-                                left: number ): ShapeView {
+            public cloneWithAppliedMargin ( top: number,
+                                          right: number,
+                                         bottom: number,
+                                           left: number ): ShapeView {
                 //
-                return applyMarginToShapeView( this, top, right, bottom, left )
+                return applyMarginToMonoStyleView( this, top, right, bottom, left )
             }
 
         //
         // ─── CENTER ──────────────────────────────────────────────────────
         //
 
-            public centerToBox ( width: number, height: number ): ShapeView{
-                return centerShapeViewToBoundaryBox( this, width, height )
+            public cloneWithViewCenteredToBoundary ( width: number,
+                                                    height: number ): ShapeView{
+                return centerMonoStyleViewToBoundaryBox( this, width, height )
             }
 
         //
@@ -244,7 +248,7 @@
         //
 
             static concatHorizontally ( boxes: ShapeView[ ],
-                                       joiner: ShapeView ): ShapeView {
+                                       joiner: ShapeView ): MonoStyleViews {
                 //
                 return concatMonoStyledViewsHorizontally( boxes, joiner )
             }
@@ -276,7 +280,7 @@
                          horizontalAlign: HorizontalAlign,
                            verticalAlign: VerticalAlign ) {
                 //
-                return alignShapeViewWithinNewBoxBoundary(
+                return alignMonoStyleViewWithinNewBoxBoundary(
                     this, boxWidth, boxHeight, horizontalAlign, verticalAlign
                 )
             }

@@ -159,6 +159,8 @@
                                   bottomMargin: number ,
                                     leftMargin: number ): ViewProtocol
 
+            cloneWithViewCenteredToBoundary ( width: number,
+                                             height: number ): ViewProtocol
 
         // ─────────────────────────────────────────────────────────────────
 

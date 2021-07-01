@@ -4,15 +4,17 @@
 //
 
     import { ShapeView }
-        from "../shape-view/main"
+        from "../views/shape-view"
+    import { MonoStyleViews }
+        from "../index"
 
 //
 // ─── CENTER TO BOUNDARY BOX ─────────────────────────────────────────────────────
 //
 
-    export function centerShapeViewToBoundaryBox ( box: ShapeView,
-                                                 width: number,
-                                                height: number ) {
+    export function centerMonoStyleViewToBoundaryBox ( box: MonoStyleViews,
+                                                     width: number,
+                                                    height: number ): ShapeView {
         const top =
             box.height === height ? 0 : Math.floor( ( height - box.height ) / 2 )
         const right =
@@ -23,7 +25,7 @@
             box.width === width ? 0 : width - ( right + box.width )
 
         const result =
-            box.applyMargin( top, right, bottom, left )
+            box.cloneWithAppliedMargin( top, right, bottom, left )
 
         return result
     }

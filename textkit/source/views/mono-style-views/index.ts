@@ -4,18 +4,18 @@
 //
 
     import { LineView }
-        from "./line-view/main"
+        from "./views/line-view"
     import { ShapeView }
-        from "./shape-view/main"
+        from "./views/shape-view"
 
 //
 // ─── EXPORTS ────────────────────────────────────────────────────────────────────
 //
 
-    export type MonoStyledViews =
+    export type MonoStyleViews =
         ShapeView | LineView
 
-    export * from "./line-view/main"
-    export * from "./shape-view/main"
+    export * from "./views/line-view"
+    export * from "./views/shape-view"
 
 // ────────────────────────────────────────────────────────────────────────────────

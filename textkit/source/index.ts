@@ -6,7 +6,7 @@
 
     // Mono Views
     export * from
-        "./views/mono-styled-views"
+        "./views/mono-style-views"
 
     // PaneView
     export * from
