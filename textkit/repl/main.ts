@@ -12,47 +12,6 @@
         from "../source"
 
 //
-// ─── TEXT KIT PATTERN ───────────────────────────────────────────────────────────
-//
-
-    function createThePattern ( ) {
-        const patternLines = [
-            "        ─┬┬┐─┐─┬┬┐─┐─┬┐─┬┬┐ ─┬┬┐─┐─┬┬┐─┐",
-            "        ─┐│└┤ ├┐└┤│ ├┐└┼┐│└┤─┐│└┤ ├┐└┤│ ",
-            "         └┴─└─└┴┬┼┼─┼┴┬┼┼┴┐└┬┼┴┬┼┐└┴┬┼┼─",
-            "              ─┐│└┤ ├┐└┤│ ├┐└┼┐│└┤─┐│└┤ ",
-            "       ─┬┬┐─┐─┬┼┼─┼─┼┼─┼┼┐└┴┬┼┼┴┐└┬┼┼─┼─",
-            "    ──┐ │└┤ ├┐└┤│ ├┐└┼┐│└┤─┐│└┤ ├┐└┤│ ├┐",
-            "      └─┴─└─└┼┬┼┴┐└┼┬┼┴┼─┼┐└┼┬┼─└┼┬┼┴┐└┼",
-            "           ─┐│└┤ ├┐└┤│ ├┐└┼┐│└┤─┐│└┤ ├┐└",
-            "            └┴─└─└┴┬┼┼─┼┴┬┼┼┴┐└┬┼┴┬┼┐└┴┬",
-            "                 ─┐│└┤ ├┐└┤│ ├┐└┼┐│└┤─┐│",
-            "          ─┬┬┐─┐─┬┼┼─┼─┼┼─┼┼┐└┴┬┼┼┴┐└┬┼┼",
-            "         ─┐│└┤ ├┐└┤│ ├┐└┼┐│└┤─┐│└┤ ├┐└┤│",
-            "          └┴─└─└┴─└┴─└┴─└┴┴─└─└┴─└─└┴─└┴",
-        ]
-
-        const pattern =
-            new TextKit.ShapeView( patternLines, 0 )
-
-        const title =
-            TextKit.ShapeView.initWithText( "TextKit", 0 )
-                .setANSITerminalStyle({
-                    italic: true,
-                })
-
-        const pane =
-            TextKit.PaneView.initWithTransparentBackground(
-                parseInt( process.env.columns || "20" ), 5
-            )
-
-        pane.add( title, 4, 2, 1 )
-        pane.add( pattern, title.width + 8, 0, 1 )
-
-        console.log( pane.ANSITerminalForm )
-    }
-
-//
 // ─── APPEND TO CONTEXT ──────────────────────────────────────────────────────────
 //
 
@@ -75,6 +34,14 @@
         for ( const property of Object.getOwnPropertyNames( object ) ) {
             appendToContext( server, property, object[ property as never ] )
         }
+    }
+
+//
+// ─── APPEND STYLER TO THE CONTEXT ───────────────────────────────────────────────
+//
+
+    function appendStylerToContext ( server: repl.REPLServer ) {
+        appendToContext( server, "$", new TextKit.ANSITerminalStyleRenderer( ) )
     }
 
 //
@@ -130,13 +97,6 @@
         })
     }
 
-    function definePowerCommand ( server: repl.REPLServer ) {
-        server.defineCommand( 'power', function power ( ) {
-            createThePattern( )
-            this.displayPrompt( )
-        })
-    }
-
 //
 // ─── WRITER ─────────────────────────────────────────────────────────────────────
 //
@@ -161,9 +121,10 @@
     }
 
     function replWriter ( output: any ) {
+        process.stdout.write( TextKit.ANSITerminalResetEscapeSequence )
         if ( typeof output === "object" ) {
-            if ( "ANSITerminalForm" in output ) {
-                return styleOutput( output.ANSITerminalForm )
+            if ( "styledForm" in output ) {
+                return styleOutput( output.styledForm )
             }
         }
 
@@ -179,11 +140,11 @@
         // context
         appendObjectToREPLContext( TextKit, server )
         appendObjectToREPLContext( Math, server )
+        appendStylerToContext( server )
         // commands
         defineExitCommand( server )
         defineCleanCommand( server )
         defineNoteCommand( server )
-        definePowerCommand( server )
     }
 
 //

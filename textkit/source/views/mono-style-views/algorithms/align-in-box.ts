@@ -8,18 +8,21 @@
     import { ShapeView }
         from "../views/shape-view"
     import { HorizontalAlign, VerticalAlign }
-        from "../../../shapes/types"
+        from "../../../protocols/align"
 
 //
 // ─── ALIGN IN BOX ───────────────────────────────────────────────────────────────
 //
 
-    export function alignMonoStyleViewWithinNewBoxBoundary ( box: MonoStyleViews,
-                                                        boxWidth: number,
-                                                       boxHeight: number,
-                                                 horizontalAlign: HorizontalAlign,
-                                                   verticalAlign: VerticalAlign ): ShapeView {
+    export function alignMonoStyleViewWithinNewBoxBoundary <EnvironmentStyleSettings extends Object> (
+            box:                MonoStyleViews<EnvironmentStyleSettings>,
+            boxWidth:           number,
+            boxHeight:          number,
+            horizontalAlign:    HorizontalAlign,
+            verticalAlign:      VerticalAlign,
+        ): ShapeView<EnvironmentStyleSettings> {
 
+        //
         let marginTop = 0, marginRight = 0, marginLeft = 0, marginBottom = 0
 
         const horizontalEmptySpace =

@@ -3,8 +3,10 @@
 // ─── IMPORTS ────────────────────────────────────────────────────────────────────
 //
 
-    import { ANSITerminalSetStyleOptions }
-        from "../environments/ansi-terminal"
+    import { StyleRendererProtocol }
+        from "./style-renderer-protocol"
+    import { Subset }
+        from "../tools/types"
 
 //
 // ─── RAY TRACER RESULT ──────────────────────────────────────────────────────────
@@ -18,19 +20,21 @@
      * This Type is defined for the core system renderer to efficiently
      * pass screen information.
      *
-     * | Index &nbsp;&nbsp; | Information                       |
-     * | :----------------- | :-------------------------------- |
-     * | 0                  | ANSI Terminal Color Starting Tag  |
-     * | 1                  | Character                         |
+     * | Index &nbsp;&nbsp; | Information                            |
+     * | :----------------- | :------------------------------------- |
+     * | 0                  | Rendering Information before the text  |
+     * | 1                  | Character                              |
+     * | 2                  | Rendering Information after the text   |
      */
     export type ScreenMatrixPixel =
-        [ string, string ]
+        [ string, string, string ]
 
 //
 // ─── TYPES ──────────────────────────────────────────────────────────────────────
 //
 
-    export interface ViewProtocol {
+    export interface ViewProtocol<EnvironmentStylingSettings extends Object,
+                                  RenderStyler extends StyleRendererProtocol<EnvironmentStylingSettings>> {
 
         //
         // ─── GEOMETRIC PROPERTIES ────────────────────────────────────────
@@ -58,21 +62,37 @@
         //
 
             /**
+             * The styler that renders styling information for the environment
+             */
+            readonly styleRenderer: RenderStyler
+
+            /**
              * Shows and sets the transparency of the view.
              */
             transparent: boolean
+
+            /**
+             * Accepts a subset of the render styling settings
+             * and applies it to the styler
+             */
+            set style ( x: Subset<EnvironmentStylingSettings> )
+
+            /**
+             * returns the style of the view
+             */
+            get style ( ): EnvironmentStylingSettings
+
+            addStyle ( x: Subset<EnvironmentStylingSettings> ): void
 
         //
         // ─── RENDER ACCESSORS ────────────────────────────────────────────
         //
 
             /**
-             * Returns the final render of the view with the ANSI Terminal
-             * escape codes that in printing to the TTY results in styled
-             * prints that contains information such as color, text
-             * transformations and cetera.
+             * Returns the rendered version of the view with
+             * styling information for the environment
              */
-            readonly ANSITerminalForm: string
+            readonly styledForm: string
 
 
             /**
@@ -82,15 +102,6 @@
              */
             readonly plainTextForm: string
 
-        //
-        // ─── ANSI TERMINAL STYLE ─────────────────────────────────────────
-        //
-
-            /**
-             * Sets the style for the ANSI Terminal Renderer.
-             * @param options ANSI Terminal stylings
-             */
-            setANSITerminalStyle ( options: ANSITerminalSetStyleOptions ): ViewProtocol
 
         //
         // ─── COMMON TOOLS FOR THE RENDERING PROTOCOL ─────────────────────
@@ -141,15 +152,6 @@
              */
             rayTrace ( left: number, top: number, x: number, y: number ): ScreenMatrixPixel
 
-
-            /**
-             * Returns the generated ANSI Terminal Escape Sequence that
-             * represents the style for the current box. This is used for
-             * the core renderer of the `PaneView` to efficiently insert
-             * style information in the render form.
-             */
-            readonly terminalStartTag: string
-
         //
         // ─── COMMON SHAPING TOOLS ────────────────────────────────────────
         //
@@ -157,10 +159,10 @@
             applyMargin ( topMargin: number ,
                         rightMargin: number ,
                        bottomMargin: number ,
-                         leftMargin: number ): ViewProtocol
+                         leftMargin: number ): ViewProtocol<EnvironmentStylingSettings, RenderStyler>
 
             centerToBoundaryBox ( width: number,
-                                 height: number ): ViewProtocol
+                                 height: number ): ViewProtocol<EnvironmentStylingSettings, RenderStyler>
 
         // ─────────────────────────────────────────────────────────────────
 

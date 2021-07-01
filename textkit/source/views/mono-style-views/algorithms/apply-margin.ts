@@ -15,11 +15,14 @@
 // ─── APPLY MARGIN ───────────────────────────────────────────────────────────────
 //
 
-    export function applyMarginToMonoStyleView ( box: MonoStyleViews,
-                                                 top: number ,
-                                               right: number ,
-                                              bottom: number ,
-                                                left: number ): ShapeView {
+    export function applyMarginToMonoStyleView <EnvironmentStyleSettings extends Object> (
+            box:    MonoStyleViews<EnvironmentStyleSettings>,
+            top:    number,
+            right:  number,
+            bottom: number,
+            left:   number,
+        ): ShapeView<EnvironmentStyleSettings> {
+
         //
         const topBottomSpaceLines =
             createEmptyStringLine( left + box.width + right )
@@ -46,7 +49,9 @@
         }
 
         //
-        return new ShapeView( lines, box.baseline + top )
+        return new ShapeView(
+            lines, box.baseline + top, box.styleRenderer, box.style, false
+        )
     }
 
 // ────────────────────────────────────────────────────────────────────────────────

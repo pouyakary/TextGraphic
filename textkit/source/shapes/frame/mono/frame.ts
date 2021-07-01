@@ -14,7 +14,12 @@
 // ─── FRAME SHAPE VIEW ───────────────────────────────────────────────────────────
 //
 
-    export function frameMonoStyledViews ( box: MonoStyleViews, charSet: BoxFrameCharSet ) {
+    export function frameMonoStyledViews <EnvironmentStyleSettings extends Object> (
+            box:        MonoStyleViews<EnvironmentStyleSettings>,
+            charSet:    BoxFrameCharSet,
+        ) {
+
+        //
         const firstLine =
             charSet.topLeft + charSet.top.repeat( box.width ) + charSet.topRight
         const lastLine =
@@ -25,6 +30,11 @@
         const lines: string[ ] =
             [ firstLine, ...middleLines, lastLine ]
         const result =
-            new ShapeView( lines, box.baseline + 1 )
+            new ShapeView(
+                lines, box.baseline + 1,
+                box.styleRenderer, box.style, box.transparent
+            )
         return result
     }
+
+// ────────────────────────────────────────────────────────────────────────────────

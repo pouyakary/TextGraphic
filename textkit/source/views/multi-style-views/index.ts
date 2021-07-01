@@ -9,8 +9,8 @@
 // ─── TYPES ──────────────────────────────────────────────────────────────────────
 //
 
-    export type MultiStyleView =
-        PaneView
+    export type MultiStyleView <EnvironmentStyleSettings extends Object> =
+        PaneView<EnvironmentStyleSettings>
 
 //
 // ─── EXPORTS ────────────────────────────────────────────────────────────────────

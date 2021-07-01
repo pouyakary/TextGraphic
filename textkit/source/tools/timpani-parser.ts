@@ -7,7 +7,7 @@
            , ANSITerminalUnderlineEscapeSequence, ANSITerminalResetEscapeSequence
            , ANSITerminalReversedEscapeSequence
            }
-        from "../environments/ansi-terminal"
+        from "../environments/ansi-terminal/ansi-terminal"
 
 //
 // ─── INTERFACES ─────────────────────────────────────────────────────────────────
@@ -220,8 +220,12 @@
 // ─── CONVERT TIMPANI TREE TO FLATTEN ANSI TERMINAL CODE ─────────────────────────
 //
 
-    function convertTimpaniTreeToFLattenANSITerminal ( tree: TimpaniToken[ ],
-                                              parentANSITag: string = "" ): FlattenANSITerminalNode[ ] {
+    function convertTimpaniTreeToFLattenANSITerminal (
+            tree:           TimpaniToken[ ],
+            parentANSITag:  string = "",
+        ): FlattenANSITerminalNode[ ] {
+
+        //
         let result =
             new Array<FlattenANSITerminalNode> ( )
 
@@ -253,8 +257,12 @@
 // ─── GENERATE ANSI TERMINAL STARTING TAG BASED ON TIMPANI CODE ──────────────────
 //
 
-    function generateANSITerminalStartingTagFromTimpaniCode ( code: TimpaniStyleType,
-                                                         parentTag: string ): string {
+    function generateANSITerminalStartingTagFromTimpaniCode (
+            code:       TimpaniStyleType,
+            parentTag:  string
+        ): string {
+
+        //
         switch ( code ) {
             case "bold":
                 return parentTag + ANSITerminalBoldEscapeSequence

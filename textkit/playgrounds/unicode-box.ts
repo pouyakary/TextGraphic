@@ -3,24 +3,29 @@
 // ─── IMPORTS ────────────────────────────────────────────────────────────────────
 //
 
-    import { ShapeView, BoxFramePresets, PaneView }
+    import { ShapeView, BoxFramePresets, PaneView, ANSITerminalStyleRenderer }
         from "../source/index"
+
+//
+// ─── ENVIRONMENTS ───────────────────────────────────────────────────────────────
+//
+
+    const styler =
+        new ANSITerminalStyleRenderer( )
 
 //
 // ─── CONST BACKGROUND ───────────────────────────────────────────────────────────
 //
 
     const background =
-        new PaneView(
-            ShapeView.initBlankRectangle( 7, 4 )
-        )
+        new PaneView( 7, 4, styler, { } )
 
     const sampleBox1 =
-        ShapeView.initBlankRectangle( 3, 1 )
+        ShapeView.initBlankRectangle( 3, 1, styler )
             .frame( BoxFramePresets.LightBoxPreset )
 
     const sampleBox2 =
-        ShapeView.initBlankRectangle( 3, 1 )
+        ShapeView.initBlankRectangle( 3, 1, styler )
             .frame( BoxFramePresets.HeavyBoxPreset )
 
     background.add( sampleBox1, 0, 0, 1 )
@@ -28,6 +33,6 @@
 
     background.fineTuneUnicodeBoxes( )
 
-    console.log( background.ANSITerminalForm )
+    console.log( background.styledForm )
 
 // ────────────────────────────────────────────────────────────────────────────────

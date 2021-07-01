@@ -38,7 +38,7 @@
 // ─── MAKE THE CELL ──────────────────────────────────────────────────────────────
 //
 
-    function createCell ( text: string, active: boolean ) {
+    function createCell ( text: string, active: boolean, styler: TextKit.ANSITerminalStyleRenderer ) {
         const border =
             ( active
                 ? TextKit.BoxFramePresets.HeavyBoxPreset
@@ -46,12 +46,13 @@
                 )
 
         const box =
-            TextKit.ShapeView.initWithText( text, 0 )
+            TextKit.ShapeView.initWithText( text, 0, styler, { bold: true })
             .centerToBoundaryBox( CELL_WIDTH - 2, 1 )
             .frame( border )
-            .setANSITerminalStyle({
-                bold: active
-            })
+
+        box.style = <TextKit.ANSITerminalSetStyleOptions> {
+            bold: true,
+        }
 
         return box
     }
@@ -60,14 +61,13 @@
 // ─── MAKING THE TABLE ───────────────────────────────────────────────────────────
 //
 
-    function renderTable ( activeColumn: number ) {
+    function renderTable ( activeColumn: number, styler: TextKit.ANSITerminalStyleRenderer ) {
         const paneWidth =
             ( ( ( CELL_WIDTH - 1 ) * TABLE_COLUMNS ) + 2 ) + LEFT_PADDING
         const paneHeight =
             ( ( ( CELL_HEIGHT - 1 ) * TABLE_ROWS ) + 1 ) + 1 * PADDING_VERTICALLY
         const tablePane =
-            TextKit.PaneView.initWithTransparentBackground(
-                paneWidth, paneHeight )
+            new TextKit.PaneView( paneWidth, paneHeight, styler, { } )
 
         const ALPHABET =
             [ "A", "B", "C", "D", "E", "F", "G", "H" ]
@@ -83,7 +83,7 @@
                 const text =
                     `${ALPHABET[column]}${row + 1}`
                 const cell =
-                    createCell( text, active )
+                    createCell( text, active, styler )
 
                 tablePane.add( cell, x, y, active ? 2 : 1 )
             }
@@ -91,7 +91,7 @@
 
         tablePane.fineTuneUnicodeBoxes( )
 
-        console.log( tablePane.ANSITerminalForm )
+        console.log( tablePane.styledForm )
     }
 
 //
@@ -99,9 +99,12 @@
 //
 
     main( ); async function main( ) {
+        const styler =
+            new TextKit.ANSITerminalStyleRenderer( )
+
         while ( true ) {
             for ( const column of [ 0, 1, 2, 3, 4 ] ) {
-                renderTable( column )
+                renderTable( column, styler )
                 const start = performance.now( )
                 await sleep( )
                 const end = performance.now( )

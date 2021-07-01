@@ -77,10 +77,17 @@
         2
 
 //
+// ─── ENVIRONMENT ────────────────────────────────────────────────────────────────
+//
+
+    const styler =
+        new TextKit.ANSITerminalStyleRenderer( )
+
+//
 // ─── HORIZONTAL RULER ───────────────────────────────────────────────────────────
 //
 
-    function createHorizontalRuler ( size: number ): TextKit.ShapeView {
+    function createHorizontalRuler ( size: number ) {
         const charSet: TextKit.RulerCharSet = {
             originChar: "└",
             middleChar: "─",
@@ -94,9 +101,9 @@
         }
 
         const ruler =
-            TextKit.createChartRuler( rulerSettings )
+            TextKit.createChartRuler( styler, rulerSettings )
                 .applyMargin( 0, 0, 0, LEFT_SPACING )
-                .setANSITerminalStyle( RULER_STYLES )
+        ruler.style = RULER_STYLES
 
         return ruler
     }
@@ -105,7 +112,7 @@
 // ─── VERTICAL RULER ─────────────────────────────────────────────────────────────
 //
 
-    function createVerticalRuler ( height: number ): TextKit.ShapeView {
+    function createVerticalRuler ( height: number ) {
         const charSet: TextKit.RulerCharSet = {
             originChar: "┐",
             middleChar: "│",
@@ -120,9 +127,9 @@
         }
 
         const ruler =
-            TextKit.createChartRuler( rulerSettings )
+            TextKit.createChartRuler( styler, rulerSettings )
                 .applyMargin( 0, 0, 0, LEFT_SPACING )
-                .setANSITerminalStyle( RULER_STYLES )
+        ruler.style = RULER_STYLES
 
         return ruler
     }
@@ -131,10 +138,10 @@
 // ─── CREATE TEXT JUSTIFIED ──────────────────────────────────────────────────────
 //
 
-    function createTextJustified ( size: number ): TextKit.ShapeView {
+    function createTextJustified ( size: number ) {
         const justifiedText =
             TextKit.justifyPlainText(
-                SAMPLE_TEXT, size, TextKit.Justification.Center )
+                SAMPLE_TEXT, size, TextKit.Justification.Center, styler )
             .applyMargin( 0, 0, 0, LEFT_SPACING )
 
         return justifiedText
@@ -159,7 +166,7 @@
         const paneHeight =
             justifiedText.height + horizontalRuler.height + VERTICAL_SPACING + ( PANE_VERTICAL_PADDING * 2 )
         const pane =
-            TextKit.PaneView.initWithTransparentBackground( paneWidth, paneHeight )
+            new TextKit.PaneView( paneWidth, paneHeight, styler, { } )
 
         //
         pane.add( verticalRuler,
@@ -181,7 +188,7 @@
 
         //
         console.clear( )
-        console.log( pane.ANSITerminalForm )
+        console.log( pane.styledForm )
 
         Tools.setCursorToBottomRight( "TextKit Justifier Clustering Demo " )
         await Tools.sleep( 50 )

@@ -12,8 +12,8 @@
 // ─── EXPORTS ────────────────────────────────────────────────────────────────────
 //
 
-    export type MonoStyleViews =
-        ShapeView | LineView
+    export type MonoStyleViews<EnvironmentStyleSettings extends Object> =
+        ShapeView<EnvironmentStyleSettings> | LineView<EnvironmentStyleSettings>
 
     export * from "./views/line-view"
     export * from "./views/shape-view"

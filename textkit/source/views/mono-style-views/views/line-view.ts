@@ -3,16 +3,15 @@
 // ─── IMPORTS ────────────────────────────────────────────────────────────────────
 //
 
+    import { Subset }
+        from "../../../tools/types"
     import { ScreenMatrixPixel, ViewProtocol }
         from "../../../protocols/view-protocol"
+    import { StyleRendererProtocol }
+        from "../../../protocols/style-renderer-protocol"
+
     import { ShapeView }
         from "./shape-view"
-
-    import { generateStartingANSITerminalEscapeSequenceOfTerminalStyling
-           , getDefaultTerminalStyle, ANSITerminalResetEscapeSequence
-           , ANSITerminalSetStyleOptions, mergeTerminalStyleWithOptions
-           }
-        from "../../../environments/ansi-terminal"
 
     import { includesLineBreak }
         from "../../../tools/string"
@@ -26,7 +25,8 @@
 // ─── LINE VIEW ──────────────────────────────────────────────────────────────────
 //
 
-    export class LineView implements ViewProtocol {
+    export class LineView <EnvironmentStyleSettings extends Object> implements
+        ViewProtocol<EnvironmentStyleSettings, StyleRendererProtocol<EnvironmentStyleSettings>> {
 
         //
         // ─── STORAGE ─────────────────────────────────────────────────────
@@ -37,15 +37,22 @@
             readonly    height:             number
             readonly    baseline:           number
 
+            readonly    styleRenderer:      StyleRendererProtocol<EnvironmentStyleSettings>
+
                         transparent:        boolean
 
-                        #terminalStartTag:  string
+                        #style:                 EnvironmentStyleSettings
+                        #leftStylingInfoCache:  string
+                        #rightStylingInfoCache: string
 
         //
         // ─── CONSTRUCTOR ─────────────────────────────────────────────────
         //
 
-            constructor ( line: string ) {
+            constructor ( line: string,
+                 styleRenderer: StyleRendererProtocol<EnvironmentStyleSettings>,
+                         style: Subset<EnvironmentStyleSettings> ) {
+
                 // checks
                 if ( typeof line !== "string" ) {
                     throw new Error (
@@ -70,8 +77,17 @@
                     0
                 this.transparent =
                     false
-                this.#terminalStartTag =
-                    ANSITerminalResetEscapeSequence
+
+                this.styleRenderer =
+                    styleRenderer
+                this.#style =
+                    styleRenderer.margeNewStyleOptionsWithPreviosuStyleState(
+                        styleRenderer.defaultStyle, style
+                    )
+                this.#leftStylingInfoCache =
+                    styleRenderer.renderLeftStylingInfo( this.#style )
+                this.#rightStylingInfoCache =
+                    styleRenderer.renderRightStylingInfo( this.#style )
             }
 
         //
@@ -82,8 +98,35 @@
                 return [ this.line ]
             }
 
-            get terminalStartTag ( ) {
-                return this.#terminalStartTag
+        //
+        // ─── STYLE ───────────────────────────────────────────────────────
+        //
+
+            private applyNewStyle ( sourceStyle: EnvironmentStyleSettings,
+                                        changes: Subset<EnvironmentStyleSettings> ) {
+                //
+                this.#style =
+                    this.styleRenderer.margeNewStyleOptionsWithPreviosuStyleState(
+                        sourceStyle, changes
+                    )
+                this.#leftStylingInfoCache =
+                    this.styleRenderer.renderLeftStylingInfo( this.#style )
+                this.#rightStylingInfoCache =
+                    this.styleRenderer.renderRightStylingInfo( this.#style )
+            }
+
+
+            get style ( ): EnvironmentStyleSettings {
+                return this.#style
+            }
+
+            set style ( input: Subset<EnvironmentStyleSettings> ) {
+                this.applyNewStyle( this.styleRenderer.defaultStyle, input )
+            }
+
+
+            addStyle (  input: Subset<EnvironmentStyleSettings> ) {
+                this.applyNewStyle( this.#style, input )
             }
 
         //
@@ -94,20 +137,8 @@
                 return this.line
             }
 
-            get ANSITerminalForm ( ): string {
-                return this.terminalStartTag + this.line + ANSITerminalResetEscapeSequence
-            }
-
-        //
-        // ─── TERMINAL STYLE ──────────────────────────────────────────────
-        //
-
-            public setANSITerminalStyle ( options: ANSITerminalSetStyleOptions ): ViewProtocol {
-                const style =
-                    mergeTerminalStyleWithOptions( getDefaultTerminalStyle( ), options )
-                this.#terminalStartTag =
-                    generateStartingANSITerminalEscapeSequenceOfTerminalStyling( style )
-                return this
+            get styledForm ( ): string {
+                return this.#leftStylingInfoCache + this.line + this.#rightStylingInfoCache
             }
 
         //
@@ -137,7 +168,11 @@
                     y - top
                 if ( y === 0 ) {
                     if ( x >= 0 && x < this.width ) {
-                        return [ this.#terminalStartTag, this.line[ x ] ]
+                        return [
+                            this.#leftStylingInfoCache,
+                            this.line[ x ],
+                            this.#rightStylingInfoCache
+                        ]
                     }
                 }
 
@@ -152,9 +187,9 @@
         //
 
             public applyMargin ( top: number,
-                                          right: number,
-                                         bottom: number,
-                                           left: number ): ShapeView {
+                               right: number,
+                              bottom: number,
+                                left: number ): ShapeView<EnvironmentStyleSettings> {
                 //
                 return applyMarginToMonoStyleView( this, top, right, bottom, left )
             }
@@ -165,9 +200,9 @@
 
 
             public centerToBoundaryBox ( width: number,
-                                        height: number ): ShapeView {
+                                        height: number ): ShapeView<EnvironmentStyleSettings> {
                 //
-                return centerViewProtocolToBoundaryBox( this, width, height ) as ShapeView
+                return centerViewProtocolToBoundaryBox( this, width, height ) as ShapeView<EnvironmentStyleSettings>
             }
 
         // ─────────────────────────────────────────────────────────────────

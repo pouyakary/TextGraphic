@@ -3,10 +3,9 @@
 // ─── IMPORTS ────────────────────────────────────────────────────────────────────
 //
 
-    import { ScreenMatrixPixel }
+    import console from "console"
+import { ScreenMatrixPixel }
         from "../../../protocols/view-protocol"
-    import { ANSITerminalResetEscapeSequence }
-        from "../../../environments/ansi-terminal"
 
 //
 // ─── TYPES ──────────────────────────────────────────────────────────────────────
@@ -15,6 +14,19 @@
     // char top left bottom right
     export type ScreenMatrixPixelSurroundings =
         string
+
+//
+// ─── CONSTANTS ──────────────────────────────────────────────────────────────────
+//
+
+    const PIXEL_ARRAY_SIZE =
+        3
+    const PIXEL_LEFT_INFO_OFFSET =
+        0
+    const PIXEL_CHARACTER_OFFSET =
+        1
+    const PIXEL_RIGHT_INFO_OFFSET =
+        2
 
 //
 // ─── SCREEN MATRIX ──────────────────────────────────────────────────────────────
@@ -36,7 +48,7 @@
 
             constructor ( width: number, height: number ) {
                 const matrixSize =
-                    width * 2 * height
+                    width * PIXEL_ARRAY_SIZE * height
 
                 this.#width =
                     width
@@ -45,11 +57,13 @@
                 this.#matrix =
                     new Array<string> ( matrixSize )
 
-                for ( let index = 0; index < matrixSize; index += 2 ) {
-                    this.#matrix[ index ] =
+                for ( let index = 0; index < matrixSize; index += PIXEL_ARRAY_SIZE ) {
+                    this.#matrix[ index + PIXEL_LEFT_INFO_OFFSET ] =
                         ""
-                    this.#matrix[ index + 1 ] =
+                    this.#matrix[ index + PIXEL_CHARACTER_OFFSET ] =
                         " "
+                    this.#matrix[ index + PIXEL_RIGHT_INFO_OFFSET ] =
+                        ""
                 }
             }
 
@@ -91,7 +105,7 @@
             //                    Width: 3
 
             private computeIndex ( x: number, y: number ): number {
-                return 2 * ( y * this.#width + x )
+                return PIXEL_ARRAY_SIZE * ( y * this.#width + x )
             }
 
         //
@@ -104,16 +118,21 @@
                 const index =
                     this.computeIndex( x, y )
 
-                this.#matrix[ index ] =
-                    value[ 0 ]  // color
-                this.#matrix[ index + 1 ] =
-                    value[ 1 ]  // character
+                this.#matrix[ index + PIXEL_LEFT_INFO_OFFSET ] =
+                    value[ PIXEL_LEFT_INFO_OFFSET ]
+
+                this.#matrix[ index + PIXEL_CHARACTER_OFFSET ] =
+                    value[ PIXEL_CHARACTER_OFFSET ]
+
+                this.#matrix[ index + PIXEL_RIGHT_INFO_OFFSET ] =
+                    value[ PIXEL_RIGHT_INFO_OFFSET ]
             }
+
 
             public writeChar ( x: number, y: number, text: string ): void {
                 const index =
                     this.computeIndex( x, y )
-                this.#matrix[ index + 1 ] =
+                this.#matrix[ index + PIXEL_CHARACTER_OFFSET ] =
                     text
             }
 
@@ -126,55 +145,63 @@
 
                 const index =
                     this.computeIndex( x, y )
-                const color =
-                    this.#matrix[ index ]
+                const leftStylingInfo =
+                    this.#matrix[ index + PIXEL_LEFT_INFO_OFFSET ]
                 const char =
-                    this.#matrix[ index + 1 ]
+                    this.#matrix[ index + PIXEL_CHARACTER_OFFSET ]
+                const rightStylingInfo =
+                    this.#matrix[ index + PIXEL_RIGHT_INFO_OFFSET ]
 
-                return [ color, char ]
+                return [ leftStylingInfo, char, rightStylingInfo ]
             }
 
             public readChar ( x: number, y: number ): string {
-                return this.read( x, y )[ 1 ]
+                return this.read( x, y )[ PIXEL_CHARACTER_OFFSET ]
             }
 
-            public readColor ( x: number, y: number ): string {
-                return this.read( x, y )[ 0 ]
+        //
+        // ─── ITERATE ON ROW ──────────────────────────────────────────────
+        //
+
+            public * iterateOnRow ( row: number ): Generator<ScreenMatrixPixel> {
+                const startingIndex =
+                    this.#width * PIXEL_ARRAY_SIZE * row
+                const endingIndex =
+                    this.#width * PIXEL_ARRAY_SIZE * ( row + 1 )
+
+                for ( let i = startingIndex; i < endingIndex; i += PIXEL_ARRAY_SIZE ) {
+                    yield this.#matrix.slice( i, i + 3 ) as ScreenMatrixPixel
+                }
             }
 
         //
         // ─── GET TERMINAL ROW ────────────────────────────────────────────
         //
 
-            public getWholeANSITerminalRow ( row: number ): string {
+            public getWholeStyledRow ( row: number ): string {
                 let line =
                     ""
-                let previousColor =
+                let previousLeftInfo =
                     ""
-                const startingIndex =
-                    this.#width * 2 * row
-                const endingIndex =
-                    this.#width * 2 * ( row + 1 )
+                let previousRightInfo =
+                    ""
 
-                for ( let i = startingIndex; i < endingIndex; i += 2 ) {
-                    const color =
-                        this.#matrix[ i ]
-                    const char =
-                        this.#matrix[ i + 1 ]
-                    if ( previousColor !== color ) {
+                for ( const [ leftStylingInfo, character, rightStylingInfo ] of this.iterateOnRow( row ) ) {
+                    if ( previousLeftInfo !== leftStylingInfo ) {
                         line +=
-                            ( color === ""
-                                ? ANSITerminalResetEscapeSequence
-                                : color
+                            ( leftStylingInfo === ""
+                                ? previousRightInfo
+                                : leftStylingInfo
                                 )
-                        previousColor =
-                            color
+                        previousLeftInfo =
+                            leftStylingInfo
                     }
                     line +=
-                        char
+                        character
+                    previousRightInfo =
+                        rightStylingInfo
                 }
-
-                return line + ANSITerminalResetEscapeSequence
+                return line + previousRightInfo
             }
 
         //
@@ -214,12 +241,12 @@
         // ─── TERMINAL FORM ───────────────────────────────────────────────
         //
 
-            public get ANSITerminalForm ( ): string {
+            public get styledForm ( ): string {
                 const lines =
                     new Array<string>( this.#height )
                 for ( let row = 0; row < this.#height; row++ ) {
                     lines[ row ] =
-                        this.getWholeANSITerminalRow( row )
+                        this.getWholeStyledRow( row )
                 }
                 return lines.join("\n")
             }

@@ -5,6 +5,8 @@
 
     import { ShapeView }
         from "../../views/mono-style-views/views/shape-view"
+    import { StyleRendererProtocol }
+        from "../../protocols/style-renderer-protocol"
 
 //
 // ─── TYPES ──────────────────────────────────────────────────────────────────────
@@ -20,9 +22,10 @@
 // ─── ARCHITECTURE RULERS ────────────────────────────────────────────────────────
 //
 
-    export function createVerticalArchitectureRuler ( size: number,
-                                                     chars: ArchitecturalRulerCharSet,
-                                                      text: string = "" ): ShapeView {
+    export function createVerticalArchitectureRuler <EnvironmentStyleSettings extends Object> ( size: number,
+                                                                                               chars: ArchitecturalRulerCharSet,
+                                                                                              styler: StyleRendererProtocol<EnvironmentStyleSettings>,
+                                                                                                text: string = "" ): ShapeView<EnvironmentStyleSettings> {
         const lineChar =
             chars.line
         const startChar =
@@ -40,20 +43,15 @@
             }
             return new ShapeView([
 
-            ], 0 )
+            ], 0, styler, { }, true )
         }
 
-        return ShapeView.initEmptyBox( )
+        return ShapeView.initEmptyBox( styler )
     }
 
 //
 // ─── CREATE VERTICAL LINE WITHOUT TEXT ──────────────────────────────────────────
 //
 
-    function createVerticalRulerWithoutText ( size: number, start: string, middle: string, end: string ): ShapeView {
-        const lineChars =
-            ""
-        return new ShapeView([ ], 0)
-    }
 
 // ────────────────────────────────────────────────────────────────────────────────

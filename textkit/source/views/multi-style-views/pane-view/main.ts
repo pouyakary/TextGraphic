@@ -3,16 +3,12 @@
 // ─── IMPORTS ────────────────────────────────────────────────────────────────────
 //
 
+    import { Subset }
+        from "../../../tools/types"
     import { ViewProtocol, ScreenMatrixPixel }
         from "../../../protocols/view-protocol"
     import { VirtualScreen }
         from "./virtual-screen"
-
-    import { getDefaultTerminalStyle, ANSITerminalSetStyleOptions
-           , generateStartingANSITerminalEscapeSequenceOfTerminalStyling
-           , mergeTerminalStyleWithOptions, ANSITerminalStyling
-           }
-        from "../../../environments/ansi-terminal"
 
     import { fineTuneUnicodeBoxForLayeredPane }
         from "./algorithms/fine-tune-unicode-box"
@@ -24,23 +20,26 @@
 
     import { centerViewProtocolToBoundaryBox }
         from "../../algorithms/center-to-boundary-box"
+    import { StyleRendererProtocol }
+        from "../../../protocols/style-renderer-protocol"
 
 //
 // ─── TYPES ──────────────────────────────────────────────────────────────────────
 //
 
-    export interface PaneChildrenProfile {
+    export interface PaneChildrenProfile <EnvironmentStyleSettings extends Object> {
         x:      number
         y:      number
         zIndex: number
-        child:  ViewProtocol
+        child:  ViewProtocol<EnvironmentStyleSettings, StyleRendererProtocol<EnvironmentStyleSettings>>
     }
 
 //
 // ─── DRAW PANE ──────────────────────────────────────────────────────────────────
 //
 
-    export class PaneView implements ViewProtocol {
+    export class PaneView <EnvironmentStyleSettings extends Object> implements
+        ViewProtocol<EnvironmentStyleSettings, StyleRendererProtocol<EnvironmentStyleSettings>> {
 
         //
         // ─── STORAGE ─────────────────────────────────────────────────────
@@ -49,17 +48,24 @@
             readonly    height:                 number
             readonly    width:                  number
             readonly    screen:                 VirtualScreen
-            readonly    #children:              PaneChildrenProfile[ ]
-                        transparent:            boolean
-                        #baseline:              number
-                        #terminalStyling:       ANSITerminalStyling
-                        #terminalStartTag:      string
+            readonly    styleRenderer:          StyleRendererProtocol<EnvironmentStyleSettings>
+            readonly    #children:              PaneChildrenProfile<EnvironmentStyleSettings> [ ]
+
+                        transparent:                boolean
+                        #baseline:                  number
+                        #style:                     EnvironmentStyleSettings
+                        #leftStylingInfoCache:      string
+                        #rightStylingInfoCache:     string
 
         //
         // ─── CONSTRUCTOR ─────────────────────────────────────────────────
         //
 
-            constructor ( width: number, height: number) {
+            constructor ( width: number,
+                         height: number,
+                  styleRenderer: StyleRendererProtocol<EnvironmentStyleSettings>,
+                          style: Subset<EnvironmentStyleSettings> ) {
+
                 this.height =
                     height
                 this.width =
@@ -70,19 +76,44 @@
                     false
                 this.#baseline =
                     0
-                this.#terminalStyling =
-                    getDefaultTerminalStyle( )
-                this.#terminalStartTag =
-                    ""
                 this.#children =
                     [ ]
+
+                this.styleRenderer =
+                    styleRenderer
+                this.#style =
+                    styleRenderer.margeNewStyleOptionsWithPreviosuStyleState(
+                        styleRenderer.defaultStyle, style
+                    )
+                this.#leftStylingInfoCache =
+                    styleRenderer.renderLeftStylingInfo( this.#style )
+                this.#rightStylingInfoCache =
+                    styleRenderer.renderRightStylingInfo( this.#style )
+            }
+
+        //
+        // ─── INITIATION SHORTCUTS ────────────────────────────────────────
+        //
+
+            static initWithBackground <EnvironmentStyleSettings extends Object> (
+                    background: ViewProtocol<EnvironmentStyleSettings, StyleRendererProtocol<EnvironmentStyleSettings>>,
+                    styler:     StyleRendererProtocol<EnvironmentStyleSettings>,
+                ): PaneView<EnvironmentStyleSettings> {
+
+                //
+                const pane =
+                    new PaneView(
+                        background.width, background.height, styler, { } )
+                    .add( background, 0, 0, 0 )
+
+                return pane
             }
 
         //
         // ─── CHILDREN ────────────────────────────────────────────────────
         //
 
-            public * getChildren ( ): Generator<PaneChildrenProfile, null> {
+            public * getChildren ( ): Generator<PaneChildrenProfile<EnvironmentStyleSettings>, null> {
                 for ( const child of this.#children ) {
                     yield child
                 }
@@ -110,30 +141,49 @@
         // ─── ADD CHILD ───────────────────────────────────────────────────
         //
 
-            public add ( child: ViewProtocol, x: number, y: number, zIndex: number ) {
-                this.#children.push({ x, y, zIndex, child })
-                this.updatePortionOfScreenMatrix( x, y, child.width, child.height )
+            public add ( child: ViewProtocol<EnvironmentStyleSettings, StyleRendererProtocol<EnvironmentStyleSettings>>,
+                             x: number,
+                             y: number,
+                        zIndex: number ) {
+                //
+                this.#children.push({
+                    x, y, zIndex, child
+                })
+                this.updatePortionOfScreenMatrix(
+                    x, y, child.width, child.height
+                )
                 return this
             }
 
         //
-        // ─── TERMINAL STYLE ──────────────────────────────────────────────
+        // ─── STYLE ───────────────────────────────────────────────────────
         //
 
-            public setANSITerminalStyle ( options: ANSITerminalSetStyleOptions ): ViewProtocol {
-                this.#terminalStyling =
-                    mergeTerminalStyleWithOptions( this.#terminalStyling, options )
-
-                this.#terminalStartTag =
-                    generateStartingANSITerminalEscapeSequenceOfTerminalStyling(
-                        this.#terminalStyling
+            private applyNewStyle ( sourceStyle: EnvironmentStyleSettings,
+                                        changes: Subset<EnvironmentStyleSettings> ) {
+                //
+                this.#style =
+                    this.styleRenderer.margeNewStyleOptionsWithPreviosuStyleState(
+                        sourceStyle, changes
                     )
-
-                return this
+                this.#leftStylingInfoCache =
+                    this.styleRenderer.renderLeftStylingInfo( this.#style )
+                this.#rightStylingInfoCache =
+                    this.styleRenderer.renderRightStylingInfo( this.#style )
             }
 
-            public get terminalStartTag ( ): string {
-                return this.#terminalStartTag
+
+            get style ( ): EnvironmentStyleSettings {
+                return this.#style
+            }
+
+            set style ( input: Subset<EnvironmentStyleSettings> ) {
+                this.applyNewStyle( this.styleRenderer.defaultStyle, input )
+            }
+
+
+            addStyle (  input: Subset<EnvironmentStyleSettings> ) {
+                this.applyNewStyle( this.#style, input )
             }
 
         //
@@ -144,7 +194,12 @@
                                top: number,
                                  x: number,
                                  y: number ): ScreenMatrixPixel {
-                return rayTraceScreenPixel( this, left, top, x, y )
+                //
+                return rayTraceScreenPixel(
+                    this, left, top, x, y,
+                    this.#leftStylingInfoCache,
+                    this.#rightStylingInfoCache
+                )
             }
 
         //
@@ -179,8 +234,8 @@
         // ─── TERMINAL FOR ────────────────────────────────────────────────
         //
 
-            public get ANSITerminalForm ( ): string {
-                return this.screen.ANSITerminalForm
+            public get styledForm ( ): string {
+                return this.screen.styledForm
             }
 
         //
@@ -209,7 +264,7 @@
             public applyMargin ( topMargin: number ,
                                rightMargin: number ,
                               bottomMargin: number ,
-                                leftMargin: number ): PaneView {
+                                leftMargin: number ): PaneView<EnvironmentStyleSettings> {
                 //
                 return applyMarginToMultiStyleView(
                     this, topMargin, rightMargin, bottomMargin, leftMargin
@@ -221,9 +276,9 @@
         //
 
             public centerToBoundaryBox ( width: number,
-                                        height: number ): PaneView {
+                                        height: number ): PaneView<EnvironmentStyleSettings> {
                 //
-                return centerViewProtocolToBoundaryBox( this, width, height ) as PaneView
+                return centerViewProtocolToBoundaryBox( this, width, height ) as PaneView<EnvironmentStyleSettings>
             }
 
         // ─────────────────────────────────────────────────────────────────

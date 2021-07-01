@@ -5,14 +5,16 @@
 
     import { ViewProtocol }
         from "../../protocols/view-protocol"
+    import { StyleRendererProtocol }
+        from "../../protocols/style-renderer-protocol"
 
 //
 // ─── CENTER TO BOUNDARY BOX ─────────────────────────────────────────────────────
 //
 
-    export function centerViewProtocolToBoundaryBox ( view: ViewProtocol,
-                                                     width: number,
-                                                    height: number ): ViewProtocol {
+    export function centerViewProtocolToBoundaryBox <EnvironmentStyleSettings extends Object> ( view: ViewProtocol<EnvironmentStyleSettings, StyleRendererProtocol<EnvironmentStyleSettings>>,
+                                                                                               width: number,
+                                                                                              height: number ): ViewProtocol<EnvironmentStyleSettings, StyleRendererProtocol<EnvironmentStyleSettings>> {
         const top =
             view.height === height ? 0 : Math.floor( ( height - view.height ) / 2 )
         const right =

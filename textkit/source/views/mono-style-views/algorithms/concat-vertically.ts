@@ -12,8 +12,16 @@
 // ─── CONCAT VERTICALLY ──────────────────────────────────────────────────────────
 //
 
-    export function concatMonoStyledViewsVertically ( boxes: MonoStyleViews[ ],
-                                                   baseLine: number ): ShapeView {
+    export function concatMonoStyledViewsVertically <EnvironmentStyleSettings extends Object> (
+            boxes:      MonoStyleViews<EnvironmentStyleSettings>[ ],
+            baseLine:   number,
+        ): ShapeView<EnvironmentStyleSettings> {
+
+        //
+        if ( boxes.length === 0 ) {
+            throw new Error ("Cannot concat empty list.")
+        }
+
         const resultWidth =
             Math.max( ...boxes.map( box => box.width ) )
         const lines =
@@ -27,7 +35,9 @@
             }
         }
 
-        return new ShapeView( lines, baseLine )
+        return new ShapeView(
+            lines, baseLine, boxes[ 0 ].styleRenderer, { }, true
+        )
     }
 
 // ────────────────────────────────────────────────────────────────────────────────

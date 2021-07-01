@@ -26,7 +26,7 @@
 //
 
     export * from
-        "./shapes/types"
+        "./protocols/align"
     export * as BoxFramePresets from
         "./shapes/presets/box-frames"
     export * from
@@ -39,7 +39,9 @@
 //
 
     export * from
-        "./environments/ansi-terminal"
+        "./environments/ansi-terminal/ansi-terminal"
+    export * from
+        "./environments/ansi-terminal/styler"
 
 //
 // ─── TOOLS ──────────────────────────────────────────────────────────────────────
@@ -56,6 +58,8 @@
 
     export * from
         "./protocols/view-protocol"
+    export * from
+        "./protocols/style-renderer-protocol"
     export * from
         "./protocols/direction"
     export * from

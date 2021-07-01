@@ -15,10 +15,14 @@
 // ─── CONCAT HORIZONTALLY ────────────────────────────────────────────────────────
 //
 
-    export function concatMonoStyledViewsHorizontally ( boxes: MonoStyleViews[ ],
-                                                       joiner: ShapeView ) {
+    export function concatMonoStyledViewsHorizontally <EnvironmentStyleSettings extends Object> (
+            boxes:  MonoStyleViews<EnvironmentStyleSettings>[ ],
+            joiner: ShapeView<EnvironmentStyleSettings>
+        ): MonoStyleViews<EnvironmentStyleSettings> {
+
+        //
         if ( boxes.length === 0 ) {
-            return ShapeView.initEmptyBox( )
+            return ShapeView.initEmptyBox( boxes[ 0 ].styleRenderer )
         }
         if ( boxes.length === 1 ) {
             return boxes[ 0 ]
@@ -77,7 +81,9 @@
         }
 
         // the new space box
-        return new ShapeView( newLines, newBaseline )
+        return new ShapeView(
+            newLines, newBaseline, boxes[ 0 ].styleRenderer, { }, true
+        )
     }
 
 // ────────────────────────────────────────────────────────────────────────────────

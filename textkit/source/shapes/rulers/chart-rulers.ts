@@ -5,6 +5,8 @@
 
     import { ShapeView }
         from "../../views/mono-style-views/views/shape-view"
+    import { StyleRendererProtocol }
+        from "../../protocols/style-renderer-protocol"
     import { Direction }
         from "../../protocols/direction"
 
@@ -42,23 +44,28 @@
 // ─── RULER MAKER ────────────────────────────────────────────────────────────────
 //
 
-    export function createChartRuler ( inputSettings: CharRulerSettings ): ShapeView {
+    export function createChartRuler <EnvironmentStyleSettings extends Object> (
+            styler:         StyleRendererProtocol<EnvironmentStyleSettings>,
+            inputSettings:  CharRulerSettings,
+        ): ShapeView<EnvironmentStyleSettings> {
+
+        //
         const settings =
             fixSettings( inputSettings )
 
         if ( settings.size < 1 ) {
-            return ShapeView.initEmptyBox( )
+            return ShapeView.initEmptyBox( styler )
         }
 
         switch ( settings.facing ) {
             case Direction.Up:
-                return createHorizontalChartRuler( settings, true )
+                return createHorizontalChartRuler( settings, styler, true )
             case Direction.Down:
-                return createHorizontalChartRuler( settings, false )
+                return createHorizontalChartRuler( settings, styler, false )
             case Direction.Left:
-                return createVerticalRuler( settings, true )
+                return createVerticalRuler( settings, styler, true )
             case Direction.Right:
-                return createVerticalRuler( settings, false )
+                return createVerticalRuler( settings, styler, false )
         }
     }
 
@@ -93,14 +100,18 @@
 // ─── HORIZONTAL CHART RULER ─────────────────────────────────────────────────────
 //
 
-    function createHorizontalChartRuler ( settings: FixedCharRulerSettings,
-                                     isDirectionUp: boolean ): ShapeView {
+    function createHorizontalChartRuler <EnvironmentStyleSettings extends Object> (
+            settings:       FixedCharRulerSettings,
+            styler:         StyleRendererProtocol<EnvironmentStyleSettings>,
+            isDirectionUp:  boolean
+        ): ShapeView<EnvironmentStyleSettings> {
+
         //
         const rulerLine =
             createHorizontalRulerLine( settings )
 
         if ( settings.hideNumbers ) {
-            return new ShapeView( [ rulerLine ], 0 )
+            return new ShapeView( [ rulerLine ], 0, styler, { }, true )
         }
 
         //
@@ -116,14 +127,20 @@
                 ? 0
                 : 1
 
-        return new ShapeView( lines, baseline )
+        return new ShapeView( lines, baseline, styler, { }, true )
     }
 
 //
 // ─── CREATE VERTICAL RULER ──────────────────────────────────────────────────────
 //
 
-    function createVerticalRuler ( settings: FixedCharRulerSettings, facingLeft: boolean ): ShapeView {
+    function createVerticalRuler <EnvironmentStyleSettings extends Object> (
+            settings:       FixedCharRulerSettings,
+            styler:         StyleRendererProtocol<EnvironmentStyleSettings>,
+            facingLeft:     boolean
+        ): ShapeView<EnvironmentStyleSettings> {
+
+        //
         const { hideNumbers, size, chars, verticalGutterSize, unit, unitSize } =
             settings
         const { originChar, middleChar, separatorChar } =
@@ -142,7 +159,7 @@
                         : middleChar
             }
 
-            return new ShapeView( lines, 0 )
+            return new ShapeView( lines, 0, styler, { }, true )
         }
 
 
@@ -182,7 +199,7 @@
                     )
         }
 
-        return new ShapeView( lines, 0 )
+        return new ShapeView( lines, 0, styler, { }, true )
     }
 
 //

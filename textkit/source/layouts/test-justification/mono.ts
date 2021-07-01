@@ -5,6 +5,8 @@
 
     import { Justification }
         from "../../protocols/justification"
+    import { StyleRendererProtocol }
+        from "../../protocols/style-renderer-protocol"
     import { ShapeView }
         from "../../views/mono-style-views/views/shape-view"
 
@@ -19,9 +21,13 @@
 // ─── MONO STYLED TEXT JUSTIFICATION ─────────────────────────────────────────────
 //
 
-    export function justifyPlainText ( text: string,
-                                      width: number,
-                              justification: Justification ): ShapeView {
+    export function justifyPlainText <EnvironmentStyleSettings extends Object> (
+            text:           string,
+            width:          number,
+            justification:  Justification,
+            styler:         StyleRendererProtocol<EnvironmentStyleSettings>
+        ): ShapeView<EnvironmentStyleSettings> {
+
         //
         const lines =
             new Array<string> ( )
@@ -75,7 +81,7 @@
         }
 
         //
-        return new ShapeView( lines, 0 )
+        return new ShapeView( lines, 0, styler, { }, false )
     }
 
 //

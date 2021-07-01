@@ -110,7 +110,7 @@
 // ─── FINE TUNE UNICODE BOX FOR LAYERED PANE ─────────────────────────────────────
 //
 
-    export function fineTuneUnicodeBoxForLayeredPane ( pane: PaneView ) {
+    export function fineTuneUnicodeBoxForLayeredPane <EnvironmentStyleSettings extends Object> ( pane: PaneView<EnvironmentStyleSettings> ) {
         const { width, height } =
             pane
         for ( let y = 0; y < height; y++ ) {
@@ -132,7 +132,10 @@
 // ─── GET REST OF THE CHARACTERS ─────────────────────────────────────────────────
 //
 
-    function getRestOfSurroundingsForFineTunnigUnicodeBoxes ( pane: PaneView, x: number, y: number ): string {
+    function getRestOfSurroundingsForFineTunnigUnicodeBoxes <EnvironmentStyleSettings extends Object> ( pane: PaneView<EnvironmentStyleSettings>,
+                                                                                                           x: number,
+                                                                                                           y: number ): string {
+        //
         let surroundings =
             ""
         surroundings +=

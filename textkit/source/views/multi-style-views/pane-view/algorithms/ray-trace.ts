@@ -12,13 +12,19 @@
 // ─── RAY TRACE ──────────────────────────────────────────────────────────────────
 //
 
-    export function rayTraceScreenPixel ( pane: PaneView,
-                                          left: number,
-                                           top: number,
-                                             x: number,
-                                             y: number ): ScreenMatrixPixel {
+    export function rayTraceScreenPixel <EnvironmentStyleSettings extends Object> (
+            pane:                   PaneView<EnvironmentStyleSettings>,
+            left:                   number,
+            top:                    number,
+            x:                      number,
+            y:                      number,
+            paneLeftStylingInfo:    string,
+            paneRightStylingInfo:   string,
+        ): ScreenMatrixPixel {
 
-        let result: PaneChildrenProfile | null =
+        //
+
+        let result: PaneChildrenProfile<EnvironmentStyleSettings> | null =
             null
         const xQuery =
             x - left
@@ -57,7 +63,11 @@
                 result.x, result.y, x, y
             )
         } else {
-            return [ pane.terminalStartTag, " " ]
+            return [
+                paneLeftStylingInfo,
+                " ",
+                paneRightStylingInfo
+            ]
         }
     }
 

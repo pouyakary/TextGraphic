@@ -3,8 +3,13 @@
 // ─── IMPORTS ────────────────────────────────────────────────────────────────────
 //
 
-    import { ViewProtocol, ScreenMatrixPixel }
+
+    import { Subset }
+        from "../../../tools/types"
+    import { ScreenMatrixPixel, ViewProtocol }
         from "../../../protocols/view-protocol"
+    import { StyleRendererProtocol }
+        from "../../../protocols/style-renderer-protocol"
 
     import { MonoStyleViews }
         from ".."
@@ -12,13 +17,7 @@
     import { BoxFrameCharSet }
         from "../../../shapes/presets/box-frames"
     import { HorizontalAlign, VerticalAlign }
-        from "../../../shapes/types"
-
-    import { ANSITerminalStyling, generateStartingANSITerminalEscapeSequenceOfTerminalStyling
-           , getDefaultTerminalStyle, ANSITerminalResetEscapeSequence
-           , ANSITerminalSetStyleOptions, mergeTerminalStyleWithOptions
-           }
-        from "../../../environments/ansi-terminal"
+        from "../../../protocols/align"
 
     import { unifyLineSpaces, breakStringIntoLines, includesLineBreak }
         from "../../../tools/string"
@@ -40,7 +39,8 @@
 // ─── SHAPE VIEW ─────────────────────────────────────────────────────────────────
 //
 
-    export class ShapeView implements ViewProtocol {
+    export class ShapeView <EnvironmentStyleSettings extends Object> implements
+        ViewProtocol<EnvironmentStyleSettings, StyleRendererProtocol<EnvironmentStyleSettings>> {
 
         //
         // ─── STORAGE ─────────────────────────────────────────────────────
@@ -49,18 +49,25 @@
             readonly    lines:              Array<string>
             readonly    height:             number
             readonly    width:              number
+            readonly    styleRenderer:      StyleRendererProtocol<EnvironmentStyleSettings>
 
                         transparent:        boolean
 
-                        #baseline:          number
-                        #terminalStyling:   ANSITerminalStyling
-                        #terminalStartTag:  string
+                        #baseline:                  number
+                        #style:                     EnvironmentStyleSettings
+                        #leftStylingInfoCache:      string
+                        #rightStylingInfoCache:     string
 
         //
         // ─── CONSTRUCTOR ─────────────────────────────────────────────────
         //i
 
-            constructor ( lines: string[ ], baseline: number ) {
+            constructor ( lines: string[ ],
+                       baseline: number,
+                  styleRenderer: StyleRendererProtocol<EnvironmentStyleSettings>,
+                          style: Subset<EnvironmentStyleSettings>,
+                    transparent: boolean ) {
+
                 // checking the lines
                 if ( lines instanceof Array ) {
                     // for checking the size of the lines
@@ -119,41 +126,69 @@
                     this.lines[ 0 ].length
                 this.#baseline =
                     baseline
-                this.#terminalStyling =
-                    getDefaultTerminalStyle( )
-                this.#terminalStartTag =
-                    ""
                 this.transparent =
-                    false
+                    transparent
+
+                this.styleRenderer =
+                    styleRenderer
+
+                // initiating the style
+                this.#style =
+                    styleRenderer.margeNewStyleOptionsWithPreviosuStyleState(
+                        styleRenderer.defaultStyle, style
+                    )
+                this.#leftStylingInfoCache =
+                    styleRenderer.renderLeftStylingInfo( this.#style )
+                this.#rightStylingInfoCache =
+                    styleRenderer.renderRightStylingInfo( this.#style )
             }
 
 
-            static initWithSpaceCheck ( lines: string[ ],
-                                     baseLine: number ) {
+            static initWithSpaceCheck <StyleSettings extends Object> (
+                    lines:          string[ ],
+                    baseLine:       number,
+                    styler:         StyleRendererProtocol<StyleSettings>,
+                    initialStyle:   Subset<StyleSettings>,
+                ) {
+
                 //
                 const unifiedLines =
                     unifyLineSpaces( lines )
-                return new ShapeView( unifiedLines, baseLine )
+                return new ShapeView( unifiedLines, baseLine, styler, initialStyle, false );
             }
 
 
-            static initWithText ( text: string, baseLine: number ) {
+            static initWithText <StyleSettings extends Object> (
+                    text:           string,
+                    baseLine:       number,
+                    styler:         StyleRendererProtocol<StyleSettings>,
+                    initialStyle:   Subset<StyleSettings>,
+                ): ShapeView<StyleSettings> {
+
+                //
                 const lines =
                     breakStringIntoLines( text )
                 const unifiedLines =
                     unifyLineSpaces( lines )
-                return new ShapeView( unifiedLines, baseLine )
+                return new ShapeView( unifiedLines, baseLine, styler, initialStyle, false )
             }
 
 
-            static initEmptyBox ( ) {
-                return new ShapeView( [ "" ], 0 )
+            static initEmptyBox <StyleSettings extends Object> (
+                    styler: StyleRendererProtocol<StyleSettings>
+                ) {
+
+                return new ShapeView( [ "" ], 0, styler, { }, true )
             }
 
 
-            static initBlankRectangle ( width: number ,
-                                       height: number ,
-                               backgroundChar: string = " " ) {
+            static initBlankRectangle <StyleSettings extends Object> (
+                    width:          number,
+                    height:         number,
+                    styler:         StyleRendererProtocol<StyleSettings>,
+                    backgroundChar: string = " ",
+                ) {
+
                 //
                 const emptyLine =
                     backgroundChar.repeat( width )
@@ -162,7 +197,8 @@
                 for ( let i = 0; i < height; i++ ) {
                     lines.push( emptyLine )
                 }
-                return new ShapeView( lines, 0 )
+
+                return new ShapeView ( lines, 0, styler, { }, false )
             }
 
         //
@@ -174,22 +210,34 @@
             }
 
         //
-        // ─── SET TERMINAL STYLE ──────────────────────────────────────────
+        // ─── STYLER ──────────────────────────────────────────────────────
         //
 
-            public setANSITerminalStyle ( options: ANSITerminalSetStyleOptions ): ShapeView {
-                this.#terminalStyling =
-                    mergeTerminalStyleWithOptions( this.#terminalStyling, options )
-                this.#terminalStartTag =
-                    generateStartingANSITerminalEscapeSequenceOfTerminalStyling(
-                        this.#terminalStyling
+            private applyNewStyle ( sourceStyle: EnvironmentStyleSettings,
+                                        changes: Subset<EnvironmentStyleSettings> ) {
+                //
+                this.#style =
+                    this.styleRenderer.margeNewStyleOptionsWithPreviosuStyleState(
+                        sourceStyle, changes
                     )
-
-                return this
+                this.#leftStylingInfoCache =
+                    this.styleRenderer.renderLeftStylingInfo( this.#style )
+                this.#rightStylingInfoCache =
+                    this.styleRenderer.renderRightStylingInfo( this.#style )
             }
 
-            public get terminalStartTag ( ): string {
-                return this.#terminalStartTag
+
+            get style ( ): EnvironmentStyleSettings {
+                return this.#style
+            }
+
+            set style ( input: Subset<EnvironmentStyleSettings> ) {
+                this.applyNewStyle( this.styleRenderer.defaultStyle, input )
+            }
+
+
+            addStyle (  input: Subset<EnvironmentStyleSettings> ) {
+                this.applyNewStyle( this.#style, input )
             }
 
         //
@@ -204,22 +252,17 @@
         // ─── TERMINAL RENDER ─────────────────────────────────────────────
         //
 
-            public get ANSITerminalForm ( ): string {
+            public get styledForm ( ): string {
                 const styledLines =
                     new Array<string> ( this.height )
-                for ( let line = 0; line < this.height; line++ ) {
-                    styledLines[ line ] =
-                        this.renderLineForANSITerminal( line )
+                for ( let row = 0; row < this.height; row++ ) {
+                    styledLines[ row ] =
+                        ( this.#leftStylingInfoCache
+                        + this.lines[ row ]
+                        + this.#rightStylingInfoCache
+                        )
                 }
                 return styledLines.join( "\n" )
-            }
-
-
-            public renderLineForANSITerminal ( line: number ) {
-                return (
-                    this.#terminalStartTag + this.lines[ line ] +
-                    ANSITerminalResetEscapeSequence
-                )
             }
 
         //
@@ -227,9 +270,9 @@
         //
 
             public applyMargin ( top: number,
-                                          right: number,
-                                         bottom: number,
-                                           left: number ): ShapeView {
+                               right: number,
+                              bottom: number,
+                                left: number ): ShapeView<EnvironmentStyleSettings> {
                 //
                 return applyMarginToMonoStyleView( this, top, right, bottom, left )
             }
@@ -239,17 +282,20 @@
         //
 
             public centerToBoundaryBox ( width: number,
-                                        height: number ): ShapeView {
+                                        height: number ): ShapeView<EnvironmentStyleSettings> {
                 //
-                return centerViewProtocolToBoundaryBox( this, width, height ) as ShapeView
+                return centerViewProtocolToBoundaryBox( this, width, height ) as ShapeView<EnvironmentStyleSettings>
             }
 
         //
         // ─── CONCAT HORIZONTALLY ─────────────────────────────────────────
         //
 
-            static concatHorizontally ( boxes: ShapeView[ ],
-                                       joiner: ShapeView ): MonoStyleViews {
+            static concatHorizontally <EnvironmentStyleSettings extends Object> (
+                    boxes:  ShapeView<EnvironmentStyleSettings> [ ],
+                    joiner: ShapeView<EnvironmentStyleSettings>,
+                ): MonoStyleViews<EnvironmentStyleSettings> {
+
                 //
                 return concatMonoStyledViewsHorizontally( boxes, joiner )
             }
@@ -258,8 +304,11 @@
         // ─── CONCAT VERTICALLY ───────────────────────────────────────────
         //
 
-            static concatVertically ( boxes: ShapeView[ ],
-                                   baseLine: number ): ShapeView {
+            static concatVertically <EnvironmentStyleSettings extends Object> (
+                    boxes:      ShapeView<EnvironmentStyleSettings>[ ],
+                    baseLine:   number,
+                ): ShapeView<EnvironmentStyleSettings> {
+
                 //
                 return concatMonoStyledViewsVertically( boxes, baseLine )
             }
@@ -268,7 +317,7 @@
         // ─── FRAME ───────────────────────────────────────────────────────
         //
 
-            public frame ( charSet: BoxFrameCharSet ) {
+            public frame ( charSet: BoxFrameCharSet ): ShapeView<EnvironmentStyleSettings> {
                 return frameMonoStyledViews( this, charSet )
             }
 
@@ -295,10 +344,7 @@
                                  x: number,
                                  y: number ): ScreenMatrixPixel {
                 //
-                return [
-                    this.#terminalStartTag,
-                    this.lines[ y - top ][ x - left ],
-                ]
+                return this.getCharAtRelativePosition( left, top, x, y )
             }
 
         //
@@ -311,8 +357,9 @@
                                                   y: number ): ScreenMatrixPixel {
                 //
                 return [
-                    this.#terminalStartTag,
+                    this.#leftStylingInfoCache,
                     this.lines[ y - top ][ x - left ],
+                    this.#rightStylingInfoCache
                 ]
             }
 

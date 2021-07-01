@@ -3,12 +3,14 @@
 // ─── IMPORTS ────────────────────────────────────────────────────────────────────
 //
 
+    import { HorizontalAlign, VerticalAlign, ResizingPolicy }
+        from "../../protocols/align"
+    import { StyleRendererProtocol }
+        from "../../protocols/style-renderer-protocol"
     import { ShapeView }
         from "../../views/mono-style-views/views/shape-view"
     import { insertJoinersInBetweenArrayItems }
         from "../../tools/array"
-    import { HorizontalAlign, VerticalAlign, ResizingPolicy }
-        from "../../shapes/types"
     import { TableCharSet, LightTablePreset }
         from "../../shapes/presets/table-frames"
 
@@ -16,21 +18,21 @@
 // ─── TYPES ──────────────────────────────────────────────────────────────────────
 //
 
-    type ShapeViewTableRows =
-        ShapeView[ ]
+    type ShapeViewTableRows <EnvironmentStyleSettings extends Object> =
+        ShapeView<EnvironmentStyleSettings> [ ]
 
-    type ShapeViewTable =
-        ShapeViewTableRows[ ]
+    type ShapeViewTable <EnvironmentStyleSettings extends Object> =
+        ShapeViewTableRows<EnvironmentStyleSettings> [ ]
 
     interface MaxArrays {
         columnsMaxWidths:   number[ ]
         rowsMaxHeights:     number[ ]
     }
 
-    interface TableLines {
-        topLine:    ShapeView
-        middleLine: ShapeView
-        bottomLine: ShapeView
+    interface TableLines <EnvironmentStyleSettings extends Object> {
+        topLine:    ShapeView<EnvironmentStyleSettings>
+        middleLine: ShapeView<EnvironmentStyleSettings>
+        bottomLine: ShapeView<EnvironmentStyleSettings>
     }
 
     export interface TableInitSettings {
@@ -53,13 +55,18 @@
 // ─── GENERATOR ──────────────────────────────────────────────────────────────────
 //
 
-    export function createShapeViewTableInTextForm ( rows: ShapeViewTable,
-                                                    input: TableInitSettings ): ShapeView {
+    export function createShapeViewTableInTextForm <EnvironmentStyleSettings extends Object> (
+            rows:   ShapeViewTable<EnvironmentStyleSettings>,
+            styler: StyleRendererProtocol<EnvironmentStyleSettings>,
+            input:  TableInitSettings,
+        ): ShapeView<EnvironmentStyleSettings> {
+
+        //
         if ( rows.length === 0 ) {
-            return ShapeView.initEmptyBox( )
+            return ShapeView.initEmptyBox( styler )
         }
 
-        completeShapeViewTable( rows )
+        completeShapeViewTable( rows, styler )
 
         const settings =
             fixTableSettings( rows, input )
@@ -67,9 +74,9 @@
             computeMaxArrays( rows, settings )
 
         const renderedRows =
-            renderRows( rows, maxArrays, settings )
+            renderRows( rows, maxArrays, settings, styler )
         const decorationLines =
-            createTableLines( maxArrays, settings.charSet )
+            createTableLines( maxArrays, settings.charSet, styler )
         const joinedTableParts =
             joinTableParts( renderedRows, decorationLines )
         const lines =
@@ -78,7 +85,7 @@
             computeNewBaseline( maxArrays )
 
         const table =
-            new ShapeView( lines, baseline )
+            new ShapeView( lines, baseline, styler, { }, false )
 
         return table
     }
@@ -87,9 +94,12 @@
 // ─── FIX SETTINGS ───────────────────────────────────────────────────────────────
 //
 
-    function fixTableSettings ( rows: ShapeViewTable,
-                               input: TableInitSettings ): TableSettings {
+    function fixTableSettings <EnvironmentStyleSettings extends Object> (
+            rows:   ShapeViewTable<EnvironmentStyleSettings>,
+            input:  TableInitSettings,
+        ): TableSettings {
 
+        //
         const horizontalAligns =
             new Array<HorizontalAlign> ( )
         const verticalAligns =
@@ -163,7 +173,11 @@
 // ─── FLATTEN LINES ──────────────────────────────────────────────────────────────
 //
 
-    function flattenShapeViewLines ( boxes: ShapeView[ ] ): string[ ] {
+    function flattenShapeViewLines <EnvironmentStyleSettings extends Object> (
+            boxes: ShapeView<EnvironmentStyleSettings>[ ],
+        ): string[ ] {
+
+        //
         const lines =
             new Array<string> ( )
         for ( const box of boxes ) {
@@ -178,8 +192,11 @@
 // ─── JOIN TABLE PARTS ───────────────────────────────────────────────────────────
 //
 
-    function joinTableParts ( renderedRows: ShapeView[ ],
-                           decorationLines: TableLines ): ShapeView[ ] {
+    function joinTableParts <EnvironmentStyleSettings extends Object> (
+            renderedRows:       ShapeView<EnvironmentStyleSettings> [ ],
+            decorationLines:    TableLines<EnvironmentStyleSettings>,
+        ): ShapeView<EnvironmentStyleSettings>[ ] {
+        //
         const linesWithMiddleDecorations =
             insertJoinersInBetweenArrayItems( renderedRows, decorationLines.middleLine )
         const joinedTableParts = [
@@ -208,8 +225,11 @@
 // ─── COMPUTE MAX ARRAYS ─────────────────────────────────────────────────────────
 //
 
-    function computeMaxArrays ( input: ShapeViewTable,
-                             settings: TableSettings ): MaxArrays {
+    function computeMaxArrays <EnvironmentStyleSettings extends Object> (
+            input:      ShapeViewTable<EnvironmentStyleSettings>,
+            settings:   TableSettings,
+        ): MaxArrays {
+        //
         const columnsMaxWidths =
             new Array<number> ( )
         const rowsMaxHeights =
@@ -301,12 +321,17 @@
 // ─── MAKE COMPLETE TABLE ────────────────────────────────────────────────────────
 //
 
-    function completeShapeViewTable ( table: ShapeViewTable ) {
+    function completeShapeViewTable <EnvironmentStyleSettings extends Object> (
+            table:  ShapeViewTable<EnvironmentStyleSettings>,
+            styler: StyleRendererProtocol<EnvironmentStyleSettings>,
+        ) {
+
+        //
         const width =
             Math.max( ...table.map( row => row.length ) )
         for ( const row of table ) {
             for ( let iterator = row.length; iterator < width; iterator++ ) {
-                row.push( ShapeView.initEmptyBox( ) )
+                row.push( ShapeView.initEmptyBox( styler ) )
             }
         }
         return table
@@ -316,7 +341,13 @@
 // ─── CREATE TABLE LINE ──────────────────────────────────────────────────────────
 //
 
-    function createTableLines ( maxArrays: MaxArrays, charSet: TableCharSet ): TableLines {
+    function createTableLines <EnvironmentStyleSettings extends Object> (
+            maxArrays:  MaxArrays,
+            charSet:    TableCharSet,
+            styler:     StyleRendererProtocol<EnvironmentStyleSettings>,
+        ): TableLines<EnvironmentStyleSettings> {
+
+        //
         const { columnsMaxWidths } =
             maxArrays
 
@@ -328,13 +359,13 @@
             makeHorizontalLines( columnsMaxWidths, charSet.bottom )
 
         const topLine =
-            makeTopBottomLineWith( topMiddleLines,
+            makeTopBottomLineWith( topMiddleLines, styler,
                 charSet.topLeft, charSet.topJoins, charSet.topRight )
         const middleLine =
-            makeTopBottomLineWith( middleMiddleLines,
+            makeTopBottomLineWith( middleMiddleLines, styler,
                 charSet.leftJoins, charSet.middleJoins, charSet.rightJoins )
         const bottomLine =
-            makeTopBottomLineWith( bottomMiddleLines,
+            makeTopBottomLineWith( bottomMiddleLines, styler,
                 charSet.bottomLeft, charSet.bottomJoins, charSet.bottomRight )
 
         return {
@@ -343,14 +374,19 @@
     }
 
 
-    function makeTopBottomLineWith ( middleLines: string[ ],
-                                            left: string,
-                                          middle: string,
-                                           right: string ): ShapeView {
+    function makeTopBottomLineWith <EnvironmentStyleSettings extends Object> (
+            middleLines:    string[ ],
+            styler:         StyleRendererProtocol<EnvironmentStyleSettings>,
+            left:           string,
+            middle:         string,
+            right:          string,
+        ): ShapeView<EnvironmentStyleSettings> {
+
+        //
         const line =
             left + middleLines.join( middle ) + right
         const box =
-            new ShapeView( [ line ], 0 )
+            new ShapeView( [ line ], 0, styler, { }, false )
         return box
     }
 
@@ -365,14 +401,18 @@
 // ─── RENDER ROWS ────────────────────────────────────────────────────────────────
 //
 
-    function renderRows ( table: ShapeViewTable,
-                      maxArrays: MaxArrays,
-                       settings: TableSettings ) {
+    function renderRows <EnvironmentStyleSettings extends Object> (
+            table:      ShapeViewTable<EnvironmentStyleSettings>,
+            maxArrays:  MaxArrays,
+            settings:   TableSettings,
+            styler:     StyleRendererProtocol<EnvironmentStyleSettings>,
+        ) {
 
+        //
         const { rowsMaxHeights, columnsMaxWidths } =
             maxArrays
         const renderedRows =
-            new Array<ShapeView> ( )
+            new Array<ShapeView<EnvironmentStyleSettings>> ( )
 
         for ( let rowIndex = 0; rowIndex < table.length; rowIndex++ ) {
             const row =
@@ -380,7 +420,7 @@
             const rowHeight =
                 rowsMaxHeights[ rowIndex ]
             const renderedRow =
-                renderRow( row, rowIndex, rowHeight, columnsMaxWidths, settings )
+                renderRow( row, rowIndex, rowHeight, columnsMaxWidths, settings, styler )
 
             renderedRows.push( renderedRow )
         }
@@ -392,18 +432,22 @@
 // ─── RENDER ROW ─────────────────────────────────────────────────────────────────
 //
 
-    function renderRow ( row: ShapeViewTableRows,
-                    rowIndex: number,
-                   rowHeight: number,
-            columnsMaxWidths: number[ ],
-                    settings: TableSettings ) {
+    function renderRow <EnvironmentStyleSettings extends Object> (
+            row:                ShapeViewTableRows<EnvironmentStyleSettings>,
+            rowIndex:           number,
+            rowHeight:          number,
+            columnsMaxWidths:   number[ ],
+            settings:           TableSettings,
+            styler:             StyleRendererProtocol<EnvironmentStyleSettings>,
+        ): ShapeView<EnvironmentStyleSettings> {
 
+        //
         const leftStrokeLine =
-            createVerticalStrokeLine( rowHeight, settings.charSet.left )
+            createVerticalStrokeLine( rowHeight, settings.charSet.left, styler )
         const middleStrokeLine =
-            createVerticalStrokeLine( rowHeight, settings.charSet.verticalMiddle )
+            createVerticalStrokeLine( rowHeight, settings.charSet.verticalMiddle, styler )
         const rightStrokeLine =
-            createVerticalStrokeLine( rowHeight, settings.charSet.right )
+            createVerticalStrokeLine( rowHeight, settings.charSet.right, styler )
         const toBeJoined =
             [ leftStrokeLine ]
 
@@ -434,7 +478,9 @@
         }
 
         const renderedRow =
-            ShapeView.concatHorizontally( toBeJoined, ShapeView.initEmptyBox( ) )
+            ShapeView.concatHorizontally(
+                toBeJoined, ShapeView.initEmptyBox( styler )
+            ) as ShapeView<EnvironmentStyleSettings>
 
         return renderedRow
     }
@@ -443,14 +489,20 @@
 // ─── ROW MIDDLE STROKE LINE ─────────────────────────────────────────────────────
 //
 
-    function createVerticalStrokeLine ( height: number, character: string ) {
+    function createVerticalStrokeLine <EnvironmentStyleSettings extends Object> (
+            height:     number,
+            character:  string,
+            styler:     StyleRendererProtocol<EnvironmentStyleSettings>,
+        ) {
+
+        //
         const lines =
             [ ]
         for ( let line = 0; line < height; line++ ) {
             lines.push( character )
         }
         const box =
-            new ShapeView( lines, 0 )
+            new ShapeView( lines, 0, styler, { }, false )
         return box
     }
 

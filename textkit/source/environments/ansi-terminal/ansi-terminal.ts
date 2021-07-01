@@ -1,5 +1,12 @@
 
 //
+// ─── IMPORTS ────────────────────────────────────────────────────────────────────
+//
+
+    import { Subset }
+        from "../../tools/types"
+
+//
 // ─── TERMINAL STYLING ───────────────────────────────────────────────────────────
 //
 
@@ -18,9 +25,8 @@
         readonly [Property in keyof ANSITerminalStyling]: boolean
     }
 
-    export type ANSITerminalSetStyleOptions = {
-        [ Property in keyof ANSITerminalStyling ]?: ANSITerminalStyling[ Property ]
-    }
+    export type ANSITerminalSetStyleOptions =
+        Subset<ANSITerminalStyling>
 
 //
 // ─── CONSTANTS ──────────────────────────────────────────────────────────────────
@@ -197,7 +203,12 @@
 // ─── STYLES EQUALS ──────────────────────────────────────────────────────────────
 //
 
-    export function terminalStylesEquals ( a: ANSITerminalStyling, b: ANSITerminalStyling ): true | TerminalStylingComparison {
+    export function terminalStylesEquals (
+            a: ANSITerminalStyling,
+            b: ANSITerminalStyling,
+        ): true | TerminalStylingComparison {
+
+        //
         let allElementsAreEquals =
             true
 
@@ -250,7 +261,11 @@
 // ─── GENERATE TERMINAL ESCAPE SEQUENCES ─────────────────────────────────────────
 //
 
-    export function generateStartingANSITerminalEscapeSequenceOfTerminalStyling ( style: ANSITerminalStyling ): string {
+    export function generateStartingANSITerminalEscapeSequenceOfTerminalStyling (
+            style: ANSITerminalStyling
+        ): string {
+
+        //
         const bold =
             style.bold ? ANSITerminalBoldEscapeSequence : ""
         const italic =
@@ -279,8 +294,12 @@
 // ─── MERGE TERMINAL STYLE WITH OPTIONS ──────────────────────────────────────────
 //
 
-    export function mergeTerminalStyleWithOptions ( style: ANSITerminalStyling,
-                                                  options: ANSITerminalSetStyleOptions ): ANSITerminalStyling {
+    export function mergeTerminalStyleWithOptions (
+            style:      ANSITerminalStyling,
+            options:    ANSITerminalSetStyleOptions
+        ): ANSITerminalStyling {
+
+        //
         return {
             backgroundColor:    options.backgroundColor     ? options.backgroundColor   : style.backgroundColor,
             foregroundColor:    options.foregroundColor     ? options.foregroundColor   : style.foregroundColor,
