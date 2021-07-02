@@ -1,80 +1,83 @@
 
-import { ShapeView, BoxFramePresets, ANSITerminalForegroundColor, CanvasView, ANSITerminalStyleRenderer, LineView } from
+import * as TextKit from
     "../source"
 
 const wait = ( ms: number ) =>
     new Promise( resolve => setTimeout( resolve, ms ) )
 
 const styler =
-    new ANSITerminalStyleRenderer( )
+    new TextKit.Environments.ANSITerminalStyleRenderer( )
 
 main( ); async function main ( ) {
     for ( let iteration = 0; true; iteration++ ) {
         // 1
         const firstCanvasBackground =
-            ShapeView.initBlankRectangle( 20, 5, styler )
-                .frame( BoxFramePresets.LightBoxPreset )
+            TextKit.ShapeView.initBlankRectangle( 20, 5, styler )
+                .frame( TextKit.Presets.LightBoxPreset )
         const firstCanvas =
-            CanvasView.initWithBackground( firstCanvasBackground, styler )
+            TextKit.CanvasView.initWithBackground( firstCanvasBackground, styler )
 
         const topLeftCanvasObject =
-            new ShapeView([ " * " ], 0, styler, { }, false )
-                .frame( BoxFramePresets.LightBoxPreset )
+            new TextKit.ShapeView([ " * " ], 0, styler, { }, false )
+                .frame( TextKit.Presets.LightBoxPreset )
         topLeftCanvasObject.style = {
-            foregroundColor: ANSITerminalForegroundColor.Blue
+            foregroundColor: TextKit.Environments.ANSITerminalForegroundColor.Blue
         }
         firstCanvas.add( topLeftCanvasObject, -5 + ( iteration % 30 ), 1, 1 )
 
         // 2
         const secondCanvasBackground =
-            ShapeView.initBlankRectangle( 20, 5, styler )
-                .frame( BoxFramePresets.LightBoxPreset )
+            TextKit.ShapeView.initBlankRectangle( 20, 5, styler )
+                .frame( TextKit.Presets.LightBoxPreset )
         const secondCanvas =
-            CanvasView.initWithBackground( secondCanvasBackground, styler )
+            TextKit.CanvasView.initWithBackground( secondCanvasBackground, styler )
 
         const secondCanvasObject =
-            new ShapeView([ " * " ], 0, styler, { }, false )
-                .frame( BoxFramePresets.LightBoxPreset )
+            new TextKit.ShapeView([ " * " ], 0, styler, { }, false )
+                .frame( TextKit.Presets.LightBoxPreset )
         secondCanvasObject.style = {
-            foregroundColor: ANSITerminalForegroundColor.Red
+            foregroundColor: TextKit.Environments.ANSITerminalForegroundColor.Red
         }
         secondCanvas.add( secondCanvasObject, 3, -3 + ( iteration % 20), 1 )
 
         // 3
         const thirdCanvasBackground =
-            ShapeView.initBlankRectangle( 20, 5, styler )
-                .frame( BoxFramePresets.LightBoxPreset )
+            TextKit.ShapeView.initBlankRectangle( 20, 5, styler )
+                .frame( TextKit.Presets.LightBoxPreset )
         const thirdCanvas =
-            CanvasView.initWithBackground( thirdCanvasBackground, styler )
+            TextKit.CanvasView.initWithBackground( thirdCanvasBackground, styler )
 
         const thirdCanvasObjectOne =
-            new ShapeView([ " * " ], 0, styler, { }, false )
-                .frame( BoxFramePresets.LightBoxPreset )
+            new TextKit.ShapeView([ " * " ], 0, styler, { }, false )
+                .frame( TextKit.Presets.LightBoxPreset )
         thirdCanvasObjectOne.style ={
-            foregroundColor: ANSITerminalForegroundColor.Green
+            foregroundColor: TextKit.Environments.ANSITerminalForegroundColor.Green
         }
         thirdCanvas.add( thirdCanvasObjectOne, -4 + ( iteration % 30 ), 3, 1 )
         const thirdCanvasObjectTwo =
-            new ShapeView([ " * " ], 0, styler, { }, false )
-                .frame( BoxFramePresets.LightBoxPreset )
+            new TextKit.ShapeView([ " * " ], 0, styler, { }, false )
+                .frame( TextKit.Presets.LightBoxPreset )
         thirdCanvasObjectTwo.style = {
-            foregroundColor: ANSITerminalForegroundColor.Blue
+            foregroundColor: TextKit.Environments.ANSITerminalForegroundColor.Blue
         }
         thirdCanvas.add( thirdCanvasObjectTwo, 24 - ( iteration % 30 ), 2 , 1 )
 
         // text
         const title =
-            new LineView(  "Multi Layer Animation Grouping in Pouya's TextKit", styler, { } )
+            new TextKit.LineView(
+                "Multi Layer Animation Grouping in Pouya's TextKit",
+                styler, { }
+            )
         title.style = {
-            italic:         true,
-            foregroundColor: ANSITerminalForegroundColor.Red
+            italic:             true,
+            foregroundColor:    TextKit.Environments.ANSITerminalForegroundColor.Red
         }
 
         // Main Canvas
         const mainCanvasBackground =
-            ShapeView.initBlankRectangle( 77, 10, styler )
+            TextKit.ShapeView.initBlankRectangle( 77, 10, styler )
         const mainCanvas =
-            CanvasView.initWithBackground( mainCanvasBackground, styler )
+            TextKit.CanvasView.initWithBackground( mainCanvasBackground, styler )
 
         mainCanvas.add( title, 15, 1, 1 )
         mainCanvas.add( firstCanvas, 4, 2, 1 )

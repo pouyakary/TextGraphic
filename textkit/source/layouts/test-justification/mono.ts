@@ -23,7 +23,7 @@
 // ─── MONO STYLED TEXT JUSTIFICATION ─────────────────────────────────────────────
 //
 
-    export function justifyPlainText <EnvironmentStyleSettings extends Object> (
+    export function createMonoStyleJustificationLayout <EnvironmentStyleSettings extends Object> (
             text:           string,
             width:          number,
             justification:  Justification,

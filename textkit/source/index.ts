@@ -16,53 +16,48 @@
 // ─── LAYOUTS ────────────────────────────────────────────────────────────────────
 //
 
-    export * from
-        "./layouts/table/spaced-box-implementation"
-    export * from
-        "./layouts/test-justification/mono"
+    export * as Layouts from
+        "./layouts"
+
+//
+// ─── PRESETS ────────────────────────────────────────────────────────────────────
+//
+
+    export * as Presets from
+        "./presets"
 
 //
 // ─── SHAPES ─────────────────────────────────────────────────────────────────────
 //
 
-    export * from
-        "./protocols/align"
-    export * as BoxFramePresets from
-        "./shapes/presets/box-frames"
-    export * from
-        "./shapes/presets/table-frames"
-    export * from
+    export * as Shapes from
         "./shapes/rulers/chart-rulers"
 
 //
 // ─── ENVIRONMENTS ───────────────────────────────────────────────────────────────
 //
 
-    export * from
-        "./environments/ansi-terminal/ansi-terminal"
-    export * from
-        "./environments/ansi-terminal/styler"
+    export * as Environments from
+        "./environments"
 
 //
 // ─── TOOLS ──────────────────────────────────────────────────────────────────────
 //
 
-    export * from
-        "./tools/array"
-    export * from
-        "./tools/timpani-parser"
+    export * as Tools from
+        "./tools"
 
 //
 // ─── PROTOCOLS ──────────────────────────────────────────────────────────────────
 //
 
-    export * from
-        "./protocols/view-protocol"
-    export * from
-        "./protocols/style-renderer-protocol"
-    export * from
-        "./protocols/direction"
-    export * from
-        "./protocols/justification"
+    export * from "./protocols"
+
+//
+// ─── COMPILERS ──────────────────────────────────────────────────────────────────
+//
+
+    export * as Compilers from
+        "./compilers"
 
 // ────────────────────────────────────────────────────────────────────────────────

@@ -15,7 +15,7 @@
         from ".."
 
     import { BoxFrameCharSet }
-        from "../../../shapes/presets/box-frames"
+        from "../../../presets/box-frames"
     import { HorizontalAlign, VerticalAlign }
         from "../../../protocols/align"
 

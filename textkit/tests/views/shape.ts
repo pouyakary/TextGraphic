@@ -24,7 +24,7 @@
             //
 
                 const styler =
-                    new TextKit.ANSITerminalStyleRenderer( )
+                    new TextKit.Environments.ANSITerminalStyleRenderer( )
 
             //
             // ─── INITIATING ──────────────────────────────────────────────────

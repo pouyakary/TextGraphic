@@ -12,7 +12,7 @@
     import { insertJoinersInBetweenArrayItems }
         from "../../tools/array"
     import { TableCharSet, LightTablePreset }
-        from "../../shapes/presets/table-frames"
+        from "../../presets/table-frames"
 
 //
 // ─── TYPES ──────────────────────────────────────────────────────────────────────

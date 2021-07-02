@@ -13,7 +13,7 @@
 //
 
     const styler =
-        new TextKit.ANSITerminalStyleRenderer( )
+        new TextKit.Environments.ANSITerminalStyleRenderer( )
 
 //
 // ─── RULER ──────────────────────────────────────────────────────────────────────
@@ -22,7 +22,7 @@
     async function renderFrame ( size: number ) {
         //
         const ruler =
-            TextKit.createChartRuler( styler, {
+            TextKit.Shapes.createChartRuler( styler, {
                 size: size,
                 facing: TextKit.Direction.Right,
                 verticalGutterSize: 5,
@@ -35,7 +35,7 @@
             })
 
         ruler.style = {
-            foregroundColor: TextKit.ANSITerminalForegroundColor.Blue
+            foregroundColor: TextKit.Environments.ANSITerminalForegroundColor.Blue
         }
 
         console.clear( )

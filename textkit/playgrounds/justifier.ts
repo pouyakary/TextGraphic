@@ -53,15 +53,22 @@
     //                                                                     Canvas Padding
 
 //
+// ─── TYPES ──────────────────────────────────────────────────────────────────────
+//
+
+    type StyleOptions =
+        TextKit.Environments.ANSITerminalSetStyleOptions
+
+//
 // ─── CONSTANTS ──────────────────────────────────────────────────────────────────
 //
 
     const SAMPLE_TEXT =
         `Lorem Ipsum is   simply dummy text   of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley   of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining   essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,  and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.`
 
-    const RULER_STYLES: TextKit.ANSITerminalSetStyleOptions = {
+    const RULER_STYLES: StyleOptions = {
         italic: true,
-        foregroundColor: TextKit.ANSITerminalForegroundColor.Blue
+        foregroundColor: TextKit.Environments.ANSITerminalForegroundColor.Blue
     }
 
     const LEFT_SPACING =
@@ -81,27 +88,27 @@
 //
 
     const styler =
-        new TextKit.ANSITerminalStyleRenderer( )
+        new TextKit.Environments.ANSITerminalStyleRenderer( )
 
 //
 // ─── HORIZONTAL RULER ───────────────────────────────────────────────────────────
 //
 
     function createHorizontalRuler ( size: number ) {
-        const charSet: TextKit.RulerCharSet = {
+        const charSet: TextKit.Shapes.RulerCharSet = {
             originChar: "└",
             middleChar: "─",
             separatorChar: "┴"
         }
 
-        const rulerSettings: TextKit.CharRulerSettings = {
+        const rulerSettings: TextKit.Shapes.CharRulerSettings = {
             size: size,
             facing: TextKit.Direction.Down,
             chars: charSet
         }
 
         const ruler =
-            TextKit.createChartRuler( styler, rulerSettings )
+            TextKit.Shapes.createChartRuler( styler, rulerSettings )
                 .applyMargin( 0, 0, 0, LEFT_SPACING )
         ruler.style = RULER_STYLES
 
@@ -113,13 +120,13 @@
 //
 
     function createVerticalRuler ( height: number ) {
-        const charSet: TextKit.RulerCharSet = {
+        const charSet: TextKit.Shapes.RulerCharSet = {
             originChar: "┐",
             middleChar: "│",
             separatorChar: "┤"
         }
 
-        const rulerSettings: TextKit.CharRulerSettings = {
+        const rulerSettings: TextKit.Shapes.CharRulerSettings = {
             size: height,
             facing: TextKit.Direction.Right,
             unit: 3,
@@ -127,7 +134,7 @@
         }
 
         const ruler =
-            TextKit.createChartRuler( styler, rulerSettings )
+            TextKit.Shapes.createChartRuler( styler, rulerSettings )
                 .applyMargin( 0, 0, 0, LEFT_SPACING )
         ruler.style = RULER_STYLES
 
@@ -140,7 +147,7 @@
 
     function createTextJustified ( size: number ) {
         const justifiedText =
-            TextKit.justifyPlainText(
+            TextKit.Layouts.createMonoStyleJustificationLayout(
                 SAMPLE_TEXT, size, TextKit.Justification.Center, styler )
             .applyMargin( 0, 0, 0, LEFT_SPACING )
 

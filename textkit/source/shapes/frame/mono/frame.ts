@@ -8,7 +8,7 @@
     import { ShapeView }
         from "../../../views/mono-style-views/views/shape-view"
     import { BoxFrameCharSet }
-        from "../../presets/box-frames"
+        from "../../../presets/box-frames"
 
 //
 // ─── FRAME SHAPE VIEW ───────────────────────────────────────────────────────────

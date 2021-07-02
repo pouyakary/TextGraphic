@@ -4,7 +4,7 @@
 //
 
     import { WHITE_SPACE_CHARACTER }
-        from "../../constants/characters"
+        from "../constants/characters"
 
 //
 // ─── TYPE ───────────────────────────────────────────────────────────────────────

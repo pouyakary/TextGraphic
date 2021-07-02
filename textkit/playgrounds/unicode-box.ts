@@ -3,7 +3,7 @@
 // ─── IMPORTS ────────────────────────────────────────────────────────────────────
 //
 
-    import { ShapeView, BoxFramePresets, CanvasView, ANSITerminalStyleRenderer }
+    import * as TextKit
         from "../source/index"
 
 //
@@ -11,22 +11,22 @@
 //
 
     const styler =
-        new ANSITerminalStyleRenderer( )
+        new TextKit.Environments.ANSITerminalStyleRenderer( )
 
 //
 // ─── CONST BACKGROUND ───────────────────────────────────────────────────────────
 //
 
     const background =
-        new CanvasView( 7, 4, styler )
+        new TextKit.CanvasView( 7, 4, styler )
 
     const sampleBox1 =
-        ShapeView.initBlankRectangle( 3, 1, styler )
-            .frame( BoxFramePresets.LightBoxPreset )
+        TextKit.ShapeView.initBlankRectangle( 3, 1, styler )
+            .frame( TextKit.Presets.LightBoxPreset )
 
     const sampleBox2 =
-        ShapeView.initBlankRectangle( 3, 1, styler )
-            .frame( BoxFramePresets.HeavyBoxPreset )
+        TextKit.ShapeView.initBlankRectangle( 3, 1, styler )
+            .frame( TextKit.Presets.HeavyBoxPreset )
 
     background.add( sampleBox1, 0, 0, 1 )
     background.add( sampleBox2, 2, 1, 2 )

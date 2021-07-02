@@ -38,11 +38,11 @@
 // ─── MAKE THE CELL ──────────────────────────────────────────────────────────────
 //
 
-    function createCell ( text: string, active: boolean, styler: TextKit.ANSITerminalStyleRenderer ) {
+    function createCell ( text: string, active: boolean, styler: TextKit.Environments.ANSITerminalStyleRenderer ) {
         const border =
             ( active
-                ? TextKit.BoxFramePresets.HeavyBoxPreset
-                : TextKit.BoxFramePresets.LightBoxPreset
+                ? TextKit.Presets.HeavyBoxPreset
+                : TextKit.Presets.LightBoxPreset
                 )
 
         const box =
@@ -50,7 +50,7 @@
             .centerToBoundaryBox( CELL_WIDTH - 2, 1 )
             .frame( border )
 
-        box.style = <TextKit.ANSITerminalSetStyleOptions> {
+        box.style = <TextKit.Environments.ANSITerminalSetStyleOptions> {
             bold: true,
         }
 
@@ -61,7 +61,7 @@
 // ─── MAKING THE TABLE ───────────────────────────────────────────────────────────
 //
 
-    function renderTable ( activeColumn: number, styler: TextKit.ANSITerminalStyleRenderer ) {
+    function renderTable ( activeColumn: number, styler: TextKit.Environments.ANSITerminalStyleRenderer ) {
         const canvasWidth =
             ( ( ( CELL_WIDTH - 1 ) * TABLE_COLUMNS ) + 2 ) + LEFT_PADDING
         const canvasHeight =
@@ -100,7 +100,7 @@
 
     main( ); async function main( ) {
         const styler =
-            new TextKit.ANSITerminalStyleRenderer( )
+            new TextKit.Environments.ANSITerminalStyleRenderer( )
 
         while ( true ) {
             for ( const column of [ 0, 1, 2, 3, 4 ] ) {
