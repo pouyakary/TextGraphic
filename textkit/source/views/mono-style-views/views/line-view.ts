@@ -138,8 +138,9 @@
             }
 
             get styledForm ( ): string {
-                const { rootLeftStylingInfo, rootRowLeftStylingInfo
-                      , rootRowRightStylingInfo, rootRightStylingInfo } =
+                const   { rootLeftStylingInfo, rootRowLeftStylingInfo
+                        , rootRowRightStylingInfo, rootRightStylingInfo
+                        } =
                     this.styleRenderer
                 return  ( rootLeftStylingInfo
                         + rootRowLeftStylingInfo
@@ -176,11 +177,12 @@
                     x - left
                 const destY =
                     y - top
-                if ( y === 0 ) {
-                    if ( x >= 0 && x < this.width ) {
+
+                if ( destY === 0 ) {
+                    if ( destX >= 0 && destX < this.width ) {
                         return [
                             this.#leftStylingInfoCache,
-                            this.line[ x ],
+                            this.line[ destX ],
                             this.#rightStylingInfoCache
                         ]
                     }
