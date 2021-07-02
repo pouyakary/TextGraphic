@@ -3,8 +3,10 @@
 // ─── IMPORTS ────────────────────────────────────────────────────────────────────
 //
 
+    import { EMPTY_STRING }
+        from "../../constants/characters"
     import { Subset }
-        from "../../tools/types"
+            from "../../tools/types"
 
 //
 // ─── TERMINAL STYLING ───────────────────────────────────────────────────────────
@@ -137,7 +139,7 @@
             case ANSITerminalForegroundColor.BrightWhite:
                 return "\x1b[37;1m"
             case ANSITerminalForegroundColor.Default:
-                return ""
+                return EMPTY_STRING
         }
     }
 
@@ -178,7 +180,7 @@
             case ANSITerminalBackgroundColor.BrightWhite:
                 return "\x1b[47;1m"
             case ANSITerminalBackgroundColor.Default:
-                return ""
+                return EMPTY_STRING
         }
     }
 
@@ -267,17 +269,17 @@
 
         //
         const bold =
-            style.bold ? ANSITerminalBoldEscapeSequence : ""
+            style.bold ? ANSITerminalBoldEscapeSequence : EMPTY_STRING
         const italic =
-            style.italic ? ANSITerminalItalicEscapeSequence : ""
+            style.italic ? ANSITerminalItalicEscapeSequence : EMPTY_STRING
         const reversed =
-            style.reversed ? ANSITerminalReversedEscapeSequence : ""
+            style.reversed ? ANSITerminalReversedEscapeSequence : EMPTY_STRING
         const blink =
-            style.blink ? ANSITerminalBlinkEscapeSequence : ""
+            style.blink ? ANSITerminalBlinkEscapeSequence : EMPTY_STRING
         const underline =
-            style.underline ? ANSITerminalUnderlineEscapeSequence : ""
+            style.underline ? ANSITerminalUnderlineEscapeSequence : EMPTY_STRING
         const dim =
-            style.dim ? ANSITerminalDimEscapeSequence : ""
+            style.dim ? ANSITerminalDimEscapeSequence : EMPTY_STRING
 
         const backgroundColor =
             getANSITerminalEscapeSequenceForBackgroundColor( style.backgroundColor )

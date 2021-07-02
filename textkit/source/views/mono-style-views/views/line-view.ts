@@ -5,7 +5,7 @@
 
     import { Subset }
         from "../../../tools/types"
-    import { ScreenMatrixPixel, ViewProtocol }
+    import { ScreenMatrixPixel, StylableViewProtocol }
         from "../../../protocols/view-protocol"
     import { StyleRendererProtocol }
         from "../../../protocols/style-renderer-protocol"
@@ -26,7 +26,7 @@
 //
 
     export class LineView <EnvironmentStyleSettings extends Object> implements
-        ViewProtocol<EnvironmentStyleSettings, StyleRendererProtocol<EnvironmentStyleSettings>> {
+        StylableViewProtocol <EnvironmentStyleSettings> {
 
         //
         // ─── STORAGE ─────────────────────────────────────────────────────
@@ -125,7 +125,7 @@
             }
 
 
-            addStyle (  input: Subset<EnvironmentStyleSettings> ) {
+            addStyle ( input: Subset<EnvironmentStyleSettings> ) {
                 this.applyNewStyle( this.#style, input )
             }
 
@@ -138,7 +138,17 @@
             }
 
             get styledForm ( ): string {
-                return this.#leftStylingInfoCache + this.line + this.#rightStylingInfoCache
+                const { rootLeftStylingInfo, rootRowLeftStylingInfo
+                      , rootRowRightStylingInfo, rootRightStylingInfo } =
+                    this.styleRenderer
+                return  ( rootLeftStylingInfo
+                        + rootRowLeftStylingInfo
+                        + this.#leftStylingInfoCache
+                        + this.line
+                        + this.#rightStylingInfoCache
+                        + rootRowRightStylingInfo
+                        + rootRightStylingInfo
+                        )
             }
 
         //

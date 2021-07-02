@@ -5,6 +5,8 @@
 
     import { BoxFrameCharSet }
         from "./box-frames"
+    import { WHITE_SPACE_CHARACTER }
+        from "../../constants/characters"
 
 //
 // ─── TYPES ──────────────────────────────────────────────────────────────────────
@@ -47,14 +49,14 @@
 //
 
     export const KaryGothic: TableCharSet = {
-        topLeft:            " ",
-        top:                " ",
-        topRight:           " ",
-        right:              " ",
-        bottomRight:        " ",
-        bottom:             " ",
-        bottomLeft:         " ",
-        left:               " ",
+        topLeft:            WHITE_SPACE_CHARACTER,
+        top:                WHITE_SPACE_CHARACTER,
+        topRight:           WHITE_SPACE_CHARACTER,
+        right:              WHITE_SPACE_CHARACTER,
+        bottomRight:        WHITE_SPACE_CHARACTER,
+        bottom:             WHITE_SPACE_CHARACTER,
+        bottomLeft:         WHITE_SPACE_CHARACTER,
+        left:               WHITE_SPACE_CHARACTER,
         horizontalMiddle:   "─",
         verticalMiddle:     "│",
         middleJoins:        "┼",

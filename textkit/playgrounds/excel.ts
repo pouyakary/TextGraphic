@@ -62,12 +62,12 @@
 //
 
     function renderTable ( activeColumn: number, styler: TextKit.ANSITerminalStyleRenderer ) {
-        const paneWidth =
+        const canvasWidth =
             ( ( ( CELL_WIDTH - 1 ) * TABLE_COLUMNS ) + 2 ) + LEFT_PADDING
-        const paneHeight =
+        const canvasHeight =
             ( ( ( CELL_HEIGHT - 1 ) * TABLE_ROWS ) + 1 ) + 1 * PADDING_VERTICALLY
-        const tablePane =
-            new TextKit.PaneView( paneWidth, paneHeight, styler, { } )
+        const tableCanvas =
+            new TextKit.CanvasView( canvasWidth, canvasHeight, styler )
 
         const ALPHABET =
             [ "A", "B", "C", "D", "E", "F", "G", "H" ]
@@ -85,13 +85,13 @@
                 const cell =
                     createCell( text, active, styler )
 
-                tablePane.add( cell, x, y, active ? 2 : 1 )
+                tableCanvas.add( cell, x, y, active ? 2 : 1 )
             }
         }
 
-        tablePane.fineTuneUnicodeBoxes( )
+        tableCanvas.fineTuneUnicodeBoxes( )
 
-        console.log( tablePane.styledForm )
+        console.log( tableCanvas.styledForm )
     }
 
 //

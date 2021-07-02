@@ -3,9 +3,13 @@
 // ─── IMPORTS ────────────────────────────────────────────────────────────────────
 //
 
-    import console from "console"
-import { ScreenMatrixPixel }
+
+    import { ScreenMatrixPixel }
         from "../../../protocols/view-protocol"
+    import { StyleRendererProtocol }
+        from "../../../protocols/style-renderer-protocol"
+    import { EMPTY_STRING, LINE_BREAK_CHARACTER, WHITE_SPACE_CHARACTER }
+        from "../../../constants/characters"
 
 //
 // ─── TYPES ──────────────────────────────────────────────────────────────────────
@@ -32,7 +36,7 @@ import { ScreenMatrixPixel }
 // ─── SCREEN MATRIX ──────────────────────────────────────────────────────────────
 //
 
-    export class VirtualScreen {
+    export class VirtualScreen <EnvironmentStyleSettings extends Object> {
 
         //
         // ─── STORAGE ─────────────────────────────────────────────────────
@@ -59,11 +63,11 @@ import { ScreenMatrixPixel }
 
                 for ( let index = 0; index < matrixSize; index += PIXEL_ARRAY_SIZE ) {
                     this.#matrix[ index + PIXEL_LEFT_INFO_OFFSET ] =
-                        ""
+                        EMPTY_STRING
                     this.#matrix[ index + PIXEL_CHARACTER_OFFSET ] =
-                        " "
+                        WHITE_SPACE_CHARACTER
                     this.#matrix[ index + PIXEL_RIGHT_INFO_OFFSET ] =
-                        ""
+                        EMPTY_STRING
                 }
             }
 
@@ -178,18 +182,23 @@ import { ScreenMatrixPixel }
         // ─── GET TERMINAL ROW ────────────────────────────────────────────
         //
 
-            public getWholeStyledRow ( row: number ): string {
+            public getWholeStyledRow (
+                    row:    number,
+                    styler: StyleRendererProtocol<EnvironmentStyleSettings>
+                ): string {
+
+                //
                 let line =
-                    ""
+                    EMPTY_STRING
                 let previousLeftInfo =
-                    ""
+                    EMPTY_STRING
                 let previousRightInfo =
-                    ""
+                    EMPTY_STRING
 
                 for ( const [ leftStylingInfo, character, rightStylingInfo ] of this.iterateOnRow( row ) ) {
                     if ( previousLeftInfo !== leftStylingInfo ) {
                         line +=
-                            ( leftStylingInfo === ""
+                            ( leftStylingInfo === EMPTY_STRING
                                 ? previousRightInfo
                                 : leftStylingInfo
                                 )
@@ -201,7 +210,12 @@ import { ScreenMatrixPixel }
                     previousRightInfo =
                         rightStylingInfo
                 }
-                return line + previousRightInfo
+
+                return  ( styler.rootRowLeftStylingInfo
+                        + line
+                        + previousRightInfo
+                        + styler.rootRowRightStylingInfo
+                        )
             }
 
         //
@@ -210,7 +224,7 @@ import { ScreenMatrixPixel }
 
             public getWholePlainTextRow ( row: number ): string {
                 let line =
-                    ""
+                    EMPTY_STRING
                 const startingIndex =
                     this.#width * 2 * row
                 const endingIndex =
@@ -227,28 +241,33 @@ import { ScreenMatrixPixel }
         // ─── PLAIN TEXT FORM ─────────────────────────────────────────────
         //
 
-            public get plainTextForm ( ): string {
+            public renderPlainTextForm ( ): string {
                 const lines =
                     new Array<string>( this.#height )
                 for ( let row = 0; row < this.#height; row++ ) {
                     lines[ row ] =
                         this.getWholePlainTextRow( row )
                 }
-                return lines.join("\n")
+                return lines.join( LINE_BREAK_CHARACTER )
             }
 
         //
         // ─── TERMINAL FORM ───────────────────────────────────────────────
         //
 
-            public get styledForm ( ): string {
+            public renderStyledForm ( styler: StyleRendererProtocol<EnvironmentStyleSettings> ): string {
                 const lines =
-                    new Array<string>( this.#height )
+                    new Array<string> ( this.#height )
+
                 for ( let row = 0; row < this.#height; row++ ) {
                     lines[ row ] =
-                        this.getWholeStyledRow( row )
+                        this.getWholeStyledRow( row, styler )
                 }
-                return lines.join("\n")
+
+                return  ( styler.rootLeftStylingInfo
+                        + lines.join( LINE_BREAK_CHARACTER )
+                        + styler.rootRightStylingInfo
+                        )
             }
 
         // ─────────────────────────────────────────────────────────────────

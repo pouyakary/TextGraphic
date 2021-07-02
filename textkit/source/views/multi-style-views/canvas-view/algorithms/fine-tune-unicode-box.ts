@@ -3,7 +3,9 @@
 // ─── IMPORTS ────────────────────────────────────────────────────────────────────
 //
 
-    import { PaneView }
+    import { EMPTY_STRING }
+        from "../../../../constants/characters"
+    import { CanvasView }
         from "../main"
 
 //
@@ -107,22 +109,22 @@
     }
 
 //
-// ─── FINE TUNE UNICODE BOX FOR LAYERED PANE ─────────────────────────────────────
+// ─── FINE TUNE UNICODE BOX FOR LAYERED CANVAS ─────────────────────────────────────
 //
 
-    export function fineTuneUnicodeBoxForLayeredPane <EnvironmentStyleSettings extends Object> ( pane: PaneView<EnvironmentStyleSettings> ) {
+    export function fineTuneUnicodeBoxForLayeredCanvas <EnvironmentStyleSettings extends Object> ( canvas: CanvasView<EnvironmentStyleSettings> ) {
         const { width, height } =
-            pane
+            canvas
         for ( let y = 0; y < height; y++ ) {
             for ( let x = 0; x < width; x++ ) {
                 let char =
-                    pane.screen.readChar( x, y )
+                    canvas.screen.readChar( x, y )
                 if ( CHANGEABLE_CHARACTERS_FOR_UNICODE_TUNNING.includes( char ) ) {
                     const surroundings =
-                        getRestOfSurroundingsForFineTunnigUnicodeBoxes( pane, x, y )
+                        getRestOfSurroundingsForFineTunnigUnicodeBoxes( canvas, x, y )
                     const newChar =
                         fineTuneUnicodeBoxCharWithSurroundings( char, surroundings )
-                    pane.screen.writeChar( x, y, newChar )
+                    canvas.screen.writeChar( x, y, newChar )
                 }
             }
         }
@@ -132,20 +134,20 @@
 // ─── GET REST OF THE CHARACTERS ─────────────────────────────────────────────────
 //
 
-    function getRestOfSurroundingsForFineTunnigUnicodeBoxes <EnvironmentStyleSettings extends Object> ( pane: PaneView<EnvironmentStyleSettings>,
+    function getRestOfSurroundingsForFineTunnigUnicodeBoxes <EnvironmentStyleSettings extends Object> ( canvas: CanvasView<EnvironmentStyleSettings>,
                                                                                                            x: number,
                                                                                                            y: number ): string {
         //
         let surroundings =
-            ""
+            EMPTY_STRING
         surroundings +=
-            ( y > 0 ? pane.screen.readChar( x, y - 1 ) : "*" )
+            ( y > 0 ? canvas.screen.readChar( x, y - 1 ) : "*" )
         surroundings +=
-            ( x < pane.width - 1 ? pane.screen.readChar( x + 1, y ) : "*" )
+            ( x < canvas.width - 1 ? canvas.screen.readChar( x + 1, y ) : "*" )
         surroundings +=
-            ( y < pane.height - 1 ? pane.screen.readChar( x, y + 1 ) : "*" )
+            ( y < canvas.height - 1 ? canvas.screen.readChar( x, y + 1 ) : "*" )
         surroundings +=
-            ( x > 0 ? pane.screen.readChar( x - 1, y ) : "*" )
+            ( x > 0 ? canvas.screen.readChar( x - 1, y ) : "*" )
 
         return surroundings
     }
@@ -158,7 +160,7 @@
         const [ top, right, bottom, left ] =
             surroundings
         let diagnostics =
-            ""
+            EMPTY_STRING
 
         // top
         if ( LIGHT_CONNECTIONS_FROM_BOTTOM.includes( char ) || LIGHT_CONNECTIONS_FROM_TOP.includes( top ) ) {

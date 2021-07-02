@@ -5,11 +5,11 @@
 
     import { MultiStyleView }
         from ".."
-    import { PaneView }
-        from "../pane-view/main"
+    import { CanvasView }
+        from "../canvas-view/main"
 
 //
-// ─── APPLY MARGIN TO PANE VIEW ──────────────────────────────────────────────────
+// ─── APPLY MARGIN TO CANVAS VIEW ──────────────────────────────────────────────────
 //
 
     export function applyMarginToMultiStyleView <EnvironmentStyleSettings extends Object> (
@@ -18,20 +18,19 @@
             rightMargin:    number,
             bottomMargin:   number,
             leftMargin:     number,
-        ): PaneView<EnvironmentStyleSettings> {
+        ): CanvasView<EnvironmentStyleSettings> {
 
         //
-        const backgroundPane =
-            new PaneView(
+        const backgroundCanvas =
+            new CanvasView(
                 leftMargin + view.width + rightMargin,
                 topMargin + view.height + bottomMargin,
                 view.styleRenderer,
-                { }
             )
 
-        backgroundPane.add( view, leftMargin, topMargin, 1 )
+        backgroundCanvas.add( view, leftMargin, topMargin, 1 )
 
-        return backgroundPane
+        return backgroundCanvas
     }
 
 // ────────────────────────────────────────────────────────────────────────────────

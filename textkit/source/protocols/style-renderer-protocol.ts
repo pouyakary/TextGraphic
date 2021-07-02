@@ -11,7 +11,12 @@
 //
 
     export interface StyleRendererProtocol<X extends object> {
-        defaultStyle: X
+        readonly defaultStyle: X
+
+        readonly rootRowRightStylingInfo:    string
+        readonly rootRowLeftStylingInfo:     string
+        readonly rootRightStylingInfo:       string
+        readonly rootLeftStylingInfo:        string
 
         renderLeftStylingInfo( style: X ):      string
         renderRightStylingInfo( style?: X ):    string

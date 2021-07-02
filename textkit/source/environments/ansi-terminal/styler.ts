@@ -3,7 +3,8 @@
 // ─── ANSI TERMINAL STYLER IMPLEMENTATION ────────────────────────────────────────
 //
 
-    import { StyleRendererProtocol }
+    import { EMPTY_STRING } from "../../constants/characters"
+import { StyleRendererProtocol }
         from "../../protocols/style-renderer-protocol"
     import { Subset }
         from "../../tools/types"
@@ -45,6 +46,15 @@
             public renderRightStylingInfo ( ): string {
                 return ANSITerminalResetEscapeSequence
             }
+
+        //
+        // ─── CANVAS INFORMATION ────────────────────────────────────────────
+        //
+
+            readonly rootRowLeftStylingInfo  = ANSITerminalResetEscapeSequence
+            readonly rootRowRightStylingInfo = ANSITerminalResetEscapeSequence
+            readonly rootRightStylingInfo    = EMPTY_STRING
+            readonly rootLeftStylingInfo     = EMPTY_STRING
 
         //
         // ─── MERGER ──────────────────────────────────────────────────────

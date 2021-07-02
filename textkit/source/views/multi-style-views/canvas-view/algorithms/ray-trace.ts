@@ -3,35 +3,35 @@
 // ─── IMPORTS ────────────────────────────────────────────────────────────────────
 //
 
-    import { PaneView, PaneChildrenProfile }
+    import { CanvasView, CanvasChildrenProfile }
         from "../main"
     import { ScreenMatrixPixel }
         from "../../../../protocols/view-protocol"
+    import { EMPTY_STRING, WHITE_SPACE_CHARACTER }
+        from "../../../../constants/characters"
 
 //
 // ─── RAY TRACE ──────────────────────────────────────────────────────────────────
 //
 
     export function rayTraceScreenPixel <EnvironmentStyleSettings extends Object> (
-            pane:                   PaneView<EnvironmentStyleSettings>,
+            canvas:                   CanvasView<EnvironmentStyleSettings>,
             left:                   number,
             top:                    number,
             x:                      number,
             y:                      number,
-            paneLeftStylingInfo:    string,
-            paneRightStylingInfo:   string,
         ): ScreenMatrixPixel {
 
         //
 
-        let result: PaneChildrenProfile<EnvironmentStyleSettings> | null =
+        let result: CanvasChildrenProfile<EnvironmentStyleSettings> | null =
             null
         const xQuery =
             x - left
         const yQuery =
             y - top
 
-        for ( const profile of pane.getChildren( ) ) {
+        for ( const profile of canvas.getChildren( ) ) {
             const horizontalBoundary =
                 ( xQuery >= profile.x ) && ( xQuery < profile.x + profile.child.width )
             const verticalBoundary =
@@ -45,7 +45,7 @@
                                 profile.child.getCharAtRelativePosition(
                                     profile.x, profile.y, x, y
                                 )
-                            if ( character !== " " ) {
+                            if ( character !== WHITE_SPACE_CHARACTER ) {
                                 result = profile
                             }
                         } else {
@@ -63,11 +63,7 @@
                 result.x, result.y, x, y
             )
         } else {
-            return [
-                paneLeftStylingInfo,
-                " ",
-                paneRightStylingInfo
-            ]
+            return [ EMPTY_STRING, WHITE_SPACE_CHARACTER, EMPTY_STRING ]
         }
     }
 

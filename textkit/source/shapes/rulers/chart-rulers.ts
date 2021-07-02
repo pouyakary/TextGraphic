@@ -9,6 +9,8 @@
         from "../../protocols/style-renderer-protocol"
     import { Direction }
         from "../../protocols/direction"
+    import { WHITE_SPACE_CHARACTER, EMPTY_STRING }
+        from "../../constants/characters"
 
 //
 // ─── TYPES ──────────────────────────────────────────────────────────────────────
@@ -168,8 +170,8 @@
             const paddingLength =
                 verticalGutterSize - 1 - no.length
             return facingLeft
-                ? " " + no + " ".repeat( paddingLength )
-                : " ".repeat( paddingLength ) + no + " "
+                ? WHITE_SPACE_CHARACTER + no + WHITE_SPACE_CHARACTER.repeat( paddingLength )
+                : WHITE_SPACE_CHARACTER.repeat( paddingLength ) + no + WHITE_SPACE_CHARACTER
         }
 
         lines[ 0 ] =
@@ -179,8 +181,8 @@
 
         const middleLineTemplate =
             facingLeft
-                ? middleChar + " ".repeat( verticalGutterSize )
-                : " ".repeat( verticalGutterSize ) + middleChar
+                ? middleChar + WHITE_SPACE_CHARACTER.repeat( verticalGutterSize )
+                : WHITE_SPACE_CHARACTER.repeat( verticalGutterSize ) + middleChar
 
         function createMiddleLine ( i: number ) {
             const label =
@@ -219,18 +221,19 @@
             const unitNumberText =
                 ( unit * unitSize * ( i + 1 ) ).toString( )
             if ( i === 0 ) {
-                numberLineArray[ i ] = "1" + " ".repeat( unit - unitNumberText.length ) + unitNumberText
+                numberLineArray[ i ] =
+                    "1" + WHITE_SPACE_CHARACTER.repeat( unit - unitNumberText.length ) + unitNumberText
             } else {
                 numberLineArray[ i ] =
-                    " ".repeat( unit - unitNumberText.length ) + unitNumberText
+                    WHITE_SPACE_CHARACTER.repeat( unit - unitNumberText.length ) + unitNumberText
             }
         }
 
         numberLineArray.push(
-            " ".repeat( size - unit * numberLineSections )
+            WHITE_SPACE_CHARACTER.repeat( size - unit * numberLineSections )
         )
 
-        return numberLineArray.join( "" )
+        return numberLineArray.join( EMPTY_STRING )
     }
 
 

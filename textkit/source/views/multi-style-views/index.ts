@@ -3,20 +3,20 @@
 // ─── IMPORT ─────────────────────────────────────────────────────────────────────
 //
 
-    import { PaneView }
-        from "./pane-view/main"
+    import { CanvasView }
+        from "./canvas-view/main"
 //
 // ─── TYPES ──────────────────────────────────────────────────────────────────────
 //
 
     export type MultiStyleView <EnvironmentStyleSettings extends Object> =
-        PaneView<EnvironmentStyleSettings>
+        CanvasView<EnvironmentStyleSettings>
 
 //
 // ─── EXPORTS ────────────────────────────────────────────────────────────────────
 //
 
     export * from
-        "./pane-view/main"
+        "./canvas-view/main"
 
 // ────────────────────────────────────────────────────────────────────────────────

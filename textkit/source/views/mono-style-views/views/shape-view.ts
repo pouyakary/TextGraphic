@@ -6,7 +6,7 @@
 
     import { Subset }
         from "../../../tools/types"
-    import { ScreenMatrixPixel, ViewProtocol }
+    import { ScreenMatrixPixel, StylableViewProtocol }
         from "../../../protocols/view-protocol"
     import { StyleRendererProtocol }
         from "../../../protocols/style-renderer-protocol"
@@ -35,12 +35,15 @@
     import { applyMarginToMonoStyleView }
         from "../algorithms/apply-margin"
 
+    import { EMPTY_STRING, LINE_BREAK_CHARACTER, WHITE_SPACE_CHARACTER }
+        from "../../../constants/characters"
+
 //
 // ─── SHAPE VIEW ─────────────────────────────────────────────────────────────────
 //
 
     export class ShapeView <EnvironmentStyleSettings extends Object> implements
-        ViewProtocol<EnvironmentStyleSettings, StyleRendererProtocol<EnvironmentStyleSettings>> {
+        StylableViewProtocol <EnvironmentStyleSettings> {
 
         //
         // ─── STORAGE ─────────────────────────────────────────────────────
@@ -178,7 +181,7 @@
                     styler: StyleRendererProtocol<StyleSettings>
                 ) {
 
-                return new ShapeView( [ "" ], 0, styler, { }, true )
+                return new ShapeView( [ EMPTY_STRING ], 0, styler, { }, true )
             }
 
 
@@ -186,7 +189,7 @@
                     width:          number,
                     height:         number,
                     styler:         StyleRendererProtocol<StyleSettings>,
-                    backgroundChar: string = " ",
+                    backgroundChar: string = WHITE_SPACE_CHARACTER,
                 ) {
 
                 //
@@ -236,7 +239,7 @@
             }
 
 
-            addStyle (  input: Subset<EnvironmentStyleSettings> ) {
+            addStyle ( input: Subset<EnvironmentStyleSettings> ) {
                 this.applyNewStyle( this.#style, input )
             }
 
@@ -245,7 +248,7 @@
         //
 
             public get plainTextForm ( ): string {
-                return this.lines.join( "\n" )
+                return this.lines.join( LINE_BREAK_CHARACTER )
             }
 
         //
@@ -255,14 +258,24 @@
             public get styledForm ( ): string {
                 const styledLines =
                     new Array<string> ( this.height )
+                const { rootLeftStylingInfo, rootRowLeftStylingInfo,
+                        rootRowRightStylingInfo, rootRightStylingInfo } =
+                    this.styleRenderer
+
                 for ( let row = 0; row < this.height; row++ ) {
                     styledLines[ row ] =
-                        ( this.#leftStylingInfoCache
+                        ( rootRowLeftStylingInfo
+                        + this.#leftStylingInfoCache
                         + this.lines[ row ]
                         + this.#rightStylingInfoCache
+                        + rootRowRightStylingInfo
                         )
                 }
-                return styledLines.join( "\n" )
+
+                return  ( rootLeftStylingInfo
+                        + styledLines.join( LINE_BREAK_CHARACTER )
+                        + rootRightStylingInfo
+                        )
             }
 
         //

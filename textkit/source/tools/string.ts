@@ -5,6 +5,8 @@
 
     import { getLongestLineOfArray }
         from "./array"
+    import { WHITE_SPACE_CHARACTER, EMPTY_STRING }
+        from "../constants/characters"
 
 //
 // ─── CONSTANTS ──────────────────────────────────────────────────────────────────
@@ -20,7 +22,10 @@
 //
 
     export function createEmptyStringLine ( size: number ) {
-        return ( size <= 0 ? "" : " ".repeat( Math.floor( size ) ) )
+        return ( size <= 0
+            ? EMPTY_STRING
+            : WHITE_SPACE_CHARACTER.repeat( Math.floor( size ) )
+            )
     }
 
 //

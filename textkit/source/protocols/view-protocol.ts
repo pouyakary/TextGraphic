@@ -71,19 +71,6 @@
              */
             transparent: boolean
 
-            /**
-             * Accepts a subset of the render styling settings
-             * and applies it to the styler
-             */
-            set style ( x: Subset<EnvironmentStylingSettings> )
-
-            /**
-             * returns the style of the view
-             */
-            get style ( ): EnvironmentStylingSettings
-
-            addStyle ( x: Subset<EnvironmentStylingSettings> ): void
-
         //
         // ─── RENDER ACCESSORS ────────────────────────────────────────────
         //
@@ -113,10 +100,10 @@
              * ---
              *
              * Returns a character as a TextKit `ScreenMatrixPixel` with the
-             * positions provided by the parent `PaneView`.
+             * positions provided by the parent `CanvasView`.
              *
-             * @param left Distance from the left in the parent pane
-             * @param top  Distance from the top in the parent pane
+             * @param left Distance from the left in the parent canvas
+             * @param top  Distance from the top in the parent canvas
              * @param x    Distance from the left in self
              * @param y    Distance from the top in self
              */
@@ -131,8 +118,8 @@
              *
              * ---
              *
-             * Ray traces a pixel for the `ParentPane`. This function is
-             * a protocol that enables the core renderer of the parent `PaneView`.
+             * Ray traces a pixel for the `ParentCanvas`. This function is
+             * a protocol that enables the core renderer of the parent `CanvasView`.
              *
              * In the leaf views (the ones that have no nesting children) the system
              * returns the character at the given position and the style associated
@@ -145,8 +132,8 @@
              * children. Therefore the renderer can ask all the children to ray trace
              * their children as well.
              *
-             * @param left Distance from the left in the parent pane
-             * @param top  Distance from the top in the parent pane
+             * @param left Distance from the left in the parent canvas
+             * @param top  Distance from the top in the parent canvas
              * @param x    Distance from the left in self
              * @param y    Distance from the top in self
              */
@@ -166,6 +153,32 @@
 
         // ─────────────────────────────────────────────────────────────────
 
+    }
+
+//
+// ─── STYLABLE VIEW ──────────────────────────────────────────────────────────────
+//
+
+    export interface StylableViewProtocol <EnvironmentStylingSettings extends Object> extends
+        ViewProtocol<EnvironmentStylingSettings, StyleRendererProtocol<EnvironmentStylingSettings>> {
+
+        /**
+         * Accepts a subset of the render styling settings
+         * and replaces it with the previous style of the
+         * object
+         */
+        set style ( x: Subset<EnvironmentStylingSettings> )
+
+        /**
+         * returns the style of the view
+         */
+        get style ( ): EnvironmentStylingSettings
+
+        /**
+         * Appends or overrides the previous styles
+         * @param style
+         */
+        addStyle ( style: Subset<EnvironmentStylingSettings> ): void
     }
 
 // ────────────────────────────────────────────────────────────────────────────────

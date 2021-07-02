@@ -3,7 +3,7 @@
 // ─── IMPORTS ────────────────────────────────────────────────────────────────────
 //
 
-    import { ANSITerminalForegroundColor, BoxFramePresets, PaneView
+    import { ANSITerminalForegroundColor, BoxFramePresets, CanvasView
            , ShapeView, ANSITerminalStyleRenderer, LineView
            }
         from "../source"
@@ -46,12 +46,12 @@
     }
 
 
-    const pane =
-        new PaneView( 65, 10, styler, { } )
+    const canvas =
+        new CanvasView( 65, 10, styler )
 
-    pane.add( box1, 3, 1, 1 )
-    pane.add( box2, 8, 2, 2 )
-    pane.add( box3, 14, 3, 3 )
+    canvas.add( box1, 3, 1, 1 )
+    canvas.add( box2, 8, 2, 2 )
+    canvas.add( box3, 14, 3, 3 )
 
     const text =
         new LineView( "And there goes the transparency! 😎", styler, { } )
@@ -60,10 +60,10 @@
         foregroundColor: ANSITerminalForegroundColor.Black
     }
 
-    pane.add( text, 27, 4, 3 )
+    canvas.add( text, 27, 4, 3 )
 
-    pane.fineTuneUnicodeBoxes( )
+    canvas.fineTuneUnicodeBoxes( )
 
-    console.log( pane.styledForm )
+    console.log( canvas.styledForm )
 
 // ────────────────────────────────────────────────────────────────────────────────

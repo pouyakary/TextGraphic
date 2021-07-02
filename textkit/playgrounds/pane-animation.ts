@@ -1,5 +1,5 @@
 
-import { ShapeView, BoxFramePresets, ANSITerminalForegroundColor, PaneView, ANSITerminalStyleRenderer, LineView } from
+import { ShapeView, BoxFramePresets, ANSITerminalForegroundColor, CanvasView, ANSITerminalStyleRenderer, LineView } from
     "../source"
 
 const wait = ( ms: number ) =>
@@ -11,56 +11,56 @@ const styler =
 main( ); async function main ( ) {
     for ( let iteration = 0; true; iteration++ ) {
         // 1
-        const firstPaneBackground =
+        const firstCanvasBackground =
             ShapeView.initBlankRectangle( 20, 5, styler )
                 .frame( BoxFramePresets.LightBoxPreset )
-        const firstPane =
-            PaneView.initWithBackground( firstPaneBackground, styler )
+        const firstCanvas =
+            CanvasView.initWithBackground( firstCanvasBackground, styler )
 
-        const topLeftPaneObject =
+        const topLeftCanvasObject =
             new ShapeView([ " * " ], 0, styler, { }, false )
                 .frame( BoxFramePresets.LightBoxPreset )
-        topLeftPaneObject.style = {
+        topLeftCanvasObject.style = {
             foregroundColor: ANSITerminalForegroundColor.Blue
         }
-        firstPane.add( topLeftPaneObject, -5 + ( iteration % 30 ), 1, 1 )
+        firstCanvas.add( topLeftCanvasObject, -5 + ( iteration % 30 ), 1, 1 )
 
         // 2
-        const secondPaneBackground =
+        const secondCanvasBackground =
             ShapeView.initBlankRectangle( 20, 5, styler )
                 .frame( BoxFramePresets.LightBoxPreset )
-        const secondPane =
-            PaneView.initWithBackground( secondPaneBackground, styler )
+        const secondCanvas =
+            CanvasView.initWithBackground( secondCanvasBackground, styler )
 
-        const secondPaneObject =
+        const secondCanvasObject =
             new ShapeView([ " * " ], 0, styler, { }, false )
                 .frame( BoxFramePresets.LightBoxPreset )
-        secondPaneObject.style = {
+        secondCanvasObject.style = {
             foregroundColor: ANSITerminalForegroundColor.Red
         }
-        secondPane.add( secondPaneObject, 3, -3 + ( iteration % 20), 1 )
+        secondCanvas.add( secondCanvasObject, 3, -3 + ( iteration % 20), 1 )
 
         // 3
-        const thirdPaneBackground =
+        const thirdCanvasBackground =
             ShapeView.initBlankRectangle( 20, 5, styler )
                 .frame( BoxFramePresets.LightBoxPreset )
-        const thirdPane =
-            PaneView.initWithBackground( thirdPaneBackground, styler )
+        const thirdCanvas =
+            CanvasView.initWithBackground( thirdCanvasBackground, styler )
 
-        const thirdPaneObjectOne =
+        const thirdCanvasObjectOne =
             new ShapeView([ " * " ], 0, styler, { }, false )
                 .frame( BoxFramePresets.LightBoxPreset )
-        thirdPaneObjectOne.style ={
+        thirdCanvasObjectOne.style ={
             foregroundColor: ANSITerminalForegroundColor.Green
         }
-        thirdPane.add( thirdPaneObjectOne, -4 + ( iteration % 30 ), 3, 1 )
-        const thirdPaneObjectTwo =
+        thirdCanvas.add( thirdCanvasObjectOne, -4 + ( iteration % 30 ), 3, 1 )
+        const thirdCanvasObjectTwo =
             new ShapeView([ " * " ], 0, styler, { }, false )
                 .frame( BoxFramePresets.LightBoxPreset )
-        thirdPaneObjectTwo.style = {
+        thirdCanvasObjectTwo.style = {
             foregroundColor: ANSITerminalForegroundColor.Blue
         }
-        thirdPane.add( thirdPaneObjectTwo, 24 - ( iteration % 30 ), 2 , 1 )
+        thirdCanvas.add( thirdCanvasObjectTwo, 24 - ( iteration % 30 ), 2 , 1 )
 
         // text
         const title =
@@ -70,21 +70,21 @@ main( ); async function main ( ) {
             foregroundColor: ANSITerminalForegroundColor.Red
         }
 
-        // Main Pane
-        const mainPaneBackground =
+        // Main Canvas
+        const mainCanvasBackground =
             ShapeView.initBlankRectangle( 77, 10, styler )
-        const mainPane =
-            PaneView.initWithBackground( mainPaneBackground, styler )
+        const mainCanvas =
+            CanvasView.initWithBackground( mainCanvasBackground, styler )
 
-        mainPane.add( title, 15, 1, 1 )
-        mainPane.add( firstPane, 4, 2, 1 )
-        mainPane.add( secondPane, 29, 2, 1 )
-        mainPane.add( thirdPane, 53, 2, 1 )
+        mainCanvas.add( title, 15, 1, 1 )
+        mainCanvas.add( firstCanvas, 4, 2, 1 )
+        mainCanvas.add( secondCanvas, 29, 2, 1 )
+        mainCanvas.add( thirdCanvas, 53, 2, 1 )
 
-        mainPane.fineTuneUnicodeBoxes()
+        mainCanvas.fineTuneUnicodeBoxes()
 
         console.clear( )
-        console.log( mainPane.styledForm )
+        console.log( mainCanvas.styledForm )
 
         await wait( 120 )
     }

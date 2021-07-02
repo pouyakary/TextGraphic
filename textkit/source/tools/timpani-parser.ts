@@ -3,6 +3,8 @@
 // ─── IMPORT ─────────────────────────────────────────────────────────────────────
 //
 
+    import { EMPTY_STRING }
+        from "../constants/characters"
     import { ANSITerminalBoldEscapeSequence, ANSITerminalItalicEscapeSequence
            , ANSITerminalUnderlineEscapeSequence, ANSITerminalResetEscapeSequence
            , ANSITerminalReversedEscapeSequence
@@ -53,7 +55,7 @@
         const parsedANSITerminal =
             parseTimpaniToANSITerminal( timpaniCode )
         let terminalOutput =
-            ""
+            EMPTY_STRING
         for ( const part of parsedANSITerminal ) {
             terminalOutput += part.terminalTag + part.text + ANSITerminalResetEscapeSequence
         }
@@ -89,7 +91,7 @@
                 this.#results =
                     new Array<TimpaniToken>( )
                 this.#currentStringStack =
-                    ""
+                    EMPTY_STRING
             }
 
         //
@@ -115,13 +117,13 @@
         //
 
             private finalizeCurrentStack ( ) {
-                if ( this.#currentStringStack !== "" ) {
+                if ( this.#currentStringStack !== EMPTY_STRING ) {
                     this.#results.push({
                         type: "normal",
                         parts: [ this.#currentStringStack ]
                     })
                 }
-                this.#currentStringStack = ""
+                this.#currentStringStack = EMPTY_STRING
             }
 
         //
@@ -189,11 +191,11 @@
 
             private parseOneCharSignedGrammar ( sign: string, type: TimpaniStyleType ): TimpaniToken {
                 let token =
-                    ""
+                    EMPTY_STRING
                 let oneCharResult: TimpaniToken = {
                     // just a dummy
                     type: "normal",
-                    parts: [ "" ]
+                    parts: [ EMPTY_STRING ]
                 }
 
                 this.loop( char => {
@@ -222,7 +224,7 @@
 
     function convertTimpaniTreeToFLattenANSITerminal (
             tree:           TimpaniToken[ ],
-            parentANSITag:  string = "",
+            parentANSITag:  string = EMPTY_STRING,
         ): FlattenANSITerminalNode[ ] {
 
         //

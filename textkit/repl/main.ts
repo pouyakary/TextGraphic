@@ -10,6 +10,8 @@
         from "util"
     import * as TextKit
         from "../source"
+    import { EMPTY_STRING, LINE_BREAK_CHARACTER }
+        from "../source/constants/characters"
 
 //
 // ─── APPEND TO CONTEXT ──────────────────────────────────────────────────────────
@@ -74,7 +76,7 @@
 
     function defineExitCommand ( server: repl.REPLServer  ) {
         server.defineCommand( 'exit', function exit( ) {
-            setTerminalTitle( "" )
+            setTerminalTitle( EMPTY_STRING )
             this.close( )
         })
     }
@@ -103,7 +105,7 @@
 
     function styleOutput ( output: string ) {
         const lines =
-            output.split( "\n" )
+            output.split( LINE_BREAK_CHARACTER )
         const styledLines =
             new Array<string> ( lines.length )
         const middleLine =
@@ -117,7 +119,7 @@
             }
         }
 
-        return styledLines.join("\n") + "\n"
+        return styledLines.join( LINE_BREAK_CHARACTER ) + LINE_BREAK_CHARACTER
     }
 
     function replWriter ( output: any ) {

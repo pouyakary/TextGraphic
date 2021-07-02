@@ -1,5 +1,12 @@
 
 //
+// ─── IMPORTS ────────────────────────────────────────────────────────────────────
+//
+
+    import { WHITE_SPACE_CHARACTER }
+        from "../../constants/characters"
+
+//
 // ─── TYPE ───────────────────────────────────────────────────────────────────────
 //
 
@@ -27,11 +34,11 @@
      */
     export const BracketPreset: BoxFrameCharSet = {
         topLeft:        "⎡",
-        top:            " ",
+        top:            WHITE_SPACE_CHARACTER,
         topRight:       "⎤",
         right:          "⎟",
         bottomRight:    "⎦",
-        bottom:         " ",
+        bottom:         WHITE_SPACE_CHARACTER,
         bottomLeft:     "⎣",
         left:           "⎜",
     }
@@ -48,14 +55,14 @@
      * ```
      */
     export const AbsolutePreset: BoxFrameCharSet = {
-        topLeft:        "⎢" ,
-        top:            " " ,
-        topRight:       "⎥" ,
-        right:          "⎥" ,
-        bottomRight:    "⎥" ,
-        bottom:         " " ,
-        bottomLeft:     "⎢" ,
-        left:           "⎢" ,
+        topLeft:        "⎢",
+        top:            WHITE_SPACE_CHARACTER ,
+        topRight:       "⎥",
+        right:          "⎥",
+        bottomRight:    "⎥",
+        bottom:         WHITE_SPACE_CHARACTER ,
+        bottomLeft:     "⎢",
+        left:           "⎢",
     }
 
 //
@@ -71,11 +78,11 @@
      */
     export const FloorPreset: BoxFrameCharSet = {
         topLeft:        "⎜",
-        top:            " ",
+        top:            WHITE_SPACE_CHARACTER,
         topRight:       "⎟",
         right:          "⎟",
         bottomRight:    "⎦",
-        bottom:         " ",
+        bottom:         WHITE_SPACE_CHARACTER,
         bottomLeft:     "⎣",
         left:           "⎜",
     }
@@ -93,11 +100,11 @@
      */
     export const CeilingPreset: BoxFrameCharSet = {
         topLeft:        "⎡",
-        top:            " ",
+        top:            WHITE_SPACE_CHARACTER,
         topRight:       "⎤",
         right:          "⎟",
         bottomRight:    "⎥",
-        bottom:         " ",
+        bottom:         WHITE_SPACE_CHARACTER,
         bottomLeft:     "⎢",
         left:           "⎢",
     }
@@ -115,11 +122,11 @@
      */
     export const ParenthesisPreset: BoxFrameCharSet = {
         topLeft:        "⎛",
-        top:            " ",
+        top:            WHITE_SPACE_CHARACTER,
         topRight:       "⎞",
         right:          "⎟",
         bottomRight:    "⎠",
-        bottom:         " ",
+        bottom:         WHITE_SPACE_CHARACTER,
         bottomLeft:     "⎝",
         left:           "⎜",
     }
@@ -270,13 +277,13 @@
      */
     export const CornersPreset: BoxFrameCharSet = {
         topLeft:        "┌",
-        top:            " ",
+        top:            WHITE_SPACE_CHARACTER,
         topRight:       "┐",
-        right:          " ",
+        right:          WHITE_SPACE_CHARACTER,
         bottomRight:    "┘",
-        bottom:         " ",
+        bottom:         WHITE_SPACE_CHARACTER,
         bottomLeft:     "└",
-        left:           " ",
+        left:           WHITE_SPACE_CHARACTER,
     }
 
 //

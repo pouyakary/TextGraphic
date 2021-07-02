@@ -10,6 +10,8 @@
         from "../views/shape-view"
     import { insertJoinersInBetweenArrayItems }
         from "../../../tools/array"
+    import { EMPTY_STRING }
+        from "../../../constants/characters"
 
 //
 // ─── CONCAT HORIZONTALLY ────────────────────────────────────────────────────────
@@ -77,7 +79,7 @@
                     boxesWithAppropriatePaddings[ column ].lines[ row ]
             }
             newLines[ row ] =
-                lineColumns.join( "" )
+                lineColumns.join( EMPTY_STRING )
         }
 
         // the new space box

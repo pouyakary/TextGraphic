@@ -8,9 +8,9 @@
     export * from
         "./views/mono-style-views"
 
-    // PaneView
+    // CanvasView
     export * from
-        "./views/multi-style-views/pane-view/main"
+        "./views/multi-style-views/canvas-view/main"
 
 //
 // ─── LAYOUTS ────────────────────────────────────────────────────────────────────

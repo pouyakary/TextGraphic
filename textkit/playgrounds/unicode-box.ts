@@ -3,7 +3,7 @@
 // ─── IMPORTS ────────────────────────────────────────────────────────────────────
 //
 
-    import { ShapeView, BoxFramePresets, PaneView, ANSITerminalStyleRenderer }
+    import { ShapeView, BoxFramePresets, CanvasView, ANSITerminalStyleRenderer }
         from "../source/index"
 
 //
@@ -18,7 +18,7 @@
 //
 
     const background =
-        new PaneView( 7, 4, styler, { } )
+        new CanvasView( 7, 4, styler )
 
     const sampleBox1 =
         ShapeView.initBlankRectangle( 3, 1, styler )

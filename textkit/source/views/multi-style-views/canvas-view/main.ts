@@ -3,14 +3,12 @@
 // ─── IMPORTS ────────────────────────────────────────────────────────────────────
 //
 
-    import { Subset }
-        from "../../../tools/types"
     import { ViewProtocol, ScreenMatrixPixel }
         from "../../../protocols/view-protocol"
     import { VirtualScreen }
         from "./virtual-screen"
 
-    import { fineTuneUnicodeBoxForLayeredPane }
+    import { fineTuneUnicodeBoxForLayeredCanvas }
         from "./algorithms/fine-tune-unicode-box"
     import { rayTraceScreenPixel }
         from "./algorithms/ray-trace"
@@ -27,7 +25,7 @@
 // ─── TYPES ──────────────────────────────────────────────────────────────────────
 //
 
-    export interface PaneChildrenProfile <EnvironmentStyleSettings extends Object> {
+    export interface CanvasChildrenProfile <EnvironmentStyleSettings extends Object> {
         x:      number
         y:      number
         zIndex: number
@@ -35,10 +33,10 @@
     }
 
 //
-// ─── DRAW PANE ──────────────────────────────────────────────────────────────────
+// ─── CANVAS VIEW ────────────────────────────────────────────────────────────────
 //
 
-    export class PaneView <EnvironmentStyleSettings extends Object> implements
+    export class CanvasView <EnvironmentStyleSettings extends Object> implements
         ViewProtocol<EnvironmentStyleSettings, StyleRendererProtocol<EnvironmentStyleSettings>> {
 
         //
@@ -47,15 +45,12 @@
 
             readonly    height:                 number
             readonly    width:                  number
-            readonly    screen:                 VirtualScreen
+            readonly    screen:                 VirtualScreen<EnvironmentStyleSettings>
             readonly    styleRenderer:          StyleRendererProtocol<EnvironmentStyleSettings>
-            readonly    #children:              PaneChildrenProfile<EnvironmentStyleSettings> [ ]
+            readonly    #children:              CanvasChildrenProfile<EnvironmentStyleSettings> [ ]
 
-                        transparent:                boolean
-                        #baseline:                  number
-                        #style:                     EnvironmentStyleSettings
-                        #leftStylingInfoCache:      string
-                        #rightStylingInfoCache:     string
+                        transparent:            boolean
+                        #baseline:              number
 
         //
         // ─── CONSTRUCTOR ─────────────────────────────────────────────────
@@ -63,8 +58,7 @@
 
             constructor ( width: number,
                          height: number,
-                  styleRenderer: StyleRendererProtocol<EnvironmentStyleSettings>,
-                          style: Subset<EnvironmentStyleSettings> ) {
+                  styleRenderer: StyleRendererProtocol<EnvironmentStyleSettings> ) {
 
                 this.height =
                     height
@@ -81,14 +75,6 @@
 
                 this.styleRenderer =
                     styleRenderer
-                this.#style =
-                    styleRenderer.margeNewStyleOptionsWithPreviosuStyleState(
-                        styleRenderer.defaultStyle, style
-                    )
-                this.#leftStylingInfoCache =
-                    styleRenderer.renderLeftStylingInfo( this.#style )
-                this.#rightStylingInfoCache =
-                    styleRenderer.renderRightStylingInfo( this.#style )
             }
 
         //
@@ -98,22 +84,22 @@
             static initWithBackground <EnvironmentStyleSettings extends Object> (
                     background: ViewProtocol<EnvironmentStyleSettings, StyleRendererProtocol<EnvironmentStyleSettings>>,
                     styler:     StyleRendererProtocol<EnvironmentStyleSettings>,
-                ): PaneView<EnvironmentStyleSettings> {
+                ): CanvasView<EnvironmentStyleSettings> {
 
                 //
-                const pane =
-                    new PaneView(
-                        background.width, background.height, styler, { } )
+                const canvas =
+                    new CanvasView(
+                        background.width, background.height, styler )
                     .add( background, 0, 0, 0 )
 
-                return pane
+                return canvas
             }
 
         //
         // ─── CHILDREN ────────────────────────────────────────────────────
         //
 
-            public * getChildren ( ): Generator<PaneChildrenProfile<EnvironmentStyleSettings>, null> {
+            public * getChildren ( ): Generator<CanvasChildrenProfile<EnvironmentStyleSettings>, null> {
                 for ( const child of this.#children ) {
                     yield child
                 }
@@ -156,37 +142,6 @@
             }
 
         //
-        // ─── STYLE ───────────────────────────────────────────────────────
-        //
-
-            private applyNewStyle ( sourceStyle: EnvironmentStyleSettings,
-                                        changes: Subset<EnvironmentStyleSettings> ) {
-                //
-                this.#style =
-                    this.styleRenderer.margeNewStyleOptionsWithPreviosuStyleState(
-                        sourceStyle, changes
-                    )
-                this.#leftStylingInfoCache =
-                    this.styleRenderer.renderLeftStylingInfo( this.#style )
-                this.#rightStylingInfoCache =
-                    this.styleRenderer.renderRightStylingInfo( this.#style )
-            }
-
-
-            get style ( ): EnvironmentStyleSettings {
-                return this.#style
-            }
-
-            set style ( input: Subset<EnvironmentStyleSettings> ) {
-                this.applyNewStyle( this.styleRenderer.defaultStyle, input )
-            }
-
-
-            addStyle (  input: Subset<EnvironmentStyleSettings> ) {
-                this.applyNewStyle( this.#style, input )
-            }
-
-        //
         // ─── RAY TRACER ──────────────────────────────────────────────────
         //
 
@@ -197,8 +152,6 @@
                 //
                 return rayTraceScreenPixel(
                     this, left, top, x, y,
-                    this.#leftStylingInfoCache,
-                    this.#rightStylingInfoCache
                 )
             }
 
@@ -227,7 +180,7 @@
         //
 
             public get plainTextForm ( ): string {
-                return this.screen.plainTextForm
+                return this.screen.renderPlainTextForm( )
             }
 
         //
@@ -235,7 +188,7 @@
         //
 
             public get styledForm ( ): string {
-                return this.screen.styledForm
+                return this.screen.renderStyledForm( this.styleRenderer )
             }
 
         //
@@ -254,7 +207,7 @@
         //
 
             public fineTuneUnicodeBoxes ( ) {
-                fineTuneUnicodeBoxForLayeredPane( this )
+                fineTuneUnicodeBoxForLayeredCanvas( this )
             }
 
         //
@@ -264,7 +217,7 @@
             public applyMargin ( topMargin: number ,
                                rightMargin: number ,
                               bottomMargin: number ,
-                                leftMargin: number ): PaneView<EnvironmentStyleSettings> {
+                                leftMargin: number ): CanvasView<EnvironmentStyleSettings> {
                 //
                 return applyMarginToMultiStyleView(
                     this, topMargin, rightMargin, bottomMargin, leftMargin
@@ -276,9 +229,9 @@
         //
 
             public centerToBoundaryBox ( width: number,
-                                        height: number ): PaneView<EnvironmentStyleSettings> {
+                                        height: number ): CanvasView<EnvironmentStyleSettings> {
                 //
-                return centerViewProtocolToBoundaryBox( this, width, height ) as PaneView<EnvironmentStyleSettings>
+                return centerViewProtocolToBoundaryBox( this, width, height ) as CanvasView<EnvironmentStyleSettings>
             }
 
         // ─────────────────────────────────────────────────────────────────

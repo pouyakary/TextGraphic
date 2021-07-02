@@ -48,9 +48,9 @@
     //      │              Spacing         Vertical                        │
     //      ▼                              Spacing                         │
     //                                                                     ▼
-    //      Pane Horizontal
+    //      Canvas Horizontal
     //      Padding                                                        Vertical
-    //                                                                     Pane Padding
+    //                                                                     Canvas Padding
 
 //
 // ─── CONSTANTS ──────────────────────────────────────────────────────────────────
@@ -71,9 +71,9 @@
         1
     const HORIZONTAL_SPACING =
         1
-    const PANE_VERTICAL_PADDING =
+    const CANVAS_VERTICAL_PADDING =
         1
-    const PANE_HORIZONTAL_PADDING =
+    const CANVAS_HORIZONTAL_PADDING =
         2
 
 //
@@ -161,34 +161,34 @@
             createTextJustified( size )
 
         //
-        const paneWidth =
-            justifiedText.width + verticalRuler.width + HORIZONTAL_SPACING + PANE_HORIZONTAL_PADDING
-        const paneHeight =
-            justifiedText.height + horizontalRuler.height + VERTICAL_SPACING + ( PANE_VERTICAL_PADDING * 2 )
-        const pane =
-            new TextKit.PaneView( paneWidth, paneHeight, styler, { } )
+        const canvasWidth =
+            justifiedText.width + verticalRuler.width + HORIZONTAL_SPACING + CANVAS_HORIZONTAL_PADDING
+        const canvasHeight =
+            justifiedText.height + horizontalRuler.height + VERTICAL_SPACING + ( CANVAS_VERTICAL_PADDING * 2 )
+        const canvas =
+            new TextKit.CanvasView( canvasWidth, canvasHeight, styler )
 
         //
-        pane.add( verticalRuler,
-            PANE_HORIZONTAL_PADDING,
-            PANE_VERTICAL_PADDING + horizontalRuler.height + VERTICAL_SPACING,
+        canvas.add( verticalRuler,
+            CANVAS_HORIZONTAL_PADDING,
+            CANVAS_VERTICAL_PADDING + horizontalRuler.height + VERTICAL_SPACING,
             1 )
 
         //
-        pane.add( horizontalRuler,
-            PANE_HORIZONTAL_PADDING + verticalRuler.width + HORIZONTAL_SPACING,
-            PANE_VERTICAL_PADDING,
+        canvas.add( horizontalRuler,
+            CANVAS_HORIZONTAL_PADDING + verticalRuler.width + HORIZONTAL_SPACING,
+            CANVAS_VERTICAL_PADDING,
             1 )
 
         //
-        pane.add( justifiedText,
-            PANE_HORIZONTAL_PADDING + verticalRuler.width + HORIZONTAL_SPACING,
-            PANE_VERTICAL_PADDING + horizontalRuler.height + VERTICAL_SPACING,
+        canvas.add( justifiedText,
+            CANVAS_HORIZONTAL_PADDING + verticalRuler.width + HORIZONTAL_SPACING,
+            CANVAS_VERTICAL_PADDING + horizontalRuler.height + VERTICAL_SPACING,
             1 )
 
         //
         console.clear( )
-        console.log( pane.styledForm )
+        console.log( canvas.styledForm )
 
         Tools.setCursorToBottomRight( "TextKit Justifier Clustering Demo " )
         await Tools.sleep( 50 )
