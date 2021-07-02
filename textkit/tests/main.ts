@@ -9,7 +9,7 @@
     import { runToolsTestSuite }
         from "./tools/main"
     import { runCoreElementsTestSuite }
-        from "./core-elements/main"
+        from "./views/main"
     import { runLayoutsTestSuite }
         from "./layouts/main"
 

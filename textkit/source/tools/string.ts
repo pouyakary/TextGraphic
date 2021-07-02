@@ -5,6 +5,8 @@
 
     import { getLongestLineOfArray }
         from "./array"
+    import { WHITE_SPACE_CHARACTER, EMPTY_STRING }
+        from "../constants/characters"
 
 //
 // ─── CONSTANTS ──────────────────────────────────────────────────────────────────
@@ -12,13 +14,18 @@
 
     const END_OF_LINE_REGEXP =
         /(?:\n\r?)|(?:\r\n?)/g
+    const END_OF_LINE_CHARACTERS =
+        /\n|\r/g
 
 //
 // ─── CREATE EMPTY STRING LINE ───────────────────────────────────────────────────
 //
 
     export function createEmptyStringLine ( size: number ) {
-        return ( size <= 0 ? "" : " ".repeat( Math.floor( size ) ) )
+        return ( size <= 0
+            ? EMPTY_STRING
+            : WHITE_SPACE_CHARACTER.repeat( Math.floor( size ) )
+            )
     }
 
 //
@@ -49,6 +56,14 @@
 
     export function breakStringIntoLines ( text: string ) {
         return text.split( END_OF_LINE_REGEXP )
+    }
+
+//
+// ─── IS MULTI LINE ──────────────────────────────────────────────────────────────
+//
+
+    export function includesLineBreak ( text: string ): boolean {
+        return END_OF_LINE_CHARACTERS.test( text )
     }
 
 // ────────────────────────────────────────────────────────────────────────────────

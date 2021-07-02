@@ -3,10 +3,14 @@
 // ─── IMPORTS ────────────────────────────────────────────────────────────────────
 //
 
-    import { SpacedBox }
-        from "../../core-elements/spaced-box/main"
+    import { ShapeView }
+        from "../../views/mono-style-views/views/shape-view"
+    import { StyleRendererProtocol }
+        from "../../protocols/style-renderer-protocol"
     import { Direction }
         from "../../protocols/direction"
+    import { WHITE_SPACE_CHARACTER, EMPTY_STRING }
+        from "../../constants/characters"
 
 //
 // ─── TYPES ──────────────────────────────────────────────────────────────────────
@@ -42,23 +46,28 @@
 // ─── RULER MAKER ────────────────────────────────────────────────────────────────
 //
 
-    export function createChartRuler ( inputSettings: CharRulerSettings ): SpacedBox {
+    export function createChartRuler <EnvironmentStyleSettings extends Object> (
+            styler:         StyleRendererProtocol<EnvironmentStyleSettings>,
+            inputSettings:  CharRulerSettings,
+        ): ShapeView<EnvironmentStyleSettings> {
+
+        //
         const settings =
             fixSettings( inputSettings )
 
         if ( settings.size < 1 ) {
-            return SpacedBox.initEmptyBox( )
+            return ShapeView.initEmptyBox( styler )
         }
 
         switch ( settings.facing ) {
             case Direction.Up:
-                return createHorizontalChartRuler( settings, true )
+                return createHorizontalChartRuler( settings, styler, true )
             case Direction.Down:
-                return createHorizontalChartRuler( settings, false )
+                return createHorizontalChartRuler( settings, styler, false )
             case Direction.Left:
-                return createVerticalRuler( settings, true )
+                return createVerticalRuler( settings, styler, true )
             case Direction.Right:
-                return createVerticalRuler( settings, false )
+                return createVerticalRuler( settings, styler, false )
         }
     }
 
@@ -93,14 +102,18 @@
 // ─── HORIZONTAL CHART RULER ─────────────────────────────────────────────────────
 //
 
-    function createHorizontalChartRuler ( settings: FixedCharRulerSettings,
-                                     isDirectionUp: boolean ): SpacedBox {
+    function createHorizontalChartRuler <EnvironmentStyleSettings extends Object> (
+            settings:       FixedCharRulerSettings,
+            styler:         StyleRendererProtocol<EnvironmentStyleSettings>,
+            isDirectionUp:  boolean
+        ): ShapeView<EnvironmentStyleSettings> {
+
         //
         const rulerLine =
             createHorizontalRulerLine( settings )
 
         if ( settings.hideNumbers ) {
-            return new SpacedBox( [ rulerLine ], 0 )
+            return new ShapeView( [ rulerLine ], 0, styler, { }, true )
         }
 
         //
@@ -116,14 +129,20 @@
                 ? 0
                 : 1
 
-        return new SpacedBox( lines, baseline )
+        return new ShapeView( lines, baseline, styler, { }, true )
     }
 
 //
 // ─── CREATE VERTICAL RULER ──────────────────────────────────────────────────────
 //
 
-    function createVerticalRuler ( settings: FixedCharRulerSettings, facingLeft: boolean ): SpacedBox {
+    function createVerticalRuler <EnvironmentStyleSettings extends Object> (
+            settings:       FixedCharRulerSettings,
+            styler:         StyleRendererProtocol<EnvironmentStyleSettings>,
+            facingLeft:     boolean
+        ): ShapeView<EnvironmentStyleSettings> {
+
+        //
         const { hideNumbers, size, chars, verticalGutterSize, unit, unitSize } =
             settings
         const { originChar, middleChar, separatorChar } =
@@ -142,7 +161,7 @@
                         : middleChar
             }
 
-            return new SpacedBox( lines, 0 )
+            return new ShapeView( lines, 0, styler, { }, true )
         }
 
 
@@ -151,8 +170,8 @@
             const paddingLength =
                 verticalGutterSize - 1 - no.length
             return facingLeft
-                ? " " + no + " ".repeat( paddingLength )
-                : " ".repeat( paddingLength ) + no + " "
+                ? WHITE_SPACE_CHARACTER + no + WHITE_SPACE_CHARACTER.repeat( paddingLength )
+                : WHITE_SPACE_CHARACTER.repeat( paddingLength ) + no + WHITE_SPACE_CHARACTER
         }
 
         lines[ 0 ] =
@@ -162,8 +181,8 @@
 
         const middleLineTemplate =
             facingLeft
-                ? middleChar + " ".repeat( verticalGutterSize )
-                : " ".repeat( verticalGutterSize ) + middleChar
+                ? middleChar + WHITE_SPACE_CHARACTER.repeat( verticalGutterSize )
+                : WHITE_SPACE_CHARACTER.repeat( verticalGutterSize ) + middleChar
 
         function createMiddleLine ( i: number ) {
             const label =
@@ -182,7 +201,7 @@
                     )
         }
 
-        return new SpacedBox( lines, 0 )
+        return new ShapeView( lines, 0, styler, { }, true )
     }
 
 //
@@ -202,18 +221,19 @@
             const unitNumberText =
                 ( unit * unitSize * ( i + 1 ) ).toString( )
             if ( i === 0 ) {
-                numberLineArray[ i ] = "1" + " ".repeat( unit - unitNumberText.length ) + unitNumberText
+                numberLineArray[ i ] =
+                    "1" + WHITE_SPACE_CHARACTER.repeat( unit - unitNumberText.length ) + unitNumberText
             } else {
                 numberLineArray[ i ] =
-                    " ".repeat( unit - unitNumberText.length ) + unitNumberText
+                    WHITE_SPACE_CHARACTER.repeat( unit - unitNumberText.length ) + unitNumberText
             }
         }
 
         numberLineArray.push(
-            " ".repeat( size - unit * numberLineSections )
+            WHITE_SPACE_CHARACTER.repeat( size - unit * numberLineSections )
         )
 
-        return numberLineArray.join( "" )
+        return numberLineArray.join( EMPTY_STRING )
     }
 
 

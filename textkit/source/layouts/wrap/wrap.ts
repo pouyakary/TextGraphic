@@ -4,9 +4,9 @@
 //
 
     import { VirtualScreen }
-        from "../../core-elements/virtual-screen"
-    import { StringBox }
-            from "../../protocols/string-box"
+        from "../../views/multi-style-views/canvas-view/virtual-screen"
+    import { ViewProtocol }
+        from "../../protocols/view-protocol"
 
 //
 // ─── WRAP LAYOUT ────────────────────────────────────────────────────────────────

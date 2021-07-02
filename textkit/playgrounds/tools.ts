@@ -1,5 +1,12 @@
 
 //
+// ─── IMPORTS ────────────────────────────────────────────────────────────────────
+//
+
+    import { EMPTY_STRING }
+        from "../source/constants/characters"
+
+//
 // ─── TYPES ──────────────────────────────────────────────────────────────────────
 //
 
@@ -17,11 +24,11 @@
 // ─── SET CURSOR TO BOTTOM ───────────────────────────────────────────────────────
 //
 
-    export function setCursorToBottomRight ( title = "" ) {
+    export function setCursorToBottomRight ( title = EMPTY_STRING ) {
         process.stdout.write(
             `\x1b[${ process.stdout.rows - 1 };${ process.stdout.columns - title.length - 1 }H`
         )
-        if ( title !== "" ) {
+        if ( title !== EMPTY_STRING ) {
             process.stdout.write(
                 title
             )

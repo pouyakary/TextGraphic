@@ -5,8 +5,12 @@
 
     import { Justification }
         from "../../protocols/justification"
-    import { SpacedBox }
-        from "../../core-elements/spaced-box/main"
+    import { StyleRendererProtocol }
+        from "../../protocols/style-renderer-protocol"
+    import { ShapeView }
+        from "../../views/mono-style-views/views/shape-view"
+    import { WHITE_SPACE_CHARACTER, LINE_BREAK_CHARACTER, TAB_CHARACTER, EMPTY_STRING }
+        from "../../constants/characters"
 
 //
 // ─── CONSTANTS ──────────────────────────────────────────────────────────────────
@@ -19,9 +23,13 @@
 // ─── MONO STYLED TEXT JUSTIFICATION ─────────────────────────────────────────────
 //
 
-    export function justifyPlainText ( text: string,
-                                      width: number,
-                              justification: Justification ): SpacedBox {
+    export function createMonoStyleJustificationLayout <EnvironmentStyleSettings extends Object> (
+            text:           string,
+            width:          number,
+            justification:  Justification,
+            styler:         StyleRendererProtocol<EnvironmentStyleSettings>
+        ): ShapeView<EnvironmentStyleSettings> {
+
         //
         const lines =
             new Array<string> ( )
@@ -64,7 +72,7 @@
 
         //
         for ( const word of clusterWordsToLinesOfSize( width, text ) ) {
-            if ( word === "\n" ) {
+            if ( word === LINE_BREAK_CHARACTER ) {
                 flushBufferOnCarriageReturn( )
             } else {
                 appendWordToBuffer( word )
@@ -75,7 +83,7 @@
         }
 
         //
-        return new SpacedBox( lines, 0 )
+        return new ShapeView( lines, 0, styler, { }, false )
     }
 
 //
@@ -89,31 +97,33 @@
         // Justification: Left
         if ( justification === Justification.Left ) {
             const line =
-                lineBuffer.join( "" )
+                lineBuffer.join( EMPTY_STRING )
             const rightSpacing =
-                " ".repeat( width - lineLength )
+                WHITE_SPACE_CHARACTER.repeat( width - lineLength )
             return line + rightSpacing
         }
 
         // Justification: Right
         if ( justification === Justification.Right ) {
             const line =
-                lineBuffer.join( "" )
+                lineBuffer.join( EMPTY_STRING )
             const leftSpacing =
-                " ".repeat( width - lineLength )
+                WHITE_SPACE_CHARACTER.repeat( width - lineLength )
             return leftSpacing + line
         }
 
         // Justification: Center
         if ( justification === Justification.Center ) {
             const line =
-                lineBuffer.join( "" )
+                lineBuffer.join( EMPTY_STRING )
             const leftSpacing =
-                " ".repeat( Math.floor( ( width - lineLength ) / 2 ) )
+                WHITE_SPACE_CHARACTER.repeat( Math.floor( ( width - lineLength ) / 2 ) )
             const rightSpacingWidth =
                 width - leftSpacing.length - line.length
             const rightSpacing =
-                rightSpacingWidth > 0 ? " ".repeat( rightSpacingWidth ) : ""
+                rightSpacingWidth > 0
+                    ? WHITE_SPACE_CHARACTER.repeat( rightSpacingWidth )
+                    : EMPTY_STRING
             return leftSpacing + line + rightSpacing
         }
 
@@ -125,11 +135,11 @@
                 const wordIndex =
                     i % lineBuffer.length
                 if ( IS_WORD_SPACE.test( lineBuffer[ wordIndex ] ) ) {
-                    lineBuffer[ wordIndex ] += " "
+                    lineBuffer[ wordIndex ] += WHITE_SPACE_CHARACTER
                     lineSize += 1
                 }
                 if ( lineSize > width -1 ) {
-                    return lineBuffer.join( "" )
+                    return lineBuffer.join( EMPTY_STRING )
                 }
             }
         }
@@ -156,7 +166,7 @@
         function flushNewLine ( ) {
             currentLineSize =
                 0
-            return "\n"
+            return LINE_BREAK_CHARACTER
         }
 
         function updateOnReturn ( word: string ) {
@@ -188,14 +198,14 @@
         let previousCharWasSpace =
             false
         let buffer =
-            ""
+            EMPTY_STRING
 
         //
         function flushBuffer ( ) {
-            if ( buffer !== "" ) {
+            if ( buffer !== EMPTY_STRING ) {
                 results.push( buffer )
             }
-            buffer = ""
+            buffer = EMPTY_STRING
         }
 
         //
@@ -209,7 +219,7 @@
 
         //
         for ( const char of text ) {
-            if ( char === " " || char === "\t" ) {
+            if ( char === WHITE_SPACE_CHARACTER || char === TAB_CHARACTER ) {
                 if ( previousCharWasSpace ) {
                     buffer += char
                 } else {
@@ -220,10 +230,10 @@
                 true
             }
 
-            else if ( char === "\n" ) {
+            else if ( char === LINE_BREAK_CHARACTER ) {
                 flushBufferIfPreviousCharacterWasSpace( )
                 flushBuffer( )
-                results.push( "\n" )
+                results.push( LINE_BREAK_CHARACTER )
             }
 
             else {

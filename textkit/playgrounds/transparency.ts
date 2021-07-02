@@ -3,57 +3,65 @@
 // ─── IMPORTS ────────────────────────────────────────────────────────────────────
 //
 
-    import { ANSITerminalForegroundColor, BoxFramePresets, LayeredPane, SpacedBox }
+    import * as TextKit
         from "../source"
+
+//
+// ─── ENVIRONMENT ────────────────────────────────────────────────────────────────
+//
+
+    const styler =
+        new TextKit.Environments.ANSITerminalStyleRenderer( )
 
 //
 // ─── TESTING TRANSPARENCY ───────────────────────────────────────────────────────
 //
 
     const box1 =
-        SpacedBox.initBlankRectangle( 8, 3 )
-            .frame( BoxFramePresets.LightBoxPreset )
-            .setANSITerminalStyle({
-                foregroundColor: ANSITerminalForegroundColor.Blue
-            })
+        TextKit.ShapeView.initBlankRectangle( 8, 3, styler )
+            .frame( TextKit.Presets.LightBoxPreset )
+
+    box1.style = {
+        foregroundColor: TextKit.Environments.ANSITerminalForegroundColor.Blue
+    }
 
     const box2 =
-        SpacedBox.initBlankRectangle( 8, 3 )
-            .frame( BoxFramePresets.LightBoxPreset )
-            .setANSITerminalStyle({
-                foregroundColor: ANSITerminalForegroundColor.Red
-            })
+        TextKit.ShapeView.initBlankRectangle( 8, 3, styler )
+            .frame( TextKit.Presets.LightBoxPreset )
+    box2.style = {
+        foregroundColor: TextKit.Environments.ANSITerminalForegroundColor.Red
+    }
 
     box2.transparent = true
 
 
     const box3 =
-        SpacedBox.initBlankRectangle( 8, 3 )
-            .frame( BoxFramePresets.LightBoxPreset )
-            .setANSITerminalStyle({
-                foregroundColor: ANSITerminalForegroundColor.Green
-            })
+        TextKit.ShapeView.initBlankRectangle( 8, 3, styler )
+            .frame( TextKit.Presets.LightBoxPreset )
 
-    const pane =
-        new LayeredPane(
-            SpacedBox.initBlankRectangle( 65, 10 )
-        )
+    box3.style = {
+        foregroundColor: TextKit.Environments.ANSITerminalForegroundColor.Green
+    }
 
-    pane.add( box1, 3, 1, 1 )
-    pane.add( box2, 8, 2, 2 )
-    pane.add( box3, 14, 3, 3 )
+
+    const canvas =
+        new TextKit.CanvasView( 65, 10, styler )
+
+    canvas.add( box1, 3, 1, 1 )
+    canvas.add( box2, 8, 2, 2 )
+    canvas.add( box3, 14, 3, 3 )
 
     const text =
-        SpacedBox.initWithText( "And there goes the transparency! 😎", 0 )
-        .setANSITerminalStyle({
-            italic: true,
-            foregroundColor: ANSITerminalForegroundColor.Black
-        })
+        new TextKit.LineView( "And there goes the transparency! 😎", styler, { } )
+    text.style = {
+        italic: true,
+        foregroundColor: TextKit.Environments.ANSITerminalForegroundColor.Black
+    }
 
-    pane.add( text, 27, 4, 3 )
+    canvas.add( text, 27, 4, 3 )
 
-    pane.fineTuneUnicodeBoxes( )
+    canvas.fineTuneUnicodeBoxes( )
 
-    console.log( pane.ANSITerminalForm )
+    console.log( canvas.styledForm )
 
 // ────────────────────────────────────────────────────────────────────────────────

@@ -3,31 +3,36 @@
 // ─── IMPORTS ────────────────────────────────────────────────────────────────────
 //
 
-    import { SpacedBox, BoxFramePresets, LayeredPane }
+    import * as TextKit
         from "../source/index"
+
+//
+// ─── ENVIRONMENTS ───────────────────────────────────────────────────────────────
+//
+
+    const styler =
+        new TextKit.Environments.ANSITerminalStyleRenderer( )
 
 //
 // ─── CONST BACKGROUND ───────────────────────────────────────────────────────────
 //
 
     const background =
-        new LayeredPane(
-            SpacedBox.initBlankRectangle( 7, 4 )
-        )
+        new TextKit.CanvasView( 7, 4, styler )
 
     const sampleBox1 =
-        SpacedBox.initBlankRectangle( 3, 1 )
-            .frame( BoxFramePresets.LightBoxPreset )
+        TextKit.ShapeView.initBlankRectangle( 3, 1, styler )
+            .frame( TextKit.Presets.LightBoxPreset )
 
     const sampleBox2 =
-        SpacedBox.initBlankRectangle( 3, 1 )
-            .frame( BoxFramePresets.HeavyBoxPreset )
+        TextKit.ShapeView.initBlankRectangle( 3, 1, styler )
+            .frame( TextKit.Presets.HeavyBoxPreset )
 
     background.add( sampleBox1, 0, 0, 1 )
     background.add( sampleBox2, 2, 1, 2 )
 
     background.fineTuneUnicodeBoxes( )
 
-    console.log( background.ANSITerminalForm )
+    console.log( background.styledForm )
 
 // ────────────────────────────────────────────────────────────────────────────────
