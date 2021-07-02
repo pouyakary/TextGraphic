@@ -1,80 +1,93 @@
 
-import { SpacedBox, BoxFramePresets, ANSITerminalForegroundColor, LayeredPane } from
+import * as TextKit from
     "../source"
 
 const wait = ( ms: number ) =>
     new Promise( resolve => setTimeout( resolve, ms ) )
 
+const styler =
+    new TextKit.Environments.ANSITerminalStyleRenderer( )
+
 main( ); async function main ( ) {
     for ( let iteration = 0; true; iteration++ ) {
         // 1
-        const firstPaneBackground =
-            SpacedBox.initBlankRectangle( 20, 5 )
-                .frame( BoxFramePresets.LightBoxPreset )
-        const firstPane =
-            new LayeredPane( firstPaneBackground )
-        const topLeftPaneObject =
-            new SpacedBox([ " * " ], 0)
-                .frame( BoxFramePresets.LightBoxPreset )
-                .setANSITerminalStyle({ foregroundColor: ANSITerminalForegroundColor.Blue })
-        firstPane.add( topLeftPaneObject, -5 + ( iteration % 30 ), 1, 1 )
+        const firstCanvasBackground =
+            TextKit.ShapeView.initBlankRectangle( 20, 5, styler )
+                .frame( TextKit.Presets.LightBoxPreset )
+        const firstCanvas =
+            TextKit.CanvasView.initWithBackground( firstCanvasBackground, styler )
+
+        const topLeftCanvasObject =
+            new TextKit.ShapeView([ " * " ], 0, styler, { }, false )
+                .frame( TextKit.Presets.LightBoxPreset )
+        topLeftCanvasObject.style = {
+            foregroundColor: TextKit.Environments.ANSITerminalForegroundColor.Blue
+        }
+        firstCanvas.add( topLeftCanvasObject, -5 + ( iteration % 30 ), 1, 1 )
 
         // 2
-        const secondPaneBackground =
-            SpacedBox.initBlankRectangle( 20, 5 )
-                .frame( BoxFramePresets.LightBoxPreset )
-        const secondPane =
-            new LayeredPane( secondPaneBackground )
-        const secondPaneObject =
-            new SpacedBox([ " * " ], 0)
-                .frame( BoxFramePresets.LightBoxPreset )
-                .setANSITerminalStyle({ foregroundColor: ANSITerminalForegroundColor.Red })
-        secondPane.add( secondPaneObject, 3, -3 + ( iteration % 20), 1 )
+        const secondCanvasBackground =
+            TextKit.ShapeView.initBlankRectangle( 20, 5, styler )
+                .frame( TextKit.Presets.LightBoxPreset )
+        const secondCanvas =
+            TextKit.CanvasView.initWithBackground( secondCanvasBackground, styler )
+
+        const secondCanvasObject =
+            new TextKit.ShapeView([ " * " ], 0, styler, { }, false )
+                .frame( TextKit.Presets.LightBoxPreset )
+        secondCanvasObject.style = {
+            foregroundColor: TextKit.Environments.ANSITerminalForegroundColor.Red
+        }
+        secondCanvas.add( secondCanvasObject, 3, -3 + ( iteration % 20), 1 )
 
         // 3
-        const thirdPaneBackground =
-            SpacedBox.initBlankRectangle( 20, 5 )
-                .frame( BoxFramePresets.LightBoxPreset )
-        const thirdPane =
-            new LayeredPane( thirdPaneBackground )
-        const thirdPaneObjectOne =
-            new SpacedBox([ " * " ], 0)
-                .frame( BoxFramePresets.LightBoxPreset )
-                .setANSITerminalStyle({
-                    foregroundColor: ANSITerminalForegroundColor.Green
-                })
-        thirdPane.add( thirdPaneObjectOne, -4 + ( iteration % 30 ), 3, 1 )
-        const thirdPaneObjectTwo =
-            new SpacedBox([ " * " ], 0)
-                .frame( BoxFramePresets.LightBoxPreset )
-                .setANSITerminalStyle({
-                    foregroundColor: ANSITerminalForegroundColor.Blue
-                })
-        thirdPane.add( thirdPaneObjectTwo, 24 - ( iteration % 30 ), 2 , 1 )
+        const thirdCanvasBackground =
+            TextKit.ShapeView.initBlankRectangle( 20, 5, styler )
+                .frame( TextKit.Presets.LightBoxPreset )
+        const thirdCanvas =
+            TextKit.CanvasView.initWithBackground( thirdCanvasBackground, styler )
+
+        const thirdCanvasObjectOne =
+            new TextKit.ShapeView([ " * " ], 0, styler, { }, false )
+                .frame( TextKit.Presets.LightBoxPreset )
+        thirdCanvasObjectOne.style ={
+            foregroundColor: TextKit.Environments.ANSITerminalForegroundColor.Green
+        }
+        thirdCanvas.add( thirdCanvasObjectOne, -4 + ( iteration % 30 ), 3, 1 )
+        const thirdCanvasObjectTwo =
+            new TextKit.ShapeView([ " * " ], 0, styler, { }, false )
+                .frame( TextKit.Presets.LightBoxPreset )
+        thirdCanvasObjectTwo.style = {
+            foregroundColor: TextKit.Environments.ANSITerminalForegroundColor.Blue
+        }
+        thirdCanvas.add( thirdCanvasObjectTwo, 24 - ( iteration % 30 ), 2 , 1 )
 
         // text
         const title =
-            SpacedBox.initWithText( "Multi Layer Animation Grouping in Pouya's TextKit", 0 )
-                .setANSITerminalStyle({
-                    italic:         true,
-                    foregroundColor: ANSITerminalForegroundColor.Red
-                })
+            new TextKit.LineView(
+                "Multi Layer Animation Grouping in Pouya's TextKit",
+                styler, { }
+            )
+        title.style = {
+            italic:             true,
+            foregroundColor:    TextKit.Environments.ANSITerminalForegroundColor.Red
+        }
 
-        // Main Pane
-        const mainPaneBackground =
-            SpacedBox.initBlankRectangle( 77, 10 )
-        const mainPane =
-            new LayeredPane( mainPaneBackground )
+        // Main Canvas
+        const mainCanvasBackground =
+            TextKit.ShapeView.initBlankRectangle( 77, 10, styler )
+        const mainCanvas =
+            TextKit.CanvasView.initWithBackground( mainCanvasBackground, styler )
 
-        mainPane.add( title, 15, 1, 1 )
-        mainPane.add( firstPane, 4, 2, 1 )
-        mainPane.add( secondPane, 29, 2, 1 )
-        mainPane.add( thirdPane, 53, 2, 1 )
+        mainCanvas.add( title, 15, 1, 1 )
+        mainCanvas.add( firstCanvas, 4, 2, 1 )
+        mainCanvas.add( secondCanvas, 29, 2, 1 )
+        mainCanvas.add( thirdCanvas, 53, 2, 1 )
 
-        mainPane.fineTuneUnicodeBoxes()
+        mainCanvas.fineTuneUnicodeBoxes()
 
         console.clear( )
-        console.log( mainPane.ANSITerminalForm )
+        console.log( mainCanvas.styledForm )
 
         await wait( 120 )
     }

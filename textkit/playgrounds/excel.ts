@@ -38,20 +38,21 @@
 // ─── MAKE THE CELL ──────────────────────────────────────────────────────────────
 //
 
-    function createCell ( text: string, active: boolean ) {
+    function createCell ( text: string, active: boolean, styler: TextKit.Environments.ANSITerminalStyleRenderer ) {
         const border =
             ( active
-                ? TextKit.BoxFramePresets.HeavyBoxPreset
-                : TextKit.BoxFramePresets.LightBoxPreset
+                ? TextKit.Presets.HeavyBoxPreset
+                : TextKit.Presets.LightBoxPreset
                 )
 
         const box =
-            TextKit.SpacedBox.initWithText( text, 0 )
-            .centerToBox( CELL_WIDTH - 2, 1 )
+            TextKit.ShapeView.initWithText( text, 0, styler, { bold: true })
+            .centerToBoundaryBox( CELL_WIDTH - 2, 1 )
             .frame( border )
-            .setANSITerminalStyle({
-                bold: active
-            })
+
+        box.style = <TextKit.Environments.ANSITerminalSetStyleOptions> {
+            bold: true,
+        }
 
         return box
     }
@@ -60,14 +61,13 @@
 // ─── MAKING THE TABLE ───────────────────────────────────────────────────────────
 //
 
-    function renderTable ( activeColumn: number ) {
-        const paneWidth =
+    function renderTable ( activeColumn: number, styler: TextKit.Environments.ANSITerminalStyleRenderer ) {
+        const canvasWidth =
             ( ( ( CELL_WIDTH - 1 ) * TABLE_COLUMNS ) + 2 ) + LEFT_PADDING
-        const paneHeight =
+        const canvasHeight =
             ( ( ( CELL_HEIGHT - 1 ) * TABLE_ROWS ) + 1 ) + 1 * PADDING_VERTICALLY
-        const tablePane =
-            TextKit.LayeredPane.initWithTransparentBackground(
-                paneWidth, paneHeight )
+        const tableCanvas =
+            new TextKit.CanvasView( canvasWidth, canvasHeight, styler )
 
         const ALPHABET =
             [ "A", "B", "C", "D", "E", "F", "G", "H" ]
@@ -83,15 +83,15 @@
                 const text =
                     `${ALPHABET[column]}${row + 1}`
                 const cell =
-                    createCell( text, active )
+                    createCell( text, active, styler )
 
-                tablePane.add( cell, x, y, active ? 2 : 1 )
+                tableCanvas.add( cell, x, y, active ? 2 : 1 )
             }
         }
 
-        tablePane.fineTuneUnicodeBoxes( )
+        tableCanvas.fineTuneUnicodeBoxes( )
 
-        console.log( tablePane.ANSITerminalForm )
+        console.log( tableCanvas.styledForm )
     }
 
 //
@@ -99,9 +99,12 @@
 //
 
     main( ); async function main( ) {
+        const styler =
+            new TextKit.Environments.ANSITerminalStyleRenderer( )
+
         while ( true ) {
             for ( const column of [ 0, 1, 2, 3, 4 ] ) {
-                renderTable( column )
+                renderTable( column, styler )
                 const start = performance.now( )
                 await sleep( )
                 const end = performance.now( )

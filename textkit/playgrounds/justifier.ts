@@ -48,9 +48,16 @@
     //      │              Spacing         Vertical                        │
     //      ▼                              Spacing                         │
     //                                                                     ▼
-    //      Pane Horizontal
+    //      Canvas Horizontal
     //      Padding                                                        Vertical
-    //                                                                     Pane Padding
+    //                                                                     Canvas Padding
+
+//
+// ─── TYPES ──────────────────────────────────────────────────────────────────────
+//
+
+    type StyleOptions =
+        TextKit.Environments.ANSITerminalSetStyleOptions
 
 //
 // ─── CONSTANTS ──────────────────────────────────────────────────────────────────
@@ -59,9 +66,9 @@
     const SAMPLE_TEXT =
         `Lorem Ipsum is   simply dummy text   of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley   of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining   essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,  and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.`
 
-    const RULER_STYLES: TextKit.ANSITerminalSetStyleOptions = {
+    const RULER_STYLES: StyleOptions = {
         italic: true,
-        foregroundColor: TextKit.ANSITerminalForegroundColor.Blue
+        foregroundColor: TextKit.Environments.ANSITerminalForegroundColor.Blue
     }
 
     const LEFT_SPACING =
@@ -71,32 +78,39 @@
         1
     const HORIZONTAL_SPACING =
         1
-    const PANE_VERTICAL_PADDING =
+    const CANVAS_VERTICAL_PADDING =
         1
-    const PANE_HORIZONTAL_PADDING =
+    const CANVAS_HORIZONTAL_PADDING =
         2
+
+//
+// ─── ENVIRONMENT ────────────────────────────────────────────────────────────────
+//
+
+    const styler =
+        new TextKit.Environments.ANSITerminalStyleRenderer( )
 
 //
 // ─── HORIZONTAL RULER ───────────────────────────────────────────────────────────
 //
 
-    function createHorizontalRuler ( size: number ): TextKit.SpacedBox {
-        const charSet: TextKit.RulerCharSet = {
+    function createHorizontalRuler ( size: number ) {
+        const charSet: TextKit.Shapes.RulerCharSet = {
             originChar: "└",
             middleChar: "─",
             separatorChar: "┴"
         }
 
-        const rulerSettings: TextKit.CharRulerSettings = {
+        const rulerSettings: TextKit.Shapes.CharRulerSettings = {
             size: size,
             facing: TextKit.Direction.Down,
             chars: charSet
         }
 
         const ruler =
-            TextKit.createChartRuler( rulerSettings )
+            TextKit.Shapes.createChartRuler( styler, rulerSettings )
                 .applyMargin( 0, 0, 0, LEFT_SPACING )
-                .setANSITerminalStyle( RULER_STYLES )
+        ruler.style = RULER_STYLES
 
         return ruler
     }
@@ -105,14 +119,14 @@
 // ─── VERTICAL RULER ─────────────────────────────────────────────────────────────
 //
 
-    function createVerticalRuler ( height: number ): TextKit.SpacedBox {
-        const charSet: TextKit.RulerCharSet = {
+    function createVerticalRuler ( height: number ) {
+        const charSet: TextKit.Shapes.RulerCharSet = {
             originChar: "┐",
             middleChar: "│",
             separatorChar: "┤"
         }
 
-        const rulerSettings: TextKit.CharRulerSettings = {
+        const rulerSettings: TextKit.Shapes.CharRulerSettings = {
             size: height,
             facing: TextKit.Direction.Right,
             unit: 3,
@@ -120,9 +134,9 @@
         }
 
         const ruler =
-            TextKit.createChartRuler( rulerSettings )
+            TextKit.Shapes.createChartRuler( styler, rulerSettings )
                 .applyMargin( 0, 0, 0, LEFT_SPACING )
-                .setANSITerminalStyle( RULER_STYLES )
+        ruler.style = RULER_STYLES
 
         return ruler
     }
@@ -131,10 +145,10 @@
 // ─── CREATE TEXT JUSTIFIED ──────────────────────────────────────────────────────
 //
 
-    function createTextJustified ( size: number ): TextKit.SpacedBox {
+    function createTextJustified ( size: number ) {
         const justifiedText =
-            TextKit.justifyPlainText(
-                SAMPLE_TEXT, size, TextKit.Justification.Center )
+            TextKit.Layouts.createMonoStyleJustificationLayout(
+                SAMPLE_TEXT, size, TextKit.Justification.Center, styler )
             .applyMargin( 0, 0, 0, LEFT_SPACING )
 
         return justifiedText
@@ -154,34 +168,34 @@
             createTextJustified( size )
 
         //
-        const paneWidth =
-            justifiedText.width + verticalRuler.width + HORIZONTAL_SPACING + PANE_HORIZONTAL_PADDING
-        const paneHeight =
-            justifiedText.height + horizontalRuler.height + VERTICAL_SPACING + ( PANE_VERTICAL_PADDING * 2 )
-        const pane =
-            TextKit.LayeredPane.initWithTransparentBackground( paneWidth, paneHeight )
+        const canvasWidth =
+            justifiedText.width + verticalRuler.width + HORIZONTAL_SPACING + CANVAS_HORIZONTAL_PADDING
+        const canvasHeight =
+            justifiedText.height + horizontalRuler.height + VERTICAL_SPACING + ( CANVAS_VERTICAL_PADDING * 2 )
+        const canvas =
+            new TextKit.CanvasView( canvasWidth, canvasHeight, styler )
 
         //
-        pane.add( verticalRuler,
-            PANE_HORIZONTAL_PADDING,
-            PANE_VERTICAL_PADDING + horizontalRuler.height + VERTICAL_SPACING,
+        canvas.add( verticalRuler,
+            CANVAS_HORIZONTAL_PADDING,
+            CANVAS_VERTICAL_PADDING + horizontalRuler.height + VERTICAL_SPACING,
             1 )
 
         //
-        pane.add( horizontalRuler,
-            PANE_HORIZONTAL_PADDING + verticalRuler.width + HORIZONTAL_SPACING,
-            PANE_VERTICAL_PADDING,
+        canvas.add( horizontalRuler,
+            CANVAS_HORIZONTAL_PADDING + verticalRuler.width + HORIZONTAL_SPACING,
+            CANVAS_VERTICAL_PADDING,
             1 )
 
         //
-        pane.add( justifiedText,
-            PANE_HORIZONTAL_PADDING + verticalRuler.width + HORIZONTAL_SPACING,
-            PANE_VERTICAL_PADDING + horizontalRuler.height + VERTICAL_SPACING,
+        canvas.add( justifiedText,
+            CANVAS_HORIZONTAL_PADDING + verticalRuler.width + HORIZONTAL_SPACING,
+            CANVAS_VERTICAL_PADDING + horizontalRuler.height + VERTICAL_SPACING,
             1 )
 
         //
         console.clear( )
-        console.log( pane.ANSITerminalForm )
+        console.log( canvas.styledForm )
 
         Tools.setCursorToBottomRight( "TextKit Justifier Clustering Demo " )
         await Tools.sleep( 50 )

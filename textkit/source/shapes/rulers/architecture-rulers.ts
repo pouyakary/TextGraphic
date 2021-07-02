@@ -3,8 +3,12 @@
 // ─── IMPORTS ────────────────────────────────────────────────────────────────────
 //
 
-    import { SpacedBox }
-        from "../../core-elements/spaced-box/main"
+    import { ShapeView }
+        from "../../views/mono-style-views/views/shape-view"
+    import { StyleRendererProtocol }
+        from "../../protocols/style-renderer-protocol"
+    import { EMPTY_STRING }
+        from "../../constants/characters"
 
 //
 // ─── TYPES ──────────────────────────────────────────────────────────────────────
@@ -20,9 +24,10 @@
 // ─── ARCHITECTURE RULERS ────────────────────────────────────────────────────────
 //
 
-    export function createVerticalArchitectureRuler ( size: number,
-                                                     chars: ArchitecturalRulerCharSet,
-                                                      text: string = "" ): SpacedBox {
+    export function createVerticalArchitectureRuler <EnvironmentStyleSettings extends Object> ( size: number,
+                                                                                               chars: ArchitecturalRulerCharSet,
+                                                                                              styler: StyleRendererProtocol<EnvironmentStyleSettings>,
+                                                                                                text: string = EMPTY_STRING ): ShapeView<EnvironmentStyleSettings> {
         const lineChar =
             chars.line
         const startChar =
@@ -38,22 +43,17 @@
                     line.push()
                 }
             }
-            return new SpacedBox([
+            return new ShapeView([
 
-            ], 0 )
+            ], 0, styler, { }, true )
         }
 
-        return SpacedBox.initEmptyBox( )
+        return ShapeView.initEmptyBox( styler )
     }
 
 //
 // ─── CREATE VERTICAL LINE WITHOUT TEXT ──────────────────────────────────────────
 //
 
-    function createVerticalRulerWithoutText ( size: number, start: string, middle: string, end: string ): SpacedBox {
-        const lineChars =
-            ""
-        return new SpacedBox([ ], 0)
-    }
 
 // ────────────────────────────────────────────────────────────────────────────────

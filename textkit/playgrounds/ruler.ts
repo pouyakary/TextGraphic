@@ -9,13 +9,20 @@
         from "./tools"
 
 //
+// ─── ENVIRONMENT ────────────────────────────────────────────────────────────────
+//
+
+    const styler =
+        new TextKit.Environments.ANSITerminalStyleRenderer( )
+
+//
 // ─── RULER ──────────────────────────────────────────────────────────────────────
 //
 
     async function renderFrame ( size: number ) {
         //
         const ruler =
-            TextKit.createChartRuler({
+            TextKit.Shapes.createChartRuler( styler, {
                 size: size,
                 facing: TextKit.Direction.Right,
                 verticalGutterSize: 5,
@@ -26,12 +33,13 @@
                     separatorChar:  "┤",
                 }
             })
-            .setANSITerminalStyle({
-                foregroundColor: TextKit.ANSITerminalForegroundColor.Blue
-            })
+
+        ruler.style = {
+            foregroundColor: TextKit.Environments.ANSITerminalForegroundColor.Blue
+        }
 
         console.clear( )
-        console.log( ruler.ANSITerminalForm )
+        console.log( ruler.styledForm )
 
         //
         Tools.setCursorToBottomRight( "Pouya's TextKit: Rulers Demo ")
