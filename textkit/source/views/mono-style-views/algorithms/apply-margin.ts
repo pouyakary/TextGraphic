@@ -10,12 +10,14 @@
         from "../views/shape-view"
     import { createEmptyStringLine }
         from "../../../tools/string"
+    import { PortableStyle }
+        from "../../../protocols"
 
 //
 // ─── APPLY MARGIN ───────────────────────────────────────────────────────────────
 //
 
-    export function applyMarginToMonoStyleView <EnvironmentStyleSettings extends Object> (
+    export function applyMarginToMonoStyleView <EnvironmentStyleSettings extends PortableStyle<any>> (
             box:    MonoStyleViews<EnvironmentStyleSettings>,
             top:    number,
             right:  number,

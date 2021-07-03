@@ -11,7 +11,7 @@
 //
 
     const styler =
-        new TextKit.Environments.ANSITerminalStyleRenderer( )
+        new TextKit.Environments.ANSITerminal.ANSITerminalStyleRenderer( )
 
 //
 // ─── TESTING TRANSPARENCY ───────────────────────────────────────────────────────
@@ -22,14 +22,14 @@
             .frame( TextKit.Presets.LightBoxPreset )
 
     box1.style = {
-        foregroundColor: TextKit.Environments.ANSITerminalForegroundColor.Blue
+        textColor: "blue"
     }
 
     const box2 =
         TextKit.ShapeView.initBlankRectangle( 8, 3, styler )
             .frame( TextKit.Presets.LightBoxPreset )
     box2.style = {
-        foregroundColor: TextKit.Environments.ANSITerminalForegroundColor.Red
+        textColor: "red"
     }
 
     box2.transparent = true
@@ -40,7 +40,7 @@
             .frame( TextKit.Presets.LightBoxPreset )
 
     box3.style = {
-        foregroundColor: TextKit.Environments.ANSITerminalForegroundColor.Green
+        textColor: "green"
     }
 
 
@@ -55,7 +55,6 @@
         new TextKit.LineView( "And there goes the transparency! 😎", styler, { } )
     text.style = {
         italic: true,
-        foregroundColor: TextKit.Environments.ANSITerminalForegroundColor.Black
     }
 
     canvas.add( text, 27, 4, 3 )

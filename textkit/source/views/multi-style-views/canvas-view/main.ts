@@ -3,8 +3,8 @@
 // ─── IMPORTS ────────────────────────────────────────────────────────────────────
 //
 
-    import { ViewProtocol, ScreenMatrixPixel }
-        from "../../../protocols/view-protocol"
+    import { ViewProtocol, ScreenMatrixPixel, PortableStyle }
+        from "../../../protocols"
     import { VirtualScreen }
         from "./virtual-screen"
 
@@ -25,7 +25,7 @@
 // ─── TYPES ──────────────────────────────────────────────────────────────────────
 //
 
-    export interface CanvasChildrenProfile <EnvironmentStyleSettings extends Object> {
+    export interface CanvasChildrenProfile <EnvironmentStyleSettings extends PortableStyle<any>> {
         x:      number
         y:      number
         zIndex: number
@@ -36,7 +36,7 @@
 // ─── CANVAS VIEW ────────────────────────────────────────────────────────────────
 //
 
-    export class CanvasView <EnvironmentStyleSettings extends Object> implements
+    export class CanvasView <EnvironmentStyleSettings extends PortableStyle<any>> implements
         ViewProtocol<EnvironmentStyleSettings, StyleRendererProtocol<EnvironmentStyleSettings>> {
 
         //
@@ -81,7 +81,7 @@
         // ─── INITIATION SHORTCUTS ────────────────────────────────────────
         //
 
-            static initWithBackground <EnvironmentStyleSettings extends Object> (
+            static initWithBackground <EnvironmentStyleSettings extends PortableStyle<any>> (
                     background: ViewProtocol<EnvironmentStyleSettings, StyleRendererProtocol<EnvironmentStyleSettings>>,
                     styler:     StyleRendererProtocol<EnvironmentStyleSettings>,
                 ): CanvasView<EnvironmentStyleSettings> {

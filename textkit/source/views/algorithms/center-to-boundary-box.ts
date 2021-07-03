@@ -3,18 +3,20 @@
 // ─── IMPORTS ────────────────────────────────────────────────────────────────────
 //
 
-    import { ViewProtocol }
-        from "../../protocols/view-protocol"
-    import { StyleRendererProtocol }
-        from "../../protocols/style-renderer-protocol"
+    import { ViewProtocol, PortableStyle, StyleRendererProtocol }
+        from "../../protocols"
 
 //
 // ─── CENTER TO BOUNDARY BOX ─────────────────────────────────────────────────────
 //
 
-    export function centerViewProtocolToBoundaryBox <EnvironmentStyleSettings extends Object> ( view: ViewProtocol<EnvironmentStyleSettings, StyleRendererProtocol<EnvironmentStyleSettings>>,
-                                                                                               width: number,
-                                                                                              height: number ): ViewProtocol<EnvironmentStyleSettings, StyleRendererProtocol<EnvironmentStyleSettings>> {
+    export function centerViewProtocolToBoundaryBox <EnvironmentStyleSettings extends PortableStyle<any>> (
+            view:   ViewProtocol<EnvironmentStyleSettings, StyleRendererProtocol<EnvironmentStyleSettings>>,
+            width:  number,
+            height: number
+        ): ViewProtocol<EnvironmentStyleSettings, StyleRendererProtocol<EnvironmentStyleSettings>> {
+
+        //
         const top =
             view.height === height ? 0 : Math.floor( ( height - view.height ) / 2 )
         const right =

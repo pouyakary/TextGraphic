@@ -39,7 +39,9 @@
 //
 
     function appendStylerToContext ( server: REPLServer ) {
-        appendToContext( server, "$", new TextKit.Environments.ANSITerminalStyleRenderer( ) )
+        appendToContext( server, "$",
+            new TextKit.Environments.ANSITerminal.ANSITerminalStyleRenderer( )
+        )
     }
 
 

@@ -8,22 +8,22 @@
 // ─── IMPORTS ────────────────────────────────────────────────────────────────────
 //
 
-    import { Color }
-        from "../color"
+    import { RGBColor }
+        from "../color/rgb"
 
 //
 // ─── STANDARD COLORS ────────────────────────────────────────────────────────────
 //
 
-    export type StandardColors =
-        | Basic16LabeledColors
-        | Color
+    export type PortableColor =
+        | BasicLabeledColors
+        | RGBColor
 
 //
 // ─── BASIC 16 LABELED COLORS ────────────────────────────────────────────────────
 //
 
-    export type Basic16LabeledColors =
+    export type BasicLabeledColors =
         | "black"
         | "red"
         | "green"
@@ -32,6 +32,7 @@
         | "magenta"
         | "cyan"
         | "white"
+        | "crimson"
         | "bright-black"
         | "bright-red"
         | "bright-green"
@@ -40,5 +41,6 @@
         | "bright-magenta"
         | "bright-cyan"
         | "bright-white"
+        | "factory"
 
 // ────────────────────────────────────────────────────────────────────────────────

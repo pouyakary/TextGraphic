@@ -5,15 +5,15 @@
 
     import { ShapeView }
         from "./views/shape-view"
-    import { StyleRendererProtocol }
-        from "../../protocols/style-renderer-protocol"
+    import { StyleRendererProtocol, PortableStyle }
+        from "../../protocols"
 
 
 //
 // ─── BIRD ───────────────────────────────────────────────────────────────────────
 //
 
-    export function createShapeViewBirdSample <EnvironmentStyleSettings extends Object> (
+    export function createShapeViewBirdSample <EnvironmentStyleSettings extends PortableStyle<any>> (
             styler: StyleRendererProtocol<EnvironmentStyleSettings>
         ) {
 
@@ -36,7 +36,7 @@
 // ─── ALIEN ──────────────────────────────────────────────────────────────────────
 //
 
-    export function createShapeViewAlienSample <EnvironmentStyleSettings extends Object> (
+    export function createShapeViewAlienSample <EnvironmentStyleSettings extends PortableStyle<any>> (
             styler: StyleRendererProtocol<EnvironmentStyleSettings>
         ) {
 

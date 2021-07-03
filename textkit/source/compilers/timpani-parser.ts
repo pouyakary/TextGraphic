@@ -5,11 +5,8 @@
 
     import { EMPTY_STRING }
         from "../constants/characters"
-    import { ANSITerminalBoldEscapeSequence, ANSITerminalItalicEscapeSequence
-           , ANSITerminalUnderlineEscapeSequence, ANSITerminalResetEscapeSequence
-           , ANSITerminalReversedEscapeSequence
-           }
-        from "../environments/ansi-terminal/ansi-terminal"
+    import * as EscapeSequences
+        from "../environments/ansi-terminal/escape-sequences"
 
 //
 // ─── INTERFACES ─────────────────────────────────────────────────────────────────
@@ -57,7 +54,7 @@
         let terminalOutput =
             EMPTY_STRING
         for ( const part of parsedANSITerminal ) {
-            terminalOutput += part.terminalTag + part.text + ANSITerminalResetEscapeSequence
+            terminalOutput += part.terminalTag + part.text + EscapeSequences.ANSITerminalResetEscapeSequence
         }
         return terminalOutput
     }
@@ -267,13 +264,13 @@
         //
         switch ( code ) {
             case "bold":
-                return parentTag + ANSITerminalBoldEscapeSequence
+                return parentTag + EscapeSequences.ANSITerminalBoldEscapeSequence
             case "italic":
-                return parentTag + ANSITerminalItalicEscapeSequence
+                return parentTag + EscapeSequences.ANSITerminalItalicEscapeSequence
             case "underline":
-                return parentTag + ANSITerminalUnderlineEscapeSequence
+                return parentTag + EscapeSequences.ANSITerminalUnderlineEscapeSequence
             case "highlighted":
-                return parentTag + ANSITerminalReversedEscapeSequence
+                return parentTag + EscapeSequences.ANSITerminalReversedEscapeSequence
             case "normal":
                 return parentTag
         }

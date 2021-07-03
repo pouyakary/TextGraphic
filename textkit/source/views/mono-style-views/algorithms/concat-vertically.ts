@@ -7,12 +7,14 @@
         from "../views/shape-view"
     import { MonoStyleViews }
         from ".."
+    import { PortableStyle }
+        from "../../../protocols"
 
 //
 // ─── CONCAT VERTICALLY ──────────────────────────────────────────────────────────
 //
 
-    export function concatMonoStyledViewsVertically <EnvironmentStyleSettings extends Object> (
+    export function concatMonoStyledViewsVertically <EnvironmentStyleSettings extends PortableStyle<any>> (
             boxes:      MonoStyleViews<EnvironmentStyleSettings>[ ],
             baseLine:   number,
         ): ShapeView<EnvironmentStyleSettings> {

@@ -5,6 +5,8 @@
 
     import { StyleRendererProtocol }
         from "./style-renderer-protocol"
+    import { PortableStyle }
+        from "./portable-style"
     import { Subset }
         from "../tools/types"
 
@@ -33,7 +35,7 @@
 // ─── TYPES ──────────────────────────────────────────────────────────────────────
 //
 
-    export interface ViewProtocol<EnvironmentStylingSettings extends Object,
+    export interface ViewProtocol<EnvironmentStylingSettings extends PortableStyle<any>,
                                   RenderStyler extends StyleRendererProtocol<EnvironmentStylingSettings>> {
 
         //
@@ -159,7 +161,7 @@
 // ─── STYLABLE VIEW ──────────────────────────────────────────────────────────────
 //
 
-    export interface StylableViewProtocol <EnvironmentStylingSettings extends Object> extends
+    export interface StylableViewProtocol <EnvironmentStylingSettings extends PortableStyle<any>> extends
         ViewProtocol<EnvironmentStylingSettings, StyleRendererProtocol<EnvironmentStylingSettings>> {
 
         /**

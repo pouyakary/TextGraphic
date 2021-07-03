@@ -5,8 +5,8 @@
 
     import { ShapeView }
         from "../../views/mono-style-views/views/shape-view"
-    import { StyleRendererProtocol }
-        from "../../protocols/style-renderer-protocol"
+    import { StyleRendererProtocol, PortableStyle }
+        from "../../protocols"
     import { EMPTY_STRING }
         from "../../constants/characters"
 
@@ -24,10 +24,14 @@
 // ─── ARCHITECTURE RULERS ────────────────────────────────────────────────────────
 //
 
-    export function createVerticalArchitectureRuler <EnvironmentStyleSettings extends Object> ( size: number,
-                                                                                               chars: ArchitecturalRulerCharSet,
-                                                                                              styler: StyleRendererProtocol<EnvironmentStyleSettings>,
-                                                                                                text: string = EMPTY_STRING ): ShapeView<EnvironmentStyleSettings> {
+    export function createVerticalArchitectureRuler <EnvironmentStyleSettings extends PortableStyle<any>> (
+            size: number,
+            chars: ArchitecturalRulerCharSet,
+            styler: StyleRendererProtocol<EnvironmentStyleSettings>,
+            text: string = EMPTY_STRING
+        ): ShapeView<EnvironmentStyleSettings> {
+
+        //
         const lineChar =
             chars.line
         const startChar =

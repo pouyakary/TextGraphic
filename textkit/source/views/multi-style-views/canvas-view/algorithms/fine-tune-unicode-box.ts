@@ -7,6 +7,8 @@
         from "../../../../constants/characters"
     import { CanvasView }
         from "../main"
+    import { PortableStyle }
+        from "../../../../protocols"
 
 //
 // ─── CONSTANTS ──────────────────────────────────────────────────────────────────
@@ -112,7 +114,10 @@
 // ─── FINE TUNE UNICODE BOX FOR LAYERED CANVAS ─────────────────────────────────────
 //
 
-    export function fineTuneUnicodeBoxForLayeredCanvas <EnvironmentStyleSettings extends Object> ( canvas: CanvasView<EnvironmentStyleSettings> ) {
+    export function fineTuneUnicodeBoxForLayeredCanvas <EnvironmentStyleSettings extends PortableStyle<any>> (
+            canvas: CanvasView<EnvironmentStyleSettings>
+        ) {
+        //
         const { width, height } =
             canvas
         for ( let y = 0; y < height; y++ ) {
@@ -134,9 +139,11 @@
 // ─── GET REST OF THE CHARACTERS ─────────────────────────────────────────────────
 //
 
-    function getRestOfSurroundingsForFineTunnigUnicodeBoxes <EnvironmentStyleSettings extends Object> ( canvas: CanvasView<EnvironmentStyleSettings>,
-                                                                                                           x: number,
-                                                                                                           y: number ): string {
+    function getRestOfSurroundingsForFineTunnigUnicodeBoxes <EnvironmentStyleSettings extends PortableStyle<any>> (
+            canvas:     CanvasView<EnvironmentStyleSettings>,
+            x:          number,
+            y:          number
+        ): string {
         //
         let surroundings =
             EMPTY_STRING

@@ -1,85 +1,55 @@
 
 //
-// ─── IMPORTS ────────────────────────────────────────────────────────────────────
-//
-
-    import { formANSITerminalEscapeSequence }
-        from "../environments/ansi-terminal/ansi-terminal"
-
-//
-// ─── TYPES ──────────────────────────────────────────────────────────────────────
-//
-
-    export type ColorBitRate =
-        8 | 24
-
-//
 // ─── COLOR CLASS ────────────────────────────────────────────────────────────────
 //
 
-    export class Color {
+    export class RGBColor {
 
         //
         // ─── STORAGE ─────────────────────────────────────────────────────
         //
 
-            #red:   number
-            #green: number
-            #blue:  number
+            readonly red:   number
+            readonly green: number
+            readonly blue:  number
 
         //
         // ─── CONSTRUCTOR ─────────────────────────────────────────────────
         //
 
             constructor ( red: number, green: number, blue: number ) {
-                this.#red =
-                    red
-                this.#green =
-                    green
-                this.#blue =
-                    blue
-            }
+                if ( red >= 0 && red <= 256 ) {
+                    this.red =
+                        Math.floor( red )
+                } else {
+                    throw new Error (`24 Bit Color cannot be initiated with red value: ${red}.`)
+                }
 
-        //
-        // ─── FORMAT 8 BIT OUTPUT ─────────────────────────────────────────
-        //
+                if ( blue >= 0 && blue <= 256 ) {
+                    this.blue =
+                        Math.floor( blue )
+                } else {
+                    throw new Error (`24 Bit Color cannot be initiated with blue value: ${red}.`)
+                }
 
-            get ANSITerminal8BitColor ( ): string {
-                const red =
-                    Math.floor( this.#red / ( 256 / 36 ) )
-                const green =
-                    Math.floor( this.#green / ( 256 / 6 ) )
-                const blue =
-                    Math.floor( this.#blue / ( 256 / 6 ) )
-
-                const colorCode =
-                    ( red + green + blue ).toString( )
-                const escapeSequence =
-                    formANSITerminalEscapeSequence( "38", "5", colorCode )
-
-                return escapeSequence
+                if ( green >= 0 && green <= 256 ) {
+                    this.green =
+                        Math.floor( green )
+                } else {
+                    throw new Error (`24 Bit Color cannot be initiated with green value: ${red}.`)
+                }
             }
 
         //
         // ─── 24 BIT ──────────────────────────────────────────────────────
         //
 
-            get ANSITerminal24BitColorForm ( ): string {
-                const colorCode =
-                    formANSITerminalEscapeSequence( "38", "2",
-                        this.#red.toString( ),
-                        this.#green.toString( ),
-                        this.#blue.toString( ),
-                    )
-                return colorCode
-            }
-
             get webRGBForm ( ): string {
                 const colorCode =
                     ( "rgb("
-                    + this.#red.toString( ) + ", " +
-                    + this.#green.toString( ) + ", " +
-                    + this.#blue.toString( )
+                    + this.red.toString( ) + ", " +
+                    + this.green.toString( ) + ", " +
+                    + this.blue.toString( )
                     + ")"
                     )
                 return colorCode
@@ -91,11 +61,11 @@
 
             get hexForm ( ) {
                 const red =
-                    colorToHexValue( this.#red )
+                    colorToHexValue( this.red )
                 const green =
-                    colorToHexValue( this.#green )
+                    colorToHexValue( this.green )
                 const blue =
-                    colorToHexValue( this.#blue )
+                    colorToHexValue( this.blue )
                 return "#" + red + green + blue
             }
 

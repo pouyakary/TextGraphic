@@ -9,12 +9,14 @@
         from "../../../views/mono-style-views/views/shape-view"
     import { BoxFrameCharSet }
         from "../../../presets/box-frames"
+    import { PortableStyle }
+        from "../../../protocols"
 
 //
 // ─── FRAME SHAPE VIEW ───────────────────────────────────────────────────────────
 //
 
-    export function frameMonoStyledViews <EnvironmentStyleSettings extends Object> (
+    export function frameMonoStyledViews <EnvironmentStyleSettings extends PortableStyle<any>> (
             box:        MonoStyleViews<EnvironmentStyleSettings>,
             charSet:    BoxFrameCharSet,
         ) {

@@ -47,9 +47,9 @@
 
     function styleClassInstanceForOutputPrint ( name: string ) {
         const styledName =
-            ( TextKit.Environments.ANSITerminalBoldEscapeSequence
+            ( TextKit.Environments.ANSITerminal.EscapeSequences.ANSITerminalBoldEscapeSequence
             + name + "{ }"
-            + TextKit.Environments.ANSITerminalResetEscapeSequence
+            + TextKit.Environments.ANSITerminal.EscapeSequences.ANSITerminalResetEscapeSequence
             )
         return styleOutput ( styledName + " /instance" )
     }
@@ -60,9 +60,9 @@
 
     function styleAtomicTypeForOutputPrint ( value: any ) {
         const styledType =
-            ( TextKit.Environments.ANSITerminalBoldEscapeSequence
+            ( TextKit.Environments.ANSITerminal.EscapeSequences.ANSITerminalBoldEscapeSequence
             + value.toString( )
-            + TextKit.Environments.ANSITerminalResetEscapeSequence
+            + TextKit.Environments.ANSITerminal.EscapeSequences.ANSITerminalResetEscapeSequence
             )
         return styleOutput ( styledType + " /" + typeof value )
     }
@@ -127,7 +127,7 @@
 //
 
     export function writer ( output: any ) {
-        process.stdout.write( TextKit.Environments.ANSITerminalResetEscapeSequence )
+        process.stdout.write( TextKit.Environments.ANSITerminal.EscapeSequences.ANSITerminalResetEscapeSequence )
 
         if ( typeof output === "number" ) {
             return styleAtomicTypeForOutputPrint( output )

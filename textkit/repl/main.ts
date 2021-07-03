@@ -27,9 +27,9 @@
         const titleText =
             " TextKit Playground ───────"
         const title =
-            ( TextKit.Environments.ANSITerminalItalicEscapeSequence
+            ( TextKit.Environments.ANSITerminal.EscapeSequences.ANSITerminalItalicEscapeSequence
             + titleText
-            + TextKit.Environments.ANSITerminalResetEscapeSequence
+            + TextKit.Environments.ANSITerminal.EscapeSequences.ANSITerminalResetEscapeSequence
             )
         const restOfTheLine =
             "─".repeat( process.stdout.columns - titleText.length )

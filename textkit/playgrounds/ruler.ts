@@ -13,7 +13,7 @@
 //
 
     const styler =
-        new TextKit.Environments.ANSITerminalStyleRenderer( )
+        new TextKit.Environments.ANSITerminal.ANSITerminalStyleRenderer( )
 
 //
 // ─── RULER ──────────────────────────────────────────────────────────────────────
@@ -35,7 +35,7 @@
             })
 
         ruler.style = {
-            foregroundColor: TextKit.Environments.ANSITerminalForegroundColor.Blue
+            textColor: "blue"
         }
 
         console.clear( )

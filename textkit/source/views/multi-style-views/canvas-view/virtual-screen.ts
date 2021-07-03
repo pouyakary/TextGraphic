@@ -4,10 +4,8 @@
 //
 
 
-    import { ScreenMatrixPixel }
-        from "../../../protocols/view-protocol"
-    import { StyleRendererProtocol }
-        from "../../../protocols/style-renderer-protocol"
+    import { ScreenMatrixPixel, StyleRendererProtocol, PortableStyle }
+        from "../../../protocols"
     import { EMPTY_STRING, LINE_BREAK_CHARACTER, WHITE_SPACE_CHARACTER }
         from "../../../constants/characters"
 
@@ -36,7 +34,7 @@
 // ─── SCREEN MATRIX ──────────────────────────────────────────────────────────────
 //
 
-    export class VirtualScreen <EnvironmentStyleSettings extends Object> {
+    export class VirtualScreen <EnvironmentStyleSettings extends PortableStyle<any>> {
 
         //
         // ─── STORAGE ─────────────────────────────────────────────────────

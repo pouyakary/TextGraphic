@@ -8,6 +8,8 @@
         from ".."
     import { ShapeView }
         from "../views/shape-view"
+    import { PortableStyle }
+        from "../../../protocols"
     import { insertJoinersInBetweenArrayItems }
         from "../../../tools/array"
     import { EMPTY_STRING }
@@ -17,7 +19,7 @@
 // ─── CONCAT HORIZONTALLY ────────────────────────────────────────────────────────
 //
 
-    export function concatMonoStyledViewsHorizontally <EnvironmentStyleSettings extends Object> (
+    export function concatMonoStyledViewsHorizontally <EnvironmentStyleSettings extends PortableStyle<any>> (
             boxes:  MonoStyleViews<EnvironmentStyleSettings>[ ],
             joiner: ShapeView<EnvironmentStyleSettings>
         ): MonoStyleViews<EnvironmentStyleSettings> {

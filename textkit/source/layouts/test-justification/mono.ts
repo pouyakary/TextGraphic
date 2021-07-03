@@ -3,10 +3,8 @@
 // ─── IMPORTS ────────────────────────────────────────────────────────────────────
 //
 
-    import { Justification }
-        from "../../protocols/justification"
-    import { StyleRendererProtocol }
-        from "../../protocols/style-renderer-protocol"
+    import { Justification, StyleRendererProtocol, PortableStyle }
+        from "../../protocols"
     import { ShapeView }
         from "../../views/mono-style-views/views/shape-view"
     import { WHITE_SPACE_CHARACTER, LINE_BREAK_CHARACTER, TAB_CHARACTER, EMPTY_STRING }
@@ -23,7 +21,7 @@
 // ─── MONO STYLED TEXT JUSTIFICATION ─────────────────────────────────────────────
 //
 
-    export function createMonoStyleJustificationLayout <EnvironmentStyleSettings extends Object> (
+    export function createMonoStyleJustificationLayout <EnvironmentStyleSettings extends PortableStyle<any>> (
             text:           string,
             width:          number,
             justification:  Justification,

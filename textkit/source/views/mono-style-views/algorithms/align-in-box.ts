@@ -7,14 +7,14 @@
         from ".."
     import { ShapeView }
         from "../views/shape-view"
-    import { HorizontalAlign, VerticalAlign }
-        from "../../../protocols/align"
+    import { HorizontalAlign, VerticalAlign, PortableStyle }
+        from "../../../protocols"
 
 //
 // ─── ALIGN IN BOX ───────────────────────────────────────────────────────────────
 //
 
-    export function alignMonoStyleViewWithinNewBoxBoundary <EnvironmentStyleSettings extends Object> (
+    export function alignMonoStyleViewWithinNewBoxBoundary <EnvironmentStyleSettings extends PortableStyle<any>> (
             box:                MonoStyleViews<EnvironmentStyleSettings>,
             boxWidth:           number,
             boxHeight:          number,

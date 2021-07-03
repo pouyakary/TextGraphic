@@ -5,10 +5,8 @@
 
     import { Subset }
         from "../../../tools/types"
-    import { ScreenMatrixPixel, StylableViewProtocol }
-        from "../../../protocols/view-protocol"
-    import { StyleRendererProtocol }
-        from "../../../protocols/style-renderer-protocol"
+    import { StyleRendererProtocol, ScreenMatrixPixel, StylableViewProtocol, PortableStyle }
+        from "../../../protocols"
 
     import { ShapeView }
         from "./shape-view"
@@ -25,7 +23,7 @@
 // ─── LINE VIEW ──────────────────────────────────────────────────────────────────
 //
 
-    export class LineView <EnvironmentStyleSettings extends Object> implements
+    export class LineView <EnvironmentStyleSettings extends PortableStyle<any>> implements
         StylableViewProtocol <EnvironmentStyleSettings> {
 
         //

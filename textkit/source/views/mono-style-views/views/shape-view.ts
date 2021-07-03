@@ -6,10 +6,8 @@
 
     import { Subset }
         from "../../../tools/types"
-    import { ScreenMatrixPixel, StylableViewProtocol }
-        from "../../../protocols/view-protocol"
-    import { StyleRendererProtocol }
-        from "../../../protocols/style-renderer-protocol"
+    import { ScreenMatrixPixel, StylableViewProtocol, PortableStyle, StyleRendererProtocol }
+        from "../../../protocols"
 
     import { MonoStyleViews }
         from ".."
@@ -42,7 +40,7 @@
 // ─── SHAPE VIEW ─────────────────────────────────────────────────────────────────
 //
 
-    export class ShapeView <EnvironmentStyleSettings extends Object> implements
+    export class ShapeView <EnvironmentStyleSettings extends PortableStyle<any>> implements
         StylableViewProtocol <EnvironmentStyleSettings> {
 
         //
@@ -147,7 +145,7 @@
             }
 
 
-            static initWithSpaceCheck <StyleSettings extends Object> (
+            static initWithSpaceCheck <StyleSettings extends PortableStyle<any>> (
                     lines:          string[ ],
                     baseLine:       number,
                     styler:         StyleRendererProtocol<StyleSettings>,
@@ -161,7 +159,7 @@
             }
 
 
-            static initWithText <StyleSettings extends Object> (
+            static initWithText <StyleSettings extends PortableStyle<any>> (
                     text:           string,
                     baseLine:       number,
                     styler:         StyleRendererProtocol<StyleSettings>,
@@ -177,7 +175,7 @@
             }
 
 
-            static initEmptyBox <StyleSettings extends Object> (
+            static initEmptyBox <StyleSettings extends PortableStyle<any>> (
                     styler: StyleRendererProtocol<StyleSettings>
                 ) {
 
@@ -185,7 +183,7 @@
             }
 
 
-            static initBlankRectangle <StyleSettings extends Object> (
+            static initBlankRectangle <StyleSettings extends PortableStyle<any>> (
                     width:          number,
                     height:         number,
                     styler:         StyleRendererProtocol<StyleSettings>,
@@ -304,7 +302,7 @@
         // ─── CONCAT HORIZONTALLY ─────────────────────────────────────────
         //
 
-            static concatHorizontally <EnvironmentStyleSettings extends Object> (
+            static concatHorizontally <EnvironmentStyleSettings extends PortableStyle<any>> (
                     boxes:  ShapeView<EnvironmentStyleSettings> [ ],
                     joiner: ShapeView<EnvironmentStyleSettings>,
                 ): MonoStyleViews<EnvironmentStyleSettings> {
@@ -317,7 +315,7 @@
         // ─── CONCAT VERTICALLY ───────────────────────────────────────────
         //
 
-            static concatVertically <EnvironmentStyleSettings extends Object> (
+            static concatVertically <EnvironmentStyleSettings extends PortableStyle<any>> (
                     boxes:      ShapeView<EnvironmentStyleSettings>[ ],
                     baseLine:   number,
                 ): ShapeView<EnvironmentStyleSettings> {

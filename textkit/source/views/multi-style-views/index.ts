@@ -5,11 +5,14 @@
 
     import { CanvasView }
         from "./canvas-view/main"
+    import { PortableStyle }
+        from "../../protocols"
+
 //
 // ─── TYPES ──────────────────────────────────────────────────────────────────────
 //
 
-    export type MultiStyleView <EnvironmentStyleSettings extends Object> =
+    export type MultiStyleView <EnvironmentStyleSettings extends PortableStyle<any>> =
         CanvasView<EnvironmentStyleSettings>
 
 //

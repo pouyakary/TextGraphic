@@ -3,23 +3,28 @@
 // ─── ANSI TERMINAL STYLER IMPLEMENTATION ────────────────────────────────────────
 //
 
-    import { EMPTY_STRING } from "../../constants/characters"
-import { StyleRendererProtocol }
-        from "../../protocols/style-renderer-protocol"
+    import { EMPTY_STRING }
+        from "../../constants/characters"
+    import { StyleRendererProtocol, PortableColor }
+        from "../../protocols"
+    import { ANSITerminalStyleSettings }
+        from "./style"
     import { Subset }
         from "../../tools/types"
+    import * as EscapeSequences
+        from "./escape-sequences"
 
-    import { ANSITerminalStyling, getDefaultTerminalStyle
-           , generateStartingANSITerminalEscapeSequenceOfTerminalStyling
-           , ANSITerminalResetEscapeSequence, mergeTerminalStyleWithOptions
+    import { generateStartingANSITerminalEscapeSequenceOfTerminalStyling
+           , mergeTerminalStyleWithOptions
            }
-        from "./ansi-terminal"
+        from "./style-diff-and-merge"
 
 //
 // ─── ANSI TERMINAL STYLE RENDERER ───────────────────────────────────────────────
 //
 
-    export class ANSITerminalStyleRenderer implements StyleRendererProtocol<ANSITerminalStyling> {
+    export class ANSITerminalStyleRenderer implements
+        StyleRendererProtocol<ANSITerminalStyleSettings> {
 
         //
         // ─── CONSTRUCTOR ─────────────────────────────────────────────────
@@ -32,27 +37,37 @@ import { StyleRendererProtocol }
         //
 
             get defaultStyle ( ) {
-                return getDefaultTerminalStyle( )
+                return {
+                    textColor:          "factory" as PortableColor,
+                    backgroundColor:    "factory" as PortableColor,
+                    bold:               false,
+                    italic:             false,
+                    reversed:           false,
+                    blink:              false,
+                    underline:          false,
+                    dim:                false,
+                }
             }
+
 
         //
         // ─── RENDER STYLES ───────────────────────────────────────────────
         //
 
-            public renderLeftStylingInfo ( style: ANSITerminalStyling ): string {
+            public renderLeftStylingInfo ( style: ANSITerminalStyleSettings ): string {
                 return generateStartingANSITerminalEscapeSequenceOfTerminalStyling( style )
             }
 
             public renderRightStylingInfo ( ): string {
-                return ANSITerminalResetEscapeSequence
+                return EscapeSequences.ANSITerminalResetEscapeSequence
             }
 
         //
         // ─── CANVAS INFORMATION ────────────────────────────────────────────
         //
 
-            readonly rootRowLeftStylingInfo  = ANSITerminalResetEscapeSequence
-            readonly rootRowRightStylingInfo = ANSITerminalResetEscapeSequence
+            readonly rootRowLeftStylingInfo  = EscapeSequences.ANSITerminalResetEscapeSequence
+            readonly rootRowRightStylingInfo = EscapeSequences.ANSITerminalResetEscapeSequence
             readonly rootRightStylingInfo    = EMPTY_STRING
             readonly rootLeftStylingInfo     = EMPTY_STRING
 
@@ -61,9 +76,9 @@ import { StyleRendererProtocol }
         //
 
             public margeNewStyleOptionsWithPreviosuStyleState (
-                    style:      ANSITerminalStyling,
-                    options:    Subset<ANSITerminalStyling>,
-                ): ANSITerminalStyling {
+                    style:      ANSITerminalStyleSettings,
+                    options:    Subset<ANSITerminalStyleSettings>,
+                ): ANSITerminalStyleSettings {
 
                 //
                 return mergeTerminalStyleWithOptions( style, options )

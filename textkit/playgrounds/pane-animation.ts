@@ -6,7 +6,7 @@ const wait = ( ms: number ) =>
     new Promise( resolve => setTimeout( resolve, ms ) )
 
 const styler =
-    new TextKit.Environments.ANSITerminalStyleRenderer( )
+    new TextKit.Environments.ANSITerminal.ANSITerminalStyleRenderer( )
 
 main( ); async function main ( ) {
     for ( let iteration = 0; true; iteration++ ) {
@@ -21,7 +21,7 @@ main( ); async function main ( ) {
             new TextKit.ShapeView([ " * " ], 0, styler, { }, false )
                 .frame( TextKit.Presets.LightBoxPreset )
         topLeftCanvasObject.style = {
-            foregroundColor: TextKit.Environments.ANSITerminalForegroundColor.Blue
+            textColor: "blue"
         }
         firstCanvas.add( topLeftCanvasObject, -5 + ( iteration % 30 ), 1, 1 )
 
@@ -36,7 +36,7 @@ main( ); async function main ( ) {
             new TextKit.ShapeView([ " * " ], 0, styler, { }, false )
                 .frame( TextKit.Presets.LightBoxPreset )
         secondCanvasObject.style = {
-            foregroundColor: TextKit.Environments.ANSITerminalForegroundColor.Red
+            textColor: "red"
         }
         secondCanvas.add( secondCanvasObject, 3, -3 + ( iteration % 20), 1 )
 
@@ -51,14 +51,14 @@ main( ); async function main ( ) {
             new TextKit.ShapeView([ " * " ], 0, styler, { }, false )
                 .frame( TextKit.Presets.LightBoxPreset )
         thirdCanvasObjectOne.style ={
-            foregroundColor: TextKit.Environments.ANSITerminalForegroundColor.Green
+            textColor: "green"
         }
         thirdCanvas.add( thirdCanvasObjectOne, -4 + ( iteration % 30 ), 3, 1 )
         const thirdCanvasObjectTwo =
             new TextKit.ShapeView([ " * " ], 0, styler, { }, false )
                 .frame( TextKit.Presets.LightBoxPreset )
         thirdCanvasObjectTwo.style = {
-            foregroundColor: TextKit.Environments.ANSITerminalForegroundColor.Blue
+            textColor: "blue"
         }
         thirdCanvas.add( thirdCanvasObjectTwo, 24 - ( iteration % 30 ), 2 , 1 )
 
@@ -69,8 +69,8 @@ main( ); async function main ( ) {
                 styler, { }
             )
         title.style = {
-            italic:             true,
-            foregroundColor:    TextKit.Environments.ANSITerminalForegroundColor.Red
+            italic:     true,
+            textColor:  "red"
         }
 
         // Main Canvas

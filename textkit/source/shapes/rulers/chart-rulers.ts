@@ -5,8 +5,8 @@
 
     import { ShapeView }
         from "../../views/mono-style-views/views/shape-view"
-    import { StyleRendererProtocol }
-        from "../../protocols/style-renderer-protocol"
+    import { StyleRendererProtocol, PortableStyle }
+        from "../../protocols"
     import { Direction }
         from "../../protocols/direction"
     import { WHITE_SPACE_CHARACTER, EMPTY_STRING }
@@ -46,7 +46,7 @@
 // ─── RULER MAKER ────────────────────────────────────────────────────────────────
 //
 
-    export function createChartRuler <EnvironmentStyleSettings extends Object> (
+    export function createChartRuler <EnvironmentStyleSettings extends PortableStyle<any>> (
             styler:         StyleRendererProtocol<EnvironmentStyleSettings>,
             inputSettings:  CharRulerSettings,
         ): ShapeView<EnvironmentStyleSettings> {
@@ -102,7 +102,7 @@
 // ─── HORIZONTAL CHART RULER ─────────────────────────────────────────────────────
 //
 
-    function createHorizontalChartRuler <EnvironmentStyleSettings extends Object> (
+    function createHorizontalChartRuler <EnvironmentStyleSettings extends PortableStyle<any>> (
             settings:       FixedCharRulerSettings,
             styler:         StyleRendererProtocol<EnvironmentStyleSettings>,
             isDirectionUp:  boolean
@@ -136,7 +136,7 @@
 // ─── CREATE VERTICAL RULER ──────────────────────────────────────────────────────
 //
 
-    function createVerticalRuler <EnvironmentStyleSettings extends Object> (
+    function createVerticalRuler <EnvironmentStyleSettings extends PortableStyle<any>> (
             settings:       FixedCharRulerSettings,
             styler:         StyleRendererProtocol<EnvironmentStyleSettings>,
             facingLeft:     boolean

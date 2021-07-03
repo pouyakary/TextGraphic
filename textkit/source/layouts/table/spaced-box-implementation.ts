@@ -7,6 +7,8 @@
         from "../../protocols/align"
     import { StyleRendererProtocol }
         from "../../protocols/style-renderer-protocol"
+    import { PortableStyle }
+        from "../../protocols/portable-style"
     import { ShapeView }
         from "../../views/mono-style-views/views/shape-view"
     import { insertJoinersInBetweenArrayItems }
@@ -18,10 +20,10 @@
 // ─── TYPES ──────────────────────────────────────────────────────────────────────
 //
 
-    type ShapeViewTableRows <EnvironmentStyleSettings extends Object> =
+    type ShapeViewTableRows <EnvironmentStyleSettings extends PortableStyle<any>> =
         ShapeView<EnvironmentStyleSettings> [ ]
 
-    type ShapeViewTable <EnvironmentStyleSettings extends Object> =
+    type ShapeViewTable <EnvironmentStyleSettings extends PortableStyle<any>> =
         ShapeViewTableRows<EnvironmentStyleSettings> [ ]
 
     interface MaxArrays {
@@ -29,7 +31,7 @@
         rowsMaxHeights:     number[ ]
     }
 
-    interface TableLines <EnvironmentStyleSettings extends Object> {
+    interface TableLines <EnvironmentStyleSettings extends PortableStyle<any>> {
         topLine:    ShapeView<EnvironmentStyleSettings>
         middleLine: ShapeView<EnvironmentStyleSettings>
         bottomLine: ShapeView<EnvironmentStyleSettings>
@@ -55,7 +57,7 @@
 // ─── GENERATOR ──────────────────────────────────────────────────────────────────
 //
 
-    export function createShapeViewTableInTextForm <EnvironmentStyleSettings extends Object> (
+    export function createShapeViewTableInTextForm <EnvironmentStyleSettings extends PortableStyle<any>> (
             rows:   ShapeViewTable<EnvironmentStyleSettings>,
             styler: StyleRendererProtocol<EnvironmentStyleSettings>,
             input:  TableInitSettings,
@@ -94,7 +96,7 @@
 // ─── FIX SETTINGS ───────────────────────────────────────────────────────────────
 //
 
-    function fixTableSettings <EnvironmentStyleSettings extends Object> (
+    function fixTableSettings <EnvironmentStyleSettings extends PortableStyle<any>> (
             rows:   ShapeViewTable<EnvironmentStyleSettings>,
             input:  TableInitSettings,
         ): TableSettings {
@@ -173,7 +175,7 @@
 // ─── FLATTEN LINES ──────────────────────────────────────────────────────────────
 //
 
-    function flattenShapeViewLines <EnvironmentStyleSettings extends Object> (
+    function flattenShapeViewLines <EnvironmentStyleSettings extends PortableStyle<any>> (
             boxes: ShapeView<EnvironmentStyleSettings>[ ],
         ): string[ ] {
 
@@ -192,7 +194,7 @@
 // ─── JOIN TABLE PARTS ───────────────────────────────────────────────────────────
 //
 
-    function joinTableParts <EnvironmentStyleSettings extends Object> (
+    function joinTableParts <EnvironmentStyleSettings extends PortableStyle<any>> (
             renderedRows:       ShapeView<EnvironmentStyleSettings> [ ],
             decorationLines:    TableLines<EnvironmentStyleSettings>,
         ): ShapeView<EnvironmentStyleSettings>[ ] {
@@ -225,7 +227,7 @@
 // ─── COMPUTE MAX ARRAYS ─────────────────────────────────────────────────────────
 //
 
-    function computeMaxArrays <EnvironmentStyleSettings extends Object> (
+    function computeMaxArrays <EnvironmentStyleSettings extends PortableStyle<any>> (
             input:      ShapeViewTable<EnvironmentStyleSettings>,
             settings:   TableSettings,
         ): MaxArrays {
@@ -321,7 +323,7 @@
 // ─── MAKE COMPLETE TABLE ────────────────────────────────────────────────────────
 //
 
-    function completeShapeViewTable <EnvironmentStyleSettings extends Object> (
+    function completeShapeViewTable <EnvironmentStyleSettings extends PortableStyle<any>> (
             table:  ShapeViewTable<EnvironmentStyleSettings>,
             styler: StyleRendererProtocol<EnvironmentStyleSettings>,
         ) {
@@ -341,7 +343,7 @@
 // ─── CREATE TABLE LINE ──────────────────────────────────────────────────────────
 //
 
-    function createTableLines <EnvironmentStyleSettings extends Object> (
+    function createTableLines <EnvironmentStyleSettings extends PortableStyle<any>> (
             maxArrays:  MaxArrays,
             charSet:    TableCharSet,
             styler:     StyleRendererProtocol<EnvironmentStyleSettings>,
@@ -374,7 +376,7 @@
     }
 
 
-    function makeTopBottomLineWith <EnvironmentStyleSettings extends Object> (
+    function makeTopBottomLineWith <EnvironmentStyleSettings extends PortableStyle<any>> (
             middleLines:    string[ ],
             styler:         StyleRendererProtocol<EnvironmentStyleSettings>,
             left:           string,
@@ -401,7 +403,7 @@
 // ─── RENDER ROWS ────────────────────────────────────────────────────────────────
 //
 
-    function renderRows <EnvironmentStyleSettings extends Object> (
+    function renderRows <EnvironmentStyleSettings extends PortableStyle<any>> (
             table:      ShapeViewTable<EnvironmentStyleSettings>,
             maxArrays:  MaxArrays,
             settings:   TableSettings,
@@ -432,7 +434,7 @@
 // ─── RENDER ROW ─────────────────────────────────────────────────────────────────
 //
 
-    function renderRow <EnvironmentStyleSettings extends Object> (
+    function renderRow <EnvironmentStyleSettings extends PortableStyle<any>> (
             row:                ShapeViewTableRows<EnvironmentStyleSettings>,
             rowIndex:           number,
             rowHeight:          number,
@@ -489,7 +491,7 @@
 // ─── ROW MIDDLE STROKE LINE ─────────────────────────────────────────────────────
 //
 
-    function createVerticalStrokeLine <EnvironmentStyleSettings extends Object> (
+    function createVerticalStrokeLine <EnvironmentStyleSettings extends PortableStyle<any>> (
             height:     number,
             character:  string,
             styler:     StyleRendererProtocol<EnvironmentStyleSettings>,

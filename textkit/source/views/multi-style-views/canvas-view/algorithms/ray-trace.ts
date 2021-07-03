@@ -9,12 +9,14 @@
         from "../../../../protocols/view-protocol"
     import { EMPTY_STRING, WHITE_SPACE_CHARACTER }
         from "../../../../constants/characters"
+    import { PortableStyle }
+        from "../../../../protocols"
 
 //
 // ─── RAY TRACE ──────────────────────────────────────────────────────────────────
 //
 
-    export function rayTraceScreenPixel <EnvironmentStyleSettings extends Object> (
+    export function rayTraceScreenPixel <EnvironmentStyleSettings extends PortableStyle<any>> (
             canvas:                   CanvasView<EnvironmentStyleSettings>,
             left:                   number,
             top:                    number,

@@ -7,12 +7,14 @@
         from ".."
     import { CanvasView }
         from "../canvas-view/main"
+    import { PortableStyle }
+        from "../../../protocols"
 
 //
 // ─── APPLY MARGIN TO CANVAS VIEW ──────────────────────────────────────────────────
 //
 
-    export function applyMarginToMultiStyleView <EnvironmentStyleSettings extends Object> (
+    export function applyMarginToMultiStyleView <EnvironmentStyleSettings extends PortableStyle<any>> (
             view:           MultiStyleView<EnvironmentStyleSettings>,
             topMargin:      number,
             rightMargin:    number,
