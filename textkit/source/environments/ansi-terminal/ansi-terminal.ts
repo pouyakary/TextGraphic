@@ -31,25 +31,34 @@
         Subset<ANSITerminalStyling>
 
 //
+// ─── FORM SEQUENCE ──────────────────────────────────────────────────────────────
+//
+
+    export function formANSITerminalEscapeSequence ( ...commands: string[ ] ) {
+        return "\x1b[" + commands.join( ";" ) + "m"
+    }
+
+//
 // ─── CONSTANTS ──────────────────────────────────────────────────────────────────
 //
 
+
     export const ANSITerminalResetEscapeSequence =
-        "\x1b[0m"
+        formANSITerminalEscapeSequence( "0" )
     export const ANSITerminalBoldEscapeSequence =
-        "\x1b[1m"
+        formANSITerminalEscapeSequence( ", "1" )
     export const ANSITerminalDimEscapeSequence =
-        "\x1b[2m"
+        formANSITerminalEscapeSequence( "2" )
     export const ANSITerminalItalicEscapeSequence =
-        "\x1b[3m"
+        formANSITerminalEscapeSequence( "3" )
     export const ANSITerminalUnderlineEscapeSequence =
-        "\x1b[4m"
+        formANSITerminalEscapeSequence( "4" )
     export const ANSITerminalBlinkEscapeSequence =
-        "\x1b[5m"
+        formANSITerminalEscapeSequence( "5" )
     export const ANSITerminalReversedEscapeSequence =
-        "\x1b[7m"
+        formANSITerminalEscapeSequence( "7" )
     export const ANSITerminalHiddenEscapeSequence =
-        "\x1b[8m"
+        formANSITerminalEscapeSequence( "8" )
 
 //
 // ─── COLORS ─────────────────────────────────────────────────────────────────────
@@ -105,39 +114,39 @@
     export function getANSITerminalEscapeSequenceForForegroundColor ( color: ANSITerminalForegroundColor ): string {
         switch ( color ) {
             case ANSITerminalForegroundColor.Black:
-                return "\x1b[30m"
+                return formANSITerminalEscapeSequence( "30" )
             case ANSITerminalForegroundColor.Red:
-                return "\x1b[31m"
+                return formANSITerminalEscapeSequence( "31" )
             case ANSITerminalForegroundColor.Green:
-                return "\x1b[32m"
+                return formANSITerminalEscapeSequence( "32" )
             case ANSITerminalForegroundColor.Yellow:
-                return "\x1b[33m"
+                return formANSITerminalEscapeSequence( "33" )
             case ANSITerminalForegroundColor.Blue:
-                return "\x1b[34m"
+                return formANSITerminalEscapeSequence( "34" )
             case ANSITerminalForegroundColor.Magenta:
-                return "\x1b[35m"
+                return formANSITerminalEscapeSequence( "35" )
             case ANSITerminalForegroundColor.Cyan:
-                return "\x1b[36m"
+                return formANSITerminalEscapeSequence( "36" )
             case ANSITerminalForegroundColor.White:
-                return "\x1b[37m"
+                return formANSITerminalEscapeSequence( "37" )
             case ANSITerminalForegroundColor.Crimson:
-                return "\x1b[38m"
+                return formANSITerminalEscapeSequence( "38" )
             case ANSITerminalForegroundColor.BrightBlack:
-                return "\x1b[30;1m"
+                return formANSITerminalEscapeSequence( "30", "1" )
             case ANSITerminalForegroundColor.BrightRed:
-                return "\x1b[31;1m"
+                return formANSITerminalEscapeSequence( "31", "1" )
             case ANSITerminalForegroundColor.BrightGreen:
-                return "\x1b[32;1m"
+                return formANSITerminalEscapeSequence( "32", "1" )
             case ANSITerminalForegroundColor.BrightYellow:
-                return "\x1b[33;1m"
+                return formANSITerminalEscapeSequence( "33", "1" )
             case ANSITerminalForegroundColor.BrightBlue:
-                return "\x1b[34;1m"
+                return formANSITerminalEscapeSequence( "34", "1" )
             case ANSITerminalForegroundColor.BrightMagenta:
-                return "\x1b[35;1m"
+                return formANSITerminalEscapeSequence( "35", "1" )
             case ANSITerminalForegroundColor.BrightCyan:
-                return "\x1b[36;1m"
+                return formANSITerminalEscapeSequence( "36", "1" )
             case ANSITerminalForegroundColor.BrightWhite:
-                return "\x1b[37;1m"
+                return formANSITerminalEscapeSequence( "37", "1" )
             case ANSITerminalForegroundColor.Default:
                 return EMPTY_STRING
         }
@@ -146,39 +155,39 @@
     export function getANSITerminalEscapeSequenceForBackgroundColor ( color: ANSITerminalBackgroundColor ): string {
         switch ( color ) {
             case ANSITerminalBackgroundColor.Black:
-                return "\x1b[40m"
+                return formANSITerminalEscapeSequence( "40" )
             case ANSITerminalBackgroundColor.Red:
-                return "\x1b[41m"
+                return formANSITerminalEscapeSequence( "41" )
             case ANSITerminalBackgroundColor.Green:
-                return "\x1b[42m"
+                return formANSITerminalEscapeSequence( "42" )
             case ANSITerminalBackgroundColor.Yellow:
-                return "\x1b[43m"
+                return formANSITerminalEscapeSequence( "43" )
             case ANSITerminalBackgroundColor.Blue:
-                return "\x1b[44m"
+                return formANSITerminalEscapeSequence( "44" )
             case ANSITerminalBackgroundColor.Magenta:
-                return "\x1b[45m"
+                return formANSITerminalEscapeSequence( "45" )
             case ANSITerminalBackgroundColor.Cyan:
-                return "\x1b[46m"
+                return formANSITerminalEscapeSequence( "46" )
             case ANSITerminalBackgroundColor.White:
-                return "\x1b[47m"
+                return formANSITerminalEscapeSequence( "47" )
             case ANSITerminalBackgroundColor.Crimson:
-                return "\x1b[48m"
+                return formANSITerminalEscapeSequence( "48" )
             case ANSITerminalBackgroundColor.BrightBlack:
-                return "\x1b[40;1m"
+                return formANSITerminalEscapeSequence( "40", "1" )
             case ANSITerminalBackgroundColor.BrightRed:
-                return "\x1b[41;1m"
+                return formANSITerminalEscapeSequence( "41", "1" )
             case ANSITerminalBackgroundColor.BrightGreen:
-                return "\x1b[42;1m"
+                return formANSITerminalEscapeSequence( "42", "1" )
             case ANSITerminalBackgroundColor.BrightYellow:
-                return "\x1b[43;1m"
+                return formANSITerminalEscapeSequence( "43", "1" )
             case ANSITerminalBackgroundColor.BrightBlue:
-                return "\x1b[44;1m"
+                return formANSITerminalEscapeSequence( "44", "1" )
             case ANSITerminalBackgroundColor.BrightMagenta:
-                return "\x1b[45;1m"
+                return formANSITerminalEscapeSequence( "45", "1" )
             case ANSITerminalBackgroundColor.BrightCyan:
-                return "\x1b[46;1m"
+                return formANSITerminalEscapeSequence( "46", "1" )
             case ANSITerminalBackgroundColor.BrightWhite:
-                return "\x1b[47;1m"
+                return formANSITerminalEscapeSequence( "47", "1" )
             case ANSITerminalBackgroundColor.Default:
                 return EMPTY_STRING
         }

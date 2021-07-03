@@ -5,10 +5,25 @@
 //
 
 //
-// ─── BASIC 8 COLORS ─────────────────────────────────────────────────────────────
+// ─── IMPORTS ────────────────────────────────────────────────────────────────────
 //
 
-    export type BasicEightColors =
+    import { Color }
+        from "../color"
+
+//
+// ─── STANDARD COLORS ────────────────────────────────────────────────────────────
+//
+
+    export type StandardColors =
+        | Basic16LabeledColors
+        | Color
+
+//
+// ─── BASIC 16 LABELED COLORS ────────────────────────────────────────────────────
+//
+
+    export type Basic16LabeledColors =
         | "black"
         | "red"
         | "green"
@@ -17,8 +32,6 @@
         | "magenta"
         | "cyan"
         | "white"
-
-    export type BasicEightBrightColors =
         | "bright-black"
         | "bright-red"
         | "bright-green"
