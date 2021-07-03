@@ -67,7 +67,7 @@
                 this.screen =
                     new VirtualScreen( this.width, this.height )
                 this.transparent =
-                    false
+                    true
                 this.#baseline =
                     0
                 this.#children =

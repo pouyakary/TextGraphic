@@ -74,7 +74,7 @@
                 this.baseline =
                     0
                 this.transparent =
-                    false
+                    true
 
                 this.styleRenderer =
                     styleRenderer

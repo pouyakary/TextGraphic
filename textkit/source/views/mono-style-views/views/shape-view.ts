@@ -155,7 +155,7 @@
                 //
                 const unifiedLines =
                     unifyLineSpaces( lines )
-                return new ShapeView( unifiedLines, baseLine, styler, initialStyle, false );
+                return new ShapeView( unifiedLines, baseLine, styler, initialStyle, true );
             }
 
 
@@ -171,7 +171,7 @@
                     breakStringIntoLines( text )
                 const unifiedLines =
                     unifyLineSpaces( lines )
-                return new ShapeView( unifiedLines, baseLine, styler, initialStyle, false )
+                return new ShapeView( unifiedLines, baseLine, styler, initialStyle, true )
             }
 
 
@@ -199,7 +199,7 @@
                     lines.push( emptyLine )
                 }
 
-                return new ShapeView ( lines, 0, styler, { }, false )
+                return new ShapeView ( lines, 0, styler, { }, true )
             }
 
         //
