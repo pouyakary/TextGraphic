@@ -21,7 +21,7 @@
 
     export function concatMonoStyledViewsHorizontally <EnvironmentStyleSettings extends PortableStyle<any>> (
             boxes:  MonoStyleViews<EnvironmentStyleSettings>[ ],
-            joiner: ShapeView<EnvironmentStyleSettings>
+            joiner: MonoStyleViews<EnvironmentStyleSettings>
         ): MonoStyleViews<EnvironmentStyleSettings> {
 
         //
