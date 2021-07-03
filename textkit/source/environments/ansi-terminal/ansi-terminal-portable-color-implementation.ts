@@ -26,7 +26,7 @@
             }
         }
 
-        return EscapeSequences.formatColorTo24BitANSITerminalColor( color )
+        return EscapeSequences.formatColorTo24BitANSITerminalColor( color, isBackground )
     }
 
 // ────────────────────────────────────────────────────────────────────────────────

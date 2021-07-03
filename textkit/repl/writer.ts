@@ -76,17 +76,17 @@
     // errors within the TextKit are not combined with the REPL.
 
     function styleViewProtocolForOutputPrint ( view: TextKit.ViewProtocol<never, never> ) {
-        const ANSI_WHITE =
-            "\x1b[37m"
+        const ANSI_DIM =
+            TextKit.Environments.ANSITerminal.EscapeSequences.Dim
         const ANSI_RESET =
-            "\x1b[0m"
+            TextKit.Environments.ANSITerminal.EscapeSequences.Reset
         const lines =
             new Array<string> ( view.height + 2 )
 
         // box top
         lines[ 0 ] =
             ( NORMAL_LEFT_SPACING
-            + ANSI_WHITE + "┌" + "─".repeat( view.width ) + "┐" + ANSI_RESET
+            + ANSI_DIM + "┌" + "─".repeat( view.width ) + "┐" + ANSI_RESET
             )
 
         // middle lines
@@ -99,9 +99,9 @@
                     : NORMAL_LEFT_SPACING
                     )
             const middleOfLine =
-                ( ANSI_WHITE + "│" + ANSI_RESET
+                ( ANSI_DIM + "│" + ANSI_RESET
                 + styledViewLines[ row ]!
-                + ANSI_WHITE + "│" + ANSI_RESET
+                + ANSI_DIM + "│" + ANSI_RESET
                 )
             const endOfLine =
                 ( row === view.baseline
@@ -115,7 +115,7 @@
         // box bottom
         lines[ view.height + 1 ] =
             ( NORMAL_LEFT_SPACING
-            + ANSI_WHITE + "└" + "─".repeat( view.width ) + "┘" + ANSI_RESET
+            + ANSI_DIM + "└" + "─".repeat( view.width ) + "┘" + ANSI_RESET
             )
 
         //

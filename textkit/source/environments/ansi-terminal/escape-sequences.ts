@@ -133,13 +133,16 @@
 // ─── STYLE COLOR FOR ANSI TERMINAL ──────────────────────────────────────────────
 //
 
-    export function formatColorTo24BitANSITerminalColor ( color: RGBColor ) {
+    export function formatColorTo24BitANSITerminalColor ( color: RGBColor, isBackground: boolean ) {
         if ( typeof color === "string" ) {
             return color
         }
 
+        const backgroundForegroundSelection =
+            isBackground ? "48" : "38"
+
         const colorCode =
-            formANSITerminalEscapeSequence( "38", "2",
+            formANSITerminalEscapeSequence( backgroundForegroundSelection, "2",
                 color.red.toString( ),
                 color.green.toString( ),
                 color.blue.toString( ),
