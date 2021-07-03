@@ -12,6 +12,7 @@
         bold:       boolean
         italic:     boolean
         underline:  boolean
+        blink:      boolean
     }
 
 // ────────────────────────────────────────────────────────────────────────────────

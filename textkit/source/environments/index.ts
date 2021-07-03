@@ -1,5 +1,5 @@
 
 export * as ANSITerminal from
     "./ansi-terminal"
-export * as HTML from
-    "./web/styler"
+export * as Web from
+    "./web"
