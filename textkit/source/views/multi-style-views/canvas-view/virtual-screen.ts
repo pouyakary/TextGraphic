@@ -204,7 +204,7 @@
                             leftStylingInfo
                     }
                     line +=
-                        character
+                        styler.encodeCharacterForStyledRender( character )
                     previousRightInfo =
                         rightStylingInfo
                 }

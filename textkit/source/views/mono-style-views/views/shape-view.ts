@@ -261,10 +261,15 @@
                     this.styleRenderer
 
                 for ( let row = 0; row < this.height; row++ ) {
+                    const encodedLine =
+                        this.lines[ row ]
+                            .replace( /./g,
+                                this.styleRenderer.encodeCharacterForStyledRender
+                            )
                     styledLines[ row ] =
                         ( rootRowLeftStylingInfo
                         + this.#leftStylingInfoCache
-                        + this.lines[ row ]
+                        + encodedLine
                         + this.#rightStylingInfoCache
                         + rootRowRightStylingInfo
                         )

@@ -84,6 +84,14 @@
                 return mergeTerminalStyleWithOptions( style, options )
             }
 
+        //
+        // ─── ENCODER ─────────────────────────────────────────────────────
+        //
+
+            public encodeCharacterForStyledRender ( char: string ) {
+                return char
+            }
+
         // ─────────────────────────────────────────────────────────────────
 
     }

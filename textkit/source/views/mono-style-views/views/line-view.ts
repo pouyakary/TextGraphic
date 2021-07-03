@@ -140,10 +140,14 @@
                         , rootRowRightStylingInfo, rootRightStylingInfo
                         } =
                     this.styleRenderer
+
+                const encodedLine =
+                    this.line.replace( /./g, this.styleRenderer.encodeCharacterForStyledRender )
+
                 return  ( rootLeftStylingInfo
                         + rootRowLeftStylingInfo
                         + this.#leftStylingInfoCache
-                        + this.line
+                        + encodedLine
                         + this.#rightStylingInfoCache
                         + rootRowRightStylingInfo
                         + rootRightStylingInfo

@@ -83,6 +83,23 @@
                     )
                 }
 
+            //
+            // ─── ENCODE CHARACTER ────────────────────────────────────────────
+            //
+
+                public encodeCharacterForStyledRender ( char: string ) {
+                    switch ( char ) {
+                        case "&":
+                            return "&amp;"
+                        case "<":
+                            return "&lt;"
+                        case ">":
+                            return "&gt;"
+                        default:
+                            return char
+                    }
+                }
+
             // ─────────────────────────────────────────────────────────────────
 
         }

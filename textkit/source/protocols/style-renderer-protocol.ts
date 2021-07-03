@@ -25,6 +25,8 @@
 
         margeNewStyleOptionsWithPreviosuStyleState ( style: Style,
                                                    options: Subset<Style> ): Style
+
+        encodeCharacterForStyledRender( char: string ): string
     }
 
 // ────────────────────────────────────────────────────────────────────────────────
