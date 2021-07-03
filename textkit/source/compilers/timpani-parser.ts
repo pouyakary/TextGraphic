@@ -54,7 +54,7 @@
         let terminalOutput =
             EMPTY_STRING
         for ( const part of parsedANSITerminal ) {
-            terminalOutput += part.terminalTag + part.text + EscapeSequences.ANSITerminalResetEscapeSequence
+            terminalOutput += part.terminalTag + part.text + EscapeSequences.Reset
         }
         return terminalOutput
     }
@@ -264,13 +264,13 @@
         //
         switch ( code ) {
             case "bold":
-                return parentTag + EscapeSequences.ANSITerminalBoldEscapeSequence
+                return parentTag + EscapeSequences.Bold
             case "italic":
-                return parentTag + EscapeSequences.ANSITerminalItalicEscapeSequence
+                return parentTag + EscapeSequences.Italic
             case "underline":
-                return parentTag + EscapeSequences.ANSITerminalUnderlineEscapeSequence
+                return parentTag + EscapeSequences.Underline
             case "highlighted":
-                return parentTag + EscapeSequences.ANSITerminalReversedEscapeSequence
+                return parentTag + EscapeSequences.Reversed
             case "normal":
                 return parentTag
         }

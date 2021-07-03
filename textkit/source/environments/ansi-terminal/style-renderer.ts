@@ -59,15 +59,15 @@
             }
 
             public renderRightStylingInfo ( ): string {
-                return EscapeSequences.ANSITerminalResetEscapeSequence
+                return EscapeSequences.Reset
             }
 
         //
         // ─── CANVAS INFORMATION ────────────────────────────────────────────
         //
 
-            readonly rootRowLeftStylingInfo  = EscapeSequences.ANSITerminalResetEscapeSequence
-            readonly rootRowRightStylingInfo = EscapeSequences.ANSITerminalResetEscapeSequence
+            readonly rootRowLeftStylingInfo  = EscapeSequences.Reset
+            readonly rootRowRightStylingInfo = EscapeSequences.Reset
             readonly rootRightStylingInfo    = EMPTY_STRING
             readonly rootLeftStylingInfo     = EMPTY_STRING
 

@@ -90,17 +90,29 @@
 
         //
         const bold =
-            style.bold ? EscapeSequences.ANSITerminalBoldEscapeSequence : EMPTY_STRING
+            style.bold
+                ? EscapeSequences.Bold
+                : EMPTY_STRING
         const italic =
-            style.italic ? EscapeSequences.ANSITerminalItalicEscapeSequence : EMPTY_STRING
+            style.italic
+                ? EscapeSequences.Italic
+                : EMPTY_STRING
         const reversed =
-            style.reversed ? EscapeSequences.ANSITerminalReversedEscapeSequence : EMPTY_STRING
+            style.reversed
+                ? EscapeSequences.Reversed
+                : EMPTY_STRING
         const blink =
-            style.blink ? EscapeSequences.ANSITerminalBlinkEscapeSequence : EMPTY_STRING
+            style.blink
+                ? EscapeSequences.Blink
+                : EMPTY_STRING
         const underline =
-            style.underline ? EscapeSequences.ANSITerminalUnderlineEscapeSequence : EMPTY_STRING
+            style.underline
+                ? EscapeSequences.Underline
+                : EMPTY_STRING
         const dim =
-            style.dim ? EscapeSequences.ANSITerminalDimEscapeSequence : EMPTY_STRING
+            style.dim
+                ? EscapeSequences.Dim
+                : EMPTY_STRING
 
         const backgroundColor =
             convertPortableColorToANSITerminalColor( style.backgroundColor, true )

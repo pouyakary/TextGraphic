@@ -22,21 +22,21 @@
 // ─── BASIC ANSI ESCAPE SEQUENCES ────────────────────────────────────────────────
 //
 
-    export const ANSITerminalResetEscapeSequence =
+    export const Reset =
         formANSITerminalEscapeSequence( "0" )
-    export const ANSITerminalBoldEscapeSequence =
+    export const Bold =
         formANSITerminalEscapeSequence( "1" )
-    export const ANSITerminalDimEscapeSequence =
+    export const Dim =
         formANSITerminalEscapeSequence( "2" )
-    export const ANSITerminalItalicEscapeSequence =
+    export const Italic =
         formANSITerminalEscapeSequence( "3" )
-    export const ANSITerminalUnderlineEscapeSequence =
+    export const Underline =
         formANSITerminalEscapeSequence( "4" )
-    export const ANSITerminalBlinkEscapeSequence =
+    export const Blink =
         formANSITerminalEscapeSequence( "5" )
-    export const ANSITerminalReversedEscapeSequence =
+    export const Reversed =
         formANSITerminalEscapeSequence( "7" )
-    export const ANSITerminalHiddenEscapeSequence =
+    export const Hidden =
         formANSITerminalEscapeSequence( "8" )
 
 //
