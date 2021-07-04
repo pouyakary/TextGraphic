@@ -20,6 +20,13 @@
         from "./tools"
 
 //
+// ─── ENVIRONMENT ────────────────────────────────────────────────────────────────
+//
+
+    const $ =
+        new TextKit.Environments.ANSITerminal.ANSITerminalStyleRenderer( )
+
+//
 // ─── HEADER ─────────────────────────────────────────────────────────────────────
 //
 
@@ -41,7 +48,7 @@
 //
 
     function setupREPLEnvironment ( server: repl.REPLServer ) {
-        setupREPLContext( server )
+        setupREPLContext( server, $ )
         setupREPLCommands( server )
     }
 
@@ -53,7 +60,10 @@
     printTextKitHeader( )
 
     const server =
-        repl.start({ prompt: '→ ', writer })
+        repl.start({
+            prompt: '→ ',
+            writer: input => writer( input, $ )
+        })
 
     server.on( "reset", ( ) =>
         setupREPLEnvironment( server ))

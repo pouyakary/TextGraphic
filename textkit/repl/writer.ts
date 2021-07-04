@@ -10,6 +10,13 @@
         from "util"
 
 //
+// ─── TYPES ──────────────────────────────────────────────────────────────────────
+//
+
+    type StyleRenderer =
+        TextKit.Environments.ANSITerminal.ANSITerminalStyleRenderer
+
+//
 // ─── CONSTANTS ──────────────────────────────────────────────────────────────────
 //
 
@@ -126,7 +133,7 @@
 // ─── WRITER ─────────────────────────────────────────────────────────────────────
 //
 
-    export function writer ( output: any ) {
+    export function writer ( output: any, $: StyleRenderer ) {
         process.stdout.write( TextKit.Environments.ANSITerminal.EscapeSequences.Reset )
 
         if ( typeof output === "number" ) {
@@ -138,16 +145,14 @@
         }
 
         if ( typeof output === "object" ) {
-            if ( "styledForm" in output ) {
+            if ( "styledForm" in output && "styleRenderer" in output && output.styleRenderer === $ ) {
                 return styleViewProtocolForOutputPrint( output )
             }
-            if ( "constructor" in output ) {
-                if ( "name" in output.constructor ) {
-                    const name =
-                        output.constructor.name
-                    if ( name !== "TypeError" || name !== "Error" ) {
-                        return styleClassInstanceForOutputPrint( output.constructor.name )
-                    }
+            if ( "constructor" in output && "name" in output.constructor ) {
+                const name =
+                    output.constructor.name
+                if ( name !== "TypeError" || name !== "Error" ) {
+                    return styleClassInstanceForOutputPrint( output.constructor.name )
                 }
             }
         }

@@ -64,8 +64,10 @@
                     height
                 this.width =
                     width
+                const baseStyle =
+                    styleRenderer.renderLeftStylingInfo( styleRenderer.defaultStyle )
                 this.screen =
-                    new VirtualScreen( this.width, this.height )
+                    new VirtualScreen( this.width, this.height, baseStyle )
                 this.transparent =
                     true
                 this.#baseline =

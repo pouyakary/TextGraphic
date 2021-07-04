@@ -48,7 +48,7 @@
         // ─── CONSTRUCTOR ─────────────────────────────────────────────────
         //
 
-            constructor ( width: number, height: number ) {
+            constructor ( width: number, height: number, leftInfo: string ) {
                 const matrixSize =
                     width * PIXEL_ARRAY_SIZE * height
 
@@ -61,7 +61,7 @@
 
                 for ( let index = 0; index < matrixSize; index += PIXEL_ARRAY_SIZE ) {
                     this.#matrix[ index + PIXEL_LEFT_INFO_OFFSET ] =
-                        EMPTY_STRING
+                        leftInfo
                     this.#matrix[ index + PIXEL_CHARACTER_OFFSET ] =
                         WHITE_SPACE_CHARACTER
                     this.#matrix[ index + PIXEL_RIGHT_INFO_OFFSET ] =
@@ -186,20 +186,22 @@
                 ): string {
 
                 //
+                const EMPTY_STYLE =
+                    styler.renderLeftStylingInfo( styler.defaultStyle )
                 let line =
                     EMPTY_STRING
                 let previousLeftInfo =
-                    EMPTY_STRING
+                    EMPTY_STYLE
                 let previousRightInfo =
                     EMPTY_STRING
 
                 for ( const [ leftStylingInfo, character, rightStylingInfo ] of this.iterateOnRow( row ) ) {
                     if ( previousLeftInfo !== leftStylingInfo ) {
                         line +=
-                            ( leftStylingInfo === EMPTY_STRING
-                                ? previousRightInfo
-                                : leftStylingInfo
-                                )
+                            previousRightInfo
+                        if ( leftStylingInfo !== EMPTY_STYLE ) {
+                            line += leftStylingInfo
+                        }
                         previousLeftInfo =
                             leftStylingInfo
                     }

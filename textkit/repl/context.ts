@@ -9,6 +9,13 @@
         from "../source"
 
 //
+// ─── TYPES ──────────────────────────────────────────────────────────────────────
+//
+
+    type StyleRenderer =
+        TextKit.Environments.ANSITerminal.ANSITerminalStyleRenderer
+
+//
 // ─── APPEND TO CONTEXT ──────────────────────────────────────────────────────────
 //
 
@@ -38,10 +45,8 @@
 // ─── APPEND STYLER TO THE CONTEXT ───────────────────────────────────────────────
 //
 
-    function appendStylerToContext ( server: REPLServer ) {
-        appendToContext( server, "$",
-            new TextKit.Environments.ANSITerminal.ANSITerminalStyleRenderer( )
-        )
+    function appendStylerToContext ( server: REPLServer, $: StyleRenderer ) {
+        appendToContext( server, "$", $ )
     }
 
 
@@ -49,10 +54,10 @@
 // ─── API ────────────────────────────────────────────────────────────────────────
 //
 
-    export function setupREPLContext ( server: REPLServer ) {
+    export function setupREPLContext ( server: REPLServer, $: StyleRenderer ) {
         appendObjectToREPLContext( TextKit, server )
         appendObjectToREPLContext( Math, server )
-        appendStylerToContext( server )
+        appendStylerToContext( server, $ )
     }
 
 // ────────────────────────────────────────────────────────────────────────────────

@@ -52,7 +52,9 @@
                 public renderLeftStylingInfo ( style: WebStyleSettings ): string {
                     const css =
                         convertWebSettingsToInlineCSS( style )
-                    return `</span style="${css}">`
+                    return css === ""
+                        ? "<span>"
+                        : `<span style="${css}">`
                 }
 
                 public renderRightStylingInfo ( ): string {
@@ -63,10 +65,10 @@
             // ─── CANVAS INFORMATION ────────────────────────────────────────────
             //
 
-                readonly rootRowLeftStylingInfo  = "<textkit-row>"
+                readonly rootRowLeftStylingInfo  = "   <textkit-row>"
                 readonly rootRowRightStylingInfo = "</textkit-row>"
-                readonly rootRightStylingInfo    = "<textkit-area>"
-                readonly rootLeftStylingInfo     = "</textkit-area>"
+                readonly rootLeftStylingInfo     = "<textkit-area>\n"
+                readonly rootRightStylingInfo    = "\n</textkit-area>"
 
             //
             // ─── MERGER ──────────────────────────────────────────────────────
@@ -95,6 +97,8 @@
                             return "&lt;"
                         case ">":
                             return "&gt;"
+                        case "█":
+                            return "&#9608;"
                         default:
                             return char
                     }

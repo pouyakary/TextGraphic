@@ -19,5 +19,6 @@
 
     export * from "./views/line-view"
     export * from "./views/shape-view"
+    export * from "./samples"
 
 // ────────────────────────────────────────────────────────────────────────────────
