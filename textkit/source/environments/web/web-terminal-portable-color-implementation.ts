@@ -3,7 +3,7 @@
 // ─── IMPORTS ────────────────────────────────────────────────────────────────────
 //
 
-    import { PortableColor, BasicLabeledColors }
+    import { PortableColor, PortableLabeledColors }
         from "../../protocols"
 
 //
@@ -26,7 +26,7 @@
 // ─── CONVERT BASIC LABELED COLORS TO CSS COLORS ─────────────────────────────────
 //
 
-    function convertBasicLabeledColorsToCSSColors ( labeledColor: BasicLabeledColors ) {
+    function convertBasicLabeledColorsToCSSColors ( labeledColor: PortableLabeledColors ) {
         switch ( labeledColor ) {
             case "black":
                 return "black"

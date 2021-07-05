@@ -69,6 +69,18 @@
                 return "#" + red + green + blue
             }
 
+        //
+        // ─── RANDOM COLOR ────────────────────────────────────────────────
+        //
+
+            public static random ( ) {
+                return new RGBColor(
+                    Math.random( ) * 256,
+                    Math.random( ) * 256,
+                    Math.random( ) * 256,
+                )
+            }
+
         // ─────────────────────────────────────────────────────────────────
 
     }

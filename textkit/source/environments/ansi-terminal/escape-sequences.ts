@@ -3,7 +3,7 @@
 // ─── IMPORTS ────────────────────────────────────────────────────────────────────
 //
 
-    import { BasicLabeledColors }
+    import { PortableLabeledColors }
         from "../../protocols/portable-color"
     import { RGBColor }
         from "../../color/rgb"
@@ -43,7 +43,7 @@
 // ─── FOREGROUND COLOR LUT ───────────────────────────────────────────────────────
 //
 
-    export function getForegroundColorEscapeSequenceForLabledColor ( color: BasicLabeledColors ): string {
+    export function getForegroundColorEscapeSequenceForLabledColor ( color: PortableLabeledColors ): string {
         switch ( color ) {
             case "black":
                 return formANSITerminalEscapeSequence( "30" )
@@ -88,7 +88,7 @@
 // ─── BACKGROUND COLOR LUT ───────────────────────────────────────────────────────
 //
 
-    export function getBackgroundColorEscapeSequenceForLabledColor ( color: BasicLabeledColors ): string {
+    export function getBackgroundColorEscapeSequenceForLabledColor ( color: PortableLabeledColors ): string {
         switch ( color ) {
             case "black":
                 return formANSITerminalEscapeSequence( "40" )
