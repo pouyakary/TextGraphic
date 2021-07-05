@@ -25,8 +25,6 @@ TextKit makes it possible to compose layers and views by combining the layers to
 
 ## Advanced Rendering Capabilities of TextKit
 
-<br>
-
 ### Rich Composition
 
 In TextKit you can combine scenes together and each View preserves the boundary for itself. So the children of the view are always retained within the boundaries of the view. This makes it possible to do all sorts of powerful things. &mdash; _P.S. Look how the borders of the boxes are combined together in their intersections :)_
@@ -64,3 +62,7 @@ The design of TextKit is around a central idea of having different renderers for
 <br>
 
 ![Screenshots of a graphic rendered for ANSI Terminal and Web](https://user-images.githubusercontent.com/2157285/124510265-b001ef00-dde8-11eb-8066-8c6df650ab7d.png)
+
+
+<br><br>
+&copy; Copyright 2020&mdash;present by Pouya Kary. All rights reserved.

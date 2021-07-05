@@ -1,7 +1,7 @@
 {
-  "name": "@pouyakary/textkit",
+  "name": "textkit",
   "version": "0.0.1",
-  "description": "The Kary TextKit Framework",
+  "description": "Textual 2D Graphics Framework",
   "main": "out/dist/textkit.js",
   "directories": {
     "test": "test"
