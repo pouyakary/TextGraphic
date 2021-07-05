@@ -40,7 +40,7 @@ const webRender = generateShape(
     new TextKit.Environments.Web.WebStyleRenderer( )
 )
 
-const expectation = generateShape(
+const terminalRender = generateShape(
     new TextKit.Environments.ANSITerminal.ANSITerminalStyleRenderer( )
 )
 
@@ -48,10 +48,13 @@ const server = new http.Server(( req, res ) => {
     res.statusCode = 200,
     res.setHeader("Content-Type", "text/html")
     res.end(htmlStyle + webRender + "</body></html>")
+    process.exit( 0 )
 })
 
 server.listen( 9090, "127.0.0.1" )
 
+console.clear( )
 console.log( "Running the test Web Renderer server on port 9090, rendering:")
-console.log( expectation )
+console.log( terminalRender )
+
 

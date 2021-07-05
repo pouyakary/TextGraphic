@@ -236,6 +236,46 @@
                 return centerViewProtocolToBoundaryBox( this, width, height ) as CanvasView<EnvironmentStyleSettings>
             }
 
+
+        //
+        // ─── CROP VIEW ───────────────────────────────────────────────────
+        //
+
+            public createCrop ( x: number, y: number, width: number, height: number ) {
+                const cropView =
+                    new CanvasView( width, height, this.styleRenderer )
+                cropView.add( this, -x, -y, 0 )
+                return cropView
+            }
+
+        //
+        // ─── SLICE HORIZONTALLY ──────────────────────────────────────────
+        //
+
+            public sliceHorizontally ( x: number ): [ CanvasView<EnvironmentStyleSettings>,
+                                                      CanvasView<EnvironmentStyleSettings> ] {
+                //
+                const leftSlice =
+                    this.createCrop( 0, 0, x, this.height )
+                const rightSlice =
+                    this.createCrop( x, 0, this.width - x, this.height )
+                return [ leftSlice, rightSlice ]
+            }
+
+        //
+        // ─── SLICE VERTICALLY ────────────────────────────────────────────
+        //
+
+            public sliceVertically ( y: number ): [ CanvasView<EnvironmentStyleSettings>,
+                                                    CanvasView<EnvironmentStyleSettings> ] {
+                //
+                const topSlice =
+                    this.createCrop( 0, 0, this.width, y )
+                const bottomSlice =
+                    this.createCrop( 0, y, this.width, this.height - y )
+                return [ topSlice, bottomSlice ]
+            }
+
         // ─────────────────────────────────────────────────────────────────
 
     }

@@ -32,8 +32,6 @@
         textColor: "red"
     }
 
-    box2.transparent = true
-
 
     const box3 =
         TextKit.ShapeView.initBlankRectangle( 8, 3, styler )
@@ -42,6 +40,8 @@
     box3.style = {
         textColor: "green"
     }
+
+    box3.transparent = false
 
 
     const canvas =
