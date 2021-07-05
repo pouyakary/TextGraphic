@@ -54,7 +54,7 @@
         const shape =
             generator( renderer )
         const color =
-            TextKit.randomPortableForegroundLabeledColor( )
+            TextKit.randomPortableLabeledColor( )
         shape.addStyle({
             textColor: color
         })

@@ -16,20 +16,8 @@
 //
 
     export type PortableColor =
-        | PortableLabeledForegroundColors
-        | PortableLabeledBackgroundColors
+        | PortableLabeledColors
         | RGBColor
-
-
-//
-// ─── PORTABLE STYLED COLORS ─────────────────────────────────────────────────────
-//
-
-    export type PortableLabeledForegroundColors =
-        PortableLabeledColors
-
-    export type PortableLabeledBackgroundColors =
-        PortableLabeledColors | "transparent"
 
 //
 // ─── BASIC 16 LABELED COLORS ────────────────────────────────────────────────────
