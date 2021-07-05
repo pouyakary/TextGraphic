@@ -65,4 +65,24 @@ The design of TextKit is around a central idea of having different renderers for
 
 
 <br><br>
+
+## Installation and Usage
+
+For now, I'm designing the system so it is both unstable and the API is subject to drastic change. You can look at the [playground examples](https://github.com/pouyakary/TextKit/tree/master/textkit/playgrounds) to get an idea of how to use the system. And the package can be installed using and used as:
+
+```shell
+% npm install --save @kary/textkit
+```
+
+```TypeScript
+import * as TextKit from "@kary/textkit"
+```
+
+<br><br>
+
+## Notes on the Active Development
+There are a lots of bugs and things that are missing. I have them listed in the projects section. Please remember that this project is not even in it's alpha release phase. It is under heavy development and many of the parts are still missing.
+
+
+<br><br>
 &copy; Copyright 2020&mdash;present by Pouya Kary. All rights reserved.
