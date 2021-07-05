@@ -1,6 +1,6 @@
 {
   "name": "@pouyakary/textkit",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "The Kary TextKit Framework",
   "main": "out/dist/textkit.js",
   "directories": {
@@ -34,9 +34,6 @@
     "@types/mocha": "^8.2.2",
     "@types/node": "^15.12.2",
     "mocha": "^9.0.0"
-  },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
   },
   "dev-dependencies": {
     "monaco-editor": "^0.25.2"

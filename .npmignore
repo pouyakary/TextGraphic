@@ -1,0 +1,6 @@
+./.cashe
+./.github
+./.vscodes
+./textkit
+.gitignore
+tsconfig.json
