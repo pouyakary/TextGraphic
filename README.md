@@ -37,7 +37,7 @@ In TextKit you can combine scenes together and each View preserves the boundary 
 
 ### Unicode Box Fine Tunning
 
-TextKit's Canvas view can fine tune the intersections of unicode boxes. This table is made of potting 30 independent boxes together, but TextKit can change the characters at where these boxes are joined together and it also understands the weights of these connections. So the result is a very beautiful and fine tunned result that previously was impossible or extremely hard to implement. I know of now other system that implements anything like this. ([Monodraw](http://monodraw.helftone.com) does have this ability but it only works for the light lines and weight detection is still unique to TextKit.)
+TextKit's Canvas view can fine tune the intersections of unicode boxes. This table is made of putting 30 independent boxes together, but TextKit can change the characters at where these boxes are joined together and it also understands the weights of these connections. So the result is a very beautiful and fine tunned result that previously was impossible or extremely hard to implement. (I know of no other system that implements anything like this. [Monodraw](http://monodraw.helftone.com) does have this ability but it only works for the light lines and weight detection is still unique to TextKit I guess)
 
 <br>
 
@@ -75,7 +75,8 @@ For now, I'm designing the system so it is both unstable and the API is subject 
 ```
 
 ```TypeScript
-import * as TextKit from "@kary/textkit"
+import * as TextKit
+    from "@kary/textkit"
 ```
 
 <br><br>
