@@ -1,5 +1,5 @@
 {
-  "name": "textkit",
+  "name": "@kary/textkit",
   "version": "0.0.1",
   "description": "Textual 2D Graphics Framework",
   "main": "out/dist/textkit.js",

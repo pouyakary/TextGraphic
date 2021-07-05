@@ -1,6 +1,7 @@
-./.cashe
-./.github
-./.vscodes
-./textkit
+.cache/**
+.github/**
+.vscode/**
+out/compiled/**/*
+textkit/**
 .gitignore
 tsconfig.json
