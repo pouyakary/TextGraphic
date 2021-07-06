@@ -1,6 +1,6 @@
 {
   "name": "@kary/textkit",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Textual 2D Graphics Framework",
   "main": "out/dist/textkit.js",
   "directories": {
@@ -10,7 +10,7 @@
     "textkit": "./out/compiled/repl/main.js"
   },
   "scripts": {
-    "build": "npm run clean; npm run compile; npm run pack",
+    "build": "npm run clean; npm run compile; npm run pack; npm run generate-d-ts",
     "fix-playground-setup": "sudo rm -f /usr/local/bin/textkit; sudo npm link; chmod u+x ./out/compiled/repl/main.js",
     "repl": "node ./out/compiled/repl/main.js",
     "compile": "tsc",
@@ -21,7 +21,8 @@
     "play-unicode": "node ./out/compiled/playgrounds/unicode-box.js",
     "play-animation": "node ./out/compiled/playgrounds/animation.js",
     "play-timpani": "node ./out/compiled/playgrounds/timpani.js",
-    "play-transparency": "node ./out/compiled/playgrounds/transparency.js"
+    "play-transparency": "node ./out/compiled/playgrounds/transparency.js",
+    "generate-d-ts": "./node_modules/.bin/dts-bundle-generator --sort --no-banner -o ./out/dist/textkit.d.ts ./out/compiled/source/index.ts"
   },
   "repository": {
     "type": "git",
@@ -33,6 +34,7 @@
   "devDependencies": {
     "@types/mocha": "^8.2.2",
     "@types/node": "^15.12.2",
+    "dts-bundle-generator": "^5.9.0",
     "mocha": "^9.0.0"
   },
   "dev-dependencies": {

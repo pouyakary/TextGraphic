@@ -144,6 +144,11 @@
             return styleAtomicTypeForOutputPrint( '"' + output + '"' )
         }
 
+        if ( typeof output === "boolean" ) {
+            return styleAtomicTypeForOutputPrint( '"' + output + '"' )
+        }
+
+
         if ( typeof output === "object" ) {
             if ( "styledForm" in output && "styleRenderer" in output && output.styleRenderer === $ ) {
                 return styleViewProtocolForOutputPrint( output )
