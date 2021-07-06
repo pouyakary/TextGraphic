@@ -13,6 +13,8 @@
 
     import * as TextKit
         from "../source"
+    import * as Tools
+        from "./tools"
 
 //
 // ─── ENVIRONMENT ────────────────────────────────────────────────────────────────
@@ -53,22 +55,28 @@
 
 
     const canvas =
-        new TextKit.CanvasView( 65, 10, styler )
+        new TextKit.CanvasView( 21, 10, styler )
 
-    canvas.add( box1, 3, 1, 1 )
-    canvas.add( box2, 8, 2, 2 )
-    canvas.add( box3, 14, 3, 3 )
-
-    const text =
-        new TextKit.LineView( "And there goes the transparency! 😎", styler, { } )
-    text.style = {
-        italic: true,
-    }
-
-    canvas.add( text, 27, 4, 3 )
+    canvas.add( box1, 0, 1, 1 )
+    canvas.add( box2, 5, 2, 2 )
+    canvas.add( box3, 11, 3, 3 )
 
     canvas.fineTuneUnicodeBoxes( )
 
-    console.log( canvas.styledForm )
+    const displayCanvas =
+        new TextKit.CanvasView(
+            process.stdout.columns,
+            process.stdout.rows - 2,
+            styler
+        )
+    displayCanvas.add(
+        canvas,
+        Math.floor( ( displayCanvas.width - canvas.width ) / 2 ),
+        Math.floor( ( displayCanvas.height - canvas.height ) / 2 ),
+        0
+    )
+
+    console.log( displayCanvas.styledForm )
+    Tools.setCursorToBottomRight( "Over-lapping Views and Transparency in TextKit " )
 
 // ────────────────────────────────────────────────────────────────────────────────
