@@ -35,6 +35,18 @@ In TextKit you can combine scenes together and each View preserves the boundary 
 
 <br>
 
+### Over-lapping Layers and Transparency
+
+TextKit is different from some of its alternatives because it uses a Virtual Screen underneath. TextKit uses no cursor movements. Instead, it uses a virtual screen to compute the resulting view and then synthesizes the required styling information (ANSI Terminal escape sequences in this example) and returns one single string that you can push to the `stdout` or `.innerHTML`
+
+To do so. TextKit uses a simple ray-tracer for z-index locating and then composes layers together. Having z-index and ray-tracing makes it possible to have objects that over-lap and also because of ray-tracing, objects can have transparency in them.
+
+<br>
+
+![Screenshot of a TextKit demo showing 3 boxes layered on each other. On with a transparent background and one with a solid colored background](https://user-images.githubusercontent.com/2157285/124674068-46a8db80-decf-11eb-98fe-84d367e36822.png)
+
+<br>
+
 ### Unicode Box Fine Tunning
 
 TextKit's Canvas view can fine tune the intersections of unicode boxes. This table is made of putting 30 independent boxes together, but TextKit can change the characters at where these boxes are joined together and it also understands the weights of these connections. So the result is a very beautiful and fine tunned result that previously was impossible or extremely hard to implement. (I know of no other system that implements anything like this. [Monodraw](http://monodraw.helftone.com) does have this ability but it only works for the light lines and weight detection is still unique to TextKit I guess)
@@ -55,6 +67,21 @@ TextKit offers a fast and virtually footprint-free system for cropping views. Th
 
 <br>
 
+### View Synthesis
+
+TextKit is a rendering engine that synthesizes the final render at once. It does not require any realtime cursor movement or environmental changes. This enables some really powerful features.
+- The system becomes platform independent as you see in the next feature title.
+- You get to run the renderer as a server side feature while having clients showing its renders.
+- It can be used to synthesize and generate all sorts of static content for the machine and the web.
+- The synthesized view can be further enhanced and modified by third party code.
+- Since you have the whole view computed ahead of time, you get a very high speed when rendering :)
+
+<br>
+
+![](https://user-images.githubusercontent.com/2157285/124675008-0d716b00-ded1-11eb-92d3-dfbb93de1e4d.png)
+
+<br>
+
 ### Platform Independent Rendering
 
 The design of TextKit is around a central idea of having different renderers for different environments, which are open to anyone to also extend and add to. TextKit has a Virtual Screen and Ray-Tracker system that makes it possible to compute optimized native renders for each platform that look exactly the same.
@@ -63,28 +90,25 @@ The design of TextKit is around a central idea of having different renderers for
 
 ![Screenshots of a graphic rendered for ANSI Terminal and Web](https://user-images.githubusercontent.com/2157285/124510265-b001ef00-dde8-11eb-8066-8c6df650ab7d.png)
 
-
 <br><br>
 
 ## Installation and Usage
 
 For now, I'm designing the system so it is both unstable and the API is subject to drastic change. You can look at the [playground examples](https://github.com/pouyakary/TextKit/tree/master/textkit/playgrounds) to get an idea of how to use the system. And the package can be installed using and used as:
 
+<br>
+
 ```shell
 % npm install --save @kary/textkit
 ```
 
 ```TypeScript
-import * as TextKit
-    from "@kary/textkit"
+import * as TextKit from "@kary/textkit"
 ```
 
 <br>
 
-You can also play inside the playground. TextKit has its own environment for playing around. The playground can be used by cloning the repo and then running:
-
-<br>
-
+You can also play inside the playground. TextKit has its own environment for playing around with the codes and testing your ideas, It has auto-complete features and debugging views. <br>
 [Learn more about the playground and its capabilities →](https://github.com/pouyakary/textkit/wiki/playground)
 
 <br>

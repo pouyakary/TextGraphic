@@ -66,7 +66,7 @@
     const displayCanvas =
         new TextKit.CanvasView(
             process.stdout.columns,
-            process.stdout.rows - 2,
+            process.stdout.rows - 1,
             styler
         )
     displayCanvas.add(
@@ -76,7 +76,10 @@
         0
     )
 
+    console.clear( )
     console.log( displayCanvas.styledForm )
+
     Tools.setCursorToBottomRight( "Over-lapping Views and Transparency in TextKit " )
+    Tools.sleep( 100 * 1000 )
 
 // ────────────────────────────────────────────────────────────────────────────────
