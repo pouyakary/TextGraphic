@@ -11,7 +11,7 @@
   },
   "scripts": {
     "build": "npm run clean; npm run compile; npm run pack",
-    "setup-repl": "npm link; chmod u+x ./out/compiled/repl/main.js",
+    "fix-playground-setup": "sudo rm -f /usr/local/bin/textkit; sudo npm link; chmod u+x ./out/compiled/repl/main.js",
     "repl": "node ./out/compiled/repl/main.js",
     "compile": "tsc",
     "clean": "rm -rf out",

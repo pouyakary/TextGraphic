@@ -23,7 +23,7 @@ TextKit makes it possible to compose layers and views by combining the layers to
 
 <br><br>
 
-## Advanced Rendering Capabilities of TextKit
+## Rendering Capabilities of TextKit
 
 ### Rich Composition
 
@@ -45,7 +45,7 @@ TextKit's Canvas view can fine tune the intersections of unicode boxes. This tab
 
 <br>
 
-### Advanced Cropping & Slicing
+### Cropping & Slicing
 
 TextKit offers a fast and virtually footprint-free system for cropping views. This makes for a great tool for making layouts, scroll views, etc...
 
@@ -53,7 +53,7 @@ TextKit offers a fast and virtually footprint-free system for cropping views. Th
 
 ![](https://user-images.githubusercontent.com/2157285/124509778-bcd21300-dde7-11eb-96b4-89264f582521.gif)
 
-<br><br>
+<br>
 
 ### Platform Independent Rendering
 
@@ -79,11 +79,23 @@ import * as TextKit
     from "@kary/textkit"
 ```
 
+<br>
+
+You can also play inside the playground. TextKit has its own environment for playing around. The playground can be used by cloning the repo and then running:
+
+<br>
+
+[Learn more about the playground and its capabilities →](https://github.com/pouyakary/textkit/wiki/playground)
+
+<br>
+
+![Screenshot showing the TextKit Playground](https://user-images.githubusercontent.com/2157285/124616367-425acf00-de8b-11eb-8b0a-a1a3994a61fe.png)
+
+
 <br><br>
 
 ## Notes on the Active Development
 There are a lots of bugs and things that are missing. I have them listed in the projects section. Please remember that this project is not even in it's alpha release phase. It is under heavy development and many of the parts are still missing.
-
 
 <br><br>
 &copy; Copyright 2020&mdash;present by Pouya Kary. All rights reserved.
