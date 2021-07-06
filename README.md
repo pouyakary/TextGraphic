@@ -1,13 +1,15 @@
 
 # TextKit
 
-TextKit is a framework for creating _Textual Graphics_. It provides layers, styling, rich color, text justification, layouts, tables, view-ports, transparency, etc. All behind a beautiful object-oriented view model that is easy and humane to use
-
-Underneath it also provides a rich rendering engine that is fully independent of any platform and can synthesize rendered code for ANSI Terminals, Web, and plain text format. Written in pure ECMAScript without incorporating any platform provided API, (no node/DOM API is used) and therefore works on any JavaScript platform.
+TextKit is a framework for creating _Textual Graphics_. It provides layers, styling, rich color, text justification, layouts, tables, view-ports, transparency, etc. All behind a beautiful object-oriented view model that is easy and humane to use. Underneath it also provides a rich rendering engine that is fully independent of any platform and can synthesize rendered code for ANSI Terminals, Web, and plain text format. Written in pure ECMAScript without incorporating any platform provided API, (no node/DOM API is used) and therefore works on any JavaScript platform.
 
 <br>
 
 ![Header Screenshots of the TextKit Playground and Demos](https://user-images.githubusercontent.com/2157285/124506813-b17be900-dde1-11eb-83d1-2c889eef50c1.png)
+
+<br>
+
+_A remark is that while TextKit can be used to style command line interfaces, it is not a command line interface library. It can work on many platforms and is intended to do the core visual tasks. I will have more libraries coming on top of the TextKit. A TermKit that provides some advance Terminal features and libraries for textual graphics and textual interfaces._
 
 <br><br>
 
