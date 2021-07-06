@@ -98,4 +98,4 @@ You can also play inside the playground. TextKit has its own environment for pla
 There are a lots of bugs and things that are missing. I have them listed in the projects section. Please remember that this project is not even in it's alpha release phase. It is under heavy development and many of the parts are still missing.
 
 <br><br>
-&copy; Copyright 2020&mdash;present by Pouya Kary. All rights reserved.
+<small><hr>&copy; Copyright 2020&mdash;present by [Pouya Kary](https://kary.us). All rights reserved.</small>
