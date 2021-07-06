@@ -67,7 +67,7 @@ TextKit offers a fast and virtually footprint-free system for cropping views. Th
 
 <br>
 
-### View Synthesis
+### Static Render Synthesis
 
 TextKit is a rendering engine that synthesizes the final render at once. It does not require any realtime cursor movement or environmental changes. This enables some really powerful features.
 - The system becomes platform independent as you see in the next feature title.
