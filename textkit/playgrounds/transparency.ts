@@ -61,7 +61,7 @@
     canvas.add( box2, 5, 2, 2 )
     canvas.add( box3, 11, 3, 3 )
 
-    canvas.fineTuneUnicodeBoxes( )
+    canvas.fineTuneBoxIntersections( )
 
     const displayCanvas =
         new TextKit.CanvasView(

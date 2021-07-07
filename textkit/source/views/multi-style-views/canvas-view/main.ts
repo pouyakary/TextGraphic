@@ -216,8 +216,9 @@
         // ─── COMBINE BOXES ───────────────────────────────────────────────
         //
 
-            public fineTuneUnicodeBoxes ( ) {
+            public fineTuneBoxIntersections ( ): CanvasView<EnvironmentStyleSettings> {
                 fineTuneUnicodeBoxForLayeredCanvas( this )
+                return this
             }
 
         //

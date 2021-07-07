@@ -92,7 +92,7 @@ main( ); async function main ( ) {
         mainCanvas.add( secondCanvas, 29, 2, 1 )
         mainCanvas.add( thirdCanvas, 53, 2, 1 )
 
-        mainCanvas.fineTuneUnicodeBoxes()
+        mainCanvas.fineTuneBoxIntersections()
 
         console.clear( )
         console.log( mainCanvas.styledForm )

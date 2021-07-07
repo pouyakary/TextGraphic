@@ -247,6 +247,7 @@
 
             addStyle ( input: Subset<EnvironmentStyleSettings> ) {
                 this.applyNewStyle( this.#style, input )
+                return this
             }
 
         //

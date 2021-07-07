@@ -104,7 +104,7 @@
             }
         }
 
-        tableCanvas.fineTuneUnicodeBoxes( )
+        tableCanvas.fineTuneBoxIntersections( )
 
         console.log( tableCanvas.styledForm )
     }

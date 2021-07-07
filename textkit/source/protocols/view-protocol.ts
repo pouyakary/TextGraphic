@@ -188,7 +188,7 @@
          * Appends or overrides the previous styles
          * @param style
          */
-        addStyle ( style: Subset<EnvironmentStylingSettings> ): void
+        addStyle ( style: Subset<EnvironmentStylingSettings> ): ViewProtocol<EnvironmentStylingSettings, StyleRendererProtocol<EnvironmentStylingSettings>>
     }
 
 // ────────────────────────────────────────────────────────────────────────────────
