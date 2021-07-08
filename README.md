@@ -118,10 +118,6 @@ You can also play inside the playground. TextKit has its own environment for pla
 ![Screenshot showing the TextKit Playground](https://user-images.githubusercontent.com/2157285/124616367-425acf00-de8b-11eb-8b0a-a1a3994a61fe.png)
 
 
-<br><br>
-
-## Notes on the Active Development
-There are a lots of bugs and things that are missing. I have them listed in the projects section. Please remember that this project is not even in it's alpha release phase. It is under heavy development and many of the parts are still missing.
-
-<br><br><br><br>
+<br><br><br>
+Made with ♥️ and for the fun.<br><br>
 <a href="https://kary.us/"><img src="https://inventory.kary.us/content/signature.png" width="120"></a>
