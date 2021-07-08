@@ -2,7 +2,7 @@
   "name": "@kary/textkit",
   "version": "0.0.2",
   "description": "Textual 2D Graphics Framework",
-  "main": "out/dist/textkit.js",
+  "main": "out/dist/textkit-node.js",
   "directories": {
     "test": "test"
   },
