@@ -10,19 +10,15 @@
     "textkit": "./out/compiled/repl/main.js"
   },
   "scripts": {
-    "build": "npm run clean; npm run compile; npm run pack; npm run generate-d-ts",
+    "build": "make build",
     "fix-playground-setup": "sudo rm -f /usr/local/bin/textkit; sudo npm link; chmod u+x ./out/compiled/repl/main.js",
     "repl": "node ./out/compiled/repl/main.js",
-    "compile": "tsc",
-    "clean": "rm -rf out",
     "test": "mocha \"./out/compiled/tests/main.js\"",
     "config-ci": "npm install -g typescript mocha",
-    "pack": "parcel build --out-dir=out/dist --out-file=textkit.js ./out/compiled/source/index.js",
     "play-unicode": "node ./out/compiled/playgrounds/unicode-box.js",
     "play-animation": "node ./out/compiled/playgrounds/animation.js",
     "play-timpani": "node ./out/compiled/playgrounds/timpani.js",
     "play-transparency": "node ./out/compiled/playgrounds/transparency.js",
-    "generate-d-ts": "./node_modules/.bin/dts-bundle-generator --sort --no-banner -o ./out/dist/textkit.d.ts ./out/compiled/source/index.ts"
   },
   "repository": {
     "type": "git",
