@@ -18,7 +18,7 @@
     "play-unicode": "node ./out/compiled/playgrounds/unicode-box.js",
     "play-animation": "node ./out/compiled/playgrounds/animation.js",
     "play-timpani": "node ./out/compiled/playgrounds/timpani.js",
-    "play-transparency": "node ./out/compiled/playgrounds/transparency.js",
+    "play-transparency": "node ./out/compiled/playgrounds/transparency.js"
   },
   "repository": {
     "type": "git",
