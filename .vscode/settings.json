@@ -1,10 +1,11 @@
 {
     "cSpell.words": [
+        "Arendelle",
         "Pouya's",
+        "ShapeView",
         "occupation",
         "pouyakary",
         "renderkit",
-        "ShapeView",
         "textkit"
     ],
     "typescript.suggest.autoImports": false,
