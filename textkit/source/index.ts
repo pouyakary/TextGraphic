@@ -6,68 +6,19 @@
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 //
 
+export * from "./views/"
+export * from "./protocols"
+export * from "./color"
 
-//
-// ─── VIEWS ──────────────────────────────────────────────────────────────────────
-//
-
-    export * from
-        "./views/"
-
-//
-// ─── LAYOUTS ────────────────────────────────────────────────────────────────────
-//
-
-    export * as Layouts from
-        "./layouts"
-
-//
-// ─── PRESETS ────────────────────────────────────────────────────────────────────
-//
-
-    export * as Presets from
-        "./presets"
-
-//
-// ─── SHAPES ─────────────────────────────────────────────────────────────────────
-//
-
-    export * as Shapes from
-        "./shapes/rulers/chart-rulers"
-
-//
-// ─── ENVIRONMENTS ───────────────────────────────────────────────────────────────
-//
-
-    export * as Environments from
-        "./environments"
-
-//
-// ─── TOOLS ──────────────────────────────────────────────────────────────────────
-//
-
-    export * as Tools from
-        "./tools"
-
-//
-// ─── PROTOCOLS ──────────────────────────────────────────────────────────────────
-//
-
-    export * from
-        "./protocols"
-
-//
-// ─── COMPILERS ──────────────────────────────────────────────────────────────────
-//
-
-    export * as Compilers from
-        "./compilers"
-
-//
-// ─── COLORS ─────────────────────────────────────────────────────────────────────
-//
-
-    export * from
-        "./color"
-
-// ────────────────────────────────────────────────────────────────────────────────
+export * as Layouts from
+    "./layouts"
+export * as Presets from
+    "./presets"
+export * as Shapes from
+    "./shapes"
+export * as Environments from
+    "./environments"
+export * as Tools from
+    "./tools"
+export * as Compilers from
+    "./compilers"

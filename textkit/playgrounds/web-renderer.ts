@@ -40,7 +40,7 @@
             new TextKit.LineView("Hello, World!", renderer, { textColor: "red" })
 
         const bird =
-            TextKit.createSampleArendelleBird( renderer )
+            TextKit.createArendelleBird( renderer )
         bird.addStyle({ textColor: "blue" })
 
         const canvas =

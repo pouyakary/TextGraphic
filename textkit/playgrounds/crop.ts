@@ -40,11 +40,11 @@
         new TextKit.CanvasView( CANVAS_WIDTH, CANVAS_HEIGHT, renderer )
 
     const alien =
-        TextKit.createSampleArendelleAlien( renderer )
+        TextKit.createArendelleAlien( renderer )
     alien.addStyle({ textColor: "blue" })
 
     const bird =
-        TextKit.createSampleArendelleBird( renderer )
+        TextKit.createArendelleBird( renderer )
     bird.addStyle({ textColor: "green" })
 
     for ( let i = 0; i < 30; i++ ) {
@@ -55,8 +55,8 @@
 
         const generator =
             ( i % 2 == 1
-                ? TextKit.createSampleArendelleAlien
-                : TextKit.createSampleArendelleBird
+                ? TextKit.createArendelleAlien
+                : TextKit.createArendelleBird
                 )
 
         const shape =

@@ -12,16 +12,16 @@
 //
 
     import { ShapeView }
-        from "./views/shape-view"
+        from "../views/mono-style-views/views/shape-view"
     import { StyleRendererProtocol, PortableStyle }
-        from "../../protocols"
+        from "../protocols"
 
 
 //
 // ─── BIRD ───────────────────────────────────────────────────────────────────────
 //
 
-    export function createSampleArendelleBird <EnvironmentStyleSettings extends PortableStyle<any>> (
+    export function createArendelleBird <EnvironmentStyleSettings extends PortableStyle<any>> (
             styler: StyleRendererProtocol<EnvironmentStyleSettings>,
             style:  Partial<EnvironmentStyleSettings> = { },
         ) {
@@ -45,7 +45,7 @@
 // ─── ALIEN ──────────────────────────────────────────────────────────────────────
 //
 
-    export function createSampleArendelleAlien <EnvironmentStyleSettings extends PortableStyle<any>> (
+    export function createArendelleAlien <EnvironmentStyleSettings extends PortableStyle<any>> (
             styler: StyleRendererProtocol<EnvironmentStyleSettings>,
             style:  Partial<EnvironmentStyleSettings> = { },
         ) {
@@ -69,7 +69,7 @@
 // ─── UTAH TEAPOT ────────────────────────────────────────────────────────────────
 //
 
-    export function createSampleUtahTeapot <EnvironmentStyleSettings extends PortableStyle<any>> (
+    export function createUtahTeapot <EnvironmentStyleSettings extends PortableStyle<any>> (
             styler: StyleRendererProtocol<EnvironmentStyleSettings>,
             style:  Partial<EnvironmentStyleSettings> = { },
         ) {
