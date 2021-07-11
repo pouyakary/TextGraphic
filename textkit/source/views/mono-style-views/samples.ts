@@ -21,8 +21,9 @@
 // ─── BIRD ───────────────────────────────────────────────────────────────────────
 //
 
-    export function createShapeViewBirdSample <EnvironmentStyleSettings extends PortableStyle<any>> (
-            styler: StyleRendererProtocol<EnvironmentStyleSettings>
+    export function createSampleArendelleBird <EnvironmentStyleSettings extends PortableStyle<any>> (
+            styler: StyleRendererProtocol<EnvironmentStyleSettings>,
+            style:  Partial<EnvironmentStyleSettings> = { },
         ) {
 
         //
@@ -37,15 +38,16 @@
             "    ██          ",
         ]
 
-        return new ShapeView( lines, 4, styler, { }, true )
+        return new ShapeView( lines, 4, styler, style, true )
     }
 
 //
 // ─── ALIEN ──────────────────────────────────────────────────────────────────────
 //
 
-    export function createShapeViewAlienSample <EnvironmentStyleSettings extends PortableStyle<any>> (
-            styler: StyleRendererProtocol<EnvironmentStyleSettings>
+    export function createSampleArendelleAlien <EnvironmentStyleSettings extends PortableStyle<any>> (
+            styler: StyleRendererProtocol<EnvironmentStyleSettings>,
+            style:  Partial<EnvironmentStyleSettings> = { },
         ) {
 
         //
@@ -60,7 +62,35 @@
             "  ████  ████  ",
         ]
 
-        return new ShapeView( lines, 4, styler, { }, true  )
+        return new ShapeView( lines, 4, styler, style, true  )
+    }
+
+//
+// ─── UTAH TEAPOT ────────────────────────────────────────────────────────────────
+//
+
+    export function createSampleUtahTeapot <EnvironmentStyleSettings extends PortableStyle<any>> (
+            styler: StyleRendererProtocol<EnvironmentStyleSettings>,
+            style:  Partial<EnvironmentStyleSettings> = { },
+        ) {
+
+        //
+        const lines = [
+            '                      ▀█████▀                         ',
+            '                       ▄███▄                          ',
+            '              ▄█████████████████████▄            ▄▄▄▄▄',
+            '  ▄▄▄▄████████████████████████████████▄        ▄████  ',
+            '▐██▀▀▀▀▀▀▀▀█████████████████████████████▄     ███▀    ',
+            '███       ███████████████████████████████▄  ▄████     ',
+            ' ███     ███████████████████████████████████████      ',
+            '  ▀██▄   ██████████████████████████████████████       ',
+            '    ▀▀███████████████████████████████████████▀        ',
+            '        ▀██████████████████████████████████▀          ',
+            '          ▀█████████████████████████████▀             ',
+            '             ▀███████████████████████▀                ',
+        ]
+
+        return new ShapeView( lines, 6, styler, style, true  )
     }
 
 // ────────────────────────────────────────────────────────────────────────────────
