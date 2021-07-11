@@ -56,8 +56,8 @@
     function createCell ( text: string, active: boolean, styler: StyleRenderer ) {
         const border =
             ( active
-                ? TextKit.Presets.HeavyBoxPreset
-                : TextKit.Presets.LightBoxPreset
+                ? TextKit.Presets.HeavyBox
+                : TextKit.Presets.LightBox
                 )
 
         const box =

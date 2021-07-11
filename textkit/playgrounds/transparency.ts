@@ -29,7 +29,7 @@
 
     const box1 =
         TextKit.ShapeView.initBlankRectangle( 8, 3, styler )
-            .frame( TextKit.Presets.LightBoxPreset )
+            .frame( TextKit.Presets.LightBox )
 
     box1.style = {
         textColor: "blue"
@@ -37,7 +37,7 @@
 
     const box2 =
         TextKit.ShapeView.initBlankRectangle( 8, 3, styler )
-            .frame( TextKit.Presets.LightBoxPreset )
+            .frame( TextKit.Presets.LightBox )
     box2.style = {
         textColor: "red"
     }
@@ -45,7 +45,7 @@
 
     const box3 =
         TextKit.ShapeView.initBlankRectangle( 8, 3, styler )
-            .frame( TextKit.Presets.LightBoxPreset )
+            .frame( TextKit.Presets.LightBox )
 
     box3.style = {
         textColor: "green"

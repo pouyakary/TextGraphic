@@ -11,8 +11,6 @@
 // ─── IMPORTS ────────────────────────────────────────────────────────────────────
 //
 
-    import { Subset }
-        from "../tools/types"
     import { PortableStyle }
         from "./portable-style"
 
@@ -32,7 +30,7 @@
         renderRightStylingInfo( style?: Style ):    string
 
         margeNewStyleOptionsWithPreviosuStyleState ( style: Style,
-                                                   options: Subset<Style> ): Style
+                                                   options: Partial<Style> ): Style
 
         encodeCharacterForStyledRender( char: string ): string
     }

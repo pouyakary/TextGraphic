@@ -13,8 +13,6 @@
 
     import { EMPTY_STRING }
         from "../../constants/characters"
-    import { Subset }
-        from "../../tools/types"
     import { ANSITerminalStyleSettings }
         from "./style"
     import * as EscapeSequences
@@ -139,7 +137,7 @@
 
     export function mergeTerminalStyleWithOptions (
             style:      ANSITerminalStyleSettings,
-            options:    Subset<ANSITerminalStyleSettings>
+            options:    Partial<ANSITerminalStyleSettings>
         ): ANSITerminalStyleSettings {
 
         //

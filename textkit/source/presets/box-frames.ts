@@ -40,7 +40,7 @@
      * ⎣    ⎦
      * ```
      */
-    export const BracketPreset: BoxFrameCharSet = {
+    export const Bracket: Readonly<BoxFrameCharSet> = {
         topLeft:        "⎡",
         top:            WHITE_SPACE_CHARACTER,
         topRight:       "⎤",
@@ -62,7 +62,7 @@
      * ⎜    ⎟
      * ```
      */
-    export const AbsolutePreset: BoxFrameCharSet = {
+    export const Absolute: Readonly<BoxFrameCharSet> = {
         topLeft:        "⎢",
         top:            WHITE_SPACE_CHARACTER ,
         topRight:       "⎥",
@@ -84,7 +84,7 @@
      * ⎣    ⎦
      * ```
      */
-    export const FloorPreset: BoxFrameCharSet = {
+    export const Floor: Readonly<BoxFrameCharSet> = {
         topLeft:        "⎜",
         top:            WHITE_SPACE_CHARACTER,
         topRight:       "⎟",
@@ -106,7 +106,7 @@
      * ⎜    ⎟
      * ```
      */
-    export const CeilingPreset: BoxFrameCharSet = {
+    export const Ceiling: Readonly<BoxFrameCharSet> = {
         topLeft:        "⎡",
         top:            WHITE_SPACE_CHARACTER,
         topRight:       "⎤",
@@ -128,7 +128,7 @@
      * ⎝    ⎠
      * ```
      */
-    export const ParenthesisPreset: BoxFrameCharSet = {
+    export const Parenthesis: Readonly<BoxFrameCharSet> = {
         topLeft:        "⎛",
         top:            WHITE_SPACE_CHARACTER,
         topRight:       "⎞",
@@ -150,7 +150,7 @@
      * └────┘
      * ```
      */
-    export const LightBoxPreset: BoxFrameCharSet = {
+    export const LightBox: Readonly<BoxFrameCharSet> = {
         topLeft:        "┌",
         top:            "─",
         topRight:       "┐",
@@ -172,7 +172,7 @@
      * ╰────╯
      * ```
      */
-    export const LightBoxWithRoundCornerPreset: BoxFrameCharSet = {
+    export const LightBoxWithRoundCorner: Readonly<BoxFrameCharSet> = {
         topLeft:        "╭",
         top:            "─",
         topRight:       "╮",
@@ -195,7 +195,7 @@
      * ┗━━━━┛
      * ```
      */
-    export const HeavyBoxPreset: BoxFrameCharSet = {
+    export const HeavyBox: Readonly<BoxFrameCharSet> = {
         topLeft:        "┏",
         top:            "━",
         topRight:       "┓",
@@ -217,7 +217,7 @@
      * ╚════╝
      * ```
      */
-    export const DoubleLineBoxPreset: BoxFrameCharSet = {
+    export const DoubleLineBox: Readonly<BoxFrameCharSet> = {
         topLeft:        "╔",
         top:            "═",
         topRight:       "╗",
@@ -239,7 +239,7 @@
      * ╙────╜
      * ```
      */
-    export const HLightVDoubleBoxPreset: BoxFrameCharSet = {
+    export const HLightVDoubleBox: Readonly<BoxFrameCharSet> = {
         topLeft:        "╓",
         top:            "─",
         topRight:       "╖",
@@ -261,7 +261,7 @@
      * ╘════╛
      * ```
      */
-    export const HDoubleVLightBoxPreset: BoxFrameCharSet = {
+    export const HDoubleVLightBox: Readonly<BoxFrameCharSet> = {
         topLeft:        "╒",
         top:            "═",
         topRight:       "╕",
@@ -283,7 +283,7 @@
      * └    ┘
      * ```
      */
-    export const CornersPreset: BoxFrameCharSet = {
+    export const Corners: Readonly<BoxFrameCharSet> = {
         topLeft:        "┌",
         top:            WHITE_SPACE_CHARACTER,
         topRight:       "┐",
@@ -305,7 +305,7 @@
      * ┕━━━━┙
      * ```
      */
-    export const HHeavyVLightBoxPreset: BoxFrameCharSet = {
+    export const HHeavyVLightBox: Readonly<BoxFrameCharSet> = {
         topLeft:        "┍",
         top:            "━",
         topRight:       "┑",

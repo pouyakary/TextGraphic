@@ -15,8 +15,6 @@
         from "./style-renderer-protocol"
     import { PortableStyle }
         from "./portable-style"
-    import { Subset }
-        from "../tools/types"
 
 //
 // ─── RAY TRACER RESULT ──────────────────────────────────────────────────────────
@@ -177,7 +175,7 @@
          * and replaces it with the previous style of the
          * object
          */
-        set style ( x: Subset<EnvironmentStylingSettings> )
+        set style ( x: Partial<EnvironmentStylingSettings> )
 
         /**
          * returns the style of the view
@@ -188,7 +186,7 @@
          * Appends or overrides the previous styles
          * @param style
          */
-        addStyle ( style: Subset<EnvironmentStylingSettings> ): ViewProtocol<EnvironmentStylingSettings, StyleRendererProtocol<EnvironmentStylingSettings>>
+        addStyle ( style: Partial<EnvironmentStylingSettings> ): ViewProtocol<EnvironmentStylingSettings, StyleRendererProtocol<EnvironmentStylingSettings>>
     }
 
 // ────────────────────────────────────────────────────────────────────────────────

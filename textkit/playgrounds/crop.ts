@@ -40,11 +40,11 @@
         new TextKit.CanvasView( CANVAS_WIDTH, CANVAS_HEIGHT, renderer )
 
     const alien =
-        TextKit.createShapeViewAlienSample( renderer )
+        TextKit.createSampleArendelleAlien( renderer )
     alien.addStyle({ textColor: "blue" })
 
     const bird =
-        TextKit.createShapeViewBirdSample( renderer )
+        TextKit.createSampleArendelleBird( renderer )
     bird.addStyle({ textColor: "green" })
 
     for ( let i = 0; i < 30; i++ ) {
@@ -55,8 +55,8 @@
 
         const generator =
             ( i % 2 == 1
-                ? TextKit.createShapeViewAlienSample
-                : TextKit.createShapeViewBirdSample
+                ? TextKit.createSampleArendelleAlien
+                : TextKit.createSampleArendelleBird
                 )
 
         const shape =
@@ -73,7 +73,7 @@
     const text =
         new TextKit.LineView( "A Demo Canvas Being Sliced", renderer, { })
             .applyMargin( 0, 2, 0, 2 )
-            .frame( TextKit.Presets.LightBoxPreset )
+            .frame( TextKit.Presets.LightBox )
             .applyMargin( 0, 2, 0, 2 )
     text.transparent = false
 

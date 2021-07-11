@@ -11,8 +11,6 @@
 // ─── IMPORTS ────────────────────────────────────────────────────────────────────
 //
 
-    import { Subset }
-        from "../../../tools/types"
     import { StyleRendererProtocol, ScreenMatrixPixel, StylableViewProtocol, PortableStyle }
         from "../../../protocols"
 
@@ -57,7 +55,7 @@
 
             constructor ( line: string,
                  styleRenderer: StyleRendererProtocol<EnvironmentStyleSettings>,
-                         style: Subset<EnvironmentStyleSettings> ) {
+                         style: Partial<EnvironmentStyleSettings> ) {
 
                 // checks
                 if ( typeof line !== "string" ) {
@@ -109,7 +107,7 @@
         //
 
             private applyNewStyle ( sourceStyle: EnvironmentStyleSettings,
-                                        changes: Subset<EnvironmentStyleSettings> ) {
+                                        changes: Partial<EnvironmentStyleSettings> ) {
                 //
                 this.#style =
                     this.styleRenderer.margeNewStyleOptionsWithPreviosuStyleState(
@@ -126,12 +124,12 @@
                 return this.#style
             }
 
-            set style ( input: Subset<EnvironmentStyleSettings> ) {
+            set style ( input: Partial<EnvironmentStyleSettings> ) {
                 this.applyNewStyle( this.styleRenderer.defaultStyle, input )
             }
 
 
-            addStyle ( input: Subset<EnvironmentStyleSettings> ) {
+            addStyle ( input: Partial<EnvironmentStyleSettings> ) {
                 this.applyNewStyle( this.#style, input )
                 return this
             }

@@ -21,13 +21,13 @@ main( ); async function main ( ) {
         // 1
         const firstCanvasBackground =
             TextKit.ShapeView.initBlankRectangle( 20, 5, styler )
-                .frame( TextKit.Presets.LightBoxPreset )
+                .frame( TextKit.Presets.LightBox )
         const firstCanvas =
             TextKit.CanvasView.initWithBackground( firstCanvasBackground, styler )
 
         const topLeftCanvasObject =
             new TextKit.ShapeView([ " * " ], 0, styler, { }, false )
-                .frame( TextKit.Presets.LightBoxPreset )
+                .frame( TextKit.Presets.LightBox )
         topLeftCanvasObject.style = {
             textColor: "blue"
         }
@@ -36,13 +36,13 @@ main( ); async function main ( ) {
         // 2
         const secondCanvasBackground =
             TextKit.ShapeView.initBlankRectangle( 20, 5, styler )
-                .frame( TextKit.Presets.LightBoxPreset )
+                .frame( TextKit.Presets.LightBox )
         const secondCanvas =
             TextKit.CanvasView.initWithBackground( secondCanvasBackground, styler )
 
         const secondCanvasObject =
             new TextKit.ShapeView([ " * " ], 0, styler, { }, false )
-                .frame( TextKit.Presets.LightBoxPreset )
+                .frame( TextKit.Presets.LightBox )
         secondCanvasObject.style = {
             textColor: "red"
         }
@@ -51,20 +51,20 @@ main( ); async function main ( ) {
         // 3
         const thirdCanvasBackground =
             TextKit.ShapeView.initBlankRectangle( 20, 5, styler )
-                .frame( TextKit.Presets.LightBoxPreset )
+                .frame( TextKit.Presets.LightBox )
         const thirdCanvas =
             TextKit.CanvasView.initWithBackground( thirdCanvasBackground, styler )
 
         const thirdCanvasObjectOne =
             new TextKit.ShapeView([ " * " ], 0, styler, { }, false )
-                .frame( TextKit.Presets.LightBoxPreset )
+                .frame( TextKit.Presets.LightBox )
         thirdCanvasObjectOne.style ={
             textColor: "green"
         }
         thirdCanvas.add( thirdCanvasObjectOne, -4 + ( iteration % 30 ), 3, 1 )
         const thirdCanvasObjectTwo =
             new TextKit.ShapeView([ " * " ], 0, styler, { }, false )
-                .frame( TextKit.Presets.LightBoxPreset )
+                .frame( TextKit.Presets.LightBox )
         thirdCanvasObjectTwo.style = {
             textColor: "blue"
         }

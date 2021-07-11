@@ -15,8 +15,6 @@
         from "../../protocols"
     import { WebStyleSettings, WebTextDecorationLineStyle, WebTextDecorationLineType }
         from "./style"
-    import { Subset }
-        from "../../tools/types"
     import { convertPortableColorToCSSColor }
         from "./web-terminal-portable-color-implementation"
     import { mergeNewWebStyleOptionsWithThePreviousSettings }
@@ -84,7 +82,7 @@
 
                 public margeNewStyleOptionsWithPreviosuStyleState (
                         style:      WebStyleSettings,
-                        options:    Subset<WebStyleSettings>,
+                        options:    Partial<WebStyleSettings>,
                     ): WebStyleSettings {
 
                     //

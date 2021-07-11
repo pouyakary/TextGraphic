@@ -13,8 +13,6 @@
 
     import { WebStyleSettings }
         from "./style"
-    import { Subset }
-        from "../../tools/types"
 
 //
 // ─── MERGE PREVIOUS STATE WITH THE NEW ──────────────────────────────────────────
@@ -22,7 +20,7 @@
 
     export function mergeNewWebStyleOptionsWithThePreviousSettings (
             previous: WebStyleSettings,
-            newStyle: Subset<WebStyleSettings>
+            newStyle: Partial<WebStyleSettings>
         ): WebStyleSettings {
 
         //

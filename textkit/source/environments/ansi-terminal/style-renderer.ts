@@ -17,8 +17,6 @@
         from "../../protocols"
     import { ANSITerminalStyleSettings }
         from "./style"
-    import { Subset }
-        from "../../tools/types"
     import * as EscapeSequences
         from "./escape-sequences"
 
@@ -85,7 +83,7 @@
 
             public margeNewStyleOptionsWithPreviosuStyleState (
                     style:      ANSITerminalStyleSettings,
-                    options:    Subset<ANSITerminalStyleSettings>,
+                    options:    Partial<ANSITerminalStyleSettings>,
                 ): ANSITerminalStyleSettings {
 
                 //

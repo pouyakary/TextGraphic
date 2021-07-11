@@ -11,9 +11,6 @@
 // ─── IMPORTS ────────────────────────────────────────────────────────────────────
 //
 
-
-    import { Subset }
-        from "../../../tools/types"
     import { ScreenMatrixPixel, StylableViewProtocol, PortableStyle, StyleRendererProtocol }
         from "../../../protocols"
 
@@ -74,7 +71,7 @@
             constructor ( lines: string[ ],
                        baseline: number,
                   styleRenderer: StyleRendererProtocol<EnvironmentStyleSettings>,
-                          style: Subset<EnvironmentStyleSettings>,
+                          style: Partial<EnvironmentStyleSettings>,
                     transparent: boolean ) {
 
                 // checking the lines
@@ -157,7 +154,7 @@
                     lines:          string[ ],
                     baseLine:       number,
                     styler:         StyleRendererProtocol<StyleSettings>,
-                    initialStyle:   Subset<StyleSettings>,
+                    initialStyle:   Partial<StyleSettings>,
                 ) {
 
                 //
@@ -171,7 +168,7 @@
                     text:           string,
                     baseLine:       number,
                     styler:         StyleRendererProtocol<StyleSettings>,
-                    initialStyle:   Subset<StyleSettings>,
+                    initialStyle:   Partial<StyleSettings>,
                 ): ShapeView<StyleSettings> {
 
                 //
@@ -223,7 +220,7 @@
         //
 
             private applyNewStyle ( sourceStyle: EnvironmentStyleSettings,
-                                        changes: Subset<EnvironmentStyleSettings> ) {
+                                        changes: Partial<EnvironmentStyleSettings> ) {
                 //
                 this.#style =
                     this.styleRenderer.margeNewStyleOptionsWithPreviosuStyleState(
@@ -240,12 +237,12 @@
                 return this.#style
             }
 
-            set style ( input: Subset<EnvironmentStyleSettings> ) {
+            set style ( input: Partial<EnvironmentStyleSettings> ) {
                 this.applyNewStyle( this.styleRenderer.defaultStyle, input )
             }
 
 
-            addStyle ( input: Subset<EnvironmentStyleSettings> ) {
+            addStyle ( input: Partial<EnvironmentStyleSettings> ) {
                 this.applyNewStyle( this.#style, input )
                 return this
             }

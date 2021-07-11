@@ -31,11 +31,11 @@
 
         const sampleBox1 =
             TextKit.ShapeView.initBlankRectangle( 3, 1, renderer )
-                .frame( TextKit.Presets.LightBoxPreset )
+                .frame( TextKit.Presets.LightBox )
 
         const sampleBox2 =
             TextKit.ShapeView.initBlankRectangle( 3, 1, renderer )
-                .frame( TextKit.Presets.HeavyBoxPreset )
+                .frame( TextKit.Presets.HeavyBox )
 
         background.add( sampleBox1, 0, 0, 1 )
         background.add( sampleBox2, 2, 1, 2 )
