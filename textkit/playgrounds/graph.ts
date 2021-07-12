@@ -59,12 +59,17 @@
 
     const canvas =
         new TextKit.CanvasView( WIDTH, HEIGHT, renderer )
+    const background =
+        new TextKit.CanvasView( WIDTH, HEIGHT, renderer )
 
-    canvas.add( hLine, 0, Math.floor( HEIGHT / 2 ) + 1, 1 )
-    canvas.add( vLine, Math.floor( WIDTH / 2 ), 0, 2 )
-    canvas.add( graph, 0, 0, 3 )
+    background.add( hLine, 0, Math.floor( HEIGHT / 2 ) + 1, 1 )
+    background.add( vLine, Math.floor( WIDTH / 2 ), 0, 2 )
+    background.fineTuneBoxIntersections( )
 
-    canvas.fineTuneBoxIntersections( )
+    canvas.add( background, 0, 0, 1 )
+    canvas.add( graph, 0, 0, 2 )
+
+
 
     const margined = canvas.applyMargin( VPadding, HPadding, VPadding, HPadding )
 
