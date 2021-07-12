@@ -226,11 +226,35 @@
         //
 
             get styledForm ( ): string {
-                return ""
+                const styledLines =
+                    new Array<string> ( this.height )
+                const { rootLeftStylingInfo, rootRowLeftStylingInfo,
+                        rootRowRightStylingInfo, rootRightStylingInfo } =
+                    this.styleRenderer
+
+                for ( let row = 0; row < this.height; row++ ) {
+                    const encodedLine =
+                        this.getRow( row )
+                            .replace( /./g,
+                                this.styleRenderer.encodeCharacterForStyledRender
+                            )
+                    styledLines[ row ] =
+                        ( rootRowLeftStylingInfo
+                        + this.#leftStylingInfoCache
+                        + encodedLine
+                        + this.#rightStylingInfoCache
+                        + rootRowRightStylingInfo
+                        )
+                }
+
+                return  ( rootLeftStylingInfo
+                        + styledLines.join( LINE_BREAK_CHARACTER )
+                        + rootRightStylingInfo
+                        )
             }
 
             get plainTextForm ( ): string {
-                return ""
+                return this.lines.join( LINE_BREAK_CHARACTER )
             }
 
         //
@@ -244,21 +268,6 @@
             private writePixelAt ( x: number, y: number, char: string ): void {
                 this.#pixelMatrix[ y * this.width + x ] =
                     char
-            }
-
-        //
-        // ─── TRANSLATIONS ────────────────────────────────────────────────
-        //
-
-            private translateScreenPositionToGraphPosition ( x: number,
-                                                             y: number ): Point {
-                //
-                const destX =
-                    ( x - this.#originX ) * this.#scale
-                const destY =
-                    ( this.height - y - this.#originY ) * this.#scale
-                //
-                return [ destX, destY ]
             }
 
         //
