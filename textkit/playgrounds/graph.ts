@@ -37,10 +37,13 @@
         renderer,
         width:      WIDTH,
         height:     HEIGHT,
-        style:      { textColor: "red" },
-        formula:    (x, y) =>
-                        y === Math.abs( x / 3 )
-
+        style:      { textColor: "cyan" },
+        scale:      0.01,
+        formula:    ( x, y, width ) => {
+            const a = ( x / width )
+            const s = Math.sin( a ) * 22
+            return y < ( Math.sin( s ) / 13 )
+        }
     })
 
 
