@@ -41,6 +41,9 @@
     import { EMPTY_STRING, LINE_BREAK_CHARACTER, WHITE_SPACE_CHARACTER }
         from "../../../constants/characters"
 
+    import * as Easters
+        from "./easters"
+
 //
 // ─── SHAPE VIEW ─────────────────────────────────────────────────────────────────
 //
@@ -205,6 +208,31 @@
                 }
 
                 return new ShapeView ( lines, 0, styler, { }, true )
+            }
+
+
+            static initUtahTeapot <ColorType, EnvironmentStyleSettings extends PortableStyle<ColorType>> (
+                    styler: StyleRendererProtocol<EnvironmentStyleSettings>,
+                    style:  Partial<EnvironmentStyleSettings> = { },
+                ) {
+                //
+                return Easters.createUtahTeapot(styler, style)
+            }
+
+            static initArendelleBird <ColorType, EnvironmentStyleSettings extends PortableStyle<ColorType>> (
+                    styler: StyleRendererProtocol<EnvironmentStyleSettings>,
+                    style:  Partial<EnvironmentStyleSettings> = { },
+                ) {
+                //
+                return Easters.createArendelleBird(styler, style)
+            }
+
+            static initArendelleAlien <ColorType, EnvironmentStyleSettings extends PortableStyle<ColorType>> (
+                    styler: StyleRendererProtocol<EnvironmentStyleSettings>,
+                    style:  Partial<EnvironmentStyleSettings> = { },
+                ) {
+                //
+                return Easters.createArendelleAlien(styler, style)
             }
 
         //

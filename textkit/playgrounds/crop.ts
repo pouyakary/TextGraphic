@@ -21,9 +21,9 @@
 //
 
     const CANVAS_WIDTH =
-        60
+        120
     const CANVAS_HEIGHT =
-        20
+        30
 
 //
 // ─── ENV ────────────────────────────────────────────────────────────────────────
@@ -40,11 +40,11 @@
         new TextKit.CanvasView( CANVAS_WIDTH, CANVAS_HEIGHT, renderer )
 
     const alien =
-        TextKit.createArendelleAlien( renderer )
+        TextKit.ShapeView.initArendelleAlien( renderer )
     alien.addStyle({ textColor: "blue" })
 
     const bird =
-        TextKit.createArendelleBird( renderer )
+        TextKit.ShapeView.initArendelleBird( renderer )
     bird.addStyle({ textColor: "green" })
 
     for ( let i = 0; i < 30; i++ ) {
@@ -54,9 +54,12 @@
             -5 + Math.floor( Math.random( ) * ( CANVAS_HEIGHT + 10 ) )
 
         const generator =
-            ( i % 2 == 1
-                ? TextKit.createArendelleAlien
-                : TextKit.createArendelleBird
+            ( i % 6 == 0
+                ? TextKit.ShapeView.initUtahTeapot
+                : ( i % 2 == 1
+                    ? TextKit.ShapeView.initArendelleAlien
+                    : TextKit.ShapeView.initArendelleBird
+                    )
                 )
 
         const shape =

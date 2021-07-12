@@ -12,9 +12,9 @@
 //
 
     import { ShapeView }
-        from "../views/mono-style-views/views/shape-view"
+        from "./shape-view"
     import { StyleRendererProtocol, PortableStyle }
-        from "../protocols"
+        from "../../../protocols"
 
 
 //
@@ -23,7 +23,7 @@
 
     export function createArendelleBird <EnvironmentStyleSettings extends PortableStyle<any>> (
             styler: StyleRendererProtocol<EnvironmentStyleSettings>,
-            style:  Partial<EnvironmentStyleSettings> = { },
+            style:  Partial<EnvironmentStyleSettings>,
         ) {
 
         //
@@ -47,7 +47,7 @@
 
     export function createArendelleAlien <EnvironmentStyleSettings extends PortableStyle<any>> (
             styler: StyleRendererProtocol<EnvironmentStyleSettings>,
-            style:  Partial<EnvironmentStyleSettings> = { },
+            style:  Partial<EnvironmentStyleSettings>,
         ) {
 
         //
@@ -71,25 +71,25 @@
 
     export function createUtahTeapot <EnvironmentStyleSettings extends PortableStyle<any>> (
             styler: StyleRendererProtocol<EnvironmentStyleSettings>,
-            style:  Partial<EnvironmentStyleSettings> = { },
+            style:  Partial<EnvironmentStyleSettings>,
         ) {
 
-        // this is Pouya's Utah Teapot V3 :)
+        // this is Pouya's Utah Teapot V3.3 :)
 
         //
         const lines = [
             '                      ▀█████▀                         ',
-            '                       ▄███▄                          ',
+            '                    ▄▄▄▄███▄▄▄▄                       ',
             '              ▄█████████████████████▄            ▄▄▄▄▄',
             '  ▄▄▄▄████████████████████████████████▄        ▄███▀  ',
-            '▐██▀▀▀▀▀▀▀▀█████████████████████████████▄     ████    ',
-            '███       ███████████████████████████████▄  ▄████     ',
+            '▐██▀▀▀▀▀▀▀▀█████████████████████████████      ████    ',
+            '███       ███████████████████████████████   ▄████     ',
             ' ███     ███████████████████████████████████████      ',
             '  ▀██▄   ██████████████████████████████████████       ',
             '    ▀▀███████████████████████████████████████▀        ',
             '        ▀██████████████████████████████████▀          ',
             '          ▀█████████████████████████████▀             ',
-            '             ▀███████████████████████▀                ',
+            '            ▀▀███████████████████████▀▀               ',
         ]
 
         return new ShapeView( lines, 6, styler, style, true  )

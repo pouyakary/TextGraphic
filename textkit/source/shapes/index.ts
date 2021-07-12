@@ -8,4 +8,3 @@
 
 export * from "./charts"
 export * from "./rulers"
-export * from "./easters"
