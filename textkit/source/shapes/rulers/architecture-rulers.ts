@@ -32,12 +32,12 @@
 // ─── ARCHITECTURE RULERS ────────────────────────────────────────────────────────
 //
 
-    export function createVerticalArchitectureRuler <EnvironmentStyleSettings extends PortableStyle<any>> (
+    export function createVerticalArchitectureRuler <ColorType, EnvironmentStyleSettings extends PortableStyle<any>> (
             size: number,
             chars: ArchitecturalRulerCharSet,
             styler: StyleRendererProtocol<EnvironmentStyleSettings>,
             text: string = EMPTY_STRING
-        ): ShapeView<EnvironmentStyleSettings> {
+        ): ShapeView<ColorType, EnvironmentStyleSettings> {
 
         //
         const lineChar =

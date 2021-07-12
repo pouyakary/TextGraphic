@@ -12,24 +12,24 @@
 //
 
     import { StyleRendererProtocol, ScreenMatrixPixel, StylableViewProtocol, PortableStyle }
-        from "../../../protocols"
+        from "../../../../protocols"
 
     import { ShapeView }
-        from "./shape-view"
+        from "../shape-view"
 
     import { includesLineBreak }
-        from "../../../tools/string"
+        from "../../../../tools/string"
 
     import { applyMarginToMonoStyleView }
-        from "../algorithms/apply-margin"
+        from "../../algorithms/apply-margin"
     import { centerViewProtocolToBoundaryBox }
-        from "../../algorithms/center-to-boundary-box"
+        from "../../../algorithms/center-to-boundary-box"
 
 //
 // ─── LINE VIEW ──────────────────────────────────────────────────────────────────
 //
 
-    export class LineView <EnvironmentStyleSettings extends PortableStyle<any>> implements
+    export class LineView <ColorType, EnvironmentStyleSettings extends PortableStyle<ColorType>> implements
         StylableViewProtocol <EnvironmentStyleSettings> {
 
         //
@@ -210,7 +210,7 @@
             public applyMargin ( top: number,
                                right: number,
                               bottom: number,
-                                left: number ): ShapeView<EnvironmentStyleSettings> {
+                                left: number ): ShapeView<ColorType, EnvironmentStyleSettings> {
                 //
                 return applyMarginToMonoStyleView( this, top, right, bottom, left )
             }
@@ -220,10 +220,12 @@
         //
 
 
-            public centerToBoundaryBox ( width: number,
-                                        height: number ): ShapeView<EnvironmentStyleSettings> {
+            public centerToBoundaryBox (
+                    width:  number,
+                    height: number,
+                ): ShapeView<ColorType, EnvironmentStyleSettings> {
                 //
-                return centerViewProtocolToBoundaryBox( this, width, height ) as ShapeView<EnvironmentStyleSettings>
+                return centerViewProtocolToBoundaryBox( this, width, height ) as ShapeView<ColorType, EnvironmentStyleSettings>
             }
 
         // ─────────────────────────────────────────────────────────────────

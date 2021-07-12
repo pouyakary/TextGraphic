@@ -22,13 +22,13 @@
 // ─── ALIGN IN BOX ───────────────────────────────────────────────────────────────
 //
 
-    export function alignMonoStyleViewWithinNewBoxBoundary <EnvironmentStyleSettings extends PortableStyle<any>> (
-            box:                MonoStyleViews<EnvironmentStyleSettings>,
+    export function alignMonoStyleViewWithinNewBoxBoundary <ColorType, EnvironmentStyleSettings extends PortableStyle<any>> (
+            box:                MonoStyleViews<ColorType, EnvironmentStyleSettings>,
             boxWidth:           number,
             boxHeight:          number,
             horizontalAlign:    HorizontalAlign,
             verticalAlign:      VerticalAlign,
-        ): ShapeView<EnvironmentStyleSettings> {
+        ): ShapeView<ColorType, EnvironmentStyleSettings> {
 
         //
         let marginTop = 0, marginRight = 0, marginLeft = 0, marginBottom = 0

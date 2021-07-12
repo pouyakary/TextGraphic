@@ -29,12 +29,12 @@
 // ─── MONO STYLED TEXT JUSTIFICATION ─────────────────────────────────────────────
 //
 
-    export function createMonoStyleJustificationLayout <EnvironmentStyleSettings extends PortableStyle<any>> (
+    export function createMonoStyleJustificationLayout <ColorType, EnvironmentStyleSettings extends PortableStyle<ColorType>> (
             text:           string,
             width:          number,
             justification:  Justification,
             styler:         StyleRendererProtocol<EnvironmentStyleSettings>
-        ): ShapeView<EnvironmentStyleSettings> {
+        ): ShapeView<ColorType, EnvironmentStyleSettings> {
 
         //
         const lines =

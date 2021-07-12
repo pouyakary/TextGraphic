@@ -54,10 +54,10 @@
 // ─── RULER MAKER ────────────────────────────────────────────────────────────────
 //
 
-    export function createChartRuler <EnvironmentStyleSettings extends PortableStyle<any>> (
+    export function createChartRuler <ColorType, EnvironmentStyleSettings extends PortableStyle<any>> (
             styler:         StyleRendererProtocol<EnvironmentStyleSettings>,
             inputSettings:  CharRulerSettings,
-        ): ShapeView<EnvironmentStyleSettings> {
+        ): ShapeView<ColorType, EnvironmentStyleSettings> {
 
         //
         const settings =
@@ -110,11 +110,11 @@
 // ─── HORIZONTAL CHART RULER ─────────────────────────────────────────────────────
 //
 
-    function createHorizontalChartRuler <EnvironmentStyleSettings extends PortableStyle<any>> (
+    function createHorizontalChartRuler <ColorType, EnvironmentStyleSettings extends PortableStyle<any>> (
             settings:       FixedCharRulerSettings,
             styler:         StyleRendererProtocol<EnvironmentStyleSettings>,
             isDirectionUp:  boolean
-        ): ShapeView<EnvironmentStyleSettings> {
+        ): ShapeView<ColorType, EnvironmentStyleSettings> {
 
         //
         const rulerLine =
@@ -144,11 +144,11 @@
 // ─── CREATE VERTICAL RULER ──────────────────────────────────────────────────────
 //
 
-    function createVerticalRuler <EnvironmentStyleSettings extends PortableStyle<any>> (
+    function createVerticalRuler <ColorType, EnvironmentStyleSettings extends PortableStyle<any>> (
             settings:       FixedCharRulerSettings,
             styler:         StyleRendererProtocol<EnvironmentStyleSettings>,
             facingLeft:     boolean
-        ): ShapeView<EnvironmentStyleSettings> {
+        ): ShapeView<ColorType, EnvironmentStyleSettings> {
 
         //
         const { hideNumbers, size, chars, verticalGutterSize, unit, unitSize } =

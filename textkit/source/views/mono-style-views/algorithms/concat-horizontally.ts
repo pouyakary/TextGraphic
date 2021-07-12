@@ -26,10 +26,10 @@
 // ─── CONCAT HORIZONTALLY ────────────────────────────────────────────────────────
 //
 
-    export function concatMonoStyledViewsHorizontally <EnvironmentStyleSettings extends PortableStyle<any>> (
-            boxes:  MonoStyleViews<EnvironmentStyleSettings>[ ],
-            joiner: MonoStyleViews<EnvironmentStyleSettings>
-        ): MonoStyleViews<EnvironmentStyleSettings> {
+    export function concatMonoStyledViewsHorizontally <ColorType, EnvironmentStyleSettings extends PortableStyle<any>> (
+            boxes:  MonoStyleViews<ColorType, EnvironmentStyleSettings>[ ],
+            joiner: MonoStyleViews<ColorType, EnvironmentStyleSettings>
+        ): MonoStyleViews<ColorType, EnvironmentStyleSettings> {
 
         //
         if ( boxes.length === 0 ) {

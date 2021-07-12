@@ -22,10 +22,10 @@
 // ─── CONCAT VERTICALLY ──────────────────────────────────────────────────────────
 //
 
-    export function concatMonoStyledViewsVertically <EnvironmentStyleSettings extends PortableStyle<any>> (
-            boxes:      MonoStyleViews<EnvironmentStyleSettings>[ ],
+    export function concatMonoStyledViewsVertically <ColorType, EnvironmentStyleSettings extends PortableStyle<any>> (
+            boxes:      MonoStyleViews<ColorType, EnvironmentStyleSettings>[ ],
             baseLine:   number,
-        ): ShapeView<EnvironmentStyleSettings> {
+        ): ShapeView<ColorType, EnvironmentStyleSettings> {
 
         //
         if ( boxes.length === 0 ) {

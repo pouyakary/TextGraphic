@@ -24,10 +24,10 @@
 // ─── FRAME SHAPE VIEW ───────────────────────────────────────────────────────────
 //
 
-    export function frameMonoStyledViews <EnvironmentStyleSettings extends PortableStyle<any>> (
-            box:        MonoStyleViews<EnvironmentStyleSettings>,
+    export function frameMonoStyledViews <ColorType, EnvironmentStyleSettings extends PortableStyle<ColorType>> (
+            box:        MonoStyleViews<ColorType, EnvironmentStyleSettings>,
             charSet:    BoxFrameCharSet,
-        ) {
+        ): ShapeView<ColorType, EnvironmentStyleSettings> {
 
         //
         const firstLine =

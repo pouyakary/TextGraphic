@@ -24,13 +24,13 @@
 // ─── APPLY MARGIN ───────────────────────────────────────────────────────────────
 //
 
-    export function applyMarginToMonoStyleView <EnvironmentStyleSettings extends PortableStyle<any>> (
-            box:    MonoStyleViews<EnvironmentStyleSettings>,
+    export function applyMarginToMonoStyleView <ColorType, EnvironmentStyleSettings extends PortableStyle<any>> (
+            box:    MonoStyleViews<ColorType, EnvironmentStyleSettings>,
             top:    number,
             right:  number,
             bottom: number,
             left:   number,
-        ): ShapeView<EnvironmentStyleSettings> {
+        ): ShapeView<ColorType, EnvironmentStyleSettings> {
 
         //
         const topBottomSpaceLines =

@@ -12,43 +12,43 @@
 //
 
     import { ScreenMatrixPixel, StylableViewProtocol, PortableStyle, StyleRendererProtocol }
-        from "../../../protocols"
+        from "../../../../protocols"
 
     import { MonoStyleViews }
-        from ".."
+        from "../.."
 
     import { BoxFrameCharSet }
-        from "../../../presets/box-frames"
+        from "../../../../presets/box-frames"
     import { HorizontalAlign, VerticalAlign }
-        from "../../../protocols/align"
+        from "../../../../protocols/align"
 
     import { unifyLineSpaces, breakStringIntoLines, includesLineBreak }
-        from "../../../tools/string"
+        from "../../../../tools/string"
 
     import { alignMonoStyleViewWithinNewBoxBoundary }
-        from "../algorithms/align-in-box"
+        from "../../algorithms/align-in-box"
     import { frameMonoStyledViews }
-        from "../../../shapes/frame/mono/frame"
+        from "../../../../shapes/frame/mono/frame"
     import { concatMonoStyledViewsVertically }
-        from "../algorithms/concat-vertically"
+        from "../../algorithms/concat-vertically"
     import { concatMonoStyledViewsHorizontally }
-        from "../algorithms/concat-horizontally"
+        from "../../algorithms/concat-horizontally"
     import { centerViewProtocolToBoundaryBox }
-        from "../../algorithms/center-to-boundary-box"
+        from "../../../algorithms/center-to-boundary-box"
     import { applyMarginToMonoStyleView }
-        from "../algorithms/apply-margin"
+        from "../../algorithms/apply-margin"
 
     import { EMPTY_STRING, LINE_BREAK_CHARACTER, WHITE_SPACE_CHARACTER }
-        from "../../../constants/characters"
+        from "../../../../constants/characters"
 
     import * as Easters
-        from "./easters"
+        from "../easters"
 
 //
 // ─── SHAPE VIEW ─────────────────────────────────────────────────────────────────
 //
 
-    export class ShapeView <EnvironmentStyleSettings extends PortableStyle<any>> implements
+    export class ShapeView <ColorType, EnvironmentStyleSettings extends PortableStyle<ColorType>> implements
         StylableViewProtocol <EnvironmentStyleSettings> {
 
         //
@@ -167,12 +167,12 @@
             }
 
 
-            static initWithText <StyleSettings extends PortableStyle<any>> (
+            static initWithText <ColorType, StyleSettings extends PortableStyle<ColorType>> (
                     text:           string,
                     baseLine:       number,
                     styler:         StyleRendererProtocol<StyleSettings>,
                     initialStyle:   Partial<StyleSettings>,
-                ): ShapeView<StyleSettings> {
+                ): ShapeView<ColorType, StyleSettings> {
 
                 //
                 const lines =
@@ -191,7 +191,7 @@
             }
 
 
-            static initBlankRectangle <StyleSettings extends PortableStyle<any>> (
+            static initBlankRectangle <ColorType, StyleSettings extends PortableStyle<ColorType>> (
                     width:          number,
                     height:         number,
                     styler:         StyleRendererProtocol<StyleSettings>,
@@ -322,7 +322,7 @@
             public applyMargin ( top: number,
                                right: number,
                               bottom: number,
-                                left: number ): ShapeView<EnvironmentStyleSettings> {
+                                left: number ): ShapeView<ColorType, EnvironmentStyleSettings> {
                 //
                 return applyMarginToMonoStyleView( this, top, right, bottom, left )
             }
@@ -332,19 +332,19 @@
         //
 
             public centerToBoundaryBox ( width: number,
-                                        height: number ): ShapeView<EnvironmentStyleSettings> {
+                                        height: number ): ShapeView<ColorType, EnvironmentStyleSettings> {
                 //
-                return centerViewProtocolToBoundaryBox( this, width, height ) as ShapeView<EnvironmentStyleSettings>
+                return centerViewProtocolToBoundaryBox( this, width, height ) as ShapeView<ColorType, EnvironmentStyleSettings>
             }
 
         //
         // ─── CONCAT HORIZONTALLY ─────────────────────────────────────────
         //
 
-            static concatHorizontally <EnvironmentStyleSettings extends PortableStyle<any>> (
-                    boxes:  ShapeView<EnvironmentStyleSettings> [ ],
-                    joiner: ShapeView<EnvironmentStyleSettings>,
-                ): MonoStyleViews<EnvironmentStyleSettings> {
+            static concatHorizontally <ColorType, EnvironmentStyleSettings extends PortableStyle<ColorType>> (
+                    boxes:  ShapeView<ColorType, EnvironmentStyleSettings> [ ],
+                    joiner: ShapeView<ColorType, EnvironmentStyleSettings>,
+                ): MonoStyleViews<ColorType, EnvironmentStyleSettings> {
 
                 //
                 return concatMonoStyledViewsHorizontally( boxes, joiner )
@@ -354,10 +354,10 @@
         // ─── CONCAT VERTICALLY ───────────────────────────────────────────
         //
 
-            static concatVertically <EnvironmentStyleSettings extends PortableStyle<any>> (
-                    boxes:      ShapeView<EnvironmentStyleSettings>[ ],
+            static concatVertically <ColorType, EnvironmentStyleSettings extends PortableStyle<ColorType>> (
+                    boxes:      ShapeView<ColorType, EnvironmentStyleSettings>[ ],
                     baseLine:   number,
-                ): ShapeView<EnvironmentStyleSettings> {
+                ): ShapeView<ColorType, EnvironmentStyleSettings> {
 
                 //
                 return concatMonoStyledViewsVertically( boxes, baseLine )
@@ -367,7 +367,7 @@
         // ─── FRAME ───────────────────────────────────────────────────────
         //
 
-            public frame ( charSet: BoxFrameCharSet ): ShapeView<EnvironmentStyleSettings> {
+            public frame ( charSet: BoxFrameCharSet ): ShapeView<ColorType, EnvironmentStyleSettings> {
                 return frameMonoStyledViews( this, charSet )
             }
 

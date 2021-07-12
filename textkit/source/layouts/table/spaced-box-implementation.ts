@@ -28,21 +28,21 @@
 // ─── TYPES ──────────────────────────────────────────────────────────────────────
 //
 
-    type ShapeViewTableRows <EnvironmentStyleSettings extends PortableStyle<any>> =
-        ShapeView<EnvironmentStyleSettings> [ ]
+    type ShapeViewTableRows <ColorType, EnvironmentStyleSettings extends PortableStyle<ColorType>> =
+        ShapeView<ColorType, EnvironmentStyleSettings> [ ]
 
-    type ShapeViewTable <EnvironmentStyleSettings extends PortableStyle<any>> =
-        ShapeViewTableRows<EnvironmentStyleSettings> [ ]
+    type ShapeViewTable <ColorType, EnvironmentStyleSettings extends PortableStyle<ColorType>> =
+        ShapeViewTableRows<ColorType, EnvironmentStyleSettings> [ ]
 
     interface MaxArrays {
         columnsMaxWidths:   number[ ]
         rowsMaxHeights:     number[ ]
     }
 
-    interface TableLines <EnvironmentStyleSettings extends PortableStyle<any>> {
-        topLine:    ShapeView<EnvironmentStyleSettings>
-        middleLine: ShapeView<EnvironmentStyleSettings>
-        bottomLine: ShapeView<EnvironmentStyleSettings>
+    interface TableLines <ColorType, EnvironmentStyleSettings extends PortableStyle<ColorType>> {
+        topLine:    ShapeView<ColorType, EnvironmentStyleSettings>
+        middleLine: ShapeView<ColorType, EnvironmentStyleSettings>
+        bottomLine: ShapeView<ColorType, EnvironmentStyleSettings>
     }
 
     export interface TableInitSettings {
@@ -65,11 +65,11 @@
 // ─── GENERATOR ──────────────────────────────────────────────────────────────────
 //
 
-    export function createShapeViewTableInTextForm <EnvironmentStyleSettings extends PortableStyle<any>> (
-            rows:   ShapeViewTable<EnvironmentStyleSettings>,
+    export function createShapeViewTableInTextForm <ColorType, EnvironmentStyleSettings extends PortableStyle<ColorType>> (
+            rows:   ShapeViewTable<ColorType, EnvironmentStyleSettings>,
             styler: StyleRendererProtocol<EnvironmentStyleSettings>,
             input:  TableInitSettings,
-        ): ShapeView<EnvironmentStyleSettings> {
+        ): ShapeView<ColorType, EnvironmentStyleSettings> {
 
         //
         if ( rows.length === 0 ) {
@@ -104,8 +104,8 @@
 // ─── FIX SETTINGS ───────────────────────────────────────────────────────────────
 //
 
-    function fixTableSettings <EnvironmentStyleSettings extends PortableStyle<any>> (
-            rows:   ShapeViewTable<EnvironmentStyleSettings>,
+    function fixTableSettings <ColorType, EnvironmentStyleSettings extends PortableStyle<ColorType>> (
+            rows:   ShapeViewTable<ColorType, EnvironmentStyleSettings>,
             input:  TableInitSettings,
         ): TableSettings {
 
@@ -183,8 +183,8 @@
 // ─── FLATTEN LINES ──────────────────────────────────────────────────────────────
 //
 
-    function flattenShapeViewLines <EnvironmentStyleSettings extends PortableStyle<any>> (
-            boxes: ShapeView<EnvironmentStyleSettings>[ ],
+    function flattenShapeViewLines <ColorType, EnvironmentStyleSettings extends PortableStyle<ColorType>> (
+            boxes: ShapeView<ColorType, EnvironmentStyleSettings>[ ],
         ): string[ ] {
 
         //
@@ -202,10 +202,10 @@
 // ─── JOIN TABLE PARTS ───────────────────────────────────────────────────────────
 //
 
-    function joinTableParts <EnvironmentStyleSettings extends PortableStyle<any>> (
-            renderedRows:       ShapeView<EnvironmentStyleSettings> [ ],
-            decorationLines:    TableLines<EnvironmentStyleSettings>,
-        ): ShapeView<EnvironmentStyleSettings>[ ] {
+    function joinTableParts <ColorType, EnvironmentStyleSettings extends PortableStyle<any>> (
+            renderedRows:       ShapeView<ColorType, EnvironmentStyleSettings> [ ],
+            decorationLines:    TableLines<ColorType, EnvironmentStyleSettings>,
+        ): ShapeView<ColorType, EnvironmentStyleSettings>[ ] {
         //
         const linesWithMiddleDecorations =
             insertJoinersInBetweenArrayItems( renderedRows, decorationLines.middleLine )
@@ -235,8 +235,8 @@
 // ─── COMPUTE MAX ARRAYS ─────────────────────────────────────────────────────────
 //
 
-    function computeMaxArrays <EnvironmentStyleSettings extends PortableStyle<any>> (
-            input:      ShapeViewTable<EnvironmentStyleSettings>,
+    function computeMaxArrays <ColorType, EnvironmentStyleSettings extends PortableStyle<any>> (
+            input:      ShapeViewTable<ColorType, EnvironmentStyleSettings>,
             settings:   TableSettings,
         ): MaxArrays {
         //
@@ -331,8 +331,8 @@
 // ─── MAKE COMPLETE TABLE ────────────────────────────────────────────────────────
 //
 
-    function completeShapeViewTable <EnvironmentStyleSettings extends PortableStyle<any>> (
-            table:  ShapeViewTable<EnvironmentStyleSettings>,
+    function completeShapeViewTable <ColorType, EnvironmentStyleSettings extends PortableStyle<ColorType>> (
+            table:  ShapeViewTable<ColorType, EnvironmentStyleSettings>,
             styler: StyleRendererProtocol<EnvironmentStyleSettings>,
         ) {
 
@@ -351,11 +351,11 @@
 // ─── CREATE TABLE LINE ──────────────────────────────────────────────────────────
 //
 
-    function createTableLines <EnvironmentStyleSettings extends PortableStyle<any>> (
+    function createTableLines <ColorType, EnvironmentStyleSettings extends PortableStyle<ColorType>> (
             maxArrays:  MaxArrays,
             charSet:    TableCharSet,
             styler:     StyleRendererProtocol<EnvironmentStyleSettings>,
-        ): TableLines<EnvironmentStyleSettings> {
+        ): TableLines<ColorType, EnvironmentStyleSettings> {
 
         //
         const { columnsMaxWidths } =
@@ -384,13 +384,13 @@
     }
 
 
-    function makeTopBottomLineWith <EnvironmentStyleSettings extends PortableStyle<any>> (
+    function makeTopBottomLineWith <ColorType, EnvironmentStyleSettings extends PortableStyle<ColorType>> (
             middleLines:    string[ ],
             styler:         StyleRendererProtocol<EnvironmentStyleSettings>,
             left:           string,
             middle:         string,
             right:          string,
-        ): ShapeView<EnvironmentStyleSettings> {
+        ): ShapeView<ColorType, EnvironmentStyleSettings> {
 
         //
         const line =
@@ -411,8 +411,8 @@
 // ─── RENDER ROWS ────────────────────────────────────────────────────────────────
 //
 
-    function renderRows <EnvironmentStyleSettings extends PortableStyle<any>> (
-            table:      ShapeViewTable<EnvironmentStyleSettings>,
+    function renderRows <ColorType, EnvironmentStyleSettings extends PortableStyle<ColorType>> (
+            table:      ShapeViewTable<ColorType, EnvironmentStyleSettings>,
             maxArrays:  MaxArrays,
             settings:   TableSettings,
             styler:     StyleRendererProtocol<EnvironmentStyleSettings>,
@@ -422,7 +422,7 @@
         const { rowsMaxHeights, columnsMaxWidths } =
             maxArrays
         const renderedRows =
-            new Array<ShapeView<EnvironmentStyleSettings>> ( )
+            new Array<ShapeView<ColorType, EnvironmentStyleSettings>> ( )
 
         for ( let rowIndex = 0; rowIndex < table.length; rowIndex++ ) {
             const row =
@@ -442,14 +442,14 @@
 // ─── RENDER ROW ─────────────────────────────────────────────────────────────────
 //
 
-    function renderRow <EnvironmentStyleSettings extends PortableStyle<any>> (
-            row:                ShapeViewTableRows<EnvironmentStyleSettings>,
+    function renderRow <ColorType, EnvironmentStyleSettings extends PortableStyle<any>> (
+            row:                ShapeViewTableRows<ColorType, EnvironmentStyleSettings>,
             rowIndex:           number,
             rowHeight:          number,
             columnsMaxWidths:   number[ ],
             settings:           TableSettings,
             styler:             StyleRendererProtocol<EnvironmentStyleSettings>,
-        ): ShapeView<EnvironmentStyleSettings> {
+        ): ShapeView<ColorType, EnvironmentStyleSettings> {
 
         //
         const leftStrokeLine =
@@ -490,7 +490,7 @@
         const renderedRow =
             ShapeView.concatHorizontally(
                 toBeJoined, ShapeView.initEmptyBox( styler )
-            ) as ShapeView<EnvironmentStyleSettings>
+            ) as ShapeView<ColorType, EnvironmentStyleSettings>
 
         return renderedRow
     }
