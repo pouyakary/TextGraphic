@@ -24,7 +24,7 @@
 // ─── APPLY MARGIN ───────────────────────────────────────────────────────────────
 //
 
-    export function applyMarginToMonoStyleView <ColorType, EnvironmentStyleSettings extends PortableStyle<any>> (
+    export function applyMarginToMonoStyleView <ColorType, EnvironmentStyleSettings extends PortableStyle<ColorType>> (
             box:    MonoStyleViews<ColorType, EnvironmentStyleSettings>,
             top:    number,
             right:  number,

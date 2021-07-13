@@ -14,7 +14,7 @@
     import { ScreenMatrixPixel, StylableViewProtocol, PortableStyle, StyleRendererProtocol }
         from "../../../../protocols"
 
-    import { MonoStyleViews, ShapeView }
+    import { ShapeView }
         from "../.."
 
     import { BoxFrameCharSet }
@@ -22,23 +22,18 @@
     import { HorizontalAlign, VerticalAlign }
         from "../../../../protocols/align"
 
-    import { unifyLineSpaces, breakStringIntoLines, includesLineBreak }
-        from "../../../../tools/string"
-
     import { alignMonoStyleViewWithinNewBoxBoundary }
         from "../../algorithms/align-in-box"
+    import { renderStyledFormForMultiLineMonoStyleViews }
+        from "../../algorithms/render-styled-form"
     import { frameMonoStyledViews }
         from "../../../../shapes/frame/mono/frame"
-    import { concatMonoStyledViewsVertically }
-        from "../../algorithms/concat-vertically"
-    import { concatMonoStyledViewsHorizontally }
-        from "../../algorithms/concat-horizontally"
     import { centerViewProtocolToBoundaryBox }
         from "../../../algorithms/center-to-boundary-box"
     import { applyMarginToMonoStyleView }
         from "../../algorithms/apply-margin"
 
-    import { EMPTY_STRING, LINE_BREAK_CHARACTER, WHITE_SPACE_CHARACTER }
+    import { LINE_BREAK_CHARACTER, WHITE_SPACE_CHARACTER, BLOCK_CHARACTER }
         from "../../../../constants/characters"
 
 //
@@ -49,28 +44,28 @@
         ( x: number, y: number, width: number, height: number ) => boolean
 
     export interface GraphSettings <ColorType, EnvironmentStyleSettings extends PortableStyle<ColorType>> {
-        renderer:       StyleRendererProtocol<EnvironmentStyleSettings>,
-        width:          number
-        height:         number
-        formula:        GraphFormula
-        originX?:       number
-        originY?:       number
-        scale?:         number
-        style?:         Partial<EnvironmentStyleSettings>
-        transparent?:   boolean
+        renderer:           StyleRendererProtocol<EnvironmentStyleSettings>,
+        width:              number
+        height:             number
+        formula:            GraphFormula
+        originX?:           number
+        originY?:           number
+        verticalZoom?:      number
+        horizontalZoom?:    number
+        style?:             Partial<EnvironmentStyleSettings>
+        character?:         string
+        transparent?:       boolean
     }
 
     type FixatedSettings <ColorType, EnvironmentStyleSettings extends PortableStyle<ColorType>> =
         Required<GraphSettings<ColorType, EnvironmentStyleSettings>>
 
-    type Point =
-        [ number, number ]
-
 //
 // ─── THE GRAPH VIEW ─────────────────────────────────────────────────────────────
 //
 
-    export class GraphView <ColorType, EnvironmentStyleSettings extends PortableStyle<ColorType>> { // implements StylableViewProtocol <EnvironmentStyleSettings> {
+    export class GraphView <ColorType, EnvironmentStyleSettings extends PortableStyle<ColorType>>
+        implements StylableViewProtocol <EnvironmentStyleSettings> {
 
         //
         // ─── STORAGE ─────────────────────────────────────────────────────
@@ -80,10 +75,12 @@
                         #style:                     EnvironmentStyleSettings
                         #leftStylingInfoCache:      string
                         #rightStylingInfoCache:     string
-            readonly    #scale:                     number
+            readonly    #verticalZoom:              number
+            readonly    #horizontalZoom:            number
             readonly    #formula:                   GraphFormula
             readonly    #originX:                   number
             readonly    #originY:                   number
+            readonly    #character:                 string
             readonly    width:                      number
             readonly    height:                     number
             readonly    baseline:                   number
@@ -95,11 +92,13 @@
         //
 
             constructor ( settings: GraphSettings<ColorType, EnvironmentStyleSettings> ) {
-                const { width, height, renderer, transparent, style, scale, formula, originX, originY } =
-                    fixSettings( settings )
+                const   { width, height, renderer, transparent, style, verticalZoom
+                        , horizontalZoom, formula, originX, originY, character
+                        } =
+                    checkAndCompleteGraphSettings( settings )
 
                 this.#pixelMatrix =
-                    initScreenMatrix( width, height )
+                    new Array<string> ( width * height )
 
                 this.width =
                     width
@@ -110,12 +109,17 @@
 
                 this.#formula =
                     formula
-                this.#scale =
-                    scale
+                this.#verticalZoom =
+                    verticalZoom
+                this.#horizontalZoom =
+                    horizontalZoom
                 this.#originX =
                     originX
                 this.#originY =
                     originY
+
+                this.#character =
+                    character
 
                 this.styleRenderer =
                     renderer
@@ -138,27 +142,32 @@
         //
 
             private renderGraph ( ) {
-                const { width, height } =
+                const { width: viewPortWidth, height: viewPortHeight } =
                     this
-                const formula =
-                    this.#formula
                 const graphWidth =
-                    width * this.#scale
+                    2 / this.#horizontalZoom
                 const graphHeight =
-                    height * this.#scale
+                    2 / this.#verticalZoom
+                const deltaOriginX =
+                    graphWidth / 2 - this.#originX
+                const deltaOriginY =
+                    graphHeight / 2 - this.#originY
 
-                for ( let row = 0; row < height; row++ ) {
+                for ( let row = 0; row < viewPortHeight; row++ ) {
                     const y =
-                        ( height - row - this.#originY ) * this.#scale
+                        ( ( ( viewPortHeight - row ) / viewPortHeight ) * graphHeight ) - deltaOriginY
 
-                    for ( let column = 0; column < width; column++ ) {
+                    for ( let column = 0; column < viewPortWidth; column++ ) {
                         const x =
-                            ( column - this.#originX ) * this.#scale
-                        const acceptable =
-                            formula( x, y, graphWidth, graphHeight )
-                        if ( acceptable ) {
-                            this.writePixelAt( column, row, "*" )
-                        }
+                            ( column / viewPortWidth ) * graphWidth - deltaOriginX
+                        const pixelOffset =
+                            row * this.width + column
+
+                        this.#pixelMatrix[ pixelOffset ] =
+                            ( this.#formula( x, y, graphWidth, graphHeight )
+                                ? this.#character
+                                : WHITE_SPACE_CHARACTER
+                                )
                     }
                 }
             }
@@ -226,31 +235,9 @@
         //
 
             get styledForm ( ): string {
-                const styledLines =
-                    new Array<string> ( this.height )
-                const { rootLeftStylingInfo, rootRowLeftStylingInfo,
-                        rootRowRightStylingInfo, rootRightStylingInfo } =
-                    this.styleRenderer
-
-                for ( let row = 0; row < this.height; row++ ) {
-                    const encodedLine =
-                        this.getRow( row )
-                            .replace( /./g,
-                                this.styleRenderer.encodeCharacterForStyledRender
-                            )
-                    styledLines[ row ] =
-                        ( rootRowLeftStylingInfo
-                        + this.#leftStylingInfoCache
-                        + encodedLine
-                        + this.#rightStylingInfoCache
-                        + rootRowRightStylingInfo
-                        )
-                }
-
-                return  ( rootLeftStylingInfo
-                        + styledLines.join( LINE_BREAK_CHARACTER )
-                        + rootRightStylingInfo
-                        )
+                return renderStyledFormForMultiLineMonoStyleViews(
+                    this, this.getRow, this.#leftStylingInfoCache, this.#rightStylingInfoCache
+                )
             }
 
             get plainTextForm ( ): string {
@@ -263,11 +250,6 @@
 
             private getPixelAt ( x: number, y: number ): string {
                 return this.#pixelMatrix[ y * this.width + x ]
-            }
-
-            private writePixelAt ( x: number, y: number, char: string ): void {
-                this.#pixelMatrix[ y * this.width + x ] =
-                    char
             }
 
         //
@@ -348,37 +330,54 @@
     }
 
 //
-// ─── INIT ARRAY ─────────────────────────────────────────────────────────────────
-//
-
-    function initScreenMatrix ( width: number, height: number ) {
-        const size =
-            width * height
-        const matrix =
-            new Array<string> ( size )
-        for ( let i = 0; i < size; i++ ) {
-            matrix[ i ] = WHITE_SPACE_CHARACTER
-        }
-        return matrix
-    }
-
-//
 // ─── FIXATE STYLE ───────────────────────────────────────────────────────────────
 //
 
-    function fixSettings <ColorType, EnvironmentStyleSettings extends PortableStyle<ColorType>> (
+    function checkAndCompleteGraphSettings <ColorType, EnvironmentStyleSettings extends PortableStyle<ColorType>> (
             settings:   GraphSettings<ColorType, EnvironmentStyleSettings>
         ): FixatedSettings<ColorType, EnvironmentStyleSettings> {
         //
-        const { renderer, width, height, formula, originX, originY, scale, style, transparent } =
+        const   { renderer, width, height, formula, originX, originY
+                , verticalZoom, horizontalZoom, style, transparent, character
+                } =
             settings
 
+        // zoom
+        if ( verticalZoom && verticalZoom <= 0 ) {
+            throw new Error(
+                `Graph's vertical zoom cannot be zero or less than zero. (found ${verticalZoom})`
+            )
+        }
+
+        if ( horizontalZoom && horizontalZoom <= 0 ) {
+            throw new Error(
+                `Graph's horizontal zoom cannot be zero or less than zero. (found ${horizontalZoom})`
+            )
+        }
+
+        // character
+        let drawingCharacter =
+            BLOCK_CHARACTER
+        if ( character ) {
+            if ( character.length === 1 ) {
+                drawingCharacter = character
+            } else {
+                throw new Error (
+                    `Graph's character should be a single character not "${character}".`
+                )
+            }
+        }
+
+
+        // done
         return { renderer, width, height, formula,
-            originX:        originX     ? originX       : Math.floor( width / 2 ),
-            originY:        originY     ? originY       : Math.floor( height / 2 ),
-            scale:          scale       ? scale         : 1 ,
-            style:          style       ? style         : {},
-            transparent:    transparent ? transparent   : true,
+            character:      drawingCharacter,
+            originX:        originX         ? originX           : 0,
+            originY:        originY         ? originY           : 0,
+            verticalZoom:   verticalZoom    ? verticalZoom      : 1,
+            horizontalZoom: horizontalZoom  ? horizontalZoom    : 1,
+            style:          style           ? style             : { },
+            transparent:    transparent     ? transparent       : true,
         }
     }
 

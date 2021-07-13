@@ -20,6 +20,9 @@
     export const LINE_BREAK_CHARACTER =
         String.fromCodePoint( 10 ) // "\n"
 
+    export const BLOCK_CHARACTER =
+        String.fromCodePoint( 9608 ) // "█"
+
     export const EMPTY_STRING =
         ""
 

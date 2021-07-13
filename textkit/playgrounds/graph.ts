@@ -32,22 +32,22 @@
         const VPadding = 2
         const WIDTH = process.stdout.columns - HPadding * 2
         const HEIGHT = process.stdout.rows - VPadding * 2 - 1
-        const GRAPH_COLOR = "cyan"
-        const GUIDES_COLOR = "red"
+        const GRAPH_COLOR = "red"
+        const GUIDES_COLOR = "blue"
 
         const graph = new TextKit.GraphView({
             renderer,
             width:      WIDTH,
             height:     HEIGHT,
             style:      { textColor: GRAPH_COLOR },
-            zoom:       Math.PI * 3,
-            formula:    ( x, y, width ) => {
+            verticalZoom: 0.8,
+            formula:    ( x, y ) => {
                 const thickness =
                     0.12
                 const theta =
-                    Math.sin( ( x - 0.5 ) * iteration / width )
+                    Math.sin( x * iteration / 2 )
                 return ( y < theta + thickness ) && ( y > theta - thickness )
-            }
+            },
         })
 
 
@@ -86,6 +86,6 @@
 // ─── MAIN ───────────────────────────────────────────────────────────────────────
 //
 
-    Tools.runRenderLoop( 1, 20, generateGraph )
+    Tools.runRenderLoop( 1, 40, generateGraph )
 
 // ────────────────────────────────────────────────────────────────────────────────
