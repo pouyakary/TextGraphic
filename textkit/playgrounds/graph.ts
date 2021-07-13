@@ -61,20 +61,15 @@
         const vLine =
             new TextKit.ShapeView( vLineLines, 0, renderer, { textColor: GUIDES_COLOR }, false )
 
-        const canvas =
-            new TextKit.CanvasView( WIDTH, HEIGHT, renderer )
         const background =
             new TextKit.CanvasView( WIDTH, HEIGHT, renderer )
 
         background.add( hLine, 0, Math.floor( HEIGHT / 2 ) + 1, 1 )
         background.add( vLine, Math.floor( WIDTH / 2 ), 0, 2 )
-        background.fineTuneBoxIntersections( )
-
-        canvas.add( background, 0, 0, 1 )
-        canvas.add( graph, 0, 0, 2 )
+        background.add( graph, 0, 0, 3 )
 
         const margined =
-            canvas.applyMargin( VPadding, HPadding, 0, HPadding )
+            background.applyMargin( VPadding, HPadding, 0, HPadding )
 
         console.clear( )
         console.log( margined.styledForm )
