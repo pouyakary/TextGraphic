@@ -16,7 +16,7 @@
     import { ShapeView }
         from "./views/shape-view"
     import { GraphView }
-        from "./views/graph-view"
+        from "./views/graph-view/class"
     import { PortableStyle }
         from "../../protocols"
 
