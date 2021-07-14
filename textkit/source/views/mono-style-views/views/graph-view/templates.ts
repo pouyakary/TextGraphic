@@ -4,7 +4,7 @@
 //
 
     export function Ellipse ( x: number, y: number ) {
-        return x * x + y * y === 1;
+        return x * x + y * y <= 1;
     }
 
 // ────────────────────────────────────────────────────────────────────────────────
