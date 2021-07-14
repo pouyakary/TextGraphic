@@ -6,5 +6,9 @@
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 //
 
-export * from "./charts"
-export * from "./rulers"
+export * as Charts from
+    "./charts"
+export * as Rulers from
+    "./rulers"
+export * as Graph from
+    "./graph"

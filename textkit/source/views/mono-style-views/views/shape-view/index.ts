@@ -27,8 +27,6 @@
 
     import { alignMonoStyleViewWithinNewBoxBoundary }
         from "../../algorithms/align-in-box"
-    import { renderStyledFormForMultiLineMonoStyleViews }
-        from "../../algorithms/render-styled-form"
     import { frameMonoStyledViews }
         from "../../../../shapes/frame/mono/frame"
     import { concatMonoStyledViewsVertically }
@@ -290,10 +288,31 @@
         //
 
             public get styledForm ( ): string {
-                return renderStyledFormForMultiLineMonoStyleViews(
-                    this, ( row: number ) => this.lines[ row ],
-                    this.#rightStylingInfoCache, this.#rightStylingInfoCache
-                )
+                const styledLines =
+                    new Array<string> ( this.height )
+                const { rootLeftStylingInfo, rootRowLeftStylingInfo,
+                        rootRowRightStylingInfo, rootRightStylingInfo } =
+                    this.styleRenderer
+
+                for ( let row = 0; row < this.height; row++ ) {
+                    const encodedLine =
+                        this.lines[ row ]
+                            .replace( /./g,
+                                this.styleRenderer.encodeCharacterForStyledRender
+                            )
+                    styledLines[ row ] =
+                        ( rootRowLeftStylingInfo
+                        + this.#leftStylingInfoCache
+                        + encodedLine
+                        + this.#rightStylingInfoCache
+                        + rootRowRightStylingInfo
+                        )
+                }
+
+                return  ( rootLeftStylingInfo
+                        + styledLines.join( LINE_BREAK_CHARACTER )
+                        + rootRightStylingInfo
+                        )
             }
 
         //

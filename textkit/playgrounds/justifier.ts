@@ -96,20 +96,20 @@
 //
 
     function createHorizontalRuler ( size: number ) {
-        const charSet: TextKit.Shapes.RulerCharSet = {
+        const charSet: TextKit.Shapes.Rulers.RulerCharSet = {
             originChar: "└",
             middleChar: "─",
             separatorChar: "┴"
         }
 
-        const rulerSettings: TextKit.Shapes.CharRulerSettings = {
+        const rulerSettings: TextKit.Shapes.Rulers.CharRulerSettings = {
             size: size,
             facing: TextKit.Direction.Down,
             chars: charSet
         }
 
         const ruler =
-            TextKit.Shapes.createChartRuler( styler, rulerSettings )
+            TextKit.Shapes.Rulers.createChartRuler( styler, rulerSettings )
                 .applyMargin( 0, 0, 0, LEFT_SPACING )
         ruler.style = RULER_STYLES
 
@@ -121,13 +121,13 @@
 //
 
     function createVerticalRuler ( height: number ) {
-        const charSet: TextKit.Shapes.RulerCharSet = {
+        const charSet: TextKit.Shapes.Rulers.RulerCharSet = {
             originChar: "┐",
             middleChar: "│",
             separatorChar: "┤"
         }
 
-        const rulerSettings: TextKit.Shapes.CharRulerSettings = {
+        const rulerSettings: TextKit.Shapes.Rulers.CharRulerSettings = {
             size: height,
             facing: TextKit.Direction.Right,
             unit: 3,
@@ -135,7 +135,7 @@
         }
 
         const ruler =
-            TextKit.Shapes.createChartRuler( styler, rulerSettings )
+            TextKit.Shapes.Rulers.createChartRuler( styler, rulerSettings )
                 .applyMargin( 0, 0, 0, LEFT_SPACING )
         ruler.style = RULER_STYLES
 

@@ -49,12 +49,12 @@
             ` W${ellipse_width} • H${ellipse_height} `
 
         const graph =
-            new TextKit.GraphView({
+            TextKit.Shapes.Graph.create({
                 renderer,
                 width:      ellipse_width,
                 height:     ellipse_height,
                 style:      { textColor: GRAPH_COLOR },
-                formula:    TextKit.GraphFormulas.Ellipse
+                formula:    TextKit.Shapes.Graph.Formulas.Ellipse
             })
 
         const graphBoxBackground =

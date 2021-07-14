@@ -35,20 +35,23 @@
         const GRAPH_COLOR = "red"
         const GUIDES_COLOR = "blue"
 
-        const graph = new TextKit.GraphView({
-            renderer,
-            width:      WIDTH,
-            height:     HEIGHT,
-            style:      { textColor: GRAPH_COLOR },
-            verticalZoom: 0.8,
-            formula:    ( x, y ) => {
-                const thickness =
-                    0.12
-                const theta =
-                    Math.sin( x * iteration / 2 )
-                return ( y < theta + thickness ) && ( y > theta - thickness )
-            },
-        })
+        const graph =
+            TextKit.Shapes.Graph.create({
+                renderer,
+                //
+                width:          WIDTH,
+                height:         HEIGHT,
+                style:          { textColor: GRAPH_COLOR },
+                verticalZoom:   0.8,
+                //
+                formula: ( x, y ) => {
+                    const thickness =
+                        0.12
+                    const theta =
+                        Math.sin( x * iteration / 2 )
+                    return ( y < theta + thickness ) && ( y > theta - thickness )
+                },
+            })
 
 
         const hLine =

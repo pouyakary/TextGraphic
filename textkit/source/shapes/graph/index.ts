@@ -6,5 +6,5 @@
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 //
 
-export * from "./class"
-export * as GraphFormulas from "./templates"
+export * from "./renderer"
+export * as Formulas from "./templates"

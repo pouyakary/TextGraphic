@@ -30,7 +30,7 @@
     async function renderFrame ( size: number ) {
         //
         const ruler =
-            TextKit.Shapes.createChartRuler( styler, {
+            TextKit.Shapes.Rulers.createChartRuler( styler, {
                 size: size,
                 facing: TextKit.Direction.Right,
                 verticalGutterSize: 5,

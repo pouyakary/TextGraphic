@@ -15,8 +15,6 @@
         from "./views/line-view"
     import { ShapeView }
         from "./views/shape-view"
-    import { GraphView }
-        from "./views/graph-view/class"
     import { PortableStyle }
         from "../../protocols"
 
@@ -27,10 +25,8 @@
     export type MonoStyleViews<ColorType, EnvironmentStyleSettings extends PortableStyle<any>> =
         | ShapeView <ColorType, EnvironmentStyleSettings>
         | LineView  <ColorType, EnvironmentStyleSettings>
-        | GraphView <ColorType, EnvironmentStyleSettings>
 
     export * from "./views/line-view"
     export * from "./views/shape-view"
-    export * from "./views/graph-view"
 
 // ────────────────────────────────────────────────────────────────────────────────
