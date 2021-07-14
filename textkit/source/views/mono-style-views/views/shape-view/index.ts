@@ -199,12 +199,12 @@
                 ) {
 
                 //
-                const emptyLine =
+                const backgroundLine =
                     backgroundChar.repeat( width )
                 const lines =
-                    new Array<string> ( )
+                    new Array<string> ( height )
                 for ( let i = 0; i < height; i++ ) {
-                    lines.push( emptyLine )
+                    lines[ i ] = backgroundLine
                 }
 
                 return new ShapeView ( lines, 0, styler, { }, true )
