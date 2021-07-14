@@ -68,19 +68,14 @@
 
         const grid =
             new TextKit.CanvasView(  WIDTH, HEIGHT, renderer )
-        grid.add( hLine, 0, Math.floor( HEIGHT / 2 ) + 1, 1 )
-        grid.add( vLine, Math.floor( WIDTH / 2 ), 0, 2 )
-
-        const centerX =
+        const dx =
+            Math.floor( HEIGHT / 2 ) + 1
+        const dy =
             Math.floor( WIDTH / 2 )
-        const centerY =
-            Math.floor( HEIGHT / 2 )
-        const sensitivity =
-            2
-        grid.fineTuneBoxIntersectionsInSelectedArea(
-            centerX - sensitivity, centerY - sensitivity,
-            centerX + sensitivity, centerY + sensitivity
-        )
+
+        grid.add( hLine, 0, dx, 1 )
+        grid.add( vLine, dy, 0, 2 )
+        grid.fineTuneBoxIntersectionsAtPoint( dy, dx )
 
         // background
         const background =

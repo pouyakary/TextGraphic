@@ -53,6 +53,9 @@ generate-dts:
 	$(call build-title,Generating Single TypeScript .d.ts file.)
 	$(Declaration-Generator) --sort --no-banner -o $(Distribution-Directory)/textkit-node.d.ts $(Compiled-Directory)/source/index.ts
 
+generate-docs:
+	npx typedoc --out ./out/docs --name "TextKit" --hideGenerator ./textkit/source/index.ts
+
 #
 # ─── PACKERS ────────────────────────────────────────────────────────────────────
 #

@@ -24,12 +24,12 @@
 // ─── RAY TRACE ──────────────────────────────────────────────────────────────────
 //
 
-    export function rayTraceScreenPixel <EnvironmentStyleSettings extends PortableStyle<any>> (
-            canvas:                   CanvasView<EnvironmentStyleSettings>,
-            left:                   number,
-            top:                    number,
-            x:                      number,
-            y:                      number,
+    export function rayTraceScreenPixel <ColorType, EnvironmentStyleSettings extends PortableStyle<any>> (
+            canvas: CanvasView<ColorType, EnvironmentStyleSettings>,
+            left:   number,
+            top:    number,
+            x:      number,
+            y:      number,
         ): ScreenMatrixPixel {
 
         //

@@ -12,7 +12,7 @@
 
     import { PortableStyle, StyleRendererProtocol }
         from "../../../protocols"
-    import { BarChartSettings, BarChartDataPoint }
+    import { BarChartSettings }
         from "./index"
     import { CanvasView }
         from "../../../views"
@@ -24,7 +24,7 @@
     export function createVerticalBarChart <ColorType, EnvironmentStyleSettings extends PortableStyle<ColorType>> (
             renderer:   StyleRendererProtocol<EnvironmentStyleSettings>,
             settings:   BarChartSettings<ColorType>,
-        ): CanvasView<EnvironmentStyleSettings> {
+        ): CanvasView<ColorType, EnvironmentStyleSettings> {
         //
         return new CanvasView(1, 1, renderer)
     }

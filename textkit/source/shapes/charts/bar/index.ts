@@ -43,7 +43,7 @@
     export function createBarChart <ColorType, EnvironmentStyleSettings extends PortableStyle<ColorType>> (
             renderer:   StyleRendererProtocol<EnvironmentStyleSettings>,
             settings:   BarChartSettings<ColorType>,
-        ): CanvasView<EnvironmentStyleSettings> {
+        ): CanvasView<ColorType, EnvironmentStyleSettings> {
 
         //
         const fixatedSettings =

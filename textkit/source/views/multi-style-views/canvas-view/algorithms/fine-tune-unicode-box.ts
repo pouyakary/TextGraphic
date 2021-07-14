@@ -122,8 +122,8 @@
 // ─── FINE TUNE UNICODE BOX FOR LAYERED CANVAS ─────────────────────────────────────
 //
 
-    export function fineTuneUnicodeBoxForLayeredCanvas <EnvironmentStyleSettings extends PortableStyle<any>> (
-            canvas: CanvasView<EnvironmentStyleSettings>,
+    export function fineTuneUnicodeBoxForLayeredCanvas <ColorType, EnvironmentStyleSettings extends PortableStyle<ColorType>> (
+            canvas: CanvasView<ColorType, EnvironmentStyleSettings>,
             startX: number,
             startY: number,
             endX:   number,
@@ -132,16 +132,29 @@
         //
         for ( let y = startY; y < endY; y++ ) {
             for ( let x = startX; x < endX; x++ ) {
-                let char =
-                    canvas.screen.readChar( x, y )
-                if ( CHANGEABLE_CHARACTERS_FOR_UNICODE_TUNNING.includes( char ) ) {
-                    const surroundings =
-                        getRestOfSurroundingsForFineTunnigUnicodeBoxes( canvas, x, y )
-                    const newChar =
-                        fineTuneUnicodeBoxCharWithSurroundings( char, surroundings )
-                    canvas.screen.writeChar( x, y, newChar )
-                }
+                fineTuneUnicodeBoxForLayeredCanvasAtPoint( canvas, x, y )
             }
+        }
+    }
+
+//
+// ─── FINE TUNE UNICODE BOX FOR LAYERED CANVAS AT POINT ──────────────────────────
+//
+
+    export function fineTuneUnicodeBoxForLayeredCanvasAtPoint <ColorType, EnvironmentStyleSettings extends PortableStyle<ColorType>> (
+        canvas: CanvasView<ColorType, EnvironmentStyleSettings>,
+        x: number,
+        y: number,
+    ) {
+        //
+        let char =
+            canvas.screen.readChar( x, y )
+        if ( CHANGEABLE_CHARACTERS_FOR_UNICODE_TUNNING.includes( char ) ) {
+            const surroundings =
+                getRestOfSurroundingsForFineTunnigUnicodeBoxes( canvas, x, y )
+            const newChar =
+                fineTuneUnicodeBoxCharWithSurroundings( char, surroundings )
+            canvas.screen.writeChar( x, y, newChar )
         }
     }
 
@@ -149,8 +162,8 @@
 // ─── GET REST OF THE CHARACTERS ─────────────────────────────────────────────────
 //
 
-    function getRestOfSurroundingsForFineTunnigUnicodeBoxes <EnvironmentStyleSettings extends PortableStyle<any>> (
-            canvas:     CanvasView<EnvironmentStyleSettings>,
+    function getRestOfSurroundingsForFineTunnigUnicodeBoxes <ColorType, EnvironmentStyleSettings extends PortableStyle<any>> (
+            canvas:     CanvasView<ColorType, EnvironmentStyleSettings>,
             x:          number,
             y:          number
         ): string {

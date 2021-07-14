@@ -16,7 +16,8 @@
     import { VirtualScreen }
         from "./virtual-screen"
 
-    import { fineTuneUnicodeBoxForLayeredCanvas }
+    import { fineTuneUnicodeBoxForLayeredCanvas,
+             fineTuneUnicodeBoxForLayeredCanvasAtPoint }
         from "./algorithms/fine-tune-unicode-box"
     import { rayTraceScreenPixel }
         from "./algorithms/ray-trace"
@@ -44,7 +45,7 @@
 // ─── CANVAS VIEW ────────────────────────────────────────────────────────────────
 //
 
-    export class CanvasView <EnvironmentStyleSettings extends PortableStyle<any>> implements
+    export class CanvasView <ColorType, EnvironmentStyleSettings extends PortableStyle<ColorType>> implements
         ViewProtocol<EnvironmentStyleSettings, StyleRendererProtocol<EnvironmentStyleSettings>> {
 
         //
@@ -91,10 +92,10 @@
         // ─── INITIATION SHORTCUTS ────────────────────────────────────────
         //
 
-            static initWithBackground <EnvironmentStyleSettings extends PortableStyle<any>> (
+            static initWithBackground <ColorType, EnvironmentStyleSettings extends PortableStyle<ColorType>> (
                     background: ViewProtocol<EnvironmentStyleSettings, StyleRendererProtocol<EnvironmentStyleSettings>>,
                     styler:     StyleRendererProtocol<EnvironmentStyleSettings>,
-                ): CanvasView<EnvironmentStyleSettings> {
+                ): CanvasView<ColorType, EnvironmentStyleSettings> {
 
                 //
                 const canvas =
@@ -216,7 +217,7 @@
         // ─── COMBINE BOXES ───────────────────────────────────────────────
         //
 
-            public fineTuneBoxIntersections ( ): CanvasView<EnvironmentStyleSettings> {
+            public fineTuneBoxIntersections ( ): CanvasView<ColorType, EnvironmentStyleSettings> {
                 fineTuneUnicodeBoxForLayeredCanvas(
                     this,
                     0, 0, this.width, this.height
@@ -224,13 +225,39 @@
                 return this
             }
 
+
+            public fineTuneBoxIntersectionsAtPoint (
+                x: number,
+                y: number,
+            ): CanvasView<ColorType, EnvironmentStyleSettings> {
+                //
+                if ( x < 0 || x >= this.width ) {
+                    throw new Error(
+                        `X should be in bounds [0 - ${this.width - 1}] but found: ${x}.`
+                    )
+                }
+
+                if ( y < 0 || y >= this.height ) {
+                    throw new Error(
+                        `Y should be in bounds [0 - ${this.height - 1}] but found: ${y}.`
+                    )
+                }
+
+                fineTuneUnicodeBoxForLayeredCanvasAtPoint(
+                    this, x, y
+                )
+
+                return this
+            }
+
+
             public fineTuneBoxIntersectionsInSelectedArea (
                 startX: number,
                 startY: number,
                 endX:   number,
-                endY:   number
-            ): CanvasView<EnvironmentStyleSettings> {
-                // checks
+                endY:   number,
+            ): CanvasView<ColorType, EnvironmentStyleSettings> {
+                //
                 if ( startX < 0 || startX >= this.width ) {
                     throw new Error(
                         `Area's Starting X point should be in bounds [0 - ${this.width - 1}] but found: ${startX}.`
@@ -255,7 +282,6 @@
                     )
                 }
 
-
                 //
                 fineTuneUnicodeBoxForLayeredCanvas(
                     this, startX, startY, endX, endY
@@ -264,14 +290,14 @@
                 return this
             }
 
-        //
+
         // ─── APPLY MARGIN ────────────────────────────────────────────────
         //
 
             public applyMargin ( topMargin: number ,
                                rightMargin: number ,
                               bottomMargin: number ,
-                                leftMargin: number ): CanvasView<EnvironmentStyleSettings> {
+                                leftMargin: number ): CanvasView<ColorType, EnvironmentStyleSettings> {
                 //
                 return applyMarginToMultiStyleView(
                     this, topMargin, rightMargin, bottomMargin, leftMargin
@@ -283,9 +309,9 @@
         //
 
             public centerToBoundaryBox ( width: number,
-                                        height: number ): CanvasView<EnvironmentStyleSettings> {
+                                        height: number ): CanvasView<ColorType, EnvironmentStyleSettings> {
                 //
-                return centerViewProtocolToBoundaryBox( this, width, height ) as CanvasView<EnvironmentStyleSettings>
+                return centerViewProtocolToBoundaryBox( this, width, height ) as CanvasView<ColorType, EnvironmentStyleSettings>
             }
 
 
@@ -304,8 +330,8 @@
         // ─── SLICE HORIZONTALLY ──────────────────────────────────────────
         //
 
-            public sliceHorizontally ( x: number ): [ CanvasView<EnvironmentStyleSettings>,
-                                                      CanvasView<EnvironmentStyleSettings> ] {
+            public sliceHorizontally ( x: number ): [ CanvasView<ColorType, EnvironmentStyleSettings>,
+                                                      CanvasView<ColorType, EnvironmentStyleSettings> ] {
                 //
                 const leftSlice =
                     this.createCrop( 0, 0, x, this.height )
@@ -318,8 +344,8 @@
         // ─── SLICE VERTICALLY ────────────────────────────────────────────
         //
 
-            public sliceVertically ( y: number ): [ CanvasView<EnvironmentStyleSettings>,
-                                                    CanvasView<EnvironmentStyleSettings> ] {
+            public sliceVertically ( y: number ): [ CanvasView<ColorType, EnvironmentStyleSettings>,
+                                                    CanvasView<ColorType, EnvironmentStyleSettings> ] {
                 //
                 const topSlice =
                     this.createCrop( 0, 0, this.width, y )

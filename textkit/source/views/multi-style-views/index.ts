@@ -20,8 +20,8 @@
 // ─── TYPES ──────────────────────────────────────────────────────────────────────
 //
 
-    export type MultiStyleView <EnvironmentStyleSettings extends PortableStyle<any>> =
-        CanvasView<EnvironmentStyleSettings>
+    export type MultiStyleView <ColorType, EnvironmentStyleSettings extends PortableStyle<ColorType>> =
+        CanvasView<ColorType, EnvironmentStyleSettings>
 
 //
 // ─── EXPORTS ────────────────────────────────────────────────────────────────────

@@ -22,13 +22,13 @@
 // ─── APPLY MARGIN TO CANVAS VIEW ──────────────────────────────────────────────────
 //
 
-    export function applyMarginToMultiStyleView <EnvironmentStyleSettings extends PortableStyle<any>> (
-            view:           MultiStyleView<EnvironmentStyleSettings>,
+    export function applyMarginToMultiStyleView <ColorType, EnvironmentStyleSettings extends PortableStyle<ColorType>> (
+            view:           MultiStyleView<ColorType, EnvironmentStyleSettings>,
             topMargin:      number,
             rightMargin:    number,
             bottomMargin:   number,
             leftMargin:     number,
-        ): CanvasView<EnvironmentStyleSettings> {
+        ): CanvasView<ColorType, EnvironmentStyleSettings> {
 
         //
         const backgroundCanvas =

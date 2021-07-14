@@ -18,7 +18,5 @@ export * as Shapes from
     "./shapes"
 export * as Environments from
     "./environments"
-export * as Tools from
-    "./tools"
 export * as Compilers from
     "./compilers"
