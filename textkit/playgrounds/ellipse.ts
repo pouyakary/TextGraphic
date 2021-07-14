@@ -81,14 +81,13 @@
         graphBox.add( graphBoxBackground, 0, 0, 1 )
         graphBox.add( title, 0, 0, 2 )
         graphBox.add( graph, 1 + GRAPH_BOX_H_PADDING, 1 + GRAPH_BOX_V_PADDING, 2 )
+        graphBox.fineTuneBoxIntersectionsInSelectedArea( 0, 0, title.width, title.height )
 
         const finalView =
             graphBox.centerToBoundaryBox(
                 process.stdout.columns,
                 process.stdout.rows,
             )
-
-        finalView.fineTuneBoxIntersections( )
 
         console.clear( )
         console.log( finalView.styledForm )

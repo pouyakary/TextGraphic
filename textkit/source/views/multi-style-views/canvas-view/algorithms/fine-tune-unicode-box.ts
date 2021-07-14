@@ -123,13 +123,15 @@
 //
 
     export function fineTuneUnicodeBoxForLayeredCanvas <EnvironmentStyleSettings extends PortableStyle<any>> (
-            canvas: CanvasView<EnvironmentStyleSettings>
+            canvas: CanvasView<EnvironmentStyleSettings>,
+            startX: number,
+            startY: number,
+            endX:   number,
+            endY:   number,
         ) {
         //
-        const { width, height } =
-            canvas
-        for ( let y = 0; y < height; y++ ) {
-            for ( let x = 0; x < width; x++ ) {
+        for ( let y = startY; y < endY; y++ ) {
+            for ( let x = startX; x < endX; x++ ) {
                 let char =
                     canvas.screen.readChar( x, y )
                 if ( CHANGEABLE_CHARACTERS_FOR_UNICODE_TUNNING.includes( char ) ) {

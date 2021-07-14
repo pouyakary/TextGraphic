@@ -217,7 +217,50 @@
         //
 
             public fineTuneBoxIntersections ( ): CanvasView<EnvironmentStyleSettings> {
-                fineTuneUnicodeBoxForLayeredCanvas( this )
+                fineTuneUnicodeBoxForLayeredCanvas(
+                    this,
+                    0, 0, this.width, this.height
+                )
+                return this
+            }
+
+            public fineTuneBoxIntersectionsInSelectedArea (
+                startX: number,
+                startY: number,
+                endX:   number,
+                endY:   number
+            ): CanvasView<EnvironmentStyleSettings> {
+                // checks
+                if ( startX < 0 || startX >= this.width ) {
+                    throw new Error(
+                        `Area's Starting X point should be in bounds [0 - ${this.width - 1}] but found: ${startX}.`
+                    )
+                }
+
+                if ( startY < 0 || startY >= this.height ) {
+                    throw new Error(
+                        `Area's Starting Y point should be in bounds [0 - ${this.height - 1}] but found: ${startY}.`
+                    )
+                }
+
+                if ( endX < 0 || endX >= this.width ) {
+                    throw new Error(
+                        `Area's Ending X point should be in bounds [0 - ${this.width - 1}] but found: ${endX}.`
+                    )
+                }
+
+                if ( endY < 0 || endY >= this.height ) {
+                    throw new Error(
+                        `Area's Ending Y point should be in bounds [0 - ${this.height - 1}] but found: ${endY}.`
+                    )
+                }
+
+
+                //
+                fineTuneUnicodeBoxForLayeredCanvas(
+                    this, startX, startY, endX, endY
+                )
+
                 return this
             }
 
