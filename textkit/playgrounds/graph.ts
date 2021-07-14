@@ -68,14 +68,14 @@
 
         const grid =
             new TextKit.CanvasView(  WIDTH, HEIGHT, renderer )
-        const dx =
-            Math.floor( HEIGHT / 2 ) + 1
         const dy =
+            Math.floor( HEIGHT / 2 ) + 1
+        const dx =
             Math.floor( WIDTH / 2 )
 
-        grid.add( hLine, 0, dx, 1 )
-        grid.add( vLine, dy, 0, 2 )
-        grid.fineTuneBoxIntersectionsAtPoint( dy, dx )
+        grid.add( hLine, 0, dy, 1 )
+        grid.add( vLine, dx, 0, 2 )
+        grid.fineTuneBoxIntersectionsAtPoint( dx, dy )
 
         // background
         const background =
