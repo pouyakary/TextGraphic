@@ -24,6 +24,10 @@
         from "../../algorithms/apply-margin"
     import { centerViewProtocolToBoundaryBox }
         from "../../../algorithms/center-to-boundary-box"
+    import { frameMonoStyledViews }
+        from "../../../../shapes/frame/mono/frame"
+    import { BoxFrameCharSet }
+        from "../../../../presets/box-frames"
 
 //
 // ─── LINE VIEW ──────────────────────────────────────────────────────────────────
@@ -226,6 +230,14 @@
                 ): ShapeView<ColorType, EnvironmentStyleSettings> {
                 //
                 return centerViewProtocolToBoundaryBox( this, width, height ) as ShapeView<ColorType, EnvironmentStyleSettings>
+            }
+
+        //
+        // ─── FRAME ───────────────────────────────────────────────────────
+        //
+
+            public frame ( charSet: BoxFrameCharSet ): ShapeView<ColorType, EnvironmentStyleSettings> {
+                return frameMonoStyledViews( this, charSet )
             }
 
         // ─────────────────────────────────────────────────────────────────
