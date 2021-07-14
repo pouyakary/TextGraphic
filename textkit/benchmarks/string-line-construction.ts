@@ -18,7 +18,7 @@
 //
 
     const size =
-        1000000
+        30000000
     const char =
         "*"
     const benchmark =

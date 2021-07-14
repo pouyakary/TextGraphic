@@ -56,11 +56,35 @@
             }
 
         //
+        // ─── PRINT MEASURE HEADER ────────────────────────────────────────
+        //
+
+            private printMeasureHeader ( ) {
+                process.stdout.write(
+                    this.#tests.length === 0
+                        ? "\n  "
+                        : " • "
+                )
+            }
+
+        //
+        // ─── CLEAR LINE ──────────────────────────────────────────────────
+        //
+
+            private clearLine ( ) {
+                process.stdout.write("\x1b[1K")
+                process.stdout.write("\x1b[0G")
+            }
+
+        //
         // ─── MEASURE ─────────────────────────────────────────────────────
         //
 
             public measure ( title: string, func: ( ) => void ) {
                 let times = 0
+
+                this.printMeasureHeader( )
+
                 for ( let i = 1; i <= this.#runs; i++ ) {
                     const start =
                         performance.now( )
@@ -71,6 +95,7 @@
                         end - start
                     times +=
                         time
+                    process.stdout.write( "•" )
                 }
 
                 const averageTime =
@@ -97,6 +122,7 @@
 
             public showSummary ( ) {
                 this.sortTests( )
+                this.clearLine( )
 
                 let row = 1
                 const rows =
@@ -110,7 +136,7 @@
                                 0, renderer, { })
                                 .applyMargin( 0, 2, 0, 2 )
                         const time =
-                            TextKit.ShapeView.initWithText( test.averageTime.toString( ),
+                            TextKit.ShapeView.initWithText( Math.floor( test.averageTime ).toString( ) + " ms",
                                 0, renderer, { })
                                 .applyMargin( 0, 2, 0, 2 )
                         return [ rowText, title, time ]
@@ -119,11 +145,17 @@
 
                 const table =
                     TextKit.Layouts.createShapeViewTableInTextForm(
-                        rows, renderer, { }
+                        rows, renderer, {
+                            horizontalAligns: [
+                                TextKit.HorizontalAlign.Left,
+                                TextKit.HorizontalAlign.Left,
+                                TextKit.HorizontalAlign.Right,
+                            ]
+                        }
                     )
 
                 const runsTextTitle =
-                    TextKit.ShapeView.initWithText( ` Sample rate: ${ this.#runs } `, 0, renderer, { })
+                    TextKit.ShapeView.initWithText( ` ${ this.#runs } runs/measure `, 0, renderer, { })
                 const runsText =
                     runsTextTitle.frame( TextKit.Presets.LightBox )
 
@@ -135,7 +167,7 @@
                 canvas.fineTuneBoxIntersections( )
 
                 const finalView =
-                    canvas.applyMargin( 1, 0, 1, 2 )
+                    canvas.applyMargin( 0, 0, 1, 2 )
 
                 console.log( finalView.styledForm )
             }
