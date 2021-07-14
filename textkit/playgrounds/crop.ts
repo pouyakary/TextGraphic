@@ -41,11 +41,15 @@
 
     const alien =
         TextKit.ShapeView.initArendelleAlien( renderer )
-    alien.addStyle({ textColor: "blue" })
+    alien.addStyle({
+        textColor: "blue"
+    })
 
     const bird =
         TextKit.ShapeView.initArendelleBird( renderer )
-    bird.addStyle({ textColor: "green" })
+    bird.addStyle({
+        textColor: "green"
+    })
 
     for ( let i = 0; i < 30; i++ ) {
         const x =
