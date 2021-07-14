@@ -51,11 +51,21 @@ To do so. TextKit uses a simple ray-tracer for z-index locating and then compose
 
 ### Graphing Engine
 
-In TextKit you can use the GraphView to render mathematical formulas into a textual format. This is done efficiently without taking advantage of a GPU (although I very much hope to have WebGPU as a GPGPU available on browser and the node so that I can implement a super preformat version of it.). One good feature of having math graphics is that you can have scalable vector graphics.
+In TextKit you can use the GraphView to render mathematical formulas into a textual format. This is done efficiently without taking advantage of a GPU (although I very much hope to have WebGPU as a GPGPU available on browser and the node so that I can implement a super preformat version of it.)
 
 <br>
 
 ![Screenshot of a graph being rendered into the screen](https://user-images.githubusercontent.com/2157285/125514236-7ab29f83-df08-4041-963d-54e9a0ad157b.gif)
+
+<br>
+
+### Scalable Vector Graphics
+
+By providing an efficient GraphView, TextKit makes it possible to have scalable vector graphics that are useful in making different UI components or graphical arts. You can make these shapes react to zoom, window size and view port size changes.
+
+<br>
+
+![](https://user-images.githubusercontent.com/2157285/125548299-a8242db3-897c-48c0-85ca-593aaeb02b3a.gif)
 
 <br>
 
