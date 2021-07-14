@@ -35,6 +35,7 @@
         const GRAPH_COLOR = "red"
         const GUIDES_COLOR = "blue"
 
+        // graph
         const graph =
             TextKit.Shapes.Graph.create({
                 renderer,
@@ -53,7 +54,7 @@
                 },
             })
 
-
+        // grid
         const hLine =
             new TextKit.LineView( "─".repeat(WIDTH - 1) + "▶︎", renderer, { textColor: GUIDES_COLOR })
         const vLineLines =
@@ -61,15 +62,21 @@
         for ( let row = 1; row < HEIGHT; row++ ) {
             vLineLines.push( "│" )
         }
+
         const vLine =
             new TextKit.ShapeView( vLineLines, 0, renderer, { textColor: GUIDES_COLOR }, false )
 
+        const grid =
+            new TextKit.CanvasView(  WIDTH, HEIGHT, renderer )
+        grid.add( hLine, 0, Math.floor( HEIGHT / 2 ) + 1, 1 )
+        grid.add( vLine, Math.floor( WIDTH / 2 ), 0, 2 )
+        grid.fineTuneBoxIntersections( )
+
+        // background
         const background =
             new TextKit.CanvasView( WIDTH, HEIGHT, renderer )
-
-        background.add( hLine, 0, Math.floor( HEIGHT / 2 ) + 1, 1 )
-        background.add( vLine, Math.floor( WIDTH / 2 ), 0, 2 )
-        background.add( graph, 0, 0, 3 )
+        background.add( grid,  0, 0, 1 )
+        background.add( graph, 0, 0, 2 )
 
         const margined =
             background.applyMargin( VPadding, HPadding, 0, HPadding )
