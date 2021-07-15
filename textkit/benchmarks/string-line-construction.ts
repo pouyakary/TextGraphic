@@ -67,7 +67,17 @@
         for ( let i = 0; i < size; i++ ) {
             sum[ i ] = char
         }
-        sum.join("")
+        sum.join( "" )
+    })
+
+//
+// ─── USING REPLACEMENT ──────────────────────────────────────────────────────────
+//
+
+    benchmark.measure ( "Creating a string with .repeat( ) and replacing with RegExp", ( ) => {
+        const sum =
+            " ".repeat( size )
+        sum.replace ( /./g, ( ) => char )
     })
 
 //
