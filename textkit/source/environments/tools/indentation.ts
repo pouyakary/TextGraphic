@@ -6,10 +6,5 @@
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 //
 
-
-export * as ANSITerminal from
-    "./ansi-terminal"
-export * as Web from
-    "./web"
-export * as SVG from
-    "./svg"
+export const INDENTATION =
+    "   "

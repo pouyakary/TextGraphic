@@ -25,6 +25,9 @@
            }
         from "./style-diff-and-merge"
 
+    import { LINE_BREAK_CHARACTER }
+        from "../../constants/characters"
+
 //
 // ─── ANSI TERMINAL STYLE RENDERER ───────────────────────────────────────────────
 //
@@ -69,15 +72,6 @@
             }
 
         //
-        // ─── CANVAS INFORMATION ────────────────────────────────────────────
-        //
-
-            readonly rootRowLeftStylingInfo  = EscapeSequences.Reset
-            readonly rootRowRightStylingInfo = EscapeSequences.Reset
-            readonly rootRightStylingInfo    = EMPTY_STRING
-            readonly rootLeftStylingInfo     = EMPTY_STRING
-
-        //
         // ─── MERGER ──────────────────────────────────────────────────────
         //
 
@@ -96,6 +90,22 @@
 
             public encodeCharacterForStyledRender ( char: string ) {
                 return char
+            }
+
+        //
+        // ─── RENDER ROOT LINES ───────────────────────────────────────────
+        //
+
+            public wrapRootLinesAndFinalizeRender ( width: number, lines: string[ ] ): string {
+                const height =
+                    lines.length
+                const result =
+                    new Array<string> ( height )
+                for ( let i = 0; i < height; i++ ) {
+                    result[ i ] = EscapeSequences.Reset + lines[ i ]
+                }
+
+                return result.join( LINE_BREAK_CHARACTER ) + EscapeSequences.Reset
             }
 
         // ─────────────────────────────────────────────────────────────────

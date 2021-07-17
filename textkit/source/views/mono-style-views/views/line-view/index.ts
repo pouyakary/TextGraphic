@@ -147,22 +147,16 @@
             }
 
             get styledForm ( ): string {
-                const   { rootLeftStylingInfo, rootRowLeftStylingInfo
-                        , rootRowRightStylingInfo, rootRightStylingInfo
-                        } =
-                    this.styleRenderer
-
                 const encodedLine =
                     this.line.replace( /./g, this.styleRenderer.encodeCharacterForStyledRender )
 
-                return  ( rootLeftStylingInfo
-                        + rootRowLeftStylingInfo
-                        + this.#leftStylingInfoCache
-                        + encodedLine
-                        + this.#rightStylingInfoCache
-                        + rootRowRightStylingInfo
-                        + rootRightStylingInfo
-                        )
+                const lines = [
+                    this.#leftStylingInfoCache + encodedLine + this.#rightStylingInfoCache
+                ]
+
+                return this.styleRenderer.wrapRootLinesAndFinalizeRender (
+                    this.width, lines
+                )
             }
 
         //

@@ -13,6 +13,10 @@
 
     import { EMPTY_STRING }
         from "../source/constants/characters"
+    import { StyleRendererProtocol, PortableStyle, PortableColor
+           , ShapeView, Shapes, LineView, CanvasView, Presets
+           }
+        from "../source"
 
 //
 // ─── TYPES ──────────────────────────────────────────────────────────────────────
@@ -65,8 +69,65 @@
 
     export function setTerminalTitle ( title: string ) {
         process.stdout.write(
-            String.fromCharCode(27) + "]0;" + title + String.fromCharCode(7)
+            String.fromCharCode( 27 ) + "]0;" + title + String.fromCharCode(7)
         )
+    }
+
+//
+// ─── A GOOD MODEL ───────────────────────────────────────────────────────────────
+//
+
+    export function createAGoodModel ( styler: any ) {
+        //
+        const canvas =
+            new CanvasView ( 80, 20, styler )
+        let zIndex =
+            1
+
+        //
+        const redTeapot =
+            ShapeView.initUtahTeapot ( styler, {
+                textColor: "red"
+            })
+        canvas.add( redTeapot, 4, 2, zIndex++ )
+
+        //
+        const blueTeapot =
+            ShapeView.initUtahTeapot ( styler, { })
+                .addStyle({ textColor: "blue" })
+        canvas.add( blueTeapot, 20, 8, zIndex++ )
+
+        //
+        const blueRectangleFrame =
+            ShapeView.initBlankRectangle( 20, 3, styler )
+                .frame( Presets.LightBox )
+                .addStyle({ textColor: "blue" })
+        canvas.add( blueRectangleFrame, 20, 3, zIndex++ )
+
+        //
+        const cyanRectangleFrame =
+            ShapeView.initBlankRectangle( 40, 7, styler )
+                .frame( Presets.LightBox )
+                .addStyle({ textColor: "cyan" })
+        canvas.add( cyanRectangleFrame, 30, 5, zIndex++ )
+
+        //
+        const text =
+            new LineView( "Hello, World!", styler, {
+                textColor: "magenta", italic: true
+            })
+        canvas.add( text, 40, 1, zIndex++ )
+
+        //
+        const refPoint =
+            new LineView( "█", styler, { } )
+
+        canvas.add( refPoint, 0, 0, zIndex++ )
+        canvas.add( refPoint, canvas.width - 1, 0, zIndex++ )
+        canvas.add( refPoint, canvas.width - 1, canvas.height - 1, zIndex++ )
+        canvas.add( refPoint, 0, canvas.height - 1, zIndex++ )
+
+        return canvas
     }
 
 // ────────────────────────────────────────────────────────────────────────────────

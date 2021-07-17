@@ -13,34 +13,24 @@
 
     import { PortableColor, PortableStyle }
         from "../../protocols"
-
-//
-// ─── EXPORT TYPES ───────────────────────────────────────────────────────────────
-//
-
-    export type WebTextDecorationLineStyle =
-        "wavy" | "dashed" | "solid"
-
-    export type WebTextDecorationLineType =
-        "overline" | "line-through" | "underline" | "none"
+    import { convertPortableColorToCSSColor }
+        from "../tools/css-portable-color-implementation"
 
 //
 // ─── STYLE ──────────────────────────────────────────────────────────────────────
 //
 
-    export interface WebStyleSettings extends PortableStyle<PortableColor> {
-        line:           WebTextDecorationLineType
-        lineStyle:      WebTextDecorationLineStyle
+    export interface SVGStyleSettings extends PortableStyle<PortableColor> {
     }
 
 //
-// ─── MERGE PREVIOUS STATE WITH THE NEW ──────────────────────────────────────────
+// ─── MERGER ─────────────────────────────────────────────────────────────────────
 //
 
     export function mergeNewWebStyleOptionsWithThePreviousSettings (
-            previous: WebStyleSettings,
-            newStyle: Partial<WebStyleSettings>
-        ): WebStyleSettings {
+            previous: SVGStyleSettings,
+            newStyle: Partial<SVGStyleSettings>
+        ): SVGStyleSettings {
 
         //
         return {
@@ -50,9 +40,41 @@
             italic:             newStyle.italic             ? newStyle.italic           : previous.italic,
             underline:          newStyle.underline          ? newStyle.underline        : previous.underline,
             blink:              newStyle.blink              ? newStyle.blink            : previous.blink,
-            line:               newStyle.line               ? newStyle.line             : previous.line,
-            lineStyle:          newStyle.lineStyle          ? newStyle.lineStyle        : previous.lineStyle,
         }
+    }
+
+//
+// ─── RENDER STYLE ───────────────────────────────────────────────────────────────
+//
+
+    export function convertSVGSettingsToInlineCSS ( style: SVGStyleSettings ) {
+        const serializedProperties =
+            new Array<string> ( )
+
+        // color
+        if ( style.textColor !== "factory" ) {
+            const serializedColor =
+                convertPortableColorToCSSColor( style.textColor )
+            serializedProperties.push( `fill: ${ serializedColor }` )
+        }
+
+        // background color
+        if ( style.backgroundColor !== "factory" ) {
+            /* this needs technical investigation */
+        }
+
+        // italic
+        if ( style.italic ) {
+            serializedProperties.push( "font-style: italic" )
+        }
+
+        // bold
+        if ( style.bold ) {
+            serializedProperties.push( "font-weight: bold" )
+        }
+
+        // done
+        return serializedProperties.join( "; " )
     }
 
 // ────────────────────────────────────────────────────────────────────────────────

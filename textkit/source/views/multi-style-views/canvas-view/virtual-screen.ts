@@ -200,30 +200,38 @@
                     EMPTY_STRING
                 let previousLeftInfo =
                     EMPTY_STYLE
-                let previousRightInfo =
-                    EMPTY_STRING
+                const closingTagStack =
+                    new Array<string> ( )
 
-                for ( const [ leftStylingInfo, character, rightStylingInfo ] of this.iterateOnRow( row ) ) {
-                    if ( previousLeftInfo !== leftStylingInfo ) {
-                        line +=
-                            previousRightInfo
-                        if ( leftStylingInfo !== EMPTY_STYLE ) {
-                            line += leftStylingInfo
-                        }
-                        previousLeftInfo =
-                            leftStylingInfo
+                function closeWithRightInfoIfPresent ( ) {
+                    const previousRightInfo =
+                        closingTagStack.pop( )
+                    if ( previousRightInfo ) {
+                        line += previousRightInfo
                     }
-                    line +=
-                        styler.encodeCharacterForStyledRender( character )
-                    previousRightInfo =
-                        rightStylingInfo
                 }
 
-                return  ( styler.rootRowLeftStylingInfo
-                        + line
-                        + previousRightInfo
-                        + styler.rootRowRightStylingInfo
-                        )
+                function checkAndAddNewLeftInfo ( leftStylingInfo: string ,
+                                                 rightStylingInfo: string ) {
+                    if ( leftStylingInfo !== previousLeftInfo ) {
+                        closeWithRightInfoIfPresent( )
+                        if ( leftStylingInfo !== EMPTY_STYLE ) {
+                            closingTagStack.push( rightStylingInfo )
+                            line += leftStylingInfo
+                        }
+                        previousLeftInfo = leftStylingInfo
+                    }
+                }
+
+
+                for ( const [ leftStylingInfo, character, rightStylingInfo ] of this.iterateOnRow( row ) ) {
+                    checkAndAddNewLeftInfo( leftStylingInfo, rightStylingInfo )
+                    line += styler.encodeCharacterForStyledRender( character )
+                }
+
+                closeWithRightInfoIfPresent( )
+
+                return line
             }
 
         //
@@ -272,10 +280,9 @@
                         this.getWholeStyledRow( row, styler )
                 }
 
-                return  ( styler.rootLeftStylingInfo
-                        + lines.join( LINE_BREAK_CHARACTER )
-                        + styler.rootRightStylingInfo
-                        )
+                return styler.wrapRootLinesAndFinalizeRender(
+                    this.#width, lines
+                )
             }
 
         // ─────────────────────────────────────────────────────────────────

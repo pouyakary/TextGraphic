@@ -290,9 +290,6 @@
             public get styledForm ( ): string {
                 const styledLines =
                     new Array<string> ( this.height )
-                const { rootLeftStylingInfo, rootRowLeftStylingInfo,
-                        rootRowRightStylingInfo, rootRightStylingInfo } =
-                    this.styleRenderer
 
                 for ( let row = 0; row < this.height; row++ ) {
                     const encodedLine =
@@ -301,18 +298,15 @@
                                 this.styleRenderer.encodeCharacterForStyledRender
                             )
                     styledLines[ row ] =
-                        ( rootRowLeftStylingInfo
-                        + this.#leftStylingInfoCache
+                        ( this.#leftStylingInfoCache
                         + encodedLine
                         + this.#rightStylingInfoCache
-                        + rootRowRightStylingInfo
                         )
                 }
 
-                return  ( rootLeftStylingInfo
-                        + styledLines.join( LINE_BREAK_CHARACTER )
-                        + rootRightStylingInfo
-                        )
+                return this.styleRenderer.wrapRootLinesAndFinalizeRender(
+                    this.width, styledLines
+                )
             }
 
         //
