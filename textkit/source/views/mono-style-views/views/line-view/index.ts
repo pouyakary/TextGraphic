@@ -11,7 +11,7 @@
 // ─── IMPORTS ────────────────────────────────────────────────────────────────────
 //
 
-    import { StyleRendererProtocol, ScreenMatrixPixel, StylableViewProtocol, PortableStyle }
+    import { StyleRendererProtocol, ScreenMatrixPixel, StylableViewProtocol, PortableStyle, PortableColor }
         from "../../../../protocols"
 
     import { ShapeView }
@@ -33,8 +33,8 @@
 // ─── LINE VIEW ──────────────────────────────────────────────────────────────────
 //
 
-    export class LineView <ColorType, EnvironmentStyleSettings extends PortableStyle<ColorType>> implements
-        StylableViewProtocol <EnvironmentStyleSettings> {
+    export class LineView <ColorType extends PortableColor, EnvironmentStyleSettings extends PortableStyle<ColorType>> implements
+        StylableViewProtocol <ColorType, EnvironmentStyleSettings> {
 
         //
         // ─── STORAGE ─────────────────────────────────────────────────────
@@ -45,7 +45,7 @@
             readonly    height:             number
             readonly    baseline:           number
 
-            readonly    styleRenderer:      StyleRendererProtocol<EnvironmentStyleSettings>
+            readonly    styleRenderer:      StyleRendererProtocol<ColorType, EnvironmentStyleSettings>
 
                         transparent:        boolean
 
@@ -58,7 +58,7 @@
         //
 
             constructor ( line: string,
-                 styleRenderer: StyleRendererProtocol<EnvironmentStyleSettings>,
+                 styleRenderer: StyleRendererProtocol<ColorType, EnvironmentStyleSettings>,
                          style: Partial<EnvironmentStyleSettings> ) {
 
                 // checks

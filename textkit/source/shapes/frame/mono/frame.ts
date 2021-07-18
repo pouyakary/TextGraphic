@@ -17,14 +17,14 @@
         from "../../../views/mono-style-views/views/shape-view"
     import { BoxFrameCharSet }
         from "../../../presets/box-frames"
-    import { PortableStyle }
+    import { PortableStyle, PortableColor }
         from "../../../protocols"
 
 //
 // ─── FRAME SHAPE VIEW ───────────────────────────────────────────────────────────
 //
 
-    export function frameMonoStyledViews <ColorType, EnvironmentStyleSettings extends PortableStyle<ColorType>> (
+    export function frameMonoStyledViews <ColorType extends PortableColor, EnvironmentStyleSettings extends PortableStyle<ColorType>> (
             box:        MonoStyleViews<ColorType, EnvironmentStyleSettings>,
             charSet:    BoxFrameCharSet,
         ): ShapeView<ColorType, EnvironmentStyleSettings> {

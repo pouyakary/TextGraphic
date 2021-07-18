@@ -37,7 +37,7 @@
 // ─── SVG STYLE RENDERER ─────────────────────────────────────────────────────────
 //
 
-    export class SVGStyleRenderer implements StyleRendererProtocol<SVGStyleSettings> {
+    export class SVGStyleRenderer implements StyleRendererProtocol<PortableColor, SVGStyleSettings> {
 
         //
         // ─── STORAGE ─────────────────────────────────────────────────────

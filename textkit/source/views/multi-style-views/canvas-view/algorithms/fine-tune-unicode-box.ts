@@ -15,7 +15,7 @@
         from "../../../../constants/characters"
     import { CanvasView }
         from "../main"
-    import { PortableStyle }
+    import { PortableStyle, PortableColor }
         from "../../../../protocols"
 
 //
@@ -122,7 +122,7 @@
 // ─── FINE TUNE UNICODE BOX FOR LAYERED CANVAS ─────────────────────────────────────
 //
 
-    export function fineTuneUnicodeBoxForLayeredCanvas <ColorType, EnvironmentStyleSettings extends PortableStyle<ColorType>> (
+    export function fineTuneUnicodeBoxForLayeredCanvas <ColorType extends PortableColor, EnvironmentStyleSettings extends PortableStyle<ColorType>> (
             canvas: CanvasView<ColorType, EnvironmentStyleSettings>,
             startX: number,
             startY: number,
@@ -141,7 +141,7 @@
 // ─── FINE TUNE UNICODE BOX FOR LAYERED CANVAS AT POINT ──────────────────────────
 //
 
-    export function fineTuneUnicodeBoxForLayeredCanvasAtPoint <ColorType, EnvironmentStyleSettings extends PortableStyle<ColorType>> (
+    export function fineTuneUnicodeBoxForLayeredCanvasAtPoint <ColorType extends PortableColor, EnvironmentStyleSettings extends PortableStyle<ColorType>> (
         canvas: CanvasView<ColorType, EnvironmentStyleSettings>,
         x: number,
         y: number,
@@ -162,7 +162,7 @@
 // ─── GET REST OF THE CHARACTERS ─────────────────────────────────────────────────
 //
 
-    function getRestOfSurroundingsForFineTunnigUnicodeBoxes <ColorType, EnvironmentStyleSettings extends PortableStyle<any>> (
+    function getRestOfSurroundingsForFineTunnigUnicodeBoxes <ColorType extends PortableColor, EnvironmentStyleSettings extends PortableStyle<any>> (
             canvas:     CanvasView<ColorType, EnvironmentStyleSettings>,
             x:          number,
             y:          number

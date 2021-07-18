@@ -15,14 +15,14 @@
         from "./views/line-view"
     import { ShapeView }
         from "./views/shape-view"
-    import { PortableStyle }
+    import { PortableStyle, PortableColor }
         from "../../protocols"
 
 //
 // ─── EXPORTS ────────────────────────────────────────────────────────────────────
 //
 
-    export type MonoStyleViews<ColorType, EnvironmentStyleSettings extends PortableStyle<any>> =
+    export type MonoStyleViews<ColorType extends PortableColor, EnvironmentStyleSettings extends PortableStyle<ColorType>> =
         | ShapeView <ColorType, EnvironmentStyleSettings>
         | LineView  <ColorType, EnvironmentStyleSettings>
 

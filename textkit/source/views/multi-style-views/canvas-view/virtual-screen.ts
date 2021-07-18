@@ -12,7 +12,7 @@
 //
 
 
-    import { ScreenMatrixPixel, StyleRendererProtocol, PortableStyle }
+    import { ScreenMatrixPixel, StyleRendererProtocol, PortableStyle, PortableColor }
         from "../../../protocols"
     import { EMPTY_STRING, LINE_BREAK_CHARACTER, WHITE_SPACE_CHARACTER }
         from "../../../constants/characters"
@@ -42,7 +42,7 @@
 // ─── SCREEN MATRIX ──────────────────────────────────────────────────────────────
 //
 
-    export class VirtualScreen <EnvironmentStyleSettings extends PortableStyle<any>> {
+    export class VirtualScreen <ColorType extends PortableColor, EnvironmentStyleSettings extends PortableStyle<any>> {
 
         //
         // ─── STORAGE ─────────────────────────────────────────────────────
@@ -190,7 +190,7 @@
 
             public getWholeStyledRow (
                     row:    number,
-                    styler: StyleRendererProtocol<EnvironmentStyleSettings>
+                    styler: StyleRendererProtocol<ColorType, EnvironmentStyleSettings>
                 ): string {
 
                 //
@@ -271,7 +271,7 @@
         // ─── TERMINAL FORM ───────────────────────────────────────────────
         //
 
-            public renderStyledForm ( styler: StyleRendererProtocol<EnvironmentStyleSettings> ): string {
+            public renderStyledForm ( styler: StyleRendererProtocol<ColorType, EnvironmentStyleSettings> ): string {
                 const lines =
                     new Array<string> ( this.#height )
 

@@ -15,6 +15,8 @@
         from "./style-renderer-protocol"
     import { PortableStyle }
         from "./portable-style"
+    import { PortableColor }
+        from "./portable-color"
 
 //
 // ─── RAY TRACER RESULT ──────────────────────────────────────────────────────────
@@ -41,8 +43,8 @@
 // ─── TYPES ──────────────────────────────────────────────────────────────────────
 //
 
-    export interface ViewProtocol<EnvironmentStylingSettings extends PortableStyle<any>,
-                                  RenderStyler extends StyleRendererProtocol<EnvironmentStylingSettings>> {
+    export interface ViewProtocol<ColorType extends PortableColor, EnvironmentStylingSettings extends PortableStyle<any>,
+                                  RenderStyler extends StyleRendererProtocol<ColorType, EnvironmentStylingSettings>> {
 
         //
         // ─── GEOMETRIC PROPERTIES ────────────────────────────────────────
@@ -158,14 +160,14 @@
             applyMargin ( topMargin: number ,
                         rightMargin: number ,
                        bottomMargin: number ,
-                         leftMargin: number ): ViewProtocol<EnvironmentStylingSettings, RenderStyler>
+                         leftMargin: number ): ViewProtocol<ColorType, EnvironmentStylingSettings, RenderStyler>
 
             /**
              *  Creates a box with size of `width` and `height` and centers
              *  the view inside of it.
              */
             centerToBoundaryBox ( width: number,
-                                 height: number ): ViewProtocol<EnvironmentStylingSettings, RenderStyler>
+                                 height: number ): ViewProtocol<ColorType, EnvironmentStylingSettings, RenderStyler>
 
         // ─────────────────────────────────────────────────────────────────
 
@@ -175,8 +177,8 @@
 // ─── STYLABLE VIEW ──────────────────────────────────────────────────────────────
 //
 
-    export interface StylableViewProtocol <EnvironmentStylingSettings extends PortableStyle<any>> extends
-        ViewProtocol<EnvironmentStylingSettings, StyleRendererProtocol<EnvironmentStylingSettings>> {
+    export interface StylableViewProtocol <ColorType extends PortableColor, EnvironmentStylingSettings extends PortableStyle<any>> extends
+        ViewProtocol<ColorType, EnvironmentStylingSettings, StyleRendererProtocol<ColorType, EnvironmentStylingSettings>> {
 
         /**
          *  Accepts a subset of the render styling settings
@@ -194,7 +196,9 @@
          *  Appends or overrides the previous styles
          *  @param style
          */
-        addStyle ( style: Partial<EnvironmentStylingSettings> ): ViewProtocol<EnvironmentStylingSettings, StyleRendererProtocol<EnvironmentStylingSettings>>
+        addStyle ( style: Partial<EnvironmentStylingSettings> ):
+            ViewProtocol<ColorType, EnvironmentStylingSettings, StyleRendererProtocol<
+                ColorType, EnvironmentStylingSettings>>
     }
 
 // ────────────────────────────────────────────────────────────────────────────────

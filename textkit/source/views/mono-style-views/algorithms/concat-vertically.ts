@@ -15,14 +15,14 @@
         from "../views/shape-view"
     import { MonoStyleViews }
         from ".."
-    import { PortableStyle }
+    import { PortableStyle, PortableColor }
         from "../../../protocols"
 
 //
 // ─── CONCAT VERTICALLY ──────────────────────────────────────────────────────────
 //
 
-    export function concatMonoStyledViewsVertically <ColorType, EnvironmentStyleSettings extends PortableStyle<any>> (
+    export function concatMonoStyledViewsVertically <ColorType extends PortableColor, EnvironmentStyleSettings extends PortableStyle<any>> (
             boxes:      MonoStyleViews<ColorType, EnvironmentStyleSettings>[ ],
             baseLine:   number,
         ): ShapeView<ColorType, EnvironmentStyleSettings> {

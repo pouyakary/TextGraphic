@@ -15,14 +15,14 @@
         from ".."
     import { CanvasView }
         from "../canvas-view/main"
-    import { PortableStyle }
+    import { PortableStyle, PortableColor }
         from "../../../protocols"
 
 //
 // ─── APPLY MARGIN TO CANVAS VIEW ──────────────────────────────────────────────────
 //
 
-    export function applyMarginToMultiStyleView <ColorType, EnvironmentStyleSettings extends PortableStyle<ColorType>> (
+    export function applyMarginToMultiStyleView <ColorType extends PortableColor, EnvironmentStyleSettings extends PortableStyle<ColorType>> (
             view:           MultiStyleView<ColorType, EnvironmentStyleSettings>,
             topMargin:      number,
             rightMargin:    number,

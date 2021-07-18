@@ -10,7 +10,7 @@
 // ─── IMPORTS ────────────────────────────────────────────────────────────────────
 //
 
-    import { PortableStyle, StyleRendererProtocol }
+    import { PortableStyle, PortableColor, StyleRendererProtocol }
         from "../../../protocols"
     import { CanvasView }
         from "../../../views"
@@ -33,15 +33,15 @@
         data:           BarChartDataPoint<ColorType>[ ]
     }
 
-    type InternalFixatedBarChartSettings <ColorType> =
+    type InternalFixatedBarChartSettings <ColorType extends PortableColor> =
         Required<BarChartSettings<ColorType>>
 
 //
 // ─── BAR CHART ──────────────────────────────────────────────────────────────────
 //
 
-    export function createBarChart <ColorType, EnvironmentStyleSettings extends PortableStyle<ColorType>> (
-            renderer:   StyleRendererProtocol<EnvironmentStyleSettings>,
+    export function createBarChart <ColorType extends PortableColor, EnvironmentStyleSettings extends PortableStyle<ColorType>> (
+            renderer:   StyleRendererProtocol<ColorType, EnvironmentStyleSettings>,
             settings:   BarChartSettings<ColorType>,
         ): CanvasView<ColorType, EnvironmentStyleSettings> {
 
@@ -58,9 +58,9 @@
 // ─── FIX THE SETTINGS ───────────────────────────────────────────────────────────
 //
 
-    function fixSettings <ColorType> (
+    function fixSettings <ColorType extends PortableColor> (
             settings: BarChartSettings<ColorType>
-        ): InternalFixatedBarChartSettings <ColorType> {
+        ): InternalFixatedBarChartSettings<ColorType> {
         //
         return {
             width:          settings.width,

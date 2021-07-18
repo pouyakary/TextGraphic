@@ -45,7 +45,7 @@
 // ─── SHAPE ──────────────────────────────────────────────────────────────────────
 //
 
-    function generateShape ( renderer: TextKit.StyleRendererProtocol<any> ) {
+    function generateShape ( renderer: TextKit.StyleRendererProtocol<any, any> ) {
         const text =
             new TextKit.LineView("Hello, World!", renderer, { textColor: "red" })
 

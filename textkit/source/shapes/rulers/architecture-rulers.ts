@@ -13,7 +13,7 @@
 
     import { ShapeView }
         from "../../views/mono-style-views/views/shape-view"
-    import { StyleRendererProtocol, PortableStyle }
+    import { StyleRendererProtocol, PortableStyle, PortableColor }
         from "../../protocols"
     import { EMPTY_STRING }
         from "../../constants/characters"
@@ -32,10 +32,10 @@
 // ─── ARCHITECTURE RULERS ────────────────────────────────────────────────────────
 //
 
-    export function createVerticalArchitectureRuler <ColorType, EnvironmentStyleSettings extends PortableStyle<any>> (
+    export function createVerticalArchitectureRuler <ColorType extends PortableColor, EnvironmentStyleSettings extends PortableStyle<any>> (
             size: number,
             chars: ArchitecturalRulerCharSet,
-            styler: StyleRendererProtocol<EnvironmentStyleSettings>,
+            styler: StyleRendererProtocol<ColorType, EnvironmentStyleSettings>,
             text: string = EMPTY_STRING
         ): ShapeView<ColorType, EnvironmentStyleSettings> {
 

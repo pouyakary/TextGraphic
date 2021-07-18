@@ -11,8 +11,6 @@
 // ─── ANSI TERMINAL STYLER IMPLEMENTATION ────────────────────────────────────────
 //
 
-    import { EMPTY_STRING }
-        from "../../constants/characters"
     import { StyleRendererProtocol, PortableColor }
         from "../../protocols"
     import { ANSITerminalStyleSettings }
@@ -33,7 +31,7 @@
 //
 
     export class ANSITerminalStyleRenderer implements
-        StyleRendererProtocol<ANSITerminalStyleSettings> {
+        StyleRendererProtocol<PortableColor, ANSITerminalStyleSettings> {
 
         //
         // ─── CONSTRUCTOR ─────────────────────────────────────────────────

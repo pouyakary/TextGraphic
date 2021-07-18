@@ -30,7 +30,7 @@
 // ─── HTML STYLE RENDERER ────────────────────────────────────────────────────────
 //
 
-    export class HTMLStyleRenderer implements StyleRendererProtocol<HTMLStyleSettings> {
+    export class HTMLStyleRenderer implements StyleRendererProtocol<PortableColor, HTMLStyleSettings> {
 
         //
         // ─── STORAGE ─────────────────────────────────────────────────────

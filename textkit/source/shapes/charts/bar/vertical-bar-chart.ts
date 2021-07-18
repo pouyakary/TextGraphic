@@ -10,7 +10,7 @@
 // ─── IMPORTS ────────────────────────────────────────────────────────────────────
 //
 
-    import { PortableStyle, StyleRendererProtocol }
+    import { PortableStyle, PortableColor, StyleRendererProtocol }
         from "../../../protocols"
     import { BarChartSettings }
         from "./index"
@@ -21,8 +21,8 @@
 // ─── API ────────────────────────────────────────────────────────────────────────
 //
 
-    export function createVerticalBarChart <ColorType, EnvironmentStyleSettings extends PortableStyle<ColorType>> (
-            renderer:   StyleRendererProtocol<EnvironmentStyleSettings>,
+    export function createVerticalBarChart <ColorType extends PortableColor, EnvironmentStyleSettings extends PortableStyle<ColorType>> (
+            renderer:   StyleRendererProtocol<ColorType, EnvironmentStyleSettings>,
             settings:   BarChartSettings<ColorType>,
         ): CanvasView<ColorType, EnvironmentStyleSettings> {
         //

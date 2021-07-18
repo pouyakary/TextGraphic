@@ -11,7 +11,7 @@
 // ─── IMPORTS ────────────────────────────────────────────────────────────────────
 //
 
-    import { Justification, StyleRendererProtocol, PortableStyle }
+    import { Justification, StyleRendererProtocol, PortableStyle, PortableColor }
         from "../../protocols"
     import { ShapeView }
         from "../../views/mono-style-views/views/shape-view"
@@ -29,11 +29,11 @@
 // ─── MONO STYLED TEXT JUSTIFICATION ─────────────────────────────────────────────
 //
 
-    export function createMonoStyleJustificationLayout <ColorType, EnvironmentStyleSettings extends PortableStyle<ColorType>> (
+    export function createMonoStyleJustificationLayout <ColorType extends PortableColor, EnvironmentStyleSettings extends PortableStyle<ColorType>> (
             text:           string,
             width:          number,
             justification:  Justification,
-            styler:         StyleRendererProtocol<EnvironmentStyleSettings>
+            styler:         StyleRendererProtocol<ColorType, EnvironmentStyleSettings>
         ): ShapeView<ColorType, EnvironmentStyleSettings> {
 
         //

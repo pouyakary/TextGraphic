@@ -13,7 +13,7 @@
 
     import { ShapeView }
         from "./shape-view"
-    import { StyleRendererProtocol, PortableStyle }
+    import { StyleRendererProtocol, PortableStyle, PortableColor }
         from "../../../protocols"
 
 
@@ -21,8 +21,8 @@
 // ─── BIRD ───────────────────────────────────────────────────────────────────────
 //
 
-    export function createArendelleBird <EnvironmentStyleSettings extends PortableStyle<any>> (
-            styler: StyleRendererProtocol<EnvironmentStyleSettings>,
+    export function createArendelleBird <ColorType extends PortableColor, EnvironmentStyleSettings extends PortableStyle<ColorType>> (
+            styler: StyleRendererProtocol<ColorType, EnvironmentStyleSettings>,
             style:  Partial<EnvironmentStyleSettings>,
         ) {
 
@@ -45,8 +45,8 @@
 // ─── ALIEN ──────────────────────────────────────────────────────────────────────
 //
 
-    export function createArendelleAlien <EnvironmentStyleSettings extends PortableStyle<any>> (
-            styler: StyleRendererProtocol<EnvironmentStyleSettings>,
+    export function createArendelleAlien <ColorType extends PortableColor, EnvironmentStyleSettings extends PortableStyle<ColorType>> (
+            styler: StyleRendererProtocol<ColorType, EnvironmentStyleSettings>,
             style:  Partial<EnvironmentStyleSettings>,
         ) {
 
@@ -69,8 +69,8 @@
 // ─── UTAH TEAPOT ────────────────────────────────────────────────────────────────
 //
 
-    export function createUtahTeapot <EnvironmentStyleSettings extends PortableStyle<any>> (
-            styler: StyleRendererProtocol<EnvironmentStyleSettings>,
+    export function createUtahTeapot <ColorType extends PortableColor, EnvironmentStyleSettings extends PortableStyle<ColorType>> (
+            styler: StyleRendererProtocol<ColorType, EnvironmentStyleSettings>,
             style:  Partial<EnvironmentStyleSettings>,
         ) {
 

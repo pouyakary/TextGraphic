@@ -17,14 +17,14 @@
         from "../../../../protocols/view-protocol"
     import { EMPTY_STRING, WHITE_SPACE_CHARACTER }
         from "../../../../constants/characters"
-    import { PortableStyle }
+    import { PortableStyle, PortableColor }
         from "../../../../protocols"
 
 //
 // ─── RAY TRACE ──────────────────────────────────────────────────────────────────
 //
 
-    export function rayTraceScreenPixel <ColorType, EnvironmentStyleSettings extends PortableStyle<any>> (
+    export function rayTraceScreenPixel <ColorType extends PortableColor, EnvironmentStyleSettings extends PortableStyle<ColorType>> (
             canvas: CanvasView<ColorType, EnvironmentStyleSettings>,
             left:   number,
             top:    number,
@@ -34,7 +34,7 @@
 
         //
 
-        let result: CanvasChildrenProfile<EnvironmentStyleSettings> | null =
+        let result: CanvasChildrenProfile<ColorType, EnvironmentStyleSettings> | null =
             null
         const xQuery =
             x - left

@@ -11,7 +11,7 @@
 // ─── IMPORTS ────────────────────────────────────────────────────────────────────
 //
 
-    import { ScreenMatrixPixel, StylableViewProtocol, PortableStyle, StyleRendererProtocol }
+    import { ScreenMatrixPixel, StylableViewProtocol, PortableStyle, PortableColor, StyleRendererProtocol }
         from "../../../../protocols"
 
     import { MonoStyleViews }
@@ -44,8 +44,8 @@
 // ─── SHAPE VIEW ─────────────────────────────────────────────────────────────────
 //
 
-    export class ShapeView <ColorType, EnvironmentStyleSettings extends PortableStyle<ColorType>> implements
-        StylableViewProtocol <EnvironmentStyleSettings> {
+    export class ShapeView <ColorType extends PortableColor, EnvironmentStyleSettings extends PortableStyle<ColorType>> implements
+        StylableViewProtocol <ColorType, EnvironmentStyleSettings> {
 
         //
         // ─── STORAGE ─────────────────────────────────────────────────────
@@ -54,7 +54,7 @@
             readonly    lines:              Array<string>
             readonly    height:             number
             readonly    width:              number
-            readonly    styleRenderer:      StyleRendererProtocol<EnvironmentStyleSettings>
+            readonly    styleRenderer:      StyleRendererProtocol<ColorType, EnvironmentStyleSettings>
 
                         transparent:        boolean
 
@@ -69,7 +69,7 @@
 
             constructor ( lines: string[ ],
                        baseline: number,
-                  styleRenderer: StyleRendererProtocol<EnvironmentStyleSettings>,
+                  styleRenderer: StyleRendererProtocol<ColorType, EnvironmentStyleSettings>,
                           style: Partial<EnvironmentStyleSettings>,
                     transparent: boolean ) {
 
@@ -149,10 +149,10 @@
             }
 
 
-            static initWithSpaceCheck <StyleSettings extends PortableStyle<any>> (
+            static initWithSpaceCheck <ColorType extends PortableColor, StyleSettings extends PortableStyle<ColorType>> (
                     lines:          string[ ],
                     baseLine:       number,
-                    styler:         StyleRendererProtocol<StyleSettings>,
+                    styler:         StyleRendererProtocol<ColorType, StyleSettings>,
                     initialStyle:   Partial<StyleSettings>,
                 ) {
 
@@ -163,10 +163,10 @@
             }
 
 
-            static initWithText <ColorType, StyleSettings extends PortableStyle<ColorType>> (
+            static initWithText <ColorType extends PortableColor, StyleSettings extends PortableStyle<ColorType>> (
                     text:           string,
                     baseLine:       number,
-                    styler:         StyleRendererProtocol<StyleSettings>,
+                    styler:         StyleRendererProtocol<ColorType, StyleSettings>,
                     initialStyle:   Partial<StyleSettings>,
                 ): ShapeView<ColorType, StyleSettings> {
 
@@ -179,18 +179,18 @@
             }
 
 
-            static initEmptyBox <StyleSettings extends PortableStyle<any>> (
-                    styler: StyleRendererProtocol<StyleSettings>
+            static initEmptyBox <ColorType extends PortableColor, StyleSettings extends PortableStyle<any>> (
+                    styler: StyleRendererProtocol<ColorType, StyleSettings>
                 ) {
 
                 return new ShapeView( [ EMPTY_STRING ], 0, styler, { }, true )
             }
 
 
-            static initBlankRectangle <ColorType, StyleSettings extends PortableStyle<ColorType>> (
+            static initBlankRectangle <ColorType extends PortableColor, StyleSettings extends PortableStyle<ColorType>> (
                     width:          number,
                     height:         number,
-                    styler:         StyleRendererProtocol<StyleSettings>,
+                    styler:         StyleRendererProtocol<ColorType, StyleSettings>,
                     backgroundChar: string = WHITE_SPACE_CHARACTER,
                 ) {
 
@@ -207,24 +207,24 @@
             }
 
 
-            static initUtahTeapot <ColorType, EnvironmentStyleSettings extends PortableStyle<ColorType>> (
-                    styler: StyleRendererProtocol<EnvironmentStyleSettings>,
+            static initUtahTeapot <ColorType extends PortableColor, EnvironmentStyleSettings extends PortableStyle<ColorType>> (
+                    styler: StyleRendererProtocol<ColorType, EnvironmentStyleSettings>,
                     style:  Partial<EnvironmentStyleSettings> = { },
                 ) {
                 //
                 return Easters.createUtahTeapot(styler, style)
             }
 
-            static initArendelleBird <ColorType, EnvironmentStyleSettings extends PortableStyle<ColorType>> (
-                    styler: StyleRendererProtocol<EnvironmentStyleSettings>,
+            static initArendelleBird <ColorType extends PortableColor, EnvironmentStyleSettings extends PortableStyle<ColorType>> (
+                    styler: StyleRendererProtocol<ColorType, EnvironmentStyleSettings>,
                     style:  Partial<EnvironmentStyleSettings> = { },
                 ) {
                 //
                 return Easters.createArendelleBird(styler, style)
             }
 
-            static initArendelleAlien <ColorType, EnvironmentStyleSettings extends PortableStyle<ColorType>> (
-                    styler: StyleRendererProtocol<EnvironmentStyleSettings>,
+            static initArendelleAlien <ColorType extends PortableColor, EnvironmentStyleSettings extends PortableStyle<ColorType>> (
+                    styler: StyleRendererProtocol<ColorType, EnvironmentStyleSettings>,
                     style:  Partial<EnvironmentStyleSettings> = { },
                 ) {
                 //
@@ -331,7 +331,7 @@
         // ─── CONCAT HORIZONTALLY ─────────────────────────────────────────
         //
 
-            static concatHorizontally <ColorType, EnvironmentStyleSettings extends PortableStyle<ColorType>> (
+            static concatHorizontally <ColorType extends PortableColor, EnvironmentStyleSettings extends PortableStyle<ColorType>> (
                     boxes:  ShapeView<ColorType, EnvironmentStyleSettings> [ ],
                     joiner: ShapeView<ColorType, EnvironmentStyleSettings>,
                 ): MonoStyleViews<ColorType, EnvironmentStyleSettings> {
@@ -344,7 +344,7 @@
         // ─── CONCAT VERTICALLY ───────────────────────────────────────────
         //
 
-            static concatVertically <ColorType, EnvironmentStyleSettings extends PortableStyle<ColorType>> (
+            static concatVertically <ColorType extends PortableColor, EnvironmentStyleSettings extends PortableStyle<ColorType>> (
                     boxes:      ShapeView<ColorType, EnvironmentStyleSettings>[ ],
                     baseLine:   number,
                 ): ShapeView<ColorType, EnvironmentStyleSettings> {

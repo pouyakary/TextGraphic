@@ -13,7 +13,7 @@
 
     import { ShapeView }
         from "../../views/mono-style-views/views/shape-view"
-    import { StyleRendererProtocol, PortableStyle }
+    import { StyleRendererProtocol, PortableStyle, PortableColor }
         from "../../protocols"
     import { Direction }
         from "../../protocols/direction"
@@ -54,8 +54,8 @@
 // ─── RULER MAKER ────────────────────────────────────────────────────────────────
 //
 
-    export function createChartRuler <ColorType, EnvironmentStyleSettings extends PortableStyle<any>> (
-            styler:         StyleRendererProtocol<EnvironmentStyleSettings>,
+    export function createChartRuler <ColorType extends PortableColor, EnvironmentStyleSettings extends PortableStyle<any>> (
+            styler:         StyleRendererProtocol<ColorType, EnvironmentStyleSettings>,
             inputSettings:  CharRulerSettings,
         ): ShapeView<ColorType, EnvironmentStyleSettings> {
 
@@ -110,9 +110,9 @@
 // ─── HORIZONTAL CHART RULER ─────────────────────────────────────────────────────
 //
 
-    function createHorizontalChartRuler <ColorType, EnvironmentStyleSettings extends PortableStyle<any>> (
+    function createHorizontalChartRuler <ColorType extends PortableColor, EnvironmentStyleSettings extends PortableStyle<any>> (
             settings:       FixedCharRulerSettings,
-            styler:         StyleRendererProtocol<EnvironmentStyleSettings>,
+            styler:         StyleRendererProtocol<ColorType, EnvironmentStyleSettings>,
             isDirectionUp:  boolean
         ): ShapeView<ColorType, EnvironmentStyleSettings> {
 
@@ -144,9 +144,9 @@
 // ─── CREATE VERTICAL RULER ──────────────────────────────────────────────────────
 //
 
-    function createVerticalRuler <ColorType, EnvironmentStyleSettings extends PortableStyle<any>> (
+    function createVerticalRuler <ColorType extends PortableColor, EnvironmentStyleSettings extends PortableStyle<any>> (
             settings:       FixedCharRulerSettings,
-            styler:         StyleRendererProtocol<EnvironmentStyleSettings>,
+            styler:         StyleRendererProtocol<ColorType, EnvironmentStyleSettings>,
             facingLeft:     boolean
         ): ShapeView<ColorType, EnvironmentStyleSettings> {
 

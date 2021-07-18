@@ -89,7 +89,7 @@
     // this because it should not allow errors to happen. This way
     // errors within the TextKit are not combined with the REPL.
 
-    function styleViewProtocolForOutputPrint ( view: TextKit.ViewProtocol<never, never> ) {
+    function styleViewProtocolForOutputPrint ( view: TextKit.ViewProtocol<any, any, any> ) {
         const ANSI_DIM =
             TextKit.Environments.ANSITerminal.EscapeSequences.Dim
         const ANSI_RESET =

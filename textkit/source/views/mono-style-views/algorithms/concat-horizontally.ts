@@ -15,7 +15,7 @@
         from ".."
     import { ShapeView }
         from "../views/shape-view"
-    import { PortableStyle }
+    import { PortableStyle, PortableColor }
         from "../../../protocols"
     import { insertJoinersInBetweenArrayItems }
         from "../../../tools/array"
@@ -26,7 +26,7 @@
 // ─── CONCAT HORIZONTALLY ────────────────────────────────────────────────────────
 //
 
-    export function concatMonoStyledViewsHorizontally <ColorType, EnvironmentStyleSettings extends PortableStyle<any>> (
+    export function concatMonoStyledViewsHorizontally <ColorType extends PortableColor, EnvironmentStyleSettings extends PortableStyle<any>> (
             boxes:  MonoStyleViews<ColorType, EnvironmentStyleSettings>[ ],
             joiner: MonoStyleViews<ColorType, EnvironmentStyleSettings>
         ): MonoStyleViews<ColorType, EnvironmentStyleSettings> {

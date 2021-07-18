@@ -15,14 +15,14 @@
         from ".."
     import { ShapeView }
         from "../views/shape-view"
-    import { HorizontalAlign, VerticalAlign, PortableStyle }
+    import { HorizontalAlign, VerticalAlign, PortableStyle, PortableColor }
         from "../../../protocols"
 
 //
 // ─── ALIGN IN BOX ───────────────────────────────────────────────────────────────
 //
 
-    export function alignMonoStyleViewWithinNewBoxBoundary <ColorType, EnvironmentStyleSettings extends PortableStyle<any>> (
+    export function alignMonoStyleViewWithinNewBoxBoundary <ColorType extends PortableColor, EnvironmentStyleSettings extends PortableStyle<any>> (
             box:                MonoStyleViews<ColorType, EnvironmentStyleSettings>,
             boxWidth:           number,
             boxHeight:          number,

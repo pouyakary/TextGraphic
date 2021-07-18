@@ -17,14 +17,14 @@
         from "../views/shape-view"
     import { createEmptyStringLine }
         from "../../../tools/string"
-    import { PortableStyle }
+    import { PortableStyle, PortableColor }
         from "../../../protocols"
 
 //
 // ─── APPLY MARGIN ───────────────────────────────────────────────────────────────
 //
 
-    export function applyMarginToMonoStyleView <ColorType, EnvironmentStyleSettings extends PortableStyle<ColorType>> (
+    export function applyMarginToMonoStyleView <ColorType extends PortableColor, EnvironmentStyleSettings extends PortableStyle<ColorType>> (
             box:    MonoStyleViews<ColorType, EnvironmentStyleSettings>,
             top:    number,
             right:  number,

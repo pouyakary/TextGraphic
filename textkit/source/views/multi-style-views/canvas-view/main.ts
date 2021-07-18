@@ -11,7 +11,7 @@
 // ─── IMPORTS ────────────────────────────────────────────────────────────────────
 //
 
-    import { ViewProtocol, ScreenMatrixPixel, PortableStyle }
+    import { ViewProtocol, ScreenMatrixPixel, PortableStyle, PortableColor }
         from "../../../protocols"
     import { VirtualScreen }
         from "./virtual-screen"
@@ -34,19 +34,19 @@
 // ─── TYPES ──────────────────────────────────────────────────────────────────────
 //
 
-    export interface CanvasChildrenProfile <EnvironmentStyleSettings extends PortableStyle<any>> {
+    export interface CanvasChildrenProfile <ColorType extends PortableColor, EnvironmentStyleSettings extends PortableStyle<ColorType>> {
         x:      number
         y:      number
         zIndex: number
-        child:  ViewProtocol<EnvironmentStyleSettings, StyleRendererProtocol<EnvironmentStyleSettings>>
+        child:  ViewProtocol<ColorType, EnvironmentStyleSettings, StyleRendererProtocol<ColorType, EnvironmentStyleSettings>>
     }
 
 //
 // ─── CANVAS VIEW ────────────────────────────────────────────────────────────────
 //
 
-    export class CanvasView <ColorType, EnvironmentStyleSettings extends PortableStyle<ColorType>> implements
-        ViewProtocol<EnvironmentStyleSettings, StyleRendererProtocol<EnvironmentStyleSettings>> {
+    export class CanvasView <ColorType extends PortableColor, EnvironmentStyleSettings extends PortableStyle<ColorType>>
+        implements ViewProtocol<ColorType, EnvironmentStyleSettings, StyleRendererProtocol<ColorType, EnvironmentStyleSettings>> {
 
         //
         // ─── STORAGE ─────────────────────────────────────────────────────
@@ -54,9 +54,9 @@
 
             readonly    height:                 number
             readonly    width:                  number
-            readonly    screen:                 VirtualScreen<EnvironmentStyleSettings>
-            readonly    styleRenderer:          StyleRendererProtocol<EnvironmentStyleSettings>
-            readonly    #children:              CanvasChildrenProfile<EnvironmentStyleSettings> [ ]
+            readonly    screen:                 VirtualScreen<ColorType, EnvironmentStyleSettings>
+            readonly    styleRenderer:          StyleRendererProtocol<ColorType, EnvironmentStyleSettings>
+            readonly    #children:              CanvasChildrenProfile<ColorType, EnvironmentStyleSettings> [ ]
 
                         transparent:            boolean
                         #baseline:              number
@@ -67,7 +67,7 @@
 
             constructor ( width: number,
                          height: number,
-                  styleRenderer: StyleRendererProtocol<EnvironmentStyleSettings> ) {
+                  styleRenderer: StyleRendererProtocol<ColorType, EnvironmentStyleSettings> ) {
 
                 this.height =
                     height
@@ -92,9 +92,9 @@
         // ─── INITIATION SHORTCUTS ────────────────────────────────────────
         //
 
-            static initWithBackground <ColorType, EnvironmentStyleSettings extends PortableStyle<ColorType>> (
-                    background: ViewProtocol<EnvironmentStyleSettings, StyleRendererProtocol<EnvironmentStyleSettings>>,
-                    styler:     StyleRendererProtocol<EnvironmentStyleSettings>,
+            static initWithBackground <ColorType extends PortableColor, EnvironmentStyleSettings extends PortableStyle<ColorType>> (
+                    background: ViewProtocol<ColorType, EnvironmentStyleSettings, StyleRendererProtocol<ColorType, EnvironmentStyleSettings>>,
+                    styler:     StyleRendererProtocol<ColorType, EnvironmentStyleSettings>,
                 ): CanvasView<ColorType, EnvironmentStyleSettings> {
 
                 //
@@ -110,7 +110,7 @@
         // ─── CHILDREN ────────────────────────────────────────────────────
         //
 
-            public * getChildren ( ): Generator<CanvasChildrenProfile<EnvironmentStyleSettings>, null> {
+            public * getChildren ( ): Generator<CanvasChildrenProfile<ColorType, EnvironmentStyleSettings>, null> {
                 for ( const child of this.#children ) {
                     yield child
                 }
@@ -138,7 +138,7 @@
         // ─── ADD CHILD ───────────────────────────────────────────────────
         //
 
-            public add ( child: ViewProtocol<EnvironmentStyleSettings, StyleRendererProtocol<EnvironmentStyleSettings>>,
+            public add ( child: ViewProtocol<ColorType, EnvironmentStyleSettings, StyleRendererProtocol<ColorType, EnvironmentStyleSettings>>,
                              x: number,
                              y: number,
                         zIndex: number ) {

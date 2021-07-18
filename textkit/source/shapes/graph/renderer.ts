@@ -11,7 +11,7 @@
 // ─── IMPORTS ────────────────────────────────────────────────────────────────────
 //
 
-    import { PortableStyle, StyleRendererProtocol }
+    import { PortableStyle, PortableColor, StyleRendererProtocol }
         from "../../protocols"
     import { ShapeView }
         from "../../views/mono-style-views"
@@ -25,8 +25,8 @@
     export type GraphFormula =
         ( x: number, y: number, width: number, height: number ) => boolean
 
-    export interface GraphSettings <ColorType, EnvironmentStyleSettings extends PortableStyle<ColorType>> {
-        renderer:           StyleRendererProtocol<EnvironmentStyleSettings>,
+    export interface GraphSettings <ColorType extends PortableColor, EnvironmentStyleSettings extends PortableStyle<ColorType>> {
+        renderer:           StyleRendererProtocol<ColorType, EnvironmentStyleSettings>,
         width:              number
         height:             number
         formula:            GraphFormula
@@ -39,14 +39,14 @@
         transparent?:       boolean
     }
 
-    type FixatedSettings <ColorType, EnvironmentStyleSettings extends PortableStyle<ColorType>> =
+    type FixatedSettings <ColorType extends PortableColor, EnvironmentStyleSettings extends PortableStyle<ColorType>> =
         Required<GraphSettings<ColorType, EnvironmentStyleSettings>>
 
 //
 // ─── CREATE MATH GRAPH ──────────────────────────────────────────────────────────
 //
 
-    export function create <ColorType, EnvironmentStyleSettings extends PortableStyle<ColorType>> (
+    export function create <ColorType extends PortableColor, EnvironmentStyleSettings extends PortableStyle<ColorType>> (
             settings: GraphSettings<ColorType, EnvironmentStyleSettings>
         ): ShapeView<ColorType, EnvironmentStyleSettings> {
         //
@@ -98,7 +98,7 @@
 // ─── FIXATE STYLE ───────────────────────────────────────────────────────────────
 //
 
-    function checkAndCompleteGraphSettings <ColorType, EnvironmentStyleSettings extends PortableStyle<ColorType>> (
+    function checkAndCompleteGraphSettings <ColorType extends PortableColor, EnvironmentStyleSettings extends PortableStyle<ColorType>> (
             settings:   GraphSettings<ColorType, EnvironmentStyleSettings>
         ): FixatedSettings<ColorType, EnvironmentStyleSettings> {
         //

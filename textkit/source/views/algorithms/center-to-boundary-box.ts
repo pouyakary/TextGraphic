@@ -11,18 +11,18 @@
 // ─── IMPORTS ────────────────────────────────────────────────────────────────────
 //
 
-    import { ViewProtocol, PortableStyle, StyleRendererProtocol }
+    import { ViewProtocol, PortableStyle, PortableColor, StyleRendererProtocol }
         from "../../protocols"
 
 //
 // ─── CENTER TO BOUNDARY BOX ─────────────────────────────────────────────────────
 //
 
-    export function centerViewProtocolToBoundaryBox <EnvironmentStyleSettings extends PortableStyle<any>> (
-            view:   ViewProtocol<EnvironmentStyleSettings, StyleRendererProtocol<EnvironmentStyleSettings>>,
+    export function centerViewProtocolToBoundaryBox <ColorType extends PortableColor, EnvironmentStyleSettings extends PortableStyle<any>> (
+            view:   ViewProtocol<ColorType, EnvironmentStyleSettings, StyleRendererProtocol<ColorType, EnvironmentStyleSettings>>,
             width:  number,
             height: number
-        ): ViewProtocol<EnvironmentStyleSettings, StyleRendererProtocol<EnvironmentStyleSettings>> {
+        ): ViewProtocol<ColorType, EnvironmentStyleSettings, StyleRendererProtocol<ColorType, EnvironmentStyleSettings>> {
 
         //
         const top =
