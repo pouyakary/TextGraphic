@@ -60,14 +60,13 @@
     const optimizedSVG =
         Tools.createAGoodModel( svgOptimizingStyler )
 
-    const desktop = ( name: string ) =>
-        path.join( homedir( ), "Desktop", name )
+    const saveToDesktop = ( name: string, model: TextKit.ViewProtocol<any, any> ) =>
+        fs.writeFileSync(
+            path.join( homedir( ), "Desktop", name ),
+            model.styledForm,
+        )
 
-    fs.writeFileSync(
-        desktop( "normal.svg" ), normalSVG.styledForm
-    )
-    fs.writeFileSync(
-        desktop( "optimized.svg" ), optimizedSVG.styledForm
-    )
+    saveToDesktop( "normal.svg", normalSVG )
+    saveToDesktop( "optimized.svg", optimizedSVG )
 
 // ────────────────────────────────────────────────────────────────────────────────
