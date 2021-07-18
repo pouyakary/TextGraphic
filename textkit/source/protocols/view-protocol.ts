@@ -122,28 +122,28 @@
 
 
             /**
-             * __⚠️ UNSAFE__ &mdash; TextKit implements no runtime checks for this function.
+             *  __⚠️ UNSAFE__ &mdash; TextKit implements no runtime checks for this function.
              *
-             * ---
+             *  ---
              *
-             * Ray traces a pixel for the `ParentCanvas`. This function is
-             * a protocol that enables the core renderer of the parent `CanvasView`.
+             *  Ray traces a pixel for the `ParentCanvas`. This function is
+             *  a protocol that enables the core renderer of the parent `CanvasView`.
              *
-             * In the leaf views (the ones that have no nesting children) the system
-             * returns the character at the given position and the style associated
-             * with the character. But in the branch views (the ones that do have
-             * nested children), function looks at all the children that might have
-             * a character at the specified position and then the ray tracers picks
-             * the most front children (or if absent the empty background).
+             *  In the leaf views (the ones that have no nesting children) the system
+             *  returns the character at the given position and the style associated
+             *  with the character. But in the branch views (the ones that do have
+             *  nested children), function looks at all the children that might have
+             *  a character at the specified position and then the ray tracers picks
+             *  the most front children (or if absent the empty background).
              *
-             * The use of this function is for a branches that also include branch
-             * children. Therefore the renderer can ask all the children to ray trace
-             * their children as well.
+             *  The use of this function is for a branches that also include branch
+             *  children. Therefore the renderer can ask all the children to ray trace
+             *  their children as well.
              *
-             * @param left Distance from the left in the parent canvas
-             * @param top  Distance from the top in the parent canvas
-             * @param x    Distance from the left in self
-             * @param y    Distance from the top in self
+             *  @param left Distance from the left in the parent canvas
+             *  @param top  Distance from the top in the parent canvas
+             *  @param x    Distance from the left in self
+             *  @param y    Distance from the top in self
              */
             rayTrace ( left: number, top: number, x: number, y: number ): ScreenMatrixPixel
 
@@ -151,11 +151,19 @@
         // ─── COMMON SHAPING TOOLS ────────────────────────────────────────
         //
 
+            /**
+             *  Frames the view with marginal space around the view. Like the
+             *  CSS, the margin is written clock-wise from top to left.
+             */
             applyMargin ( topMargin: number ,
                         rightMargin: number ,
                        bottomMargin: number ,
                          leftMargin: number ): ViewProtocol<EnvironmentStylingSettings, RenderStyler>
 
+            /**
+             *  Creates a box with size of `width` and `height` and centers
+             *  the view inside of it.
+             */
             centerToBoundaryBox ( width: number,
                                  height: number ): ViewProtocol<EnvironmentStylingSettings, RenderStyler>
 
@@ -171,20 +179,20 @@
         ViewProtocol<EnvironmentStylingSettings, StyleRendererProtocol<EnvironmentStylingSettings>> {
 
         /**
-         * Accepts a subset of the render styling settings
-         * and replaces it with the previous style of the
-         * object
+         *  Accepts a subset of the render styling settings
+         *  and replaces it with the previous style of the
+         *  object
          */
         set style ( x: Partial<EnvironmentStylingSettings> )
 
         /**
-         * returns the style of the view
+         *  returns the style of the view
          */
         get style ( ): EnvironmentStylingSettings
 
         /**
-         * Appends or overrides the previous styles
-         * @param style
+         *  Appends or overrides the previous styles
+         *  @param style
          */
         addStyle ( style: Partial<EnvironmentStylingSettings> ): ViewProtocol<EnvironmentStylingSettings, StyleRendererProtocol<EnvironmentStylingSettings>>
     }
