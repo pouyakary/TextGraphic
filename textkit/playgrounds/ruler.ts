@@ -43,7 +43,7 @@
             })
 
         ruler.style = {
-            textColor: "blue"
+            color: "blue"
         }
 
         console.clear( )

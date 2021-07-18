@@ -42,13 +42,13 @@
     const alien =
         TextKit.ShapeView.initArendelleAlien( renderer )
     alien.addStyle({
-        textColor: "blue"
+        color: "blue"
     })
 
     const bird =
         TextKit.ShapeView.initArendelleBird( renderer )
     bird.addStyle({
-        textColor: "green"
+        color: "green"
     })
 
     for ( let i = 0; i < 30; i++ ) {
@@ -71,7 +71,7 @@
         const color =
             TextKit.randomPortableLabeledColor( )
         shape.addStyle({
-            textColor: color
+            color: color
         })
 
         sampleCanvas.add( shape, x, y, i )

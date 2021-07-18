@@ -42,7 +42,7 @@
             true
 
         const textColor =
-            a.textColor == b.textColor
+            a.color == b.color
         allElementsAreEquals = allElementsAreEquals && textColor
 
         const backgroundColor =
@@ -79,7 +79,7 @@
         }
 
         const report: TerminalStylingComparison = {
-            textColor, backgroundColor, bold, italic,
+            color: textColor, backgroundColor, bold, italic,
             reversed, blink, underline, dim,
         }
 
@@ -123,7 +123,7 @@
         const backgroundColor =
             convertPortableColorToANSITerminalColor( style.backgroundColor, true )
         const foregroundColor =
-            convertPortableColorToANSITerminalColor( style.textColor, false )
+            convertPortableColorToANSITerminalColor( style.color, false )
 
         return (
             bold + italic + dim + reversed + blink + underline +
@@ -143,7 +143,7 @@
         //
         return {
             backgroundColor:    options.backgroundColor     ? options.backgroundColor   : style.backgroundColor,
-            textColor:          options.textColor           ? options.textColor         : style.textColor,
+            color:          options.color           ? options.color         : style.color,
             bold:               options.bold                ? options.bold              : style.bold,
             italic:             options.italic              ? options.italic            : style.italic,
             reversed:           options.reversed            ? options.reversed          : style.reversed,

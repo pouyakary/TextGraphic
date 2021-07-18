@@ -12,14 +12,18 @@
 //
 
     export interface PortableStyle <Color> {
-        // Coloring
-        textColor:          Color
+        /** Color of the Foreground Text */
+        color:              Color
+        /** Color of the Background */
         backgroundColor:    Color
 
-        // Text Decoration
+        /** Makes the text and some borders bold */
         bold:       boolean
+        /** Makes the text italic */
         italic:     boolean
+        /** Draws a line under the text */
         underline:  boolean
+        /** Makes the text blink (by hiding and showing in a time interval */
         blink:      boolean
     }
 

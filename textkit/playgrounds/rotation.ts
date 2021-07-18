@@ -33,7 +33,7 @@
             width:  process.stdout.columns,
             height: process.stdout.rows,
             style: {
-                textColor: color as never
+                color: color as never
             },
             formula: ( iX, iY ) => {
                 // bounds of the 3

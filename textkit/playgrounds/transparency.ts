@@ -32,14 +32,14 @@
             .frame( TextKit.Presets.LightBox )
 
     box1.style = {
-        textColor: "blue"
+        color: "blue"
     }
 
     const box2 =
         TextKit.ShapeView.initBlankRectangle( 8, 3, styler )
             .frame( TextKit.Presets.LightBox )
     box2.style = {
-        textColor: "red"
+        color: "red"
     }
 
 
@@ -48,7 +48,7 @@
             .frame( TextKit.Presets.LightBox )
 
     box3.style = {
-        textColor: "green"
+        color: "green"
     }
 
     box3.transparent = false

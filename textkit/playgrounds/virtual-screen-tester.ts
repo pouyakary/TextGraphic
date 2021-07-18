@@ -46,15 +46,15 @@
         const canvas =
             new TextKit.CanvasView( width, height, renderer )
         const X =
-            new TextKit.LineView( "X", renderer, { textColor: "red" })
+            new TextKit.LineView( "X", renderer, { color: "red" })
         const Z =
             new TextKit.LineView( "Z", renderer, { })
         const Y =
-            new TextKit.LineView( "Z", renderer, { textColor: "blue" })
+            new TextKit.LineView( "Z", renderer, { color: "blue" })
         const P =
-            new TextKit.LineView( "+++", renderer, { textColor: "blue", italic: true })
+            new TextKit.LineView( "+++", renderer, { color: "blue", italic: true })
         const A =
-            new TextKit.LineView( "***", renderer, { textColor: "red" })
+            new TextKit.LineView( "***", renderer, { color: "red" })
 
         for ( let y = 0; y < height; y++ ) {
             for ( let x = 0; x < width; x++ ) {

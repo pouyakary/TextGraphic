@@ -87,34 +87,34 @@
         //
         const redTeapot =
             ShapeView.initUtahTeapot ( styler, {
-                textColor: "red"
+                color: "red"
             })
         canvas.add( redTeapot, 4, 2, zIndex++ )
 
         //
         const blueTeapot =
             ShapeView.initUtahTeapot ( styler, { })
-                .addStyle({ textColor: "blue" })
+                .addStyle({ color: "blue" })
         canvas.add( blueTeapot, 20, 8, zIndex++ )
 
         //
         const blueRectangleFrame =
             ShapeView.initBlankRectangle( 20, 3, styler )
                 .frame( Presets.LightBox )
-                .addStyle({ textColor: "blue" })
+                .addStyle({ color: "blue" })
         canvas.add( blueRectangleFrame, 20, 3, zIndex++ )
 
         //
         const cyanRectangleFrame =
             ShapeView.initBlankRectangle( 40, 7, styler )
                 .frame( Presets.LightBox )
-                .addStyle({ textColor: "cyan" })
+                .addStyle({ color: "cyan" })
         canvas.add( cyanRectangleFrame, 30, 5, zIndex++ )
 
         //
         const text =
             new LineView( "Hello, World!", styler, {
-                textColor: "magenta", italic: true
+                color: "magenta", italic: true
             })
         canvas.add( text, 40, 1, zIndex++ )
 

@@ -53,7 +53,7 @@
                 renderer,
                 width:      ellipse_width,
                 height:     ellipse_height,
-                style:      { textColor: GRAPH_COLOR },
+                style:      { color: GRAPH_COLOR },
                 formula:    TextKit.Shapes.Graph.Formulas.Ellipse
             })
 
@@ -64,12 +64,12 @@
                 renderer,
             )
             .frame( TextKit.Presets.HeavyBox )
-            .addStyle({ textColor: GUIDES_COLOR })
+            .addStyle({ color: GUIDES_COLOR })
 
         const title =
             TextKit.ShapeView.initWithText( titleText, 0, renderer, { } )
                 .frame( TextKit.Presets.HeavyBox )
-                .addStyle({ textColor: GUIDES_COLOR })
+                .addStyle({ color: GUIDES_COLOR })
 
         const graphBox =
             new TextKit.CanvasView(

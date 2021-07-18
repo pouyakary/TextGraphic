@@ -42,7 +42,7 @@
                 //
                 width:          WIDTH,
                 height:         HEIGHT,
-                style:          { textColor: GRAPH_COLOR },
+                style:          { color: GRAPH_COLOR },
                 verticalZoom:   0.8,
                 //
                 formula: ( x, y ) => {
@@ -56,7 +56,7 @@
 
         // grid
         const hLine =
-            new TextKit.LineView( "─".repeat(WIDTH - 1) + "▶︎", renderer, { textColor: GUIDES_COLOR })
+            new TextKit.LineView( "─".repeat(WIDTH - 1) + "▶︎", renderer, { color: GUIDES_COLOR })
         const vLineLines =
             [ "▲" ]
         for ( let row = 1; row < HEIGHT; row++ ) {
@@ -64,7 +64,7 @@
         }
 
         const vLine =
-            new TextKit.ShapeView( vLineLines, 0, renderer, { textColor: GUIDES_COLOR }, false )
+            new TextKit.ShapeView( vLineLines, 0, renderer, { color: GUIDES_COLOR }, false )
 
         const grid =
             new TextKit.CanvasView(  WIDTH, HEIGHT, renderer )

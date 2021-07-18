@@ -163,9 +163,9 @@
         }
 
         // color
-        if ( style.textColor !== "factory" ) {
+        if ( style.color !== "factory" ) {
             const serializedColor =
-                convertPortableColorToCSSColor( style.textColor )
+                convertPortableColorToCSSColor( style.color )
             serializedProperties.push( `color: ${ serializedColor }` )
         }
 

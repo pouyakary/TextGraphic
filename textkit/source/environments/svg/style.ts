@@ -34,7 +34,7 @@
 
         //
         return {
-            textColor:          newStyle.textColor          ? newStyle.textColor        : previous.textColor,
+            color:          newStyle.color          ? newStyle.color        : previous.color,
             backgroundColor:    newStyle.backgroundColor    ? newStyle.backgroundColor  : previous.backgroundColor,
             bold:               newStyle.bold               ? newStyle.bold             : previous.bold,
             italic:             newStyle.italic             ? newStyle.italic           : previous.italic,
@@ -52,9 +52,9 @@
             new Array<string> ( )
 
         // color
-        if ( style.textColor !== "factory" ) {
+        if ( style.color !== "factory" ) {
             const serializedColor =
-                convertPortableColorToCSSColor( style.textColor )
+                convertPortableColorToCSSColor( style.color )
             serializedProperties.push( `fill: ${ serializedColor }` )
         }
 

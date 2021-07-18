@@ -29,7 +29,7 @@ main( ); async function main ( ) {
             new TextKit.ShapeView([ " * " ], 0, styler, { }, false )
                 .frame( TextKit.Presets.LightBox )
         topLeftCanvasObject.style = {
-            textColor: "blue"
+            color: "blue"
         }
         firstCanvas.add( topLeftCanvasObject, -5 + ( iteration % 30 ), 1, 1 )
 
@@ -44,7 +44,7 @@ main( ); async function main ( ) {
             new TextKit.ShapeView([ " * " ], 0, styler, { }, false )
                 .frame( TextKit.Presets.LightBox )
         secondCanvasObject.style = {
-            textColor: "red"
+            color: "red"
         }
         secondCanvas.add( secondCanvasObject, 3, -3 + ( iteration % 20), 1 )
 
@@ -59,14 +59,14 @@ main( ); async function main ( ) {
             new TextKit.ShapeView([ " * " ], 0, styler, { }, false )
                 .frame( TextKit.Presets.LightBox )
         thirdCanvasObjectOne.style ={
-            textColor: "green"
+            color: "green"
         }
         thirdCanvas.add( thirdCanvasObjectOne, -4 + ( iteration % 30 ), 3, 1 )
         const thirdCanvasObjectTwo =
             new TextKit.ShapeView([ " * " ], 0, styler, { }, false )
                 .frame( TextKit.Presets.LightBox )
         thirdCanvasObjectTwo.style = {
-            textColor: "blue"
+            color: "blue"
         }
         thirdCanvas.add( thirdCanvasObjectTwo, 24 - ( iteration % 30 ), 2 , 1 )
 
@@ -78,7 +78,7 @@ main( ); async function main ( ) {
             )
         title.style = {
             italic:     true,
-            textColor:  "red"
+            color:  "red"
         }
 
         // Main Canvas
