@@ -18,19 +18,19 @@
 // ─── EXPORT TYPES ───────────────────────────────────────────────────────────────
 //
 
-    export type WebTextDecorationLineStyle =
+    export type HTMLTextDecorationLineStyle =
         "wavy" | "dashed" | "solid"
 
-    export type WebTextDecorationLineType =
+    export type HTMLTextDecorationLineType =
         "overline" | "line-through" | "underline" | "none"
 
 //
 // ─── STYLE ──────────────────────────────────────────────────────────────────────
 //
 
-    export interface WebStyleSettings extends PortableStyle<PortableColor> {
-        line:           WebTextDecorationLineType
-        lineStyle:      WebTextDecorationLineStyle
+    export interface HTMLStyleSettings extends PortableStyle<PortableColor> {
+        line:           HTMLTextDecorationLineType
+        lineStyle:      HTMLTextDecorationLineStyle
     }
 
 //
@@ -38,9 +38,9 @@
 //
 
     export function mergeNewWebStyleOptionsWithThePreviousSettings (
-            previous: WebStyleSettings,
-            newStyle: Partial<WebStyleSettings>
-        ): WebStyleSettings {
+            previous: HTMLStyleSettings,
+            newStyle: Partial<HTMLStyleSettings>
+        ): HTMLStyleSettings {
 
         //
         return {

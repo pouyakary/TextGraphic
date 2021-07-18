@@ -106,11 +106,11 @@ TextKit is a rendering engine that synthesizes the final render at once. It does
 
 ### Platform Independent Rendering
 
-The design of TextKit is around a central idea of having different renderers for different environments, which are open to anyone to also extend and add to. TextKit has a Virtual Screen and Ray-Tracker system that makes it possible to compute optimized native renders for each platform that look exactly the same.
+The design of TextKit is around a central idea of having different renderers for different environments, which are open to anyone to also extend and add to. TextKit has a Virtual Screen and Ray-Tracker system that makes it possible to compute optimized native renders for different platforms. Currently TextKit offers renderers for [ANSI Terminal](https://github.com/pouyakary/TextKit/tree/master/textkit/source/environments/ansi-terminal), [SVG](https://github.com/pouyakary/TextKit/tree/master/textkit/source/environments/svg), and [HTML](https://github.com/pouyakary/TextKit/tree/master/textkit/source/environments/html).
 
 <br>
 
-![Screenshots of a graphic rendered for ANSI Terminal and Web](https://user-images.githubusercontent.com/2157285/124510265-b001ef00-dde8-11eb-8066-8c6df650ab7d.png)
+![Screenshots of a graphic rendered for ANSI Terminal, SVG and Web](https://user-images.githubusercontent.com/2157285/126066739-24eecd9f-cdf3-410a-aec5-5855dec84509.png)
 
 <br><br>
 

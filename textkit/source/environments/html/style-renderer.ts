@@ -13,8 +13,8 @@
 
     import { StyleRendererProtocol, PortableColor }
         from "../../protocols"
-    import { WebStyleSettings, WebTextDecorationLineStyle
-           , WebTextDecorationLineType, mergeNewWebStyleOptionsWithThePreviousSettings
+    import { HTMLStyleSettings, HTMLTextDecorationLineStyle
+           , HTMLTextDecorationLineType, mergeNewWebStyleOptionsWithThePreviousSettings
            }
         from "./style"
     import { convertPortableColorToCSSColor }
@@ -27,10 +27,10 @@
         from "../tools/indentation"
 
 //
-// ─── ANSI TERMINAL STYLE RENDERER ───────────────────────────────────────────────
+// ─── HTML STYLE RENDERER ────────────────────────────────────────────────────────
 //
 
-    export class WebStyleRenderer implements StyleRendererProtocol<WebStyleSettings> {
+    export class HTMLStyleRenderer implements StyleRendererProtocol<HTMLStyleSettings> {
 
         //
         // ─── STORAGE ─────────────────────────────────────────────────────
@@ -59,8 +59,8 @@
                     italic:             false,
                     underline:          false,
                     blink:              false,
-                    line:               "none" as WebTextDecorationLineType,
-                    lineStyle:          "solid" as WebTextDecorationLineStyle,
+                    line:               "none" as HTMLTextDecorationLineType,
+                    lineStyle:          "solid" as HTMLTextDecorationLineStyle,
                 }
             }
 
@@ -68,9 +68,9 @@
         // ─── RENDER STYLES ───────────────────────────────────────────────
         //
 
-            public renderLeftStylingInfo ( style: WebStyleSettings ): string {
+            public renderLeftStylingInfo ( style: HTMLStyleSettings ): string {
                 const css =
-                    convertWebSettingsToInlineCSS( style )
+                    convertHTMLSettingsToInlineCSS( style )
                 const attribute =
                     this.#optimizer.generateAttribute( css )
 
@@ -86,9 +86,9 @@
         //
 
             public margeNewStyleOptionsWithPreviosuStyleState (
-                    style:      WebStyleSettings,
-                    options:    Partial<WebStyleSettings>,
-                ): WebStyleSettings {
+                    style:      HTMLStyleSettings,
+                    options:    Partial<HTMLStyleSettings>,
+                ): HTMLStyleSettings {
 
                 //
                 return mergeNewWebStyleOptionsWithThePreviousSettings(
@@ -128,8 +128,8 @@
                     "<textkit-area>" + headerStyleTag
 
                 // body
-                for ( let i = 1; i <= lines.length; i++ ) {
-                    renderedParts[ i ] =
+                for ( let i = 0; i <= lines.length; i++ ) {
+                    renderedParts[ i + 1 ] =
                         `${ INDENTATION }<textkit-row>${ lines[ i ] }</textkit-row>`
                 }
 
@@ -149,7 +149,7 @@
 // ─── RENDER STYLE ───────────────────────────────────────────────────────────────
 //
 
-    function convertWebSettingsToInlineCSS ( style: WebStyleSettings ) {
+    function convertHTMLSettingsToInlineCSS ( style: HTMLStyleSettings ) {
         const serializedProperties =
             new Array<string> ( )
 

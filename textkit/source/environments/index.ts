@@ -9,7 +9,7 @@
 
 export * as ANSITerminal from
     "./ansi-terminal"
-export * as Web from
-    "./web"
+export * as HTML from
+    "./html"
 export * as SVG from
     "./svg"
