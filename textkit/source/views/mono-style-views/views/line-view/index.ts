@@ -17,7 +17,7 @@
     import { ShapeView }
         from "../shape-view"
 
-    import { includesLineBreak }
+    import { includesLineBreak, replaceCharacters }
         from "../../../../tools/string"
 
     import { applyMarginToMonoStyleView }
@@ -148,7 +148,9 @@
 
             get styledForm ( ): string {
                 const encodedLine =
-                    this.line.replace( /./g, this.styleRenderer.encodeCharacterForStyledRender )
+                    replaceCharacters(
+                        this.line, this.styleRenderer.encodeCharacterForStyledRender
+                    )
 
                 const lines = [
                     this.#leftStylingInfoCache + encodedLine + this.#rightStylingInfoCache

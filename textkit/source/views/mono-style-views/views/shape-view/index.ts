@@ -21,10 +21,8 @@
         from "../../../../presets/box-frames"
     import { HorizontalAlign, VerticalAlign }
         from "../../../../protocols/align"
-
-    import { unifyLineSpaces, breakStringIntoLines, includesLineBreak }
+    import { unifyLineSpaces, breakStringIntoLines, includesLineBreak, replaceCharacters }
         from "../../../../tools/string"
-
     import { alignMonoStyleViewWithinNewBoxBoundary }
         from "../../algorithms/align-in-box"
     import { frameMonoStyledViews }
@@ -37,10 +35,8 @@
         from "../../../algorithms/center-to-boundary-box"
     import { applyMarginToMonoStyleView }
         from "../../algorithms/apply-margin"
-
     import { EMPTY_STRING, LINE_BREAK_CHARACTER, WHITE_SPACE_CHARACTER }
         from "../../../../constants/characters"
-
     import * as Easters
         from "../easters"
 
@@ -290,18 +286,18 @@
             public get styledForm ( ): string {
                 const styledLines =
                     new Array<string> ( this.height )
+                const { encodeCharacterForStyledRender } =
+                    this.styleRenderer
+                const leftInfo =
+                    this.#leftStylingInfoCache
+                const rightInfo =
+                    this.#rightStylingInfoCache
 
                 for ( let row = 0; row < this.height; row++ ) {
                     const encodedLine =
-                        this.lines[ row ]
-                            .replace( /./g,
-                                this.styleRenderer.encodeCharacterForStyledRender
-                            )
+                        replaceCharacters( this.lines[ row ], encodeCharacterForStyledRender )
                     styledLines[ row ] =
-                        ( this.#leftStylingInfoCache
-                        + encodedLine
-                        + this.#rightStylingInfoCache
-                        )
+                        leftInfo + encodedLine + rightInfo
                 }
 
                 return this.styleRenderer.wrapRootLinesAndFinalizeRender(

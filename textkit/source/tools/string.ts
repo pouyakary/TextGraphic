@@ -74,4 +74,19 @@
         return END_OF_LINE_CHARACTERS.test( text )
     }
 
+//
+// ─── REPLACE CHARACTERS ─────────────────────────────────────────────────────────
+//
+
+    export function replaceCharacters ( text: string, replacer: ( char: string ) => string ): string {
+        const size =
+            text.length
+        const newText =
+            new Array( size )
+        for ( let i = 0; i < size; i++ ) {
+            newText[ i ] = replacer( text[ i ] )
+        }
+        return newText.join( EMPTY_STRING )
+    }
+
 // ────────────────────────────────────────────────────────────────────────────────
