@@ -53,7 +53,7 @@
 
             get defaultStyle ( ) {
                 return {
-                    textColor:          "factory" as PortableColor,
+                    color:              "factory" as PortableColor,
                     backgroundColor:    "factory" as PortableColor,
                     bold:               false,
                     italic:             false,

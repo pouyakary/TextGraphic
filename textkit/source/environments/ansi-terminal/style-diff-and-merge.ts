@@ -143,7 +143,7 @@
         //
         return {
             backgroundColor:    options.backgroundColor     ? options.backgroundColor   : style.backgroundColor,
-            color:          options.color           ? options.color         : style.color,
+            color:              options.color           ? options.color         : style.color,
             bold:               options.bold                ? options.bold              : style.bold,
             italic:             options.italic              ? options.italic            : style.italic,
             reversed:           options.reversed            ? options.reversed          : style.reversed,
