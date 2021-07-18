@@ -15,6 +15,10 @@
         from "../source"
     import * as Tools
         from "./tools"
+    import { homedir }
+        from "os"
+    import * as path
+        from "path"
     import * as fs
         from "fs"
 
@@ -56,7 +60,14 @@
     const optimizedSVG =
         Tools.createAGoodModel( svgOptimizingStyler )
 
-    fs.writeFileSync( "/Users/pouya/desktop/normal.svg", normalSVG.styledForm )
-    fs.writeFileSync( "/Users/pouya/desktop/optimized.svg", optimizedSVG.styledForm )
+    const desktop = ( name: string ) =>
+        path.join( homedir( ), "Desktop", name )
+
+    fs.writeFileSync(
+        desktop( "normal.svg" ), normalSVG.styledForm
+    )
+    fs.writeFileSync(
+        desktop( "optimized.svg" ), optimizedSVG.styledForm
+    )
 
 // ────────────────────────────────────────────────────────────────────────────────
