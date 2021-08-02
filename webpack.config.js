@@ -12,8 +12,9 @@ const nodeConfiguration = {
     target:     "node",
     entry:      entryPoint( "index.js" ),
     output: {
-        path:       distFolder,
-        filename:   "textgraphic.node.js",
+        libraryTarget:  "commonjs",
+        path:           distFolder,
+        filename:       "textgraphic.node.js",
     },
 }
 
@@ -22,8 +23,9 @@ const webConfiguration = {
     target:     "web",
     entry:      entryPoint( "web-index.js" ),
     output: {
-        path:       distFolder,
-        filename:   "textgraphic.web.js",
+        libraryTarget:  "window",
+        path:           distFolder,
+        filename:       "textgraphic.web.js",
     },
 }
 

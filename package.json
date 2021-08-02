@@ -1,6 +1,6 @@
 {
   "name": "textgraphic",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Textual 2D Graphics Framework",
   "main": "out/dist/textgraphic.node.js",
   "directories": {
