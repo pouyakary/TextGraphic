@@ -1,8 +1,8 @@
 {
   "name": "textgraphic",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Textual 2D Graphics Framework",
-  "main": "out/dist/textgraphic-node.js",
+  "main": "out/dist/textgraphic.node.js",
   "directories": {
     "test": "test"
   },
@@ -32,9 +32,7 @@
     "@types/node": "^15.12.2",
     "dts-bundle-generator": "^5.9.0",
     "mocha": "^9.0.0",
-    "typedoc": "^0.21.4"
-  },
-  "dev-dependencies": {
-    "monaco-editor": "^0.25.2"
+    "typedoc": "^0.21.4",
+    "webpack-cli": "^4.7.2"
   }
 }

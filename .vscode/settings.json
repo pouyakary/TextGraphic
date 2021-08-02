@@ -6,6 +6,7 @@
         "occupation",
         "pouyakary",
         "renderkit",
+        "textgraphic",
         "textkit"
     ],
     "typescript.suggest.autoImports": false,

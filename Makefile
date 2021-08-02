@@ -32,7 +32,7 @@ endef
 # ─── MASTER COMMAND ─────────────────────────────────────────────────────────────
 #
 
-build: clean compile generate-dts pack-for-browser pack-for-node
+build: clean compile generate-dts pack
 	$(info )
 	$(info )
 	$(info $(Separation-Line))
@@ -57,7 +57,9 @@ compile:
 
 generate-dts:
 	$(call build-title,Generating Single TypeScript .d.ts file.)
-	$(Declaration-Generator) --sort --no-banner -o $(Distribution-Directory)/$(PACKAGE_NAME)-node.d.ts $(Compiled-Directory)/source/index.ts
+	rm -f ./out/dist/textgraphic.node.js
+	tsc ./textgraphic/source/index.ts   --declaration   --target ES2016   --module amd   --moduleResolution node   --out ./out/dist/textgraphic.node.js
+	rm -f ./out/dist/textgraphic.node.js
 
 generate-docs:
 	npx typedoc --out ./out/docs --name "$(PRODUCT_NAME)" --hideGenerator ./$(SOURCE_DIR)/source/index.ts
@@ -66,16 +68,8 @@ generate-docs:
 # ─── PACKERS ────────────────────────────────────────────────────────────────────
 #
 
-define pack-with-parcel
-    parcel build --out-dir=$(Distribution-Directory) --out-file=$(PACKAGE_NAME)-$(1).js --global=$(PRODUCT_NAME) --target=$(1) $(Compiled-Directory)/source/index.js
-endef
-
-pack-for-browser:
-	$(call build-title,Packing for the Browser)
-	$(call pack-with-parcel,browser)
-
-pack-for-node:
-	$(call build-title,Packing for the Node)
-	$(call pack-with-parcel,node)
+pack:
+	$(call build-title,Packing code for the Node and Web.mak)
+	webpack
 
 # ────────────────────────────────────────────────────────────────────────────────
