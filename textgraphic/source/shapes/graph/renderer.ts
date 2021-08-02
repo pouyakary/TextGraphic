@@ -133,7 +133,6 @@
             }
         }
 
-
         // done
         return { renderer, width, height, formula,
             character:      drawingCharacter,

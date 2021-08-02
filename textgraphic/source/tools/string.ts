@@ -78,7 +78,9 @@
 // ─── REPLACE CHARACTERS ─────────────────────────────────────────────────────────
 //
 
-    export function replaceCharacters ( text: string, replacer: ( char: string ) => string ): string {
+    export function replaceCharacters ( text: string,
+                                    replacer: ( char: string ) => string ): string {
+        //
         const size =
             text.length
         const newText =

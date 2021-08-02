@@ -1,17 +1,17 @@
 {
-  "name": "@kary/textkit",
+  "name": "textgraphic",
   "version": "0.0.2",
   "description": "Textual 2D Graphics Framework",
-  "main": "out/dist/textkit-node.js",
+  "main": "out/dist/textgraphic-node.js",
   "directories": {
     "test": "test"
   },
   "bin": {
-    "textkit": "./out/compiled/repl/main.js"
+    "text": "./out/compiled/repl/main.js"
   },
   "scripts": {
     "build": "make build",
-    "fix-playground-setup": "sudo rm -f /usr/local/bin/textkit; sudo npm link; chmod u+x ./out/compiled/repl/main.js",
+    "fix-playground-setup": "sudo rm -f /usr/local/bin/textgraphic; sudo npm link; chmod u+x ./out/compiled/repl/main.js",
     "repl": "node ./out/compiled/repl/main.js",
     "test": "mocha \"./out/compiled/tests/main.js\"",
     "config-ci": "npm install -g typescript mocha",
@@ -22,11 +22,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/pouyakary/textkit"
+    "url": "git+https://github.com/pouyakary/textgraphic"
   },
   "author": "Pouya Kary",
   "license": "ISC",
-  "homepage": "https://github.com/pouyakary/textkit",
+  "homepage": "https://github.com/pouyakary/textgraphic",
   "devDependencies": {
     "@types/mocha": "^8.2.2",
     "@types/node": "^15.12.2",

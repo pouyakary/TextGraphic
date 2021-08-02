@@ -3,6 +3,12 @@
 # ─── CONSTANTS ──────────────────────────────────────────────────────────────────
 #
 
+PRODUCT_NAME="TextGraphic"
+
+PACKAGE_NAME=textgraphic
+
+SOURCE_DIR = ./textgraphic
+
 Declaration-Generator = ./node_modules/.bin/dts-bundle-generator
 
 Distribution-Directory = ./out/dist
@@ -30,7 +36,7 @@ build: clean compile generate-dts pack-for-browser pack-for-node
 	$(info )
 	$(info )
 	$(info $(Separation-Line))
-	$(info ☑︎ Successfully built TextKit)
+	$(info ☑︎ Successfully built TextGraphic)
 	$(info )
 
 #
@@ -51,17 +57,17 @@ compile:
 
 generate-dts:
 	$(call build-title,Generating Single TypeScript .d.ts file.)
-	$(Declaration-Generator) --sort --no-banner -o $(Distribution-Directory)/textkit-node.d.ts $(Compiled-Directory)/source/index.ts
+	$(Declaration-Generator) --sort --no-banner -o $(Distribution-Directory)/$(PACKAGE_NAME)-node.d.ts $(Compiled-Directory)/source/index.ts
 
 generate-docs:
-	npx typedoc --out ./out/docs --name "TextKit" --hideGenerator ./textkit/source/index.ts
+	npx typedoc --out ./out/docs --name "$(PRODUCT_NAME)" --hideGenerator ./$(SOURCE_DIR)/source/index.ts
 
 #
 # ─── PACKERS ────────────────────────────────────────────────────────────────────
 #
 
 define pack-with-parcel
-    parcel build --out-dir=$(Distribution-Directory) --out-file=textkit-$(1).js --global=TextKit --target=$(1) $(Compiled-Directory)/source/index.js
+    parcel build --out-dir=$(Distribution-Directory) --out-file=$(PACKAGE_NAME)-$(1).js --global=$(PRODUCT_NAME) --target=$(1) $(Compiled-Directory)/source/index.js
 endef
 
 pack-for-browser:

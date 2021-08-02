@@ -2,6 +2,6 @@
 .github/**
 .vscode/**
 out/compiled/**/*
-textkit/**
+textgraphic/**
 .gitignore
 tsconfig.json
