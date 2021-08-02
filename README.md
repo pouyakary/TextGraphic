@@ -121,11 +121,11 @@ For now, I'm designing the system so it is both unstable and the API is subject 
 <br>
 
 ```shell
-% npm install --save @kary/TextGraphic
+% npm install --save textgraphic
 ```
 
 ```TypeScript
-import * as TextGraphic from "@kary/TextGraphic"
+import * as TextGraphic from "textgraphic"
 ```
 
 <br>
