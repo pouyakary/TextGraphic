@@ -1,6 +1,6 @@
 {
   "name": "textgraphic",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Textual 2D Graphics Framework",
   "main": "out/dist/textgraphic.node.js",
   "directories": {
@@ -10,7 +10,7 @@
     "text": "./out/compiled/repl/main.js"
   },
   "scripts": {
-    "build": "make build",
+    "build": "node build.js",
     "fix-playground-setup": "sudo rm -f /usr/local/bin/textgraphic; sudo npm link; chmod u+x ./out/compiled/repl/main.js",
     "repl": "node ./out/compiled/repl/main.js",
     "test": "mocha \"./out/compiled/tests/main.js\"",
