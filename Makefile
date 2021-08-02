@@ -59,6 +59,7 @@ generate-dts:
 	$(call build-title,Generating Single TypeScript .d.ts file.)
 	rm -f ./out/dist/textgraphic.node.js
 	tsc ./textgraphic/source/index.ts   --declaration   --target ES2016   --module amd   --moduleResolution node   --out ./out/dist/textgraphic.node.js
+	sed -i 's/declare module "index"/declare module "textgraphic"' ./out/dist/textgraphic.node.d.js
 	rm -f ./out/dist/textgraphic.node.js
 
 generate-docs:
