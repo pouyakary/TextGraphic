@@ -11,7 +11,7 @@
 // ─── IMPORTS ────────────────────────────────────────────────────────────────────
 //
 
-    import * as TextKit from
+    import * as TextGraphic from
         "../source"
     import * as Tools from
         "./tools"
@@ -21,7 +21,7 @@
 //
 
     const renderer =
-        new TextKit.Environments.ANSITerminal.ANSITerminalStyleRenderer( )
+        new TextGraphic.Environments.ANSITerminal.ANSITerminalStyleRenderer( )
 
 //
 // ─── CONSTANTS ──────────────────────────────────────────────────────────────────
@@ -49,30 +49,30 @@
             ` W${ellipse_width} • H${ellipse_height} `
 
         const graph =
-            TextKit.Shapes.Graph.create({
+            TextGraphic.Shapes.Graph.create({
                 renderer,
                 width:      ellipse_width,
                 height:     ellipse_height,
                 style:      { color: GRAPH_COLOR },
-                formula:    TextKit.Shapes.Graph.Formulas.Ellipse
+                formula:    TextGraphic.Shapes.Graph.Formulas.Ellipse
             })
 
         const graphBoxBackground =
-            TextKit.ShapeView.initBlankRectangle(
+            TextGraphic.ShapeView.initBlankRectangle(
                 ellipse_width  + 2 * GRAPH_BOX_H_PADDING,
                 ellipse_height + 2 * GRAPH_BOX_V_PADDING,
                 renderer,
             )
-            .frame( TextKit.Presets.HeavyBox )
+            .frame( TextGraphic.Presets.HeavyBox )
             .addStyle({ color: GUIDES_COLOR })
 
         const title =
-            TextKit.ShapeView.initWithText( titleText, 0, renderer, { } )
-                .frame( TextKit.Presets.HeavyBox )
+            TextGraphic.ShapeView.initWithText( titleText, 0, renderer, { } )
+                .frame( TextGraphic.Presets.HeavyBox )
                 .addStyle({ color: GUIDES_COLOR })
 
         const graphBox =
-            new TextKit.CanvasView(
+            new TextGraphic.CanvasView(
                 ellipse_width  + 2 * GRAPH_BOX_H_PADDING + 2,
                 ellipse_height + 2 * GRAPH_BOX_V_PADDING + 2,
                 renderer,
@@ -92,7 +92,7 @@
         console.clear( )
         console.log( finalView.styledForm )
         Tools.setTerminalTitle( titleText )
-        Tools.setCursorToBottomRight( "TextKit Ellipse Demo " )
+        Tools.setCursorToBottomRight( "TextGraphic Ellipse Demo " )
         await Tools.sleep( 50 )
     }
 

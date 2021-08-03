@@ -14,7 +14,7 @@
 
     import * as repl
         from "repl";
-    import * as TextKit
+    import * as TextGraphic
         from "../source"
 
     import { writer }
@@ -32,19 +32,19 @@
 //
 
     const $ =
-        new TextKit.Environments.ANSITerminal.ANSITerminalStyleRenderer( )
+        new TextGraphic.Environments.ANSITerminal.ANSITerminalStyleRenderer( )
 
 //
 // ─── HEADER ─────────────────────────────────────────────────────────────────────
 //
 
-    function printTextKitHeader ( ) {
+    function printTextGraphicHeader ( ) {
         const titleText =
-            " TextKit Playground ───────"
+            " TextGraphic Playground ───────"
         const title =
-            ( TextKit.Environments.ANSITerminal.EscapeSequences.Italic
+            ( TextGraphic.Environments.ANSITerminal.EscapeSequences.Italic
             + titleText
-            + TextKit.Environments.ANSITerminal.EscapeSequences.Reset
+            + TextGraphic.Environments.ANSITerminal.EscapeSequences.Reset
             )
         const restOfTheLine =
             "─".repeat( process.stdout.columns - titleText.length )
@@ -64,8 +64,8 @@
 // ─── MAIN ───────────────────────────────────────────────────────────────────────
 //
 
-    setTerminalTitle( "Pouya's TextKit Playground" )
-    printTextKitHeader( )
+    setTerminalTitle( "Pouya's TextGraphic Playground" )
+    printTextGraphicHeader( )
 
     const server =
         repl.start({

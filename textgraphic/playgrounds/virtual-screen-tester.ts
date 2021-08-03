@@ -11,7 +11,7 @@
 // ─── IMPORTS ────────────────────────────────────────────────────────────────────
 //
 
-    import * as TextKit
+    import * as TextGraphic
         from "../source"
 
 //
@@ -44,17 +44,17 @@
         const height =
             map.length
         const canvas =
-            new TextKit.CanvasView( width, height, renderer )
+            new TextGraphic.CanvasView( width, height, renderer )
         const X =
-            new TextKit.LineView( "X", renderer, { color: "red" })
+            new TextGraphic.LineView( "X", renderer, { color: "red" })
         const Z =
-            new TextKit.LineView( "Z", renderer, { })
+            new TextGraphic.LineView( "Z", renderer, { })
         const Y =
-            new TextKit.LineView( "Z", renderer, { color: "blue" })
+            new TextGraphic.LineView( "Z", renderer, { color: "blue" })
         const P =
-            new TextKit.LineView( "+++", renderer, { color: "blue", italic: true })
+            new TextGraphic.LineView( "+++", renderer, { color: "blue", italic: true })
         const A =
-            new TextKit.LineView( "***", renderer, { color: "red" })
+            new TextGraphic.LineView( "***", renderer, { color: "red" })
 
         for ( let y = 0; y < height; y++ ) {
             for ( let x = 0; x < width; x++ ) {
@@ -86,7 +86,7 @@
 //
 
     const terminalRenderer =
-        new TextKit.Environments.ANSITerminal.ANSITerminalStyleRenderer( )
+        new TextGraphic.Environments.ANSITerminal.ANSITerminalStyleRenderer( )
     const terminalRender =
         createModel( terminalRenderer ).styledForm
 

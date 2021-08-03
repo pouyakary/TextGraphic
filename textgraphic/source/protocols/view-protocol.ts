@@ -23,7 +23,7 @@
 //
 
     /**
-     * __⚠️ UNSAFE__ &mdash; TextKit implements no runtime checks for this type.
+     * __⚠️ UNSAFE__ &mdash; TextGraphic implements no runtime checks for this type.
      *
      * ---
      *
@@ -105,11 +105,11 @@
         //
 
             /**
-             * __⚠️ UNSAFE__ &mdash; TextKit implements no runtime checks for this function.
+             * __⚠️ UNSAFE__ &mdash; TextGraphic implements no runtime checks for this function.
              *
              * ---
              *
-             * Returns a character as a TextKit `ScreenMatrixPixel` with the
+             * Returns a character as a TextGraphic `ScreenMatrixPixel` with the
              * positions provided by the parent `CanvasView`.
              *
              * @param left Distance from the left in the parent canvas
@@ -124,7 +124,7 @@
 
 
             /**
-             *  __⚠️ UNSAFE__ &mdash; TextKit implements no runtime checks for this function.
+             *  __⚠️ UNSAFE__ &mdash; TextGraphic implements no runtime checks for this function.
              *
              *  ---
              *

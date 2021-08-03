@@ -7,7 +7,6 @@
         "pouyakary",
         "renderkit",
         "textgraphic",
-        "textkit"
     ],
     "typescript.suggest.autoImports": false,
     "typescript.preferences.includePackageJsonAutoImports": "off"

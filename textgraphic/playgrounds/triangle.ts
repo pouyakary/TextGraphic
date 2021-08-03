@@ -11,7 +11,7 @@
 // ─── IMPORTS ────────────────────────────────────────────────────────────────────
 //
 
-    import * as TextKit
+    import * as TextGraphic
         from "../source"
     import * as Tools
         from "./tools"
@@ -21,14 +21,14 @@
 //
 
     const renderer =
-        new TextKit.Environments.ANSITerminal.ANSITerminalStyleRenderer( )
+        new TextGraphic.Environments.ANSITerminal.ANSITerminalStyleRenderer( )
 
 //
 // ─── RENDER TRIANGLE ────────────────────────────────────────────────────────────
 //
 
     async function renderTriangle ( f: number ) {
-        const triangle = TextKit.Shapes.Graph.create({
+        const triangle = TextGraphic.Shapes.Graph.create({
             renderer,
             style: { color: "blue" },
             width: process.stdout.columns,

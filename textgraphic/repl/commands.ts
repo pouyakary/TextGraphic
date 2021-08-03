@@ -13,7 +13,7 @@
 
     import { REPLServer }
         from "repl"
-    import * as TextKit
+    import * as TextGraphic
         from "../source"
     import { setTerminalTitle }
         from "./tools"
@@ -47,7 +47,7 @@
     function defineNoteCommand ( server: REPLServer ) {
         server.defineCommand( 'note', function note( timpani ) {
             const note =
-                TextKit.Compilers.compileTimpaniToANSITerminalSequence( timpani )
+                TextGraphic.Compilers.compileTimpaniToANSITerminalSequence( timpani )
             console.log( )
             console.log( note )
             console.log( )

@@ -10,7 +10,7 @@
 // ─── IMPORTS ────────────────────────────────────────────────────────────────────
 //
 
-    import * as TextKit
+    import * as TextGraphic
         from "../source"
     import * as http
         from "http"
@@ -29,11 +29,11 @@
         <html>
             <head>
                 <meta charset="UTF-8">
-                <title>Testing TextKit</title>
+                <title>Testing TextGraphic</title>
             </head>
             <body>
             <style>
-                textkit-row {
+                textgraphic-row {
                 display: block;
                 white-space: pre;
                 font-family: monospace;
@@ -45,16 +45,16 @@
 // ─── SHAPE ──────────────────────────────────────────────────────────────────────
 //
 
-    function generateShape ( renderer: TextKit.StyleRendererProtocol<any, any> ) {
+    function generateShape ( renderer: TextGraphic.StyleRendererProtocol<any, any> ) {
         const text =
-            new TextKit.LineView("Hello, World!", renderer, { textColor: "red" })
+            new TextGraphic.LineView("Hello, World!", renderer, { textColor: "red" })
 
         const bird =
-            TextKit.ShapeView.initArendelleBird( renderer )
+            TextGraphic.ShapeView.initArendelleBird( renderer )
         bird.addStyle({ textColor: "blue" })
 
         const canvas =
-            new TextKit.CanvasView( 40, 15, renderer )
+            new TextGraphic.CanvasView( 40, 15, renderer )
 
         canvas.add( text, 5, 1, 0 )
         canvas.add( text, 20, 1, 0 )
@@ -69,15 +69,15 @@
 //
 
     const htmlRender = generateShape(
-        new TextKit.Environments.HTML.HTMLStyleRenderer( )
+        new TextGraphic.Environments.HTML.HTMLStyleRenderer( )
     )
 
     const terminalRender = generateShape(
-        new TextKit.Environments.ANSITerminal.ANSITerminalStyleRenderer( )
+        new TextGraphic.Environments.ANSITerminal.ANSITerminalStyleRenderer( )
     )
 
     const svgRender = generateShape(
-        new TextKit.Environments.SVG.SVGStyleRenderer( true, {
+        new TextGraphic.Environments.SVG.SVGStyleRenderer( true, {
             fontSize: 13, fontFamily: "Menlo"
         })
     )

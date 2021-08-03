@@ -1,7 +1,7 @@
 
 # TextGraphic
 
-TextGraphic _(previously "TextKit")_ is a framework for creating _Textual Graphics_. It provides layers, styling, rich color, text justification, layouts, tables, view-ports, transparency, etc. All behind a beautiful object-oriented view model that is easy and humane to use. Underneath it also provides a rich rendering engine that is fully independent of any platform and can synthesize rendered code for ANSI Terminals, Web, and plain text format. Written in pure ECMAScript without incorporating any platform provided API, (no node/DOM API is used) and therefore works on any JavaScript platform.
+TextGraphic _(previously "TextGraphic")_ is a framework for creating _Textual Graphics_. It provides layers, styling, rich color, text justification, layouts, tables, view-ports, transparency, etc. All behind a beautiful object-oriented view model that is easy and humane to use. Underneath it also provides a rich rendering engine that is fully independent of any platform and can synthesize rendered code for ANSI Terminals, Web, and plain text format. Written in pure ECMAScript without incorporating any platform provided API, (no node/DOM API is used) and therefore works on any JavaScript platform.
 
 <br>
 

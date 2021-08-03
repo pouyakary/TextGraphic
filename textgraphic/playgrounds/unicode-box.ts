@@ -11,7 +11,7 @@
 // ─── IMPORTS ────────────────────────────────────────────────────────────────────
 //
 
-    import * as TextKit
+    import * as TextGraphic
         from "../source/index"
 
 //
@@ -19,7 +19,7 @@
 //
 
     const renderer =
-        new TextKit.Environments.ANSITerminal.ANSITerminalStyleRenderer( )
+        new TextGraphic.Environments.ANSITerminal.ANSITerminalStyleRenderer( )
 
 //
 // ─── SAMPLE ─────────────────────────────────────────────────────────────────────
@@ -27,15 +27,15 @@
 
     function createSample ( ) {
         const background =
-            new TextKit.CanvasView( 7, 4, renderer )
+            new TextGraphic.CanvasView( 7, 4, renderer )
 
         const sampleBox1 =
-            TextKit.ShapeView.initBlankRectangle( 3, 1, renderer )
-                .frame( TextKit.Presets.LightBox )
+            TextGraphic.ShapeView.initBlankRectangle( 3, 1, renderer )
+                .frame( TextGraphic.Presets.LightBox )
 
         const sampleBox2 =
-            TextKit.ShapeView.initBlankRectangle( 3, 1, renderer )
-                .frame( TextKit.Presets.HeavyBox )
+            TextGraphic.ShapeView.initBlankRectangle( 3, 1, renderer )
+                .frame( TextGraphic.Presets.HeavyBox )
 
         background.add( sampleBox1, 0, 0, 1 )
         background.add( sampleBox2, 2, 1, 2 )
@@ -53,12 +53,12 @@
         createSample( )
             .fineTuneBoxIntersections( )
     const arrow =
-        new TextKit.LineView( "becomes", renderer, { })
+        new TextGraphic.LineView( "becomes", renderer, { })
     const spacing =
         3
 
     const container =
-        new TextKit.CanvasView(
+        new TextGraphic.CanvasView(
             2 * ( spacing + normalSample.width ) + arrow.width,
             normalSample.height,
             renderer,
@@ -89,7 +89,7 @@
 
 
     const background =
-        new TextKit.CanvasView(
+        new TextGraphic.CanvasView(
             process.stdout.columns,
             10,
             renderer

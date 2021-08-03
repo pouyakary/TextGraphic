@@ -11,7 +11,7 @@
 // ─── IMPORTS ────────────────────────────────────────────────────────────────────
 //
 
-    import * as TextKit
+    import * as TextGraphic
         from "../source"
     import * as Tools
         from "./tools"
@@ -21,14 +21,14 @@
 //
 
     const renderer =
-        new TextKit.Environments.ANSITerminal.ANSITerminalStyleRenderer( )
+        new TextGraphic.Environments.ANSITerminal.ANSITerminalStyleRenderer( )
 
 //
 // ─── RENDER GRAPH ───────────────────────────────────────────────────────────────
 //
 
     function renderGraph ( color: string, f: number ) {
-        return TextKit.Shapes.Graph.create({
+        return TextGraphic.Shapes.Graph.create({
             renderer,
             width:  process.stdout.columns,
             height: process.stdout.rows,
@@ -55,7 +55,7 @@
 
     async function renderFrame ( f: number ) {
         const canvas =
-            new TextKit.CanvasView(
+            new TextGraphic.CanvasView(
                 process.stdout.columns, process.stdout.rows, renderer
             )
         canvas.add(

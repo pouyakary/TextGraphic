@@ -11,7 +11,7 @@
 // ─── IMPORTS ────────────────────────────────────────────────────────────────────
 //
 
-    import * as TextKit
+    import * as TextGraphic
         from "../source"
     import * as Tools
         from "./tools"
@@ -69,7 +69,7 @@
 
     const RULER_STYLES = {
         italic: true,
-        textColor: "blue" as TextKit.PortableColor
+        textColor: "blue" as TextGraphic.PortableColor
     }
 
     const LEFT_SPACING =
@@ -89,27 +89,27 @@
 //
 
     const styler =
-        new TextKit.Environments.ANSITerminal.ANSITerminalStyleRenderer( )
+        new TextGraphic.Environments.ANSITerminal.ANSITerminalStyleRenderer( )
 
 //
 // ─── HORIZONTAL RULER ───────────────────────────────────────────────────────────
 //
 
     function createHorizontalRuler ( size: number ) {
-        const charSet: TextKit.Shapes.Rulers.RulerCharSet = {
+        const charSet: TextGraphic.Shapes.Rulers.RulerCharSet = {
             originChar: "└",
             middleChar: "─",
             separatorChar: "┴"
         }
 
-        const rulerSettings: TextKit.Shapes.Rulers.CharRulerSettings = {
+        const rulerSettings: TextGraphic.Shapes.Rulers.CharRulerSettings = {
             size: size,
-            facing: TextKit.Direction.Down,
+            facing: TextGraphic.Direction.Down,
             chars: charSet
         }
 
         const ruler =
-            TextKit.Shapes.Rulers.createChartRuler( styler, rulerSettings )
+            TextGraphic.Shapes.Rulers.createChartRuler( styler, rulerSettings )
                 .applyMargin( 0, 0, 0, LEFT_SPACING )
         ruler.style = RULER_STYLES
 
@@ -121,21 +121,21 @@
 //
 
     function createVerticalRuler ( height: number ) {
-        const charSet: TextKit.Shapes.Rulers.RulerCharSet = {
+        const charSet: TextGraphic.Shapes.Rulers.RulerCharSet = {
             originChar: "┐",
             middleChar: "│",
             separatorChar: "┤"
         }
 
-        const rulerSettings: TextKit.Shapes.Rulers.CharRulerSettings = {
+        const rulerSettings: TextGraphic.Shapes.Rulers.CharRulerSettings = {
             size: height,
-            facing: TextKit.Direction.Right,
+            facing: TextGraphic.Direction.Right,
             unit: 3,
             chars: charSet
         }
 
         const ruler =
-            TextKit.Shapes.Rulers.createChartRuler( styler, rulerSettings )
+            TextGraphic.Shapes.Rulers.createChartRuler( styler, rulerSettings )
                 .applyMargin( 0, 0, 0, LEFT_SPACING )
         ruler.style = RULER_STYLES
 
@@ -148,8 +148,8 @@
 
     function createTextJustified ( size: number ) {
         const justifiedText =
-            TextKit.Layouts.createMonoStyleJustificationLayout(
-                SAMPLE_TEXT, size, TextKit.Justification.Center, styler )
+            TextGraphic.Layouts.createMonoStyleJustificationLayout(
+                SAMPLE_TEXT, size, TextGraphic.Justification.Center, styler )
             .applyMargin( 0, 0, 0, LEFT_SPACING )
 
         return justifiedText
@@ -174,7 +174,7 @@
         const canvasHeight =
             justifiedText.height + horizontalRuler.height + VERTICAL_SPACING + ( CANVAS_VERTICAL_PADDING * 2 )
         const canvas =
-            new TextKit.CanvasView( canvasWidth, canvasHeight, styler )
+            new TextGraphic.CanvasView( canvasWidth, canvasHeight, styler )
 
         //
         canvas.add( verticalRuler,
@@ -198,7 +198,7 @@
         console.clear( )
         console.log( canvas.styledForm )
 
-        Tools.setCursorToBottomRight( "TextKit Justifier Clustering Demo " )
+        Tools.setCursorToBottomRight( "TextGraphic Justifier Clustering Demo " )
         await Tools.sleep( 50 )
     }
 

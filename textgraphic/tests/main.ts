@@ -25,7 +25,7 @@
 // ─── TEXT KIT TEST SUITE ────────────────────────────────────────────────────────
 //
 
-    describe ( "TextKit Framework", function () {
+    describe ( "TextGraphic Framework", function () {
         runToolsTestSuite( )
         runCoreElementsTestSuite( )
         runLayoutsTestSuite( )

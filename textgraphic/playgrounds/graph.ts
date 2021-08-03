@@ -10,7 +10,7 @@
 // ─── IMPORTS ────────────────────────────────────────────────────────────────────
 //
 
-    import * as TextKit from
+    import * as TextGraphic from
         "../source"
     import * as Tools from
         "./tools"
@@ -20,7 +20,7 @@
 //
 
     const renderer =
-        new TextKit.Environments.ANSITerminal.ANSITerminalStyleRenderer( )
+        new TextGraphic.Environments.ANSITerminal.ANSITerminalStyleRenderer( )
 
 
 //
@@ -37,7 +37,7 @@
 
         // graph
         const graph =
-            TextKit.Shapes.Graph.create({
+            TextGraphic.Shapes.Graph.create({
                 renderer,
                 //
                 width:          WIDTH,
@@ -56,7 +56,7 @@
 
         // grid
         const hLine =
-            new TextKit.LineView( "─".repeat(WIDTH - 1) + "▶︎", renderer, { color: GUIDES_COLOR })
+            new TextGraphic.LineView( "─".repeat(WIDTH - 1) + "▶︎", renderer, { color: GUIDES_COLOR })
         const vLineLines =
             [ "▲" ]
         for ( let row = 1; row < HEIGHT; row++ ) {
@@ -64,10 +64,10 @@
         }
 
         const vLine =
-            new TextKit.ShapeView( vLineLines, 0, renderer, { color: GUIDES_COLOR }, false )
+            new TextGraphic.ShapeView( vLineLines, 0, renderer, { color: GUIDES_COLOR }, false )
 
         const grid =
-            new TextKit.CanvasView(  WIDTH, HEIGHT, renderer )
+            new TextGraphic.CanvasView(  WIDTH, HEIGHT, renderer )
         const dy =
             Math.floor( HEIGHT / 2 ) + 1
         const dx =
@@ -79,7 +79,7 @@
 
         // background
         const background =
-            new TextKit.CanvasView( WIDTH, HEIGHT, renderer )
+            new TextGraphic.CanvasView( WIDTH, HEIGHT, renderer )
         background.add( grid,  0, 0, 1 )
         background.add( graph, 0, 0, 2 )
 
@@ -88,7 +88,7 @@
 
         console.clear( )
         console.log( margined.styledForm )
-        Tools.setCursorToBottomRight( "TextKit GraphView Demo " )
+        Tools.setCursorToBottomRight( "TextGraphic GraphView Demo " )
         await Tools.sleep( 100 )
     }
 

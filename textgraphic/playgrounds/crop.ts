@@ -11,7 +11,7 @@
 // ─── IMPORTS ────────────────────────────────────────────────────────────────────
 //
 
-    import * as TextKit
+    import * as TextGraphic
         from "../source"
     import * as Tools
         from "./tools"
@@ -27,26 +27,26 @@
 
 //
 // ─── ENV ────────────────────────────────────────────────────────────────────────
-//
+//`
 
     const renderer =
-        new TextKit.Environments.ANSITerminal.ANSITerminalStyleRenderer( )
+        new TextGraphic.Environments.ANSITerminal.ANSITerminalStyleRenderer( )
 
 //
 // ─── CANVAS ─────────────────────────────────────────────────────────────────────
 //
 
     const sampleCanvas =
-        new TextKit.CanvasView( CANVAS_WIDTH, CANVAS_HEIGHT, renderer )
+        new TextGraphic.CanvasView( CANVAS_WIDTH, CANVAS_HEIGHT, renderer )
 
     const alien =
-        TextKit.ShapeView.initArendelleAlien( renderer )
+        TextGraphic.ShapeView.initArendelleAlien( renderer )
     alien.addStyle({
         color: "blue"
     })
 
     const bird =
-        TextKit.ShapeView.initArendelleBird( renderer )
+        TextGraphic.ShapeView.initArendelleBird( renderer )
     bird.addStyle({
         color: "green"
     })
@@ -59,17 +59,17 @@
 
         const generator =
             ( i % 6 == 0
-                ? TextKit.ShapeView.initUtahTeapot
+                ? TextGraphic.ShapeView.initUtahTeapot
                 : ( i % 2 == 1
-                    ? TextKit.ShapeView.initArendelleAlien
-                    : TextKit.ShapeView.initArendelleBird
+                    ? TextGraphic.ShapeView.initArendelleAlien
+                    : TextGraphic.ShapeView.initArendelleBird
                     )
                 )
 
         const shape =
             generator( renderer )
         const color =
-            TextKit.randomPortableLabeledColor( )
+            TextGraphic.randomPortableLabeledColor( )
         shape.addStyle({
             color: color
         })
@@ -78,9 +78,9 @@
     }
 
     const text =
-        new TextKit.LineView( "A Demo Canvas Being Sliced", renderer, { })
+        new TextGraphic.LineView( "A Demo Canvas Being Sliced", renderer, { })
             .applyMargin( 0, 2, 0, 2 )
-            .frame( TextKit.Presets.LightBox )
+            .frame( TextGraphic.Presets.LightBox )
             .applyMargin( 0, 2, 0, 2 )
     text.transparent = false
 
@@ -104,14 +104,14 @@
     Tools.runRenderLoop( 0, 10, async spacing => {
 
         const masterCanvas =
-            new TextKit.CanvasView( CANVAS_WIDTH + spacing , CANVAS_HEIGHT,  renderer )
+            new TextGraphic.CanvasView( CANVAS_WIDTH + spacing , CANVAS_HEIGHT,  renderer )
 
         masterCanvas.add( right, left.width + spacing, 0, 0 )
         masterCanvas.add( left, 0, 0, 0 )
 
         console.clear( )
         console.log( masterCanvas.styledForm )
-        Tools.setCursorToBottomRight( "TextKit Demo: Canvas View Cropping and Slicing ")
+        Tools.setCursorToBottomRight( "TextGraphic Demo: Canvas View Cropping and Slicing ")
         await Tools.sleep( 150 )
     })
 

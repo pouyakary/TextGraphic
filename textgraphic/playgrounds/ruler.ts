@@ -11,7 +11,7 @@
 // ─── IMPORTS ────────────────────────────────────────────────────────────────────
 //
 
-    import * as TextKit
+    import * as TextGraphic
         from "../source"
     import * as Tools
         from "./tools"
@@ -21,7 +21,7 @@
 //
 
     const styler =
-        new TextKit.Environments.ANSITerminal.ANSITerminalStyleRenderer( )
+        new TextGraphic.Environments.ANSITerminal.ANSITerminalStyleRenderer( )
 
 //
 // ─── RULER ──────────────────────────────────────────────────────────────────────
@@ -30,9 +30,9 @@
     async function renderFrame ( size: number ) {
         //
         const ruler =
-            TextKit.Shapes.Rulers.createChartRuler( styler, {
+            TextGraphic.Shapes.Rulers.createChartRuler( styler, {
                 size: size,
-                facing: TextKit.Direction.Right,
+                facing: TextGraphic.Direction.Right,
                 verticalGutterSize: 5,
                 unit: 5,
                 chars: {
@@ -50,7 +50,7 @@
         console.log( ruler.styledForm )
 
         //
-        Tools.setCursorToBottomRight( "Pouya's TextKit: Rulers Demo ")
+        Tools.setCursorToBottomRight( "Pouya's TextGraphic: Rulers Demo ")
         await Tools.sleep( 50 )
     }
 

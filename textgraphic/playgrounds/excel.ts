@@ -13,7 +13,7 @@
 
     import { performance }
         from "perf_hooks"
-    import * as TextKit
+    import * as TextGraphic
         from "../source"
 
 //
@@ -40,7 +40,7 @@
 //
 
     type StyleRenderer =
-        TextKit.Environments.ANSITerminal.ANSITerminalStyleRenderer
+        TextGraphic.Environments.ANSITerminal.ANSITerminalStyleRenderer
 
 //
 // ─── WAIT ───────────────────────────────────────────────────────────────────────
@@ -56,12 +56,12 @@
     function createCell ( text: string, active: boolean, styler: StyleRenderer ) {
         const border =
             ( active
-                ? TextKit.Presets.HeavyBox
-                : TextKit.Presets.LightBox
+                ? TextGraphic.Presets.HeavyBox
+                : TextGraphic.Presets.LightBox
                 )
 
         const box =
-            TextKit.ShapeView.initWithText( text, 0, styler, { bold: true })
+            TextGraphic.ShapeView.initWithText( text, 0, styler, { bold: true })
             .centerToBoundaryBox( CELL_WIDTH - 2, 1 )
             .frame( border )
 
@@ -82,7 +82,7 @@
         const canvasHeight =
             ( ( ( CELL_HEIGHT - 1 ) * TABLE_ROWS ) + 1 ) + 1 * PADDING_VERTICALLY
         const tableCanvas =
-            new TextKit.CanvasView( canvasWidth, canvasHeight, styler )
+            new TextGraphic.CanvasView( canvasWidth, canvasHeight, styler )
 
         const ALPHABET =
             [ "A", "B", "C", "D", "E", "F", "G", "H" ]
@@ -115,7 +115,7 @@
 
     main( ); async function main( ) {
         const styler =
-            new TextKit.Environments.ANSITerminal.ANSITerminalStyleRenderer( )
+            new TextGraphic.Environments.ANSITerminal.ANSITerminalStyleRenderer( )
 
         while ( true ) {
             for ( const column of [ 0, 1, 2, 3, 4 ] ) {

@@ -12,7 +12,7 @@
 
     import { performance }
         from "perf_hooks"
-    import * as TextKit
+    import * as TextGraphic
         from "../source"
 
 //
@@ -20,7 +20,7 @@
 //
 
     const renderer =
-        new TextKit.Environments.ANSITerminal.ANSITerminalStyleRenderer( )
+        new TextGraphic.Environments.ANSITerminal.ANSITerminalStyleRenderer( )
 
 //
 // ─── TYPES ──────────────────────────────────────────────────────────────────────
@@ -128,15 +128,15 @@
                 const rows =
                     this.#tests.map( test => {
                         const rowText =
-                            TextKit.ShapeView.initWithText( ( row++ ).toString( ),
+                            TextGraphic.ShapeView.initWithText( ( row++ ).toString( ),
                                 0, renderer, { })
                                 .applyMargin( 0, 2, 0, 2 )
                         const title =
-                            TextKit.ShapeView.initWithText( test.title,
+                            TextGraphic.ShapeView.initWithText( test.title,
                                 0, renderer, { })
                                 .applyMargin( 0, 2, 0, 2 )
                         const time =
-                            TextKit.ShapeView.initWithText( Math.floor( test.averageTime ).toString( ) + " ms",
+                            TextGraphic.ShapeView.initWithText( Math.floor( test.averageTime ).toString( ) + " ms",
                                 0, renderer, { })
                                 .applyMargin( 0, 2, 0, 2 )
                         return [ rowText, title, time ]
@@ -144,23 +144,23 @@
 
 
                 const table =
-                    TextKit.Layouts.createShapeViewTableInTextForm(
+                    TextGraphic.Layouts.createShapeViewTableInTextForm(
                         rows, renderer, {
                             horizontalAligns: [
-                                TextKit.HorizontalAlign.Left,
-                                TextKit.HorizontalAlign.Left,
-                                TextKit.HorizontalAlign.Right,
+                                TextGraphic.HorizontalAlign.Left,
+                                TextGraphic.HorizontalAlign.Left,
+                                TextGraphic.HorizontalAlign.Right,
                             ]
                         }
                     )
 
                 const runsTextTitle =
-                    TextKit.ShapeView.initWithText( ` ${ this.#runs } runs/measure `, 0, renderer, { })
+                    TextGraphic.ShapeView.initWithText( ` ${ this.#runs } runs/measure `, 0, renderer, { })
                 const runsText =
-                    runsTextTitle.frame( TextKit.Presets.LightBox )
+                    runsTextTitle.frame( TextGraphic.Presets.LightBox )
 
                 const canvas =
-                    new TextKit.CanvasView( table.width, table.height + 2, renderer )
+                    new TextGraphic.CanvasView( table.width, table.height + 2, renderer )
 
                 canvas.add( runsText, 0, 0, 0 )
                 canvas.add( table, 0, 2, 0 )

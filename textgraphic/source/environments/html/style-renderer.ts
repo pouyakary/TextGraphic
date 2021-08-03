@@ -125,17 +125,17 @@
                 const headerStyleTag =
                     this.#optimizer.generateHeaderStyleTag( "" )
                 renderedParts[ 0 ] =
-                    "<textkit-area>" + headerStyleTag
+                    "<textgraphic-area>" + headerStyleTag
 
                 // body
                 for ( let i = 0; i <= lines.length; i++ ) {
                     renderedParts[ i + 1 ] =
-                        `${ INDENTATION }<textkit-row>${ lines[ i ] }</textkit-row>`
+                        `${ INDENTATION }<textgraphic-row>${ lines[ i ] }</textgraphic-row>`
                 }
 
                 // footer
                 renderedParts[ lines.length + 1 ] =
-                    "</textkit-area>"
+                    "</textgraphic-area>"
 
                 //
                 return renderedParts.join( LINE_BREAK_CHARACTER )

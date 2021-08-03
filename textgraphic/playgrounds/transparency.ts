@@ -11,7 +11,7 @@
 // ─── IMPORTS ────────────────────────────────────────────────────────────────────
 //
 
-    import * as TextKit
+    import * as TextGraphic
         from "../source"
     import * as Tools
         from "./tools"
@@ -21,31 +21,31 @@
 //
 
     const styler =
-        new TextKit.Environments.ANSITerminal.ANSITerminalStyleRenderer( )
+        new TextGraphic.Environments.ANSITerminal.ANSITerminalStyleRenderer( )
 
 //
 // ─── TESTING TRANSPARENCY ───────────────────────────────────────────────────────
 //
 
     const box1 =
-        TextKit.ShapeView.initBlankRectangle( 8, 3, styler )
-            .frame( TextKit.Presets.LightBox )
+        TextGraphic.ShapeView.initBlankRectangle( 8, 3, styler )
+            .frame( TextGraphic.Presets.LightBox )
 
     box1.style = {
         color: "blue"
     }
 
     const box2 =
-        TextKit.ShapeView.initBlankRectangle( 8, 3, styler )
-            .frame( TextKit.Presets.LightBox )
+        TextGraphic.ShapeView.initBlankRectangle( 8, 3, styler )
+            .frame( TextGraphic.Presets.LightBox )
     box2.style = {
         color: "red"
     }
 
 
     const box3 =
-        TextKit.ShapeView.initBlankRectangle( 8, 3, styler )
-            .frame( TextKit.Presets.LightBox )
+        TextGraphic.ShapeView.initBlankRectangle( 8, 3, styler )
+            .frame( TextGraphic.Presets.LightBox )
 
     box3.style = {
         color: "green"
@@ -55,7 +55,7 @@
 
 
     const canvas =
-        new TextKit.CanvasView( 21, 10, styler )
+        new TextGraphic.CanvasView( 21, 10, styler )
 
     canvas.add( box1, 0, 1, 1 )
     canvas.add( box2, 5, 2, 2 )
@@ -64,7 +64,7 @@
     canvas.fineTuneBoxIntersections( )
 
     const displayCanvas =
-        new TextKit.CanvasView(
+        new TextGraphic.CanvasView(
             process.stdout.columns,
             process.stdout.rows - 1,
             styler
@@ -79,7 +79,7 @@
     console.clear( )
     console.log( displayCanvas.styledForm )
 
-    Tools.setCursorToBottomRight( "Over-lapping Views and Transparency in TextKit " )
+    Tools.setCursorToBottomRight( "Over-lapping Views and Transparency in TextGraphic " )
     Tools.sleep( 100 * 1000 )
 
 // ────────────────────────────────────────────────────────────────────────────────

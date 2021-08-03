@@ -21,7 +21,7 @@
 //
 
     /**
-     *  TextKit is designed to be destination-independent. Some may use it to
+     *  TextGraphic is designed to be destination-independent. Some may use it to
      *  render text in a browser, but it can also be used to render text in a
      *  terminal. The way this independence is designed is by having a protocol
      *  that defines how style is rendered. Each new target platform is defined
@@ -32,7 +32,7 @@
      *  freedom to create new views but also keeps them from shooting themselves
      *  in the foot.
      *
-     *  TextKit is about text and every implementation of a textual markup
+     *  TextGraphic is about text and every implementation of a textual markup
      *  evolves some sort of a tag mechanism where some form of an indication
      *  marks the starting point of the markup and one other marks the ending.
      *
@@ -44,15 +44,15 @@
      *
      *  As it is easy to observe, the only different factor in the actual
      *  render is how one platform defines its markup indications. Therefore
-     *  the separation of concerns within the TextKit is that the the renderer
+     *  the separation of concerns within the TextGraphic is that the the renderer
      *  of the view (the `.styledForm` property) is responsible for inserting
-     *  the appropriate style indicators&mdash;which in TextKit jargon is
+     *  the appropriate style indicators&mdash;which in TextGraphic jargon is
      *  called the _styling info_&mdash;and the style renderer is tasked with
      *  forming the _Style_ into appropriate _StyleInfo_ for the particular
      *  section.
      *
      *  As each target may have different styling options, each platform that
-     *  is defined for the TextKit needs to have two standards implemented.
+     *  is defined for the TextGraphic needs to have two standards implemented.
      *
      *  1. A `ColorType` that extends the `PortableColor`.
      *  2. An `EnvironmentStyleSetting` that extends the `PortableStyle<ColorType>`
@@ -156,9 +156,9 @@
              *  For example within ANSI Terminal, this will only be joining
              *  the lines together with a line break character (`\n`). But,
              *  in the HTML render, each line is being wrapped inside a
-             *  `<textkit-row> ... </textkit-row` tag and then all of these
+             *  `<textgraphic-row> ... </textgraphic-row` tag and then all of these
              *  rows, plus an additionally generated `<style>` tag is being
-             *  wrapped inside of a `<textkit-area> ... </textkit-area>`.
+             *  wrapped inside of a `<textgraphic-area> ... </textgraphic-area>`.
              */
 
             wrapRootLinesAndFinalizeRender ( width: number,

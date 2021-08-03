@@ -11,7 +11,7 @@
 // ─── IMPORTS ────────────────────────────────────────────────────────────────────
 //
 
-    import * as TextKit
+    import * as TextGraphic
         from "../source"
     import * as Tools
         from "./tools"
@@ -35,13 +35,13 @@
 //
 
     const terminalStyler =
-        new TextKit.Environments.ANSITerminal.ANSITerminalStyleRenderer( )
+        new TextGraphic.Environments.ANSITerminal.ANSITerminalStyleRenderer( )
 
     const svgOptimizingStyler =
-        new TextKit.Environments.SVG.SVGStyleRenderer( true, SVG_RENDERER_SETTINGS )
+        new TextGraphic.Environments.SVG.SVGStyleRenderer( true, SVG_RENDERER_SETTINGS )
 
     const svgInliningStyler =
-        new TextKit.Environments.SVG.SVGStyleRenderer( false, SVG_RENDERER_SETTINGS )
+        new TextGraphic.Environments.SVG.SVGStyleRenderer( false, SVG_RENDERER_SETTINGS )
 
 //
 // ─── RENDER FOR PREVIEW ─────────────────────────────────────────────────────────
@@ -60,7 +60,7 @@
     const optimizedSVG =
         Tools.createAGoodModel( svgOptimizingStyler )
 
-    const saveToDesktop = ( name: string, model: TextKit.ViewProtocol<any, any, any> ) =>
+    const saveToDesktop = ( name: string, model: TextGraphic.ViewProtocol<any, any, any> ) =>
         fs.writeFileSync(
             path.join( homedir( ), "Desktop", name ),
             model.styledForm,

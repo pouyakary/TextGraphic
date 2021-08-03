@@ -13,7 +13,7 @@
 
     import { REPLServer }
         from "repl"
-    import * as TextKit
+    import * as TextGraphic
         from "../source"
 
 //
@@ -21,7 +21,7 @@
 //
 
     type StyleRenderer =
-        TextKit.Environments.ANSITerminal.ANSITerminalStyleRenderer
+        TextGraphic.Environments.ANSITerminal.ANSITerminalStyleRenderer
 
 //
 // ─── APPEND TO CONTEXT ──────────────────────────────────────────────────────────
@@ -63,7 +63,7 @@
 //
 
     export function setupREPLContext ( server: REPLServer, $: StyleRenderer ) {
-        appendObjectToREPLContext( TextKit, server )
+        appendObjectToREPLContext( TextGraphic, server )
         appendObjectToREPLContext( Math, server )
         appendStylerToContext( server, $ )
     }

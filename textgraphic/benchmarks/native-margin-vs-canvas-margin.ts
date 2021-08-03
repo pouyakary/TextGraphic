@@ -12,7 +12,7 @@
 
     import { Benchmark }
         from "./suite"
-    import * as TextKit
+    import * as TextGraphic
         from "../source"
 
 //
@@ -20,7 +20,7 @@
 //
 
     const renderer =
-        new TextKit.Environments.ANSITerminal.ANSITerminalStyleRenderer( )
+        new TextGraphic.Environments.ANSITerminal.ANSITerminalStyleRenderer( )
     const benchmark =
         new Benchmark( 10 )
 
@@ -29,7 +29,7 @@
 //
 
     const SAMPLE_BACKGROUND =
-        TextKit.ShapeView.initBlankRectangle(
+        TextGraphic.ShapeView.initBlankRectangle(
             100, 100, renderer, "*"
         )
 
@@ -79,7 +79,7 @@
 
     benchmark.measure( "100 -> 200 / Canvas", ( ) => {
         const canvas =
-            new TextKit.CanvasView( 200, 200, renderer )
+            new TextGraphic.CanvasView( 200, 200, renderer )
         canvas.add( SAMPLE_BACKGROUND, 50, 50, 0 )
         canvas.styledForm
     })
@@ -90,7 +90,7 @@
 
     benchmark.measure( "100 -> 500 / Canvas", ( ) => {
         const canvas =
-            new TextKit.CanvasView( 500, 500, renderer )
+            new TextGraphic.CanvasView( 500, 500, renderer )
         canvas.add( SAMPLE_BACKGROUND, 250, 250, 0 )
         canvas.styledForm
     })
@@ -101,7 +101,7 @@
 
     benchmark.measure( "100 -> 1000 / Canvas", ( ) => {
         const canvas =
-            new TextKit.CanvasView( 1000, 1000, renderer )
+            new TextGraphic.CanvasView( 1000, 1000, renderer )
         canvas.add( SAMPLE_BACKGROUND, 450, 450, 0 )
         canvas.styledForm
     })
@@ -112,7 +112,7 @@
 
     benchmark.measure( "100 -> 2000 / Canvas", ( ) => {
         const canvas =
-            new TextKit.CanvasView( 2000, 2000, renderer )
+            new TextGraphic.CanvasView( 2000, 2000, renderer )
         canvas.add( SAMPLE_BACKGROUND, 950, 950, 0 )
         canvas.styledForm
     })
